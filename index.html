@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+<<<<<<< HEAD
     <meta charset='UTF-8'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TellME7 ATM Simulator</title>
@@ -34,3 +35,97 @@
     <script src="script.js"></script>
 </body>
 </html>
+=======
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>TellME 7 - ATM Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="atm-container">
+        <!-- Главный экран -->
+        <div id="mainScreen" class="screen active">
+            <div class="screen-header">
+                <h1>TellME 7</h1>
+                <button class="exit-btn" onclick="exitApp()">Выход</button>
+            </div>
+            
+            <div class="buttons-grid">
+                <button class="atm-btn" onclick="initCassettes()">
+                    Инициализация кассет
+                </button>
+                <button class="atm-btn" onclick="recyclCollection()">
+                    Инкассация ресайклера
+                </button>
+                <button class="atm-btn" onclick="showSupervisorMenu()">
+                    Меню оператора
+                </button>
+            </div>
+            
+            <div class="status-bar">
+                <span>ATM TellME 7 v1.0</span>
+            </div>
+        </div>
+        
+        <!-- Меню оператора -->
+        <div id="supervisorScreen" class="screen">
+            <div class="screen-header">
+                <h2>Меню оператора</h2>
+                <button class="back-btn" onclick="showMainMenu()">← Назад</button>
+            </div>
+            
+            <div class="buttons-grid">
+                <button class="atm-btn" onclick="openCloseDay()">
+                    Открытие/закрытие операционного дня
+                </button>
+                <button class="atm-btn" onclick="showMainMenu()">
+                    В режим обслуживания клиентов
+                </button>
+            </div>
+        </div>
+        
+        <!-- Экран пополнения кассеты -->
+        <div id="replenishScreen" class="screen">
+            <div class="screen-header">
+                <h2>Пополнение кассеты</h2>
+                <button class="back-btn" onclick="showSupervisorMenu()">← Назад</button>
+            </div>
+            
+            <div class="form-container">
+                <div class="form-group">
+                    <label>Номер кассеты</label>
+                    <div class="value-display" id="cassetteNumber">001</div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Номинал</label>
+                    <div class="value-display" id="nominal">100 руб.</div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Загрузка (количество банкнот)</label>
+                    <input type="number" id="amount" class="amount-input" 
+                           min="0" max="2000" placeholder="0">
+                </div>
+            </div>
+            
+            <div class="buttons-grid small-buttons">
+                <button class="atm-btn small" onclick="submitReplenish()">Подтвердить</button>
+                <button class="atm-btn small" onclick="resetAmount()">Сброс</button>
+                <button class="atm-btn small" onclick="cancelReplenish()">Отмена</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для сообщений -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <p id="modalMessage"></p>
+            <button onclick="closeModal()" class="modal-btn">OK</button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
+>>>>>>> 37a450918377232e74573d35e76eab262c07a947
