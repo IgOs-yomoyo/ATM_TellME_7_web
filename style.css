@@ -1,353 +1,112 @@
-<<<<<<< HEAD
-/* 
-   * - означает "все элементы"
-   margin: 0 - убираем отступы
-   padding: 0 - убираем внутренние отступы
-*/
-
-* {margin: 0;
-padding: 0;
-box-sizing: border-box;
-}
-
-body {
-    font-family: 'Arial', sans-serif; /* шрифт */
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)
-    min-height: 100vh; /* минимальная высота = весь экран */
-    display: flex; /* включаем flexbox для центрирования */
-    justify-content: center; /* центрируем по горизонтали */
-    align-items: center; /* центрируем по вертикали */
-    padding: 20px;
-}
-/*Контейнер для банкомата*/
-.atm-container {
-    width: 100%;
-    max-width: 800px;
-    background: white;
-    border-radius: 20px; /* скругленные углы */
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    overflow: hidden; /* чтобы ничего не выходило за границы */
-
-}
-
-/*Экран банкомата*/
-.atm-screen {
-    padding: 40px;
-    min-height: 500px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-/* Заголовки */
-.atm-title{
-    text-align: center;
-    font-size: 48px;
-    color: #2c3e50;
-    margin-bottom: 10px;
-}
-.atm-subtitle{
-     text-align: center;
-    font-size: 24px;
-    color: #7f8c8d;
-    margin-bottom: 40px;
-    font-weight: normal;
-}
-/* Кнопки */
-/* Контейнер для кнопок меню */
-.menu-buttons{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-bottom: 40px;
-}
-
-.atm-button {
-    padding: 20px;
-    font-size: 20px;
-    font-weight: bold;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    background-color: #4CAF50;
-    color: white;
-    width: 100%;
-}
-
-.atm-button:hover {
-    transform: translateY(-2px);
-    background-color: #45a049;
-    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
-}
-.atm-button:active {
-    transform: translateY(0);
-}
-/* Контейнер для кнопки "Выход" */
-.exit-container {
-    border-top: 1px solid #e0e0e0;
-    padding-top: 20px;
-    margin-top: 20px;
-}
-
-/* Кнопка "Выход" */
-.exit-button {
-      padding: 15px;
-    font-size: 18px;
-    font-weight: bold;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    background-color: #f44336;
-    color: white;
-    width: 100%;
-}
-
-.exit-button:hover {
-    background-color: #da190b;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
-}
-
-.exit-button:active {
-    transform: translateY(0);
-}
-
-
-=======
+/* Сброс отступов - убираем стандартные отступы браузера */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+
+/* Стиль для всей страницы - на весь экран */
 body {
-    font-family: 'Arial', 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-family: 'Arial', sans-serif;
+    background: #1a1a2e;
+    min-height: 100vh;          /* 100% высоты окна */
+    display: flex;               /* flexbox для центрирования */
+    justify-content: center;     /* центрируем по горизонтали */
+    align-items: center;         /* центрируем по вертикали */
     padding: 20px;
 }
 
+/* Контейнер экрана банкомата - основная рамка */
 .atm-container {
-    max-width: 800px;
-    width: 100%;
-    background: #2c3e50;
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    width: 90vw;
+    height: 85vh;
+    max-width: 1200px;           /* максимальная ширина */
+    background: #faf9f8;         /* темно-синий фон рамки */
+    border-radius: 20px;         /* скругленные углы */
+    overflow: hidden;
 }
-
+/* Экран банкомата - здесь будут кнопки */
 .screen {
-    display: none;
-    background: #ecf0f1;
-    border-radius: 10px;
-    min-height: 500px;
-    position: relative;
-}
-
-.screen.active {
-    display: block;
-}
-
-.screen-header {
-    background: rgba(44, 62, 80, 0.95);
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid #3498db;
-    border-radius: 10px 10px 0 0;
-}
-
-.screen-header h1, .screen-header h2 {
-    color: white;
-    font-size: 24px;
-}
-
-.buttons-grid {
-    padding: 30px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-}
-
-.atm-btn {
-    background: #1976D2;
-    color: white;
-    border: none;
-    padding: 15px 20px;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.atm-btn:hover {
-    background: #1565C0;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-
-.atm-btn:active {
-    transform: translateY(0);
-}
-
-.exit-btn, .back-btn {
-    background: #f44336;
-    padding: 8px 16px;
-    font-size: 14px;
-}
-
-.exit-btn:hover, .back-btn:hover {
-    background: #d32f2f;
-}
-
-.small-buttons {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    padding: 20px;
-}
-
-.atm-btn.small {
-    padding: 10px 15px;
-    font-size: 16px;
-}
-
-.form-container {
-    padding: 30px;
-    background: rgba(255,255,255,0.95);
-    margin: 20px;
-    border-radius: 10px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 8px;
-    color: #2c3e50;
-    font-size: 16px;
-}
-
-.value-display {
-    background: #f8f9fa;
-    border: 2px solid #ddd;
-    padding: 12px;
-    border-radius: 8px;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-    color: #2c3e50;
-}
-
-.amount-input {
+    position: relative;          /* для позиционирования кнопок внутри */
     width: 100%;
-    padding: 12px;
-    font-size: 18px;
-    text-align: center;
-    border: 2px solid #1976D2;
-    border-radius: 8px;
-    outline: none;
+    height: 100%;                /* 80% от высоты окна */
+    /* min-height: 500px;           минимальная высота */
+    background: white;           /* белый фон экрана */
+}
+/* Общий стиль для кнопок */
+.atm-button {
+    position: absolute;
+    font-size: 20px;
     font-weight: bold;
-}
-
-.amount-input:focus {
-    border-color: #0D47A1;
-    box-shadow: 0 0 5px rgba(25,118,210,0.3);
-}
-
-.status-bar {
-    padding: 10px 20px;
-    background: rgba(0,0,0,0.7);
-    color: white;
-    font-size: 12px;
-    text-align: right;
-    border-radius: 0 0 10px 10px;
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    text-align: center;
-    max-width: 400px;
-    width: 90%;
-}
-
-.modal-content p {
-    margin-bottom: 20px;
-    font-size: 18px;
-    color: #2c3e50;
-}
-
-.modal-btn {
-    background: #1976D2;
-    color: white;
+    padding: 50px 90px;
     border: none;
-    padding: 10px 30px;
-    font-size: 16px;
-    border-radius: 5px;
+    border-radius: 12px;
     cursor: pointer;
+    transition: 0.2s;
+    background-color: #5856f0;
+    color: #f8f9fa;
+    width: 500px;
+    text-align: center;
 }
 
-.modal-btn:hover {
-    background: #1565C0;
+/* Эффект при наведении на кнопку */
+.atm-button:hover {
+    transform: scale(1.02);      /* увеличиваем на 5% */
+    /* background-color: #45a049;   /* темнее зеленый */
+    /* box-shadow: 0 5px 15px rgba(0,0,0,0.3); */
+    filter: brightness(1.05);
 }
 
+/* Кнопка Выход */
+.atm-button.exit {
+    background-color: #5856f0;
+}
+
+.atm-button:hover {
+    transform: scale(1.02);      /* увеличиваем на 5% */
+    /* background-color: #45a049;   /* темнее зеленый */
+    /* box-shadow: 0 5px 15px rgba(0,0,0,0.3); */
+    filter: brightness(1.05);
+}
+
+/* Позиционирование кнопок */
+/* Левая верхняя */
+.top-left {
+    top: 150px;
+    left: 337px;
+}
+
+/* Правая верхняя */
+.top-right {
+    top: 150px;
+    right: 337px;
+}
+
+/* Правая нижняя */
+.bottom-right {
+    bottom: 150px;
+    right: 337px;
+}
+
+/* Левая нижняя - выход*/
+.bottom-left {
+    bottom: 150px;
+    left: 337px;
+}
+ 
+/* Адаптация для маленьких экранов */
 @media (max-width: 768px) {
-    .atm-container {
-        padding: 10px;
-    }
-    
-    .buttons-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-        padding: 20px;
-    }
-    
-    .small-buttons {
-        grid-template-columns: 1fr;
-    }
-    
-    .screen-header h1, .screen-header h2 {
-        font-size: 18px;
-    }
-    
-    .atm-btn {
-        padding: 12px 16px;
+    .atm-button {
         font-size: 16px;
+        width: 200px;
+        padding: 12px 20px;
     }
-    
-    .form-container {
-        padding: 20px;
-        margin: 15px;
-    }
-    
-    .amount-input {
-        font-size: 16px;
-        padding: 10px;
+    .top-left, .top-right, .bottom-left, .bottom-right {
+        top: 15px;
+        bottom: 15px;
+        left: 15px;
+        right: 15px;
     }
 }
->>>>>>> 37a450918377232e74573d35e76eab262c07a947
+

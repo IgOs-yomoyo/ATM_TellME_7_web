@@ -1,131 +1,106 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<<<<<<< HEAD
     <meta charset='UTF-8'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TellME7 ATM Simulator</title>
-    <link rel="stylesheet" href="style.css">  ← ЭТА СТРОЧКА ДОЛЖНА БЫТЬ
-</html>head>
-<body>
-    <div class="atm-container">
-            <div class="atm-screen">
-                <h1 class="atm-title">TellME7</h1>
-                <h2> class="atm-subtitle">Выберите операцию</h2>
-
-                <!-- Кнопки меню -->
-                 <div class="menu-buttons">
-                    <button class="atm-button" onclick="initCassettes()">
-                        Инициализация кассет
-                    </button>
-                    <!-- Кнопка "Выход" -->
-                    <button class="atm-button button-small" onclick="exitApp()">
-                        Выход
-                    </button>
-                
-                    <button class="atm-button" onclick="recyclCollection()" style="top: 31%; left: 51%;">
-                        Инкассация ресайклера
-                    </button>
-            
-                    <button class="atm-button" onclick="goToSupervisor()" style="top: 86%; left: 51%; height: 14%;">
-                        Меню оператора
-                    </button>
-        </div>
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>
-=======
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>TellME 7 - ATM Simulator</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">  
 </head>
 <body>
-    <div class="atm-container">
-        <!-- Главный экран -->
-        <div id="mainScreen" class="screen active">
-            <div class="screen-header">
-                <h1>TellME 7</h1>
-                <button class="exit-btn" onclick="exitApp()">Выход</button>
-            </div>
-            
-            <div class="buttons-grid">
-                <button class="atm-btn" onclick="initCassettes()">
+    <div class="mainScreen">
+        <div id="mainScreen" class="screen-active">
+            <div class="atm-screen">
+                <!-- Кнопка Инициализация кассет слева сверху -->
+                <button class="atm-button top-left" onclick="initCassettes()">
                     Инициализация кассет
                 </button>
-                <button class="atm-btn" onclick="recyclCollection()">
+                <!-- Кнопка Инкассация ресайклера     -->
+                <button class="atm-button top-right" onclick="recyclCollection">
                     Инкассация ресайклера
                 </button>
-                <button class="atm-btn" onclick="showSupervisorMenu()">
+                <!-- Кнопка Меню оператора -->
+                <button class="atm-button bottom-right" onclick="goToSupervisor()">
                     Меню оператора
                 </button>
-            </div>
-            
-            <div class="status-bar">
-                <span>ATM TellME 7 v1.0</span>
-            </div>
-        </div>
-        
-        <!-- Меню оператора -->
-        <div id="supervisorScreen" class="screen">
-            <div class="screen-header">
-                <h2>Меню оператора</h2>
-                <button class="back-btn" onclick="showMainMenu()">← Назад</button>
-            </div>
-            
-            <div class="buttons-grid">
-                <button class="atm-btn" onclick="openCloseDay()">
-                    Открытие/закрытие операционного дня
-                </button>
-                <button class="atm-btn" onclick="showMainMenu()">
-                    В режим обслуживания клиентов
-                </button>
-            </div>
-        </div>
-        
-        <!-- Экран пополнения кассеты -->
-        <div id="replenishScreen" class="screen">
-            <div class="screen-header">
-                <h2>Пополнение кассеты</h2>
-                <button class="back-btn" onclick="showSupervisorMenu()">← Назад</button>
-            </div>
-            
-            <div class="form-container">
-                <div class="form-group">
-                    <label>Номер кассеты</label>
-                    <div class="value-display" id="cassetteNumber">001</div>
-                </div>
-                
-                <div class="form-group">
-                    <label>Номинал</label>
-                    <div class="value-display" id="nominal">100 руб.</div>
-                </div>
-                
-                <div class="form-group">
-                    <label>Загрузка (количество банкнот)</label>
-                    <input type="number" id="amount" class="amount-input" 
-                           min="0" max="2000" placeholder="0">
-                </div>
-            </div>
-            
-            <div class="buttons-grid small-buttons">
-                <button class="atm-btn small" onclick="submitReplenish()">Подтвердить</button>
-                <button class="atm-btn small" onclick="resetAmount()">Сброс</button>
-                <button class="atm-btn small" onclick="cancelReplenish()">Отмена</button>
+                <!-- Кнопка "Выход" -->
+                <button class="atm-button bottom-left exit" onclick="exitApp()">
+                    Выход
+                </button>     
             </div>
         </div>
     </div>
-    
-    <!-- Модальное окно для сообщений -->
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <p id="modalMessage"></p>
-            <button onclick="closeModal()" class="modal-btn">OK</button>
+
+    <!-- Экран Меню оператора -->
+    <div id="supervisorscreen" class="screen" style="display: none;">
+        <div class="atm-screen">
+
+            <!-- Левая верхняя кнопка Выключить банкомат -->
+            <button class="atm-button top-left" onclick="shutdownATM()">
+                Выключить<br>банкомат
+            </button>
+
+            <!-- Правая верхняя кнопка В режим обслуживания клиентов -->
+             <button class="atm-button normal-mode" onclick="gotoNormalMode()">
+                В режим обслуживания клиентов
+            </button>
+
+            <!-- Левая средняя кнопка Открытие/закрытие операционного дня -->
+             <button class="atm-button OpenCloseDay" onclick="openCloseDay()">
+                Открытие/закрытие<br>операционного дня
+             </button>
+
+            <!-- Правая средняя кнопка Состояние устройств -->
+             <button class="atm-button device-status" onclick="DeviceStatus()">
+                Состояние устройств
+             </button>
         </div>
     </div>
     
-    <script src="script.js"></script>
+    <script>
+        // Переключение между экранами
+        function showMainMenu() {
+            document.getElementById('mainScreen').style.display = 'block';
+            document.getElementById('supervisorscreen').style.display = 'none';
+        }
+
+        function showSupervisorMenu() {
+            document.getElementById('mainScreen').style.display = 'none';
+            document.getElementById('supervisorscreen').style.display = 'block'
+        }
+       
+        // Функции главного меню
+        function exitApp() {
+            let answer = confirm("Вы уверены, что хотите выйти?");
+            if (answer = true) {
+                alert("До свидания!");
+            }
+        }
+
+        function initCassettes() {
+            alert("Инициализация кассет");
+        }
+
+        function recyclCollection() {
+            alert("Инкассация ресайклера")
+        }
+
+        function goToSupervisor() {
+            alert("Переход в меню оператора");
+        }
+
+        // Функции меню оператора
+        function shutdownATM() {
+            let answer = confirm('Вы уверены, что хотите выключить банкомат?');
+            if (answer == true) {alert('Банкомат выключается...')
+
+            }
+        }
+
+        // Функция "Состояние устройств"
+        function device-status() {
+            alert('Переход на экран "Состояние устройств"')
+        }
+    </script>    
 </body>
 </html>
->>>>>>> 37a450918377232e74573d35e76eab262c07a947
+
