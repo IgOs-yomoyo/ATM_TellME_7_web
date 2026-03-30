@@ -1,0 +1,116 @@
+/* 
+   * - означает "все элементы"
+   margin: 0 - убираем отступы
+   padding: 0 - убираем внутренние отступы
+*/
+
+* {margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif; /* шрифт */
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)
+    min-height: 100vh; /* минимальная высота = весь экран */
+    display: flex; /* включаем flexbox для центрирования */
+    justify-content: center; /* центрируем по горизонтали */
+    align-items: center; /* центрируем по вертикали */
+    padding: 20px;
+}
+/*Контейнер для банкомата*/
+.atm-container {
+    width: 100%;
+    max-width: 800px;
+    background: white;
+    border-radius: 20px; /* скругленные углы */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    overflow: hidden; /* чтобы ничего не выходило за границы */
+
+}
+
+/*Экран банкомата*/
+.atm-screen {
+    padding: 40px;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Заголовки */
+.atm-title{
+    text-align: center;
+    font-size: 48px;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+.atm-subtitle{
+     text-align: center;
+    font-size: 24px;
+    color: #7f8c8d;
+    margin-bottom: 40px;
+    font-weight: normal;
+}
+/* Кнопки */
+/* Контейнер для кнопок меню */
+.menu-buttons{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.atm-button {
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #4CAF50;
+    color: white;
+    width: 100%;
+}
+
+.atm-button:hover {
+    transform: translateY(-2px);
+    background-color: #45a049;
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+}
+.atm-button:active {
+    transform: translateY(0);
+}
+/* Контейнер для кнопки "Выход" */
+.exit-container {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+/* Кнопка "Выход" */
+.exit-button {
+      padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #f44336;
+    color: white;
+    width: 100%;
+}
+
+.exit-button:hover {
+    background-color: #da190b;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
+}
+
+.exit-button:active {
+    transform: translateY(0);
+}
+
+

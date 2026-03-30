@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TellME7 ATM Simulator</title>
+    <link rel="stylesheet" href="style.css">  ← ЭТА СТРОЧКА ДОЛЖНА БЫТЬ
+</html>head>
+<body>
+    <div class="atm-container">
+            <div class="atm-screen">
+                <h1 class="atm-title">TellME7</h1>
+                <h2> class="atm-subtitle">Выберите операцию</h2>
+
+                <!-- Кнопки меню -->
+                 <div class="menu-buttons">
+                    <button class="atm-button" onclick="initCassettes()">
+                        Инициализация кассет
+                    </button>
+                    <!-- Кнопка "Выход" -->
+                    <button class="atm-button button-small" onclick="exitApp()">
+                        Выход
+                    </button>
+                
+                    <button class="atm-button" onclick="recyclCollection()" style="top: 31%; left: 51%;">
+                        Инкассация ресайклера
+                    </button>
+            
+                    <button class="atm-button" onclick="goToSupervisor()" style="top: 86%; left: 51%; height: 14%;">
+                        Меню оператора
+                    </button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
