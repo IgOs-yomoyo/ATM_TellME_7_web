@@ -4,103 +4,136 @@
     <meta charset='UTF-8'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TellME7 ATM Simulator</title>
-    <link rel="stylesheet" href="style.css">  
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #1a1a2e;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .atm-container {
+            width: 90vw;
+            height: 85vh;
+            max-width: 1200px;
+            background: #2c3e50;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .atm-screen {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: white;
+        }
+
+        .atm-button {
+            position: absolute;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            background-color: #4CAF50;
+            color: white;
+            width: 220px;
+            text-align: center;
+        }
+
+        .atm-button:hover {
+            transform: scale(1.02);
+            filter: brightness(1.05);
+        }
+
+        .atm-button.exit {
+            background-color: #f44336;
+        }
+
+        .top-left { top: 80px; left: 80px; }
+        .top-right { top: 80px; right: 80px; }
+        .bottom-left { bottom: 80px; left: 80px; }
+        .bottom-right { bottom: 80px; right: 80px; }
+
+        /* Стили для экрана меню оператора */
+        .supervisor-shutdown { top: 80px; left: 80px; background-color: #f44336; }
+        .supervisor-service { top: 80px; right: 80px; background-color: #FF9800; }
+        .supervisor-openclose { top: 50%; left: 80px; transform: translateY(-50%); background-color: #4CAF50; }
+        .supervisor-devices { top: 50%; right: 80px; transform: translateY(-50%); background-color: #2196F3; }
+    </style>
 </head>
 <body>
-    <div class="mainScreen">
-        <div id="mainScreen" class="screen-active">
-            <div class="atm-screen">
-                <!-- Кнопка Инициализация кассет слева сверху -->
-                <button class="atm-button top-left" onclick="initCassettes()">
-                    Инициализация кассет
-                </button>
-                <!-- Кнопка Инкассация ресайклера     -->
-                <button class="atm-button top-right" onclick="recyclCollection">
-                    Инкассация ресайклера
-                </button>
-                <!-- Кнопка Меню оператора -->
-                <button class="atm-button bottom-right" onclick="goToSupervisor()">
-                    Меню оператора
-                </button>
-                <!-- Кнопка "Выход" -->
-                <button class="atm-button bottom-left exit" onclick="exitApp()">
-                    Выход
-                </button>     
-            </div>
+    <div class="atm-container">
+        <!-- Главный экран -->
+        <div id="mainScreen" class="atm-screen">
+            <button class="atm-button top-left" onclick="initCassettes()">Инициализация кассет</button>
+            <button class="atm-button top-right" onclick="recyclCollection()">Инкассация ресайклера</button>
+            <button class="atm-button bottom-right" onclick="showSupervisorMenu()">Меню оператора</button>
+            <button class="atm-button bottom-left exit" onclick="exitApp()">Выход</button>
+        </div>
+
+        <!-- Экран меню оператора (скрыт) -->
+        <div id="supervisorScreen" class="atm-screen" style="display: none;">
+            <button class="atm-button supervisor-shutdown" onclick="shutdownATM()">Выключить<br>банкомат</button>
+            <button class="atm-button supervisor-service" onclick="showMainMenu()">В режим обслуживания<br>клиентов</button>
+            <button class="atm-button supervisor-openclose" onclick="openCloseDay()">Открытие/закрытие<br>операционного дня</button>
+            <button class="atm-button supervisor-devices" onclick="deviceStatus()">Состояние устройств</button>
         </div>
     </div>
 
-    <!-- Экран Меню оператора -->
-    <div id="supervisorscreen" class="screen" style="display: none;">
-        <div class="atm-screen">
-
-            <!-- Левая верхняя кнопка Выключить банкомат -->
-            <button class="atm-button top-left" onclick="shutdownATM()">
-                Выключить<br>банкомат
-            </button>
-
-            <!-- Правая верхняя кнопка В режим обслуживания клиентов -->
-             <button class="atm-button normal-mode" onclick="gotoNormalMode()">
-                В режим обслуживания клиентов
-            </button>
-
-            <!-- Левая средняя кнопка Открытие/закрытие операционного дня -->
-             <button class="atm-button OpenCloseDay" onclick="openCloseDay()">
-                Открытие/закрытие<br>операционного дня
-             </button>
-
-            <!-- Правая средняя кнопка Состояние устройств -->
-             <button class="atm-button device-status" onclick="DeviceStatus()">
-                Состояние устройств
-             </button>
-        </div>
-    </div>
-    
     <script>
-        // Переключение между экранами
+        // Функции переключения экранов
         function showMainMenu() {
             document.getElementById('mainScreen').style.display = 'block';
-            document.getElementById('supervisorscreen').style.display = 'none';
+            document.getElementById('supervisorScreen').style.display = 'none';
         }
 
         function showSupervisorMenu() {
             document.getElementById('mainScreen').style.display = 'none';
-            document.getElementById('supervisorscreen').style.display = 'block'
-        }
-       
-        // Функции главного меню
-        function exitApp() {
-            let answer = confirm("Вы уверены, что хотите выйти?");
-            if (answer = true) {
-                alert("До свидания!");
-            }
+            document.getElementById('supervisorScreen').style.display = 'block';
         }
 
+        // Функции главного меню
         function initCassettes() {
-            alert("Инициализация кассет");
+            alert("Инициализация кассет выполнена!");
         }
 
         function recyclCollection() {
-            alert("Инкассация ресайклера")
+            alert("Инкассация ресайклера выполнена!");
         }
 
-        function goToSupervisor() {
-            alert("Переход в меню оператора");
+        function exitApp() {
+            if (confirm("Вы уверены, что хотите выйти?")) {
+                document.body.innerHTML = '<div style="text-align:center; margin-top:50px;"><h1>🔌 Банкомат выключен</h1><button onclick="location.reload()">Включить</button></div>';
+            }
         }
 
         // Функции меню оператора
         function shutdownATM() {
-            let answer = confirm('Вы уверены, что хотите выключить банкомат?');
-            if (answer == true) {alert('Банкомат выключается...')
-
+            if (confirm("Выключить банкомат?")) {
+                alert("Банкомат выключается...");
             }
         }
 
-        // Функция "Состояние устройств"
-        function device-status() {
-            alert('Переход на экран "Состояние устройств"')
+        function deviceStatus() {
+            alert("Состояние устройств:\n- Кассеты: OK\n- Принтер: OK\n- Дисплей: OK");
         }
-    </script>    
+
+        function openCloseDay() {
+            alert("Открытие/закрытие операционного дня");
+        }
+    </script>
 </body>
 </html>
-
