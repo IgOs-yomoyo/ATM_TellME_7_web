@@ -12,9 +12,14 @@ function deviceStatus() {
 }
 
 function openCloseDay() {
-    alert("Открытие/закрытие операционного дня");
+    // alert("Открытие/закрытие операционного дня");
+    showopenclosedaymenu();
 }
 
 function gotoNormalMode() {
     showMainMenu();
+}
+
+function NottoService(){
+    alert('Переход в режим "Банкомат не обслуживает"')
 }

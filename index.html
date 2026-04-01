@@ -4,136 +4,60 @@
     <meta charset='UTF-8'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TellME7 ATM Simulator</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background: #1a1a2e;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .atm-container {
-            width: 90vw;
-            height: 85vh;
-            max-width: 1200px;
-            background: #2c3e50;
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .atm-screen {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            background: white;
-        }
-
-        .atm-button {
-            position: absolute;
-            font-size: 18px;
-            font-weight: bold;
-            padding: 15px 25px;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: 0.2s;
-            background-color: #4CAF50;
-            color: white;
-            width: 220px;
-            text-align: center;
-        }
-
-        .atm-button:hover {
-            transform: scale(1.02);
-            filter: brightness(1.05);
-        }
-
-        .atm-button.exit {
-            background-color: #f44336;
-        }
-
-        .top-left { top: 80px; left: 80px; }
-        .top-right { top: 80px; right: 80px; }
-        .bottom-left { bottom: 80px; left: 80px; }
-        .bottom-right { bottom: 80px; right: 80px; }
-
-        /* Стили для экрана меню оператора */
-        .supervisor-shutdown { top: 80px; left: 80px; background-color: #f44336; }
-        .supervisor-service { top: 80px; right: 80px; background-color: #FF9800; }
-        .supervisor-openclose { top: 50%; left: 80px; transform: translateY(-50%); background-color: #4CAF50; }
-        .supervisor-devices { top: 50%; right: 80px; transform: translateY(-50%); background-color: #2196F3; }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="atm-container">
         <!-- Главный экран -->
         <div id="mainScreen" class="atm-screen">
-            <button class="atm-button top-left" onclick="initCassettes()">Инициализация кассет</button>
-            <button class="atm-button top-right" onclick="recyclCollection()">Инкассация ресайклера</button>
-            <button class="atm-button bottom-right" onclick="showSupervisorMenu()">Меню оператора</button>
-            <button class="atm-button bottom-left exit" onclick="exitApp()">Выход</button>
+            <button class="atm-button top-left" onclick="initCassettes()">ИНИЦИАЛИЗАЦИЯ КАССЕТ</button>
+            <button class="atm-button top-right" onclick="recyclCollection()">ИНКАССАЦИЯ РЕСАЙКЛЕРА</button>
+            <button class="atm-button bottom-right" onclick="showSupervisorMenu()">МЕНЮ ОПЕРАТОРА</button>
+            <button class="atm-button exit-button" onclick="exitApp()">Выход</button>
         </div>
 
         <!-- Экран меню оператора (скрыт) -->
         <div id="supervisorScreen" class="atm-screen" style="display: none;">
-            <button class="atm-button supervisor-shutdown" onclick="shutdownATM()">Выключить<br>банкомат</button>
-            <button class="atm-button supervisor-service" onclick="showMainMenu()">В режим обслуживания<br>клиентов</button>
-            <button class="atm-button supervisor-openclose" onclick="openCloseDay()">Открытие/закрытие<br>операционного дня</button>
-            <button class="atm-button supervisor-devices" onclick="deviceStatus()">Состояние устройств</button>
+            <button class="atm-button supervisor-nottoservice" onclick="NottoService()">В РЕЖИМ<br>БАНКОМАТ 
+                НЕ ОБСЛУЖИВАЕТ</button>
+            <button class="atm-button supervisor-shutdown" onclick="shutdownATM()">ВЫКЛЮЧИТЬ<br>БАНКОМАТ
+            </button>
+            <button class="atm-button supervisor-service" onclick="showMainMenu()">В РЕЖИМ ОБСЛУЖИВАНИЯ<br>КЛИЕНТОВ
+            </button>
+            <button class="atm-button supervisor-openclose" onclick="openCloseDay()">ОТКРЫТИЕ/ЗАКРЫТИЕ
+                <br>ОПЕРАЦИОННОГО ДНЯ</button>
+            <button class="atm-button supervisor-devices" onclick="deviceStatus()">СОСТОЯНИЕ
+                УСТРОЙСТВ
+            </button>
         </div>
+        <!-- Экран "ОТКРЫТИЕ\ЗАКРЫТИЕ ОПЕРАЦИОННОГО ДНЯ" -->
+        <div id="opencloseday" class="atm-screen" style="display: none;">
+            <button class="atm-button opencloseday-recycler" onclick="recyclerday()">РЕСАЙКЛЕР</button>
+            <button class="atm-button opencloseday-backtosupervisor" onclick="backtosupervisor()">ВОЗВРАТ</button>
+            <button class="atm-button opencloseday-backtonormal" onclick="backtonormal()">В РЕЖИМ ОБСЛУЖИВАНИЯ 
+                <br>КЛИЕНТОВ
+            </button>
+            <button class="atm-button opencloseday-extraoperation" onclick="extraoperation()">ДОПОЛНИТЕЛЬНЫЕ<br>
+                ОПЕРАЦИИ</button>
+        <!-- Экран "ОПЕРАЦИОННЫЙ ДЕНЬ РЕСАЙКЛЕРА" -->
+         <div id="recyclerday" class="atm-screen" style="display: none;">
+            <button class="atm-button recyclerday-openday" onclick="openrecyclerday()" >ОТКРЫТИЕ ОПЕРАЦИОННОГО
+                 ДНЯ</button>
+            <button class="atm-button recyclerday-closeday" onclick="closerecyclerday()">ЗАКРЫТИЕ ОПЕРАЦИОННОГО 
+                ДНЯ</button>
+            <button class="atm-button recyclerday-printbalance" onclick="printbalance()">ПЕЧАТЬ БАЛАНСА</button>
+            <button class="atm-button recyclerday-previous" onclick="рrevious()">ВОЗВРАТ</button>
+            <button class="atm-button recyclerday-backtonormal" onclick="backtonormal()">В РЕЖИМ ОБСЛУЖИВАНИЯ
+                КЛИЕНТОВ</button>
+            <button class="atm-button recyclerday-intermediateresult" onclick="intermediateresult()">ПРОМЕЖУТОЧНЫЕ
+                 РЕЗУЛЬТАТЫ</button>    
+         </div>
     </div>
 
-    <script>
-        // Функции переключения экранов
-        function showMainMenu() {
-            document.getElementById('mainScreen').style.display = 'block';
-            document.getElementById('supervisorScreen').style.display = 'none';
-        }
-
-        function showSupervisorMenu() {
-            document.getElementById('mainScreen').style.display = 'none';
-            document.getElementById('supervisorScreen').style.display = 'block';
-        }
-
-        // Функции главного меню
-        function initCassettes() {
-            alert("Инициализация кассет выполнена!");
-        }
-
-        function recyclCollection() {
-            alert("Инкассация ресайклера выполнена!");
-        }
-
-        function exitApp() {
-            if (confirm("Вы уверены, что хотите выйти?")) {
-                document.body.innerHTML = '<div style="text-align:center; margin-top:50px;"><h1>🔌 Банкомат выключен</h1><button onclick="location.reload()">Включить</button></div>';
-            }
-        }
-
-        // Функции меню оператора
-        function shutdownATM() {
-            if (confirm("Выключить банкомат?")) {
-                alert("Банкомат выключается...");
-            }
-        }
-
-        function deviceStatus() {
-            alert("Состояние устройств:\n- Кассеты: OK\n- Принтер: OK\n- Дисплей: OK");
-        }
-
-        function openCloseDay() {
-            alert("Открытие/закрытие операционного дня");
-        }
-    </script>
+    <script src="js/utils.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/supervisor.js"></script> 
+    <script src="js/openclosedaymenu.js"></script>
+    <script src="js/recyclerdaymenu.js"></script> 
 </body>
 </html>

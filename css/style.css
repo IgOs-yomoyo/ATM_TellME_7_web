@@ -38,17 +38,30 @@ body {
 /* Общие стили для кнопок */
 .atm-button {
     position: absolute;
-    font-size: 18px;
+    font-size: 24px;
     font-weight: bold;
-    padding: 15px 25px;
+    padding: 25px 35px;
     border: none;
-    border-radius: 12px;
+    border-radius: 16px;
     cursor: pointer;
     transition: 0.2s;
-    background-color: #4CAF50;
+    background-color: #1976D2;
     color: white;
-    width: 220px;
+    min-width: 280px;
+    /* width: 220px; */
     text-align: center;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+.top-left, .top-right, .bottom-left, .bottom-right,
+.supervisor-shutdown, .supervisor-service,
+.supervisor-openclose, .supervisor-devices, .supervisor-nottoservice, .opencloseday-recycler, 
+.opencloseday-backtosupervisor, .opencloseday-backtonormal, .opencloseday-extraoperation, .recyclerday-openday,
+.recyclerday-closeday, .recyclerday-printbalance, .recyclerday-previous,
+ .recyclerday-backtonormal, .recyclerday-intermediateresult
+ {
+    width: 450px;
+    height: 130px;
 }
 
 .atm-button:hover {
@@ -57,61 +70,138 @@ body {
 }
 
 /* Кнопка выхода */
-.atm-button.exit {
-    background-color: #f44336;
+.exit-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #07f068;
+    color: white;
+    padding: 12px, 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 1000;
+    font-weight: bold;
 }
 
 .atm-button.exit:hover {
-    background-color: #da190b;
+    background-color: #117a3d;
 }
 
 /* ========== ПОЗИЦИОНИРОВАНИЕ ДЛЯ ГЛАВНОГО МЕНЮ ========== */
 .top-left {
-    top: 80px;
-    left: 80px;
+    top: 200px;
+    left: 5px;
 }
 
 .top-right {
-    top: 80px;
-    right: 80px;
+    top: 200px;
+    right: 5px;
 }
 
-.bottom-left {
+/* .bottom-left {
     bottom: 80px;
     left: 80px;
-}
+} */
 
 .bottom-right {
-    bottom: 80px;
-    right: 80px;
+    bottom: 5px;
+    right: 5px;
 }
 
 /* ========== ПОЗИЦИОНИРОВАНИЕ ДЛЯ МЕНЮ ОПЕРАТОРА ========== */
 .supervisor-shutdown {
-    top: 80px;
-    left: 80px;
-    background-color: #f44336;
+    top: 680px;
+    left: 5px;
+    background-color: #1976D2;
 }
 
 .supervisor-service {
-    top: 80px;
-    right: 80px;
-    background-color: #FF9800;
+    top: 200px;
+    right: 5px;
+    background-color: #1976D2;
 }
 
 .supervisor-openclose {
-    top: 50%;
-    left: 80px;
-    transform: translateY(-50%);
-    background-color: #4CAF50;
+    top: 350px;
+    left: 5px;
+    /* transform: translateY(-50%); */
+    background-color: #1976D2;
 }
 
 .supervisor-devices {
-    top: 50%;
-    right: 80px;
-    transform: translateY(-50%);
-    background-color: #2196F3;
+    top: 350px;
+    right: 5px;
+    /* transform: translateY(-50%); */
+    background-color: #1976D2;
 }
+
+.supervisor-nottoservice {
+    top: 200px;
+    left: 5px;
+    background-color: #1976D2; 
+}
+
+/* ========== ПОЗИЦИОНИРОВАНИЕ ДЛЯ ЭКРАНА "ОТКРЫТИЕ\ЗАКРЫТИЕ ОПЕРАЦИОННОГО ДНЯ" ========== */
+
+.opencloseday-recycler{
+    top: 520px;
+    left: 5px;
+    background-color: #1976D2;
+}
+
+.opencloseday-backtosupervisor {
+    top: 250px;
+    right: 5px;
+    background-color: #1976D2;
+}
+
+.opencloseday-backtonormal {
+    top: 390px;
+    right: 5px;
+    background-color: #1976D2;
+}
+
+.opencloseday-extraoperation {
+    top: 680px;
+    right: 5px;
+    background-color: #1976D2;
+}
+
+/* ========== ПОЗИЦИОНИРОВАНИЕ ДЛЯ ЭКРАНА "ОПЕРАЦИОННЫЙ ДЕНЬ РЕСАЙКЛКЛЕРА" ========== */
+.recyclerday-openday {
+    top: 520px;
+    left: 5px;
+    background-color: #1976D2;
+}
+.recyclerday-closeday {
+    top: 250px;
+    right: 5px;
+    background-color: #1976D2;
+}
+.recyclerday-printbalance {
+    top: 390px;
+    right: 5px;
+    background-color: #1976D2;
+}
+.recyclerday-previous {
+    top: 680px;
+    right: 5px;
+    background-color: #1976D2;
+}
+.recyclerday-backtonormal {
+    top: 250px;
+    right: 5px;
+    background-color: #1976D2;
+}
+.recyclerday-intermediateresult {
+    top: 680px;
+    right: 5px;
+    background-color: #1976D2;
+}
+
+
 
 /* Адаптация для маленьких экранов */
 @media (max-width: 768px) {
@@ -135,3 +225,73 @@ body {
         transform: translateY(-50%);
     }
 }
+
+/* <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #1a1a2e;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .atm-container {
+            width: 90vw;
+            height: 85vh;
+            max-width: 1200px;
+            background: #2c3e50;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .atm-screen {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: white;
+        }
+
+        .atm-button {
+            position: absolute;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            background-color: #4CAF50;
+            color: white;
+            width: 220px;
+            text-align: center;
+        }
+
+        .atm-button:hover {
+            transform: scale(1.02);
+            filter: brightness(1.05);
+        }
+
+        .atm-button.exit {
+            background-color: #f44336;
+        }
+
+        .top-left { top: 80px; left: 80px; }
+        .top-right { top: 80px; right: 80px; }
+        .bottom-left { bottom: 80px; left: 80px; }
+        .bottom-right { bottom: 80px; right: 80px; }
+
+        Стили для экрана меню оператора */
+        /* .supervisor-shutdown { top: 80px; left: 80px; background-color: #f44336; } */
+        /* .supervisor-service { top: 80px; right: 80px; background-color: #FF9800; } */
+        /* .supervisor-openclose { top: 50%; left: 80px; transform: translateY(-50%); background-color: #4CAF50; } */
+        /* .supervisor-devices { top: 50%; right: 80px; transform: translateY(-50%); background-color: #2196F3; } */
+    /* </style> */

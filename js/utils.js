@@ -32,3 +32,20 @@ function exitApp() {
         `;
     }
 }
+
+function showopenclosedaymenu(){
+    const supervisorScreen = document.getElementById('supervisorScreen')
+    const opencloseday = document.getElementById('opencloseday')
+
+    if (supervisorScreen) supervisorScreen.style.display = 'none';
+    if (opencloseday) opencloseday.style.display = 'block'
+}
+
+// function showRecyclerDayMenu()
+function showRecyclerDayMenu() {
+    const opencloseday = document.getElementById('opencloseday')
+    const recyclerday = document.getElementById('recyclerday')
+
+    if (opencloseday) opencloseday.style.display = 'none';
+    if (recyclerday) recyclerday.style.display = 'block'
+}
