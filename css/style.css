@@ -59,7 +59,7 @@ body {
 .supervisor-openclose, .supervisor-devices, .supervisor-nottoservice, .opencloseday-recycler, 
 .opencloseday-backtosupervisor, .opencloseday-backtonormal, .opencloseday-extraoperation, .recyclerday-openday,
 .recyclerday-closeday, .recyclerday-printbalance, .recyclerday-previous,
- .recyclerday-backtonormal, .recyclerday-intermediateresult
+ .recyclerday-backtonormal, .recyclerday-intermediateresult, .closeday
  {
     width: 450px;
     height: 130px;
@@ -112,6 +112,10 @@ body {
     z-index: 10;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     border-bottom: 3px solid white;  /* белая рамка снизу */
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* ========== ПОЗИЦИОНИРОВАНИЕ ДЛЯ ГЛАВНОГО МЕНЮ ========== */
@@ -226,6 +230,12 @@ body {
     background-color: #1976D2;
 }
 
+/* ========== ПОЗИЦИОНИРОВАНИЕ ДЛЯ ЭКРАНА "ЗАКРЫТИЕ ОПЕРАЦИОННОГО ДНЯ" ========== */
+.closeday {
+    top: 680px;
+    right: 5px;
+    background-color: #1976D2;
+}
 
 
 /* Адаптация для маленьких экранов */
@@ -241,7 +251,7 @@ body {
 .supervisor-openclose, .supervisor-devices, .supervisor-nottoservice, .opencloseday-recycler, 
 .opencloseday-backtosupervisor, .opencloseday-backtonormal, .opencloseday-extraoperation, .recyclerday-openday,
 .recyclerday-closeday, .recyclerday-printbalance, .recyclerday-previous,
- .recyclerday-backtonormal, .recyclerday-intermediateresult {
+ .recyclerday-backtonormal, .recyclerday-intermediateresult, .closeday {
         left: 20px;
         right: 20px;
         top: 20px;

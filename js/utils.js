@@ -41,11 +41,19 @@ function showopenclosedaymenu(){
     if (opencloseday) opencloseday.style.display = 'block';
 }
 
-// function showRecyclerDayMenu()
 function showRecyclerDayMenu() {
     const opencloseday = document.getElementById('opencloseday')
     const recyclerday = document.getElementById('recyclerday')
 
     if (opencloseday) opencloseday.style.display = 'none';
     if (recyclerday) recyclerday.style.display = 'block';
+}
+
+// Функция для экрана "Закрытие опер дня"
+function showDayCloseScreen() {
+    const recyclerday = document.getElementById('recyclerday')
+    const closerecyclerday = document.getElementById('closerecyclerday')
+
+    if (recyclerday) recyclerday.style.display = 'none';
+    if (closerecyclerday) closerecyclerday.style.display = 'block';
 }
