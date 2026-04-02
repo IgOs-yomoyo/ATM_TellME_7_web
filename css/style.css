@@ -53,6 +53,7 @@ body {
     white-space: nowrap;
     box-sizing: border-box;
 }
+
 .top-left, .top-right, .bottom-left, .bottom-right,
 .supervisor-shutdown, .supervisor-service,
 .supervisor-openclose, .supervisor-devices, .supervisor-nottoservice, .opencloseday-recycler, 
@@ -87,6 +88,30 @@ body {
 
 .atm-button.exit:hover {
     background-color: #117a3d;
+}
+
+/* Стиль для заголовков экранов */
+.screen-title {
+    position: absolute;
+    /* top: 10px; */
+    /* left: 50%; */
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+    /* transform: translate(-50%); */
+    background-color: #1976D2;
+    color: white;
+    text-align: center;
+    font-size: 48px;
+    font-weight: bold;
+    padding: 15px 20px;
+    border-radius: 20px;
+    font-family: Arial, sans-serif;
+    letter-spacing: 1px;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-bottom: 3px solid white;  /* белая рамка снизу */
 }
 
 /* ========== ПОЗИЦИОНИРОВАНИЕ ДЛЯ ГЛАВНОГО МЕНЮ ========== */
@@ -145,7 +170,7 @@ body {
 
 /* ========== ПОЗИЦИОНИРОВАНИЕ ДЛЯ ЭКРАНА "ОТКРЫТИЕ\ЗАКРЫТИЕ ОПЕРАЦИОННОГО ДНЯ" ========== */
 
-.opencloseday-recycler{
+.opencloseday-recycler {
     top: 520px;
     left: 5px;
     background-color: #1976D2;
@@ -171,27 +196,27 @@ body {
 
 /* ========== ПОЗИЦИОНИРОВАНИЕ ДЛЯ ЭКРАНА "ОПЕРАЦИОННЫЙ ДЕНЬ РЕСАЙКЛКЛЕРА" ========== */
 .recyclerday-openday {
-    top: 520px;
+    top: 540px;
     left: 5px;
     background-color: #1976D2;
 }
 .recyclerday-closeday {
-    top: 250px;
-    right: 5px;
+    top: 680px;
+    left: 5px;
     background-color: #1976D2;
 }
 .recyclerday-printbalance {
-    top: 390px;
-    right: 5px;
+    top: 250px;
+    left: 5px;
     background-color: #1976D2;
 }
 .recyclerday-previous {
-    top: 680px;
+    top: 250px;
     right: 5px;
     background-color: #1976D2;
 }
 .recyclerday-backtonormal {
-    top: 250px;
+    top: 390px;
     right: 5px;
     background-color: #1976D2;
 }
@@ -212,8 +237,11 @@ body {
     }
     
     .top-left, .top-right, .bottom-left, .bottom-right,
-    .supervisor-shutdown, .supervisor-service,
-    .supervisor-openclose, .supervisor-devices {
+.supervisor-shutdown, .supervisor-service,
+.supervisor-openclose, .supervisor-devices, .supervisor-nottoservice, .opencloseday-recycler, 
+.opencloseday-backtosupervisor, .opencloseday-backtonormal, .opencloseday-extraoperation, .recyclerday-openday,
+.recyclerday-closeday, .recyclerday-printbalance, .recyclerday-previous,
+ .recyclerday-backtonormal, .recyclerday-intermediateresult {
         left: 20px;
         right: 20px;
         top: 20px;

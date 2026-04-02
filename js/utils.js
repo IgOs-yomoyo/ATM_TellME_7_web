@@ -38,7 +38,7 @@ function showopenclosedaymenu(){
     const opencloseday = document.getElementById('opencloseday')
 
     if (supervisorScreen) supervisorScreen.style.display = 'none';
-    if (opencloseday) opencloseday.style.display = 'block'
+    if (opencloseday) opencloseday.style.display = 'block';
 }
 
 // function showRecyclerDayMenu()
@@ -47,5 +47,5 @@ function showRecyclerDayMenu() {
     const recyclerday = document.getElementById('recyclerday')
 
     if (opencloseday) opencloseday.style.display = 'none';
-    if (recyclerday) recyclerday.style.display = 'block'
+    if (recyclerday) recyclerday.style.display = 'block';
 }

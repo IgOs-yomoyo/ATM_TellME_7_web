@@ -16,8 +16,10 @@
             <button class="atm-button exit-button" onclick="exitApp()">Выход</button>
         </div>
 
-        <!-- Экран меню оператора (скрыт) -->
+        <!-- Экран меню оператора -->
         <div id="supervisorScreen" class="atm-screen" style="display: none;">
+            <!-- Заголовок экрана -->
+            <div class="screen-title">ОСНОВНОЙ ЭКРАН ОПЕРАТОРА</div>
             <button class="atm-button supervisor-nottoservice" onclick="NottoService()">В РЕЖИМ<br>БАНКОМАТ 
                 НЕ ОБСЛУЖИВАЕТ</button>
             <button class="atm-button supervisor-shutdown" onclick="shutdownATM()">ВЫКЛЮЧИТЬ<br>БАНКОМАТ
@@ -32,6 +34,7 @@
         </div>
         <!-- Экран "ОТКРЫТИЕ\ЗАКРЫТИЕ ОПЕРАЦИОННОГО ДНЯ" -->
         <div id="opencloseday" class="atm-screen" style="display: none;">
+            <div class="screen-title">ОТКРЫТИЕ\ЗАКРЫТИЕ ОПЕРАЦИОННОГО ДНЯ</div>
             <button class="atm-button opencloseday-recycler" onclick="recyclerday()">РЕСАЙКЛЕР</button>
             <button class="atm-button opencloseday-backtosupervisor" onclick="backtosupervisor()">ВОЗВРАТ</button>
             <button class="atm-button opencloseday-backtonormal" onclick="backtonormal()">В РЕЖИМ ОБСЛУЖИВАНИЯ 
@@ -39,15 +42,17 @@
             </button>
             <button class="atm-button opencloseday-extraoperation" onclick="extraoperation()">ДОПОЛНИТЕЛЬНЫЕ<br>
                 ОПЕРАЦИИ</button>
+        </div>
         <!-- Экран "ОПЕРАЦИОННЫЙ ДЕНЬ РЕСАЙКЛЕРА" -->
          <div id="recyclerday" class="atm-screen" style="display: none;">
-            <button class="atm-button recyclerday-openday" onclick="openrecyclerday()" >ОТКРЫТИЕ ОПЕРАЦИОННОГО
+            <div class="screen-title">ОПЕРАЦИОННЫЙ ДЕНЬ РЕСАЙКЛЕРА</div>
+            <button class="atm-button recyclerday-openday" onclick="openrecyclerday()">ОТКРЫТИЕ ОПЕРАЦИОННОГО<br>
                  ДНЯ</button>
-            <button class="atm-button recyclerday-closeday" onclick="closerecyclerday()">ЗАКРЫТИЕ ОПЕРАЦИОННОГО 
+            <button class="atm-button recyclerday-closeday" onclick="closerecyclerday()">ЗАКРЫТИЕ ОПЕРАЦИОННОГО<br>
                 ДНЯ</button>
             <button class="atm-button recyclerday-printbalance" onclick="printbalance()">ПЕЧАТЬ БАЛАНСА</button>
             <button class="atm-button recyclerday-previous" onclick="рrevious()">ВОЗВРАТ</button>
-            <button class="atm-button recyclerday-backtonormal" onclick="backtonormal()">В РЕЖИМ ОБСЛУЖИВАНИЯ
+            <button class="atm-button recyclerday-backtonormal" onclick="backtonormal()">В РЕЖИМ ОБСЛУЖИВАНИЯ<br>
                 КЛИЕНТОВ</button>
             <button class="atm-button recyclerday-intermediateresult" onclick="intermediateresult()">ПРОМЕЖУТОЧНЫЕ
                  РЕЗУЛЬТАТЫ</button>    
