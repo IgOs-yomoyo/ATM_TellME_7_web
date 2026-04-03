@@ -77,3 +77,21 @@ function cancelreplenishcassette(){
     if (replenishcassette_1) replenishcassette_1.style.display = 'none';
     if (recyclerday) recyclerday.style.display = 'block';
 }
+
+// Функция подтверждения загрузки кассеты 1 и переход на экран загрузки кассеты 2
+function EnterReplenishCassette_1() {
+    const replenishcassette_1 = document.getElementById('replenishcassette_1')
+    const replenishcassette_2 = document.getElementById('replenishcassette_2')
+
+    if (replenishcassette_1) replenishcassette_1.style.display = 'none';
+    if (replenishcassette_2) replenishcassette_2.style.display = 'block';
+}
+
+// Функция подтверждения загрузки кассеты 2 и переход на экран загрузки кассеты 3
+function EnterReplenishCassette_2() {
+    const replenishcassette_2 = document.getElementById('replenishcassette_2')
+    const replenishcassette_3 = document.getElementById('replenishcassette_3')
+
+    if (replenishcassette_2) replenishcassette_2.style.display = 'none';
+    if (replenishcassette_3) replenishcassette_3.style.display = 'block';
+}
