@@ -5,3 +5,7 @@ function рrevious() {
 function closerecyclerday() {
     showDayCloseScreen();
 }
+
+function openrecyclerday() {
+   replenishfirstcassette(); 
+}

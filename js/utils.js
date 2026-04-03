@@ -57,3 +57,23 @@ function showDayCloseScreen() {
     if (recyclerday) recyclerday.style.display = 'none';
     if (closerecyclerday) closerecyclerday.style.display = 'block';
 }
+
+// Функция перехода из экрана "Операционный день ресайклера" на экран "Введите загрузку кассеты ..."
+// через кнопку "Открыть операционный день"
+function replenishfirstcassette() {
+    const recyclerday = document.getElementById('recyclerday')
+    const replenishcassette_1 = document.getElementById('replenishcassette_1')
+
+    if (recyclerday) recyclerday.style.display = 'none';
+    if (replenishcassette_1) replenishcassette_1.style.display = 'block';
+}
+
+// Фнкция для возврата из экрана "Введите загрузку кассеты ..." на экран "Операционный день ресайклера" 
+// через кнопку "Отмена"
+function cancelreplenishcassette(){
+    const replenishcassette_1 = document.getElementById('replenishcassette_1')
+    const recyclerday = document.getElementById('recyclerday')
+
+    if (replenishcassette_1) replenishcassette_1.style.display = 'none';
+    if (recyclerday) recyclerday.style.display = 'block';
+}
