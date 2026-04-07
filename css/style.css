@@ -243,11 +243,13 @@ body {
     position: absolute;
     top: 180px;
     left: 0px;
-    width: 650px;
+    width: 650px;   /* Было 650 */
+    display: flex;
+    justify-content: left;
     /* width: 100%; */
-    height: calc(100% - 100px);
+    height: calc(100% - 100px); 
     /* height: ; */
-    margin-top: 0px;
+    margin-top: 0px; 
     /* overflow-y: auto; */
 }
 
@@ -304,8 +306,27 @@ body {
     justify-content: center;
 }
 
+/* Контейнер load-input */
 .load-input {
     flex: 1;
+    /* background-color: white;
+    color: #333;
+    padding: 30px 40px;
+    border-radius: 2px;
+    font-size: 24px;
+    font-weight: bold;
+    border: 2px solid #1976D2;
+    text-align: center; */
+    margin-left: 20px;
+    /* outline: none; */
+    height: 100%;
+    /* width: 250px; */
+}
+
+/* Поле ввода внутри load-input */
+.load-input .info-input {
+    width: 100%;
+    height: 100%;
     background-color: white;
     color: #333;
     padding: 30px 40px;
@@ -314,12 +335,9 @@ body {
     font-weight: bold;
     border: 2px solid #1976D2;
     text-align: center;
-    margin-left: 20px;
     outline: none;
-    height: 100%;
-    /* width: 250px; */
+    box-sizing: border-box;
 }
-
 .load-input:focus {
     border-color: #FF9800;
     box-shadow: 0 0 5px rgba(255, 152, 0, 0.5);

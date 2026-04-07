@@ -62,7 +62,7 @@
             <div class="screen-title">ЗАКРЫТИЕ ОПЕРАЦИОННОГО ДНЯ</div>
             <button class="atm-button closeday" onclick="Continue()">ПРОДОЛЖИТЬ</button>
          </div>
-         <!-- Экран "ЗАГРУЗКА КАССЕТЫ 1" -->
+        <!-- Экран "ЗАГРУЗКА КАССЕТЫ 1" -->
         <div id="replenishcassette_1" class="atm-screen" style="display: none;">
             <div class="screen-title">ВВЕДИТЕ ЗАГРУЗКУ КАССЕТЫ 1</div>
             <!-- Контейнер с полями -->
@@ -73,11 +73,6 @@
                         <div class="info-label">Кассета №</div>
                         <div class="info-value cassette-number">001</div>
                     </div>
-                    <!-- Поле "Номинал"  -->
-                    <div class="info-row">
-                        <div class="info-label">Номинал</div>
-                        <div class="info-value nominal-value">100</div>
-                    </div>
                     <!-- Строка "Загрузка" -->
                     <div class="info-row">
                         <div class="info-label">Загрузка</div>
@@ -85,22 +80,84 @@
                             <input type="text"
                                 id="LoadInput_1"
                                 class="info-input"
+                                maxlength="4"
                                 inputmode="numeric"
-                                maxlength="4">
+                                pattern="\d*"
+                                autocomplete="off"
+                                autocorrect="off"
+                                autocapitalize="off"
+                                spellcheck="false">
                             </div>
-                        </div>
                     </div>
-                </div>    
+                    <!-- Поле "Статус кассеты" -->
+                     <div class="info-row">
+                        <div class="info-label">Статус кассеты</div>
+                        <div class="info-value status-value">ПРЕДУПРЕЖДЕНИЕ</div>
+                     </div>
+                    <!-- Поле "Номинал"  -->
+                    <div class="info-row">
+                        <div class="info-label">Номинал</div>
+                        <div class="info-value nominal-value">100</div>
+                    </div>
+                    <!-- Поле "ВАЛЮТА" -->
+                    <div class="info-row">
+                        <div class="info-label">ВАЛЮТА</div>
+                        <div class="info-value currency-value">РУБЛИ (RUB)</div>
+                    </div>
+                </div>
+            </div>    
 
                 <!-- Кнопки -->
                 <button class="atm-button cancel-btn" onclick="Cancel(1)">ОТМЕНА</button>
                 <button class="atm-button reset-btn" onclick="Reset(1)">ОБНУЛИТЬ</button>
                 <button class="atm-button enter-btn" onclick="Enter(1)">ВВОД</button>
-            </div>
         </div>
         <!-- Экран "ЗАГРУЗКА КАССЕТЫ 2" -->
         <div id="replenishcassette_2" class="atm-screen" style="display: none;">
             <div class="screen-title">ВВЕДИТЕ ЗАГРУЗКУ КАССЕТЫ 2</div>
+            <!-- Контейнер с полями -->
+            <div class="screen-content">
+                <div class="load-cassette-container">
+                    <!-- Поле "Кассета №" -->
+                    <div class="info-row">
+                        <div class="info-label">Кассета №</div>
+                        <div class="info-value cassette-number">002</div>
+                    </div>
+                    <!-- Строка "Загрузка" -->
+                    <div class="info-row">
+                        <div class="info-label">Загрузка</div>
+                        <div class="load-input">
+                            <input type="text"
+                                id="LoadInput_2"
+                                class="info-input"
+                                maxlength="4"
+                                inputmode="numeric"
+                                pattern="\d*"
+                                autocomplete="off"
+                                autocorrect="off"
+                                autocapitalize="off"
+                                spellcheck="false">
+                            </div>
+                    </div>
+                    <!-- Поле "Статус кассеты" -->
+                    <div class="info-row">
+                        <div class="info-label">Статус кассеты</div>
+                        <div class="info-value status-value">ПРЕДУПРЕЖДЕНИЕ</div>
+                    </div>
+                    <!-- Поле "Номинал"  -->
+                    <div class="info-row">
+                        <div class="info-label">Номинал</div>
+                        <div class="info-value nominal-value">500</div>
+                    </div>
+                    <!-- Поле "ВАЛЮТА" -->
+                    <div class="info-row">
+                        <div class="info-label">ВАЛЮТА</div>
+                        <div class="info-value currency-value">РУБЛИ (RUB)</div>
+                    </div>
+                </div>
+            </div>    
+
+            <!-- Кнопки -->
             <button class="atm-button cancel-btn" onclick="Cancel(2)">ОТМЕНА</button>
             <button class="atm-button reset-btn" onclick="Reset(2)">ОБНУЛИТЬ</button>
             <button class="atm-button enter-btn" onclick="Enter(2)">ВВОД</button>
@@ -108,6 +165,47 @@
         <!-- Экран "ЗАГРУЗКА КАССЕТЫ 3" -->
         <div id="replenishcassette_3" class="atm-screen" style="display: none;">
             <div class="screen-title">ВВЕДИТЕ ЗАГРУЗКУ КАССЕТЫ 3</div>
+            <!-- Контейнер с полями -->
+            <div class="screen-content">
+                <div class="load-cassette-container">
+                    <!-- Поле "Кассета №" -->
+                    <div class="info-row">
+                        <div class="info-label">Кассета №</div>
+                        <div class="info-value cassette-number">003</div>
+                    </div>
+                    <!-- Строка "Загрузка" -->
+                    <div class="info-row">
+                        <div class="info-label">Загрузка</div>
+                        <div class="load-input">
+                            <input type="text"
+                                id="LoadInput_3"
+                                class="info-input"
+                                maxlength="4"
+                                inputmode="numeric"
+                                pattern="\d*"
+                                autocomplete="off"
+                                autocorrect="off"
+                                autocapitalize="off"
+                                spellcheck="false">
+                            </div>
+                    </div>
+                    <!-- Поле "Статус кассеты" -->
+                    <div class="info-row">
+                        <div class="info-label">Статус кассеты</div>
+                        <div class="info-value status-value">ПРЕДУПРЕЖДЕНИЕ</div>
+                    </div>
+                    <!-- Поле "Номинал"  -->
+                    <div class="info-row">
+                        <div class="info-label">Номинал</div>
+                        <div class="info-value nominal-value">1000</div>
+                    </div>
+                    <!-- Поле "ВАЛЮТА" -->
+                    <div class="info-row">
+                        <div class="info-label">ВАЛЮТА</div>
+                        <div class="info-value currency-value">РУБЛИ (RUB)</div>
+                    </div>
+                </div>
+            </div>    
             <button class="atm-button cancel-btn" onclick="Cancel(3)">ОТМЕНА</button>
             <button class="atm-button reset-btn" onclick="Reset(3)">ОБНУЛИТЬ</button>
             <button class="atm-button enter-btn" onclick="Enter(3)">ВВОД</button>
@@ -115,6 +213,47 @@
         <!-- Экран "ЗАГРУЗКА КАССЕТЫ 4" -->
         <div id="replenishcassette_4" class="atm-screen" style="display: none;">
             <div class="screen-title">ВВЕДИТЕ ЗАГРУЗКУ КАССЕТЫ 4</div>
+            <!-- Контейнер с полями -->
+            <div class="screen-content">
+                <div class="load-cassette-container">
+                    <!-- Поле "Кассета №" -->
+                    <div class="info-row">
+                        <div class="info-label">Кассета №</div>
+                        <div class="info-value cassette-number">004</div>
+                    </div>
+                    <!-- Строка "Загрузка" -->
+                    <div class="info-row">
+                        <div class="info-label">Загрузка</div>
+                        <div class="load-input">
+                            <input type="text"
+                                id="LoadInput_4"
+                                class="info-input"
+                                maxlength="4"
+                                inputmode="numeric"
+                                pattern="\d*"
+                                autocomplete="off"
+                                autocorrect="off"
+                                autocapitalize="off"
+                                spellcheck="false">
+                            </div>
+                    </div>
+                    <!-- Поле "Статус кассеты" -->
+                    <div class="info-row">
+                        <div class="info-label">Статус кассеты</div>
+                        <div class="info-value status-value">ПРЕДУПРЕЖДЕНИЕ</div>
+                    </div>
+                    <!-- Поле "Номинал"  -->
+                    <div class="info-row">
+                        <div class="info-label">Номинал</div>
+                        <div class="info-value nominal-value">5000</div>
+                    </div>
+                    <!-- Поле "ВАЛЮТА" -->
+                    <div class="info-row">
+                        <div class="info-label">ВАЛЮТА</div>
+                        <div class="info-value currency-value">РУБЛИ (RUB)</div>
+                    </div>
+                </div>
+            </div>    
             <button class="atm-button cancel-btn" onclick="Cancel(4)">ОТМЕНА</button>
             <button class="atm-button reset-btn" onclick="Reset(4)">ОБНУЛИТЬ</button>
             <button class="atm-button enter-btn" onclick="Enter(4)">ВВОД</button>
