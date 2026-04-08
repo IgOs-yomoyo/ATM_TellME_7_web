@@ -155,7 +155,7 @@
 
     // Завершение открытия операционного дня
     function completeOpeningDay() {
-        // Подсчёт итогов
+        // Подсчёт итогов (можно убрать)
         let totalBanknotes = 0;
         let totalAmount = 0;
         
@@ -168,11 +168,13 @@
         
         console.log(`Всего банкнот: ${totalBanknotes} шт.`);
         console.log(`Общая сумма: ${totalAmount.toLocaleString()} ₽`);
+
+        showReceiptScreen();
         
-        // Показываем меню ресайклера
-        const recyclerday = document.getElementById('recyclerday');
-        if (recyclerday) recyclerday.style.display = 'block';
-        alert(`Операционный день успешно открыт!\nЗагружено банкнот: ${totalBanknotes} шт.\nНа сумму: ${totalAmount.toLocaleString()} ₽`);
+        // // Показываем меню ресайклера
+        // const recyclerday = document.getElementById('recyclerday');
+        // if (recyclerday) recyclerday.style.display = 'block';
+        // alert(`Операционный день успешно открыт!\nЗагружено банкнот: ${totalBanknotes} шт.\nНа сумму: ${totalAmount.toLocaleString()} ₽`);
     }
 
     // При показе экрана кассеты 1 - инициализируем поле ввода
@@ -181,5 +183,120 @@
         if (screen) {
             screen.style.display = 'block';
             initInputField(cassetteNumber);
+        }
+    }
+
+    // Функция для отображения чека открытия операционного дня
+    function showReceiptScreen() {
+        // Скрываем экран загрузки кассеты 4
+        const replenishScreen4 = document.getElementById('replenishcassette_4');
+        if (replenishScreen4) replenishScreen4.style.display = 'none';
+    
+        // Показываем экран чека
+        const receiptScreen = document.getElementById('receiptScreen');
+        if (receiptScreen) receiptScreen.style.display = 'block';
+    
+        // Формируем содержимое чека
+        generateReceiptContent();
+    }
+
+    // Функция для генерации содержимого чека
+    function generateReceiptContent() {
+        const receiptContent = document.getElementById('receiptContent');
+        if (!receiptContent) return;
+    
+        // Получаем текущую дату и время
+        const now = new Date();
+        const currentDate = now.toLocaleDateString('ru-RU');
+        const currentTime = now.toLocaleTimeString('ru-RU');
+    
+        // Формируем чек
+        let receiptHtml = '';
+        receiptHtml += '<div style="text-align: center; font-family: monospace;">';
+        receiptHtml += 'БАНК<br>';
+        receiptHtml += 'Волгоградский проспект 32 к45<br>';
+        receiptHtml += '--------------------------------<br>';
+        receiptHtml += `Дата: ${currentDate}<br>`;
+        receiptHtml += '--------------------------------<br>';
+        receiptHtml += `Время: ${currentTime}<br>`;
+        receiptHtml += '--------------------------------<br>';
+        receiptHtml += 'Номер банкомата: 10869631<br>';
+        receiptHtml += '--------------------------------<br>';
+        receiptHtml += '<strong>Открытие операционного дня ресайклера</strong><br>';
+        receiptHtml += '--------------------------------<br>';
+        receiptHtml += '</div>';
+        
+// Таблица
+    receiptHtml += '<table style="width: 100%; font-family: monospace; font-size: 12px; border-collapse: collapse; text-align: center;">';
+    receiptHtml += '<tr>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">№</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Ном</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Вал</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Заг</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Ост</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Выд</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Сбр</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">С</th>';
+    receiptHtml += '</tr>';
+
+    // Данные по кассетам
+    let totalLoaded = 0;
+    const cassettes = [
+        { number: 1000, nominal: 100, loaded: cassetteLoads[1] || 0 },
+        { number: 2000, nominal: 500, loaded: cassetteLoads[2] || 0 },
+        { number: 3000, nominal: 1000, loaded: cassetteLoads[3] || 0 },
+        { number: 4000, nominal: 5000, loaded: cassetteLoads[4] || 0 }
+    ];
+
+    for (let i = 0; i < cassettes.length; i++) {
+        const c = cassettes[i];
+
+        const loadedAmount = c.loaded * c.nominal;
+    
+        const maxDropped = Math.min(c.loaded, 2);
+        // const banknotesCount = c.loaded / c.nominal;
+        const dropped = c.loaded > 0 ? Math.floor(Math.random() * (maxDropped + 1)) : 0;
+
+        const remainingBanknotes = c.loaded - dropped;
+
+        const remainingAmount = remainingBanknotes * c.nominal;
+        
+        receiptHtml += '<tr>';
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.number}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.nominal}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">643</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${loadedAmount}</td>`;  // ← сумма загрузки
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${remainingAmount}</td>`; // ← остаток
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">-</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${dropped}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">0</td>`;
+        receiptHtml += '</tr>';
+        
+        totalLoaded += loadedAmount;
+    }
+
+    receiptHtml += '</table>';
+    receiptHtml += '<div style="text-align: center; font-family: monospace; margin-top: 10px;">';
+    receiptHtml += '--------------------------------<br>';
+    receiptHtml += `<strong>Всего загружено: ${totalLoaded} руб.</strong><br>`;
+    receiptHtml += '--------------------------------<br>';
+    receiptHtml += '</div>';
+
+    receiptContent.innerHTML = receiptHtml;
+}
+
+    // Функция подтверждения чека и возврат в меню
+    function confirmReceipt() {
+        // Скрываем экран чека
+        const receiptScreen = document.getElementById('receiptScreen');
+        if (receiptScreen) receiptScreen.style.display = 'none';
+    
+        // Показываем меню оператора (или главное меню)
+        const supervisorScreen = document.getElementById('supervisorScreen');
+        if (supervisorScreen) supervisorScreen.style.display = 'block';
+    
+        // Сбрасываем данные кассет для следующего раза
+        for (let i = 1; i <= 4; i++) {
+            cassetteLoads[i] = null;
         }
     }

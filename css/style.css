@@ -360,6 +360,41 @@ body {
     right: 5px;
 }
 
+/* ====================Стили для чека открытия опер дня======================= */
+/* Контейнер для чека */
+.receipt-container {
+    position: absolute;
+    top: 180px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 550px;
+    background: white;
+    border: 2px solid #1976D2;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+/* Содержание чека */
+.receipt-content {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: #000;
+    line-height: 1.4;
+    max-height: 500px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    text-align: left;
+}
+
+/* Кнопка подтверждения на экране чека */
+.receipt-confirm-btn {
+    top: 720px;
+    right: 50px;
+    width: 250px;
+    height: 70px;
+}
+
+
 /* Адаптация для маленьких экранов */
 @media (max-width: 768px) {
     .atm-button {

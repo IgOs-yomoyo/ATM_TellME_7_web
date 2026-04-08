@@ -258,7 +258,19 @@
             <button class="atm-button reset-btn" onclick="Reset(4)">ОБНУЛИТЬ</button>
             <button class="atm-button enter-btn" onclick="Enter(4)">ВВОД</button>
         </div>
+
+        <!-- Экран "Чек открытия операционного дня" -->
+        <div id="receiptScreen" class="atm-screen" style="display: none;">
+            <div class="screen-title">ЧЕК ОТКРЫТИЯ ОПЕРАЦИОННОГО ДНЯ</div>
+            <div class="receipt-container">
+                <div class="receipt-content" id="receiptContent">
+                <!-- Текст будет вставлен через javascript -->
+                </div>
+            </div>
+            <button class="atm-button receipt-confirm-btn" onclick="confirmReceipt()">ПРОДОЛЖИТЬ</button>
+        </div>
     </div>
+
 
     <script src="js/utils.js"></script>
     <script src="js/main.js"></script>
@@ -267,4 +279,5 @@
     <script src="js/recyclerdaymenu.js"></script> 
     <script src="js/closerecyclerday.js"></script>
     <script src="js/openrecyclerdaycreens.js"></script>
+</body>
 </html>
