@@ -388,10 +388,10 @@ body {
 
 /* Кнопка подтверждения на экране чека */
 .receipt-confirm-btn {
-    top: 720px;
-    right: 50px;
-    width: 250px;
-    height: 70px;
+    top: 670px;
+    right: 5px;   
+    width: 450px;
+    height: 130px;
 }
 
 

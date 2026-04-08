@@ -108,12 +108,18 @@
         let value = input ? input.value : '';
         
         // Проверка, что поле не пустое
-        if (!value || value === '') {
-            // alert('Пожалуйста, введите количество банкнот');
-            input.focus();
-            return;
-        }
+        // if (!value || value === '') {
+        //     // alert('Пожалуйста, введите количество банкнот');
+        //     input.focus();
+        //     return;
+        // }
         
+
+        // Если поле пустое, то это 0
+        if (!value || value === '') {
+            value = '0';
+        }
+
         let numValue = parseInt(value);
         
         // Проверка на число
@@ -292,11 +298,21 @@
         if (receiptScreen) receiptScreen.style.display = 'none';
     
         // Показываем меню оператора (или главное меню)
-        const supervisorScreen = document.getElementById('supervisorScreen');
-        if (supervisorScreen) supervisorScreen.style.display = 'block';
+        const recyclerday = document.getElementById('recyclerday');
+        if (recyclerday) recyclerday.style.display = 'block';
     
         // Сбрасываем данные кассет для следующего раза
-        for (let i = 1; i <= 4; i++) {
-            cassetteLoads[i] = null;
-        }
+        resetAllInputFields()
+        // for (let i = 1; i <= 4; i++) {
+        //     cassetteLoads[i] = null;
+        // }
+    }
+
+    function resetAllInputFields() {
+            for (let i = 1; i <= 4; i++) {
+                const input = document.getElementById(`LoadInput_${i}`);
+                if (input) {
+                    input.value = '';
+                }
+            }
     }
