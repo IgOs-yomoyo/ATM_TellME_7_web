@@ -51,19 +51,46 @@
         if (input) {
             // Очищаем поле
             input.value = '';
+ 
+         // Создаём функцию для blur
+            function handleBlur() {
+                validateLimit(input, cassetteNumber);
+            }
+
+            // Удаляем старые обработчики, чтобы не накапливать
+            input.removeEventListener('keydown', restrictInputToNumbers);
+            input.removeEventListener('blur', handleBlur);
             
             // Добавляем обработчик на ввод (только цифры)
             input.addEventListener('keydown', restrictInputToNumbers);
-            
-            // Добавляем обработчик на потерю фокуса (проверка лимита)
-            input.addEventListener('blur', function() {
-                validateLimit(this, cassetteNumber);
-            });
-            
-            // Фокус на поле
+            input.addEventListener('blur', handleBlur);
+
+            // Устанавливаем фокус на поле
             input.focus();
         }
     }
+            
+            // Добавляем обработчик на потерю фокуса (проверка лимита)
+    //         input.addEventListener('blur', function() {
+    //             validateLimit(this, cassetteNumber);
+    //         });
+            
+    //         // Фокус на поле
+    //         // input.focus();
+    //         if (screen) {
+    //             screen.style.display = 'block';
+    //             requestAnimationFrame(function() {
+    //                 initInputField(cassetteNumber);
+    //             })
+    //         }
+    //     }
+    // }
+
+    // if (screen) {
+    //         screen.style.display = 'block';
+    //         requestAnimationFrame(function() {
+    //             initInputField(cassetteNumber);
+    //         })
 
 
 
@@ -183,14 +210,47 @@
         // alert(`Операционный день успешно открыт!\nЗагружено банкнот: ${totalBanknotes} шт.\nНа сумму: ${totalAmount.toLocaleString()} ₽`);
     }
 
-    // При показе экрана кассеты 1 - инициализируем поле ввода
+    // При показе экрана кассеты - инициализируем поле ввода
     function showCassetteScreen(cassetteNumber) {
         const screen = document.getElementById(`replenishcassette_${cassetteNumber}`);
         if (screen) {
             screen.style.display = 'block';
-            initInputField(cassetteNumber);
+            console.log(`2. Экран отображён, display: ${screen.style.display}`);
+        
+            
+        
+            const delay = (cassetteNumber === 1) ? 5000 : 100;
+            console.log(`Задержка ${delay} мс для кассеты ${cassetteNumber}`);
+        
+            setTimeout(function() {
+                
+                const input = document.getElementById(`LoadInput_${cassetteNumber}`);
+                
+                if (input) {
+                    
+                    input.removeAttribute('readonly');
+                    input.tabIndex = 0;
+                    input.style.display = 'inline-block';
+                    input.style.visibility = 'visability';
+                    input.style.pointerEvents = 'auto';
+                    input.focus();
+                    // input.select();
+                    
+                    //Если фокус всё равно не на поле, принудительно устанавливаем через setTimeout
+                    if (document.activeElement !== input) {
+                        setTimeout(function() {
+                            input.focus();
+                            console.log('Повторная попытка фокуса');
+                        }, 50);
+                    }
+                
+                    console.log(`Фокус на кассете ${cassetteNumber}, activeElement:`, document.activeElement);
+                }
+            }, delay);
         }
     }
+
+    // input.dispatchEvent(new KeyboardEvent('keydown', {key: 'Tab', bubbles: true}));
 
     // Функция для отображения чека открытия операционного дня
     function showReceiptScreen() {
@@ -302,7 +362,7 @@
         if (recyclerday) recyclerday.style.display = 'block';
     
         // Сбрасываем данные кассет для следующего раза
-        resetAllInputFields()
+        resetAllInputFields();
         // for (let i = 1; i <= 4; i++) {
         //     cassetteLoads[i] = null;
         // }
