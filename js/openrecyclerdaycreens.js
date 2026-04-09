@@ -295,13 +295,14 @@
 // Таблица
     receiptHtml += '<table style="width: 100%; font-family: monospace; font-size: 12px; border-collapse: collapse; text-align: center;">';
     receiptHtml += '<tr>';
-    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">№</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Кас №</th>';
     receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Ном</th>';
     receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Вал</th>';
     receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Заг</th>';
-    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Ост</th>';
     receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Выд</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Прин</th>';
     receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Сбр</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Ост</th>';
     receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">С</th>';
     receiptHtml += '</tr>';
 
@@ -314,42 +315,85 @@
         { number: 4000, nominal: 5000, loaded: cassetteLoads[4] || 0 }
     ];
 
+    let totalDroppedAmount = 0; //Переменная для хранения суммы сброшенных банкнот
+
     for (let i = 0; i < cassettes.length; i++) {
         const c = cassettes[i];
 
         const loadedAmount = c.loaded * c.nominal;
     
-        const maxDropped = Math.min(c.loaded, 2);
+        // const maxDropped = Math.min(c.loaded, 2);
         // const banknotesCount = c.loaded / c.nominal;
-        const dropped = c.loaded > 0 ? Math.floor(Math.random() * (maxDropped + 1)) : 0;
+        // const dropped = c.loaded > 0 ? Math.floor(Math.random() * (maxDropped + 1)) : 0;
+        // Сброшенные банкноты, от 1 до 3
+        const dropped = (c.loaded === 0) ? 0 : Math.floor(Math.random() * 3) + 1;
+
+        // Сумма сброшенных банкнот
+        const droppedAmount = dropped * c.nominal;
+        totalDroppedAmount += droppedAmount; // Сумма сброшенных банкнот
+        // Статус кассеты. Логику добавим позже
+        const status = 0;
+        
 
         const remainingBanknotes = c.loaded - dropped;
 
         const remainingAmount = remainingBanknotes * c.nominal;
+        const issued = 0;  // При открытии опер дня выдано 0
+        const accepted = 0;   // При загрузке принято 0
         
-        receiptHtml += '<tr>';
+         receiptHtml += '<tr style="border: 1px solid #000;">';
         receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.number}</td>`;
         receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.nominal}</td>`;
-        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">643</td>`;
-        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${loadedAmount}</td>`;  // ← сумма загрузки
-        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${remainingAmount}</td>`; // ← остаток
-        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">-</td>`;
-        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${dropped}</td>`;
-        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">0</td>`;
-        receiptHtml += '</tr>';
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">643</td>`;      // Валюта
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${loadedAmount.toLocaleString()}</td>`;  // Загружено
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${accepted}</td>`;  // Принято
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${issued}</td>`;    // Выдано
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${dropped}</td>`;   // Сбр
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${remainingAmount.toLocaleString()}</td>`; // Остаток
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${status}</td>`;    // С    receiptHtml += '</tr>';
         
         totalLoaded += loadedAmount;
     }
 
     receiptHtml += '</table>';
-    receiptHtml += '<div style="text-align: center; font-family: monospace; margin-top: 10px;">';
+    receiptHtml += '<div style="text-align: left; font-family: monospace; margin-top: 10px;">';
     receiptHtml += '--------------------------------<br>';
     receiptHtml += `<strong>Всего загружено: ${totalLoaded} руб.</strong><br>`;
     receiptHtml += '--------------------------------<br>';
     receiptHtml += '</div>';
 
+    // receiptContent.innerHTML = receiptHtml;
+
+
+   // Депозит, Реджект, Ретракт (вертикально)
+    receiptHtml += '<div style="margin-top: 10px;">';
+    receiptHtml += '--------------------------------<br>';
+    receiptHtml += '<strong>Депозит:</strong> 0 руб.<br>';
+    receiptHtml += '<strong>Реджект:</strong> 0 шт.<br>';
+    receiptHtml += '<strong>Ретракт:</strong> 0 шт.<br>';
+    receiptHtml += '--------------------------------<br>';
+    receiptHtml += '</div>';
+
+    //  Итоговые данные
+    receiptHtml += '<div style="margin-top: 10px;">';
+    receiptHtml += '--------------------------------<br>';
+    receiptHtml += `<strong>Загружено: ${totalLoaded.toLocaleString()} руб.</strong><br>`;
+    receiptHtml += `Принято: 0 руб.<br>`;
+    receiptHtml += `Выдано: 0 руб.<br>`;
+    receiptHtml += `Сброшено: ${totalDroppedAmount.toLocaleString()}<br>`;
+    receiptHtml += `Отбраковано: 0 руб.<br>`;
+    receiptHtml += `Ретракт: 0 руб.<br>`;
+    receiptHtml += '--------------------------------<br>';
+    receiptHtml += '<strong>Принято в депозитную кассету</strong><br>';
+    receiptHtml += '0 руб.<br>';
+    receiptHtml += '--------------------------------<br>';
+    receiptHtml += '</div>';
+    
+    receiptHtml += '</div>';
+
     receiptContent.innerHTML = receiptHtml;
 }
+    
 
     // Функция подтверждения чека и возврат в меню
     function confirmReceipt() {

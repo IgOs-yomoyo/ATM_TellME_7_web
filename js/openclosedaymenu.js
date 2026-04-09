@@ -14,3 +14,4 @@ function backtonormal() {
 function recyclerday() {
     showRecyclerDayMenu();
 }
+
