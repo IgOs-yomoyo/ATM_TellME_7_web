@@ -70,29 +70,6 @@
         }
     }
             
-            // Добавляем обработчик на потерю фокуса (проверка лимита)
-    //         input.addEventListener('blur', function() {
-    //             validateLimit(this, cassetteNumber);
-    //         });
-            
-    //         // Фокус на поле
-    //         // input.focus();
-    //         if (screen) {
-    //             screen.style.display = 'block';
-    //             requestAnimationFrame(function() {
-    //                 initInputField(cassetteNumber);
-    //             })
-    //         }
-    //     }
-    // }
-
-    // if (screen) {
-    //         screen.style.display = 'block';
-    //         requestAnimationFrame(function() {
-    //             initInputField(cassetteNumber);
-    //         })
-
-
 
     // Функция возврата в меню "Операционный день ресайклера" из любого экрана пополнения кассет
     function Cancel(cassetteNumber) {
@@ -186,6 +163,19 @@
         }
     }
 
+    // Флаг, что день открыт
+    let isOperationalDayOpen = false;
+
+    // Функция для проверки статуса опер дня
+    function isDayOpened() {
+        return isOperationalDayOpen;
+    }
+
+    // Функция для установки статуса опер дня
+    function setDayOpened(status) {
+        isOperationalDayOpen = status;
+    }
+
     // Завершение открытия операционного дня
     function completeOpeningDay() {
         // Подсчёт итогов (можно убрать)
@@ -198,16 +188,29 @@
                 totalAmount += cassetteLoads[i] * cassetteLimits[i].nominal;
             }
         }
-        
-        console.log(`Всего банкнот: ${totalBanknotes} шт.`);
-        console.log(`Общая сумма: ${totalAmount.toLocaleString()} ₽`);
 
-        showReceiptScreen();
+        // Сохраняем данные открытия дня
+        const openingData = {
+        date: new Date().toLocaleDateString('ru-RU'),
+        time: new Date().toLocaleTimeString('ru-RU'),
+        cassetteLoads: { ...cassetteLoads },
+        totalAmount: totalAmount
+    };
         
-        // // Показываем меню ресайклера
-        // const recyclerday = document.getElementById('recyclerday');
-        // if (recyclerday) recyclerday.style.display = 'block';
-        // alert(`Операционный день успешно открыт!\nЗагружено банкнот: ${totalBanknotes} шт.\nНа сумму: ${totalAmount.toLocaleString()} ₽`);
+        // console.log(`Всего банкнот: ${totalBanknotes} шт.`); // Это логи для консоли. Они не нужны. 
+        // console.log(`Общая сумма: ${totalAmount.toLocaleString()} ₽`);
+
+        // Устанавливаем флаг
+        setDayOpened(true);
+
+        // Передаём данные в closerecyclerday.js
+        if (typeof setOpeningDayData === 'function') {
+            setOpeningDayData(openingData);
+        }
+
+        // Показываем чек
+        showReceiptScreen();
+
     }
 
     // При показе экрана кассеты - инициализируем поле ввода
