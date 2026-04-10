@@ -49,7 +49,7 @@ function showRecyclerDayMenu() {
     if (recyclerday) recyclerday.style.display = 'block';
 }
 
-// Функция для экрана "Закрытие опер дня"
+// // Функция для экрана "Закрытие опер дня"
 function showDayCloseScreen() {
     const recyclerday = document.getElementById('recyclerday')
     const closerecyclerday = document.getElementById('closerecyclerday')

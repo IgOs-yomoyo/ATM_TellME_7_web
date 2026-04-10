@@ -174,6 +174,7 @@
     // Функция для установки статуса опер дня
     function setDayOpened(status) {
         isOperationalDayOpen = status;
+        console.log(`setDayOpened: день ${status ? 'ОТКРЫТ' : 'ЗАКРЫТ'}`);
     }
 
     // Завершение открытия операционного дня
@@ -201,7 +202,7 @@
         // console.log(`Общая сумма: ${totalAmount.toLocaleString()} ₽`);
 
         // Устанавливаем флаг
-        setDayOpened(true);
+        // setDayOpened(true);
 
         // Передаём данные в closerecyclerday.js
         if (typeof setOpeningDayData === 'function') {
@@ -403,7 +404,13 @@
         // Скрываем экран чека
         const receiptScreen = document.getElementById('receiptScreen');
         if (receiptScreen) receiptScreen.style.display = 'none';
-    
+        
+        // Попробуем вставить сюда флаг открытия опер дня
+        if (typeof setDayOpened === 'function') {
+            setDayOpened(true);
+        }
+
+
         // Показываем меню оператора (или главное меню)
         const recyclerday = document.getElementById('recyclerday');
         if (recyclerday) recyclerday.style.display = 'block';

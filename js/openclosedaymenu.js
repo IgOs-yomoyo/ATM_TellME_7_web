@@ -1,7 +1,7 @@
 
-function gotorecyclerday() {
-    showRecyclerDayMenu();
-}
+// function gotorecyclerday() {  // Эта функция, похоже, лишняя. Она дублируем функцию recyclerday. 
+//     showRecyclerDayMenu();
+// }
 
 function backtosupervisor() {
     showSupervisorMenu();
@@ -15,3 +15,4 @@ function recyclerday() {
     showRecyclerDayMenu();
 }
 
+// Здесь нужно будет добавить функцию "Дополнительные операции"
