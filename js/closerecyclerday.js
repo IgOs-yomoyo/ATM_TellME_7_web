@@ -83,19 +83,28 @@ function generateDayTransactions(openingDayData) {
         const maxAccepted = Math.min(Math.floor(banknotesCount * 0.3), 2000 - banknotesCount);
         const acceptedBanknotes = Math.floor(Math.random() * (maxAccepted + 1));
 
+        // Выдано клиентам 0 - 20% от загруженных, но не более остатка
+        const maxIssued = Math.min(Math.floor(banknotesCount * 0.2), banknotesCount);
+        const issuedBanknotes = Math.floor(Math.random() * (maxIssued + 1));
 
+        const maxDropped = Math.min(2, banknotesCount - issuedBanknotes)
+        const droppedBanknotes = maxDropped > 0 ? Math.floor(Math.random() * (maxDropped + 1)) : 0;
 
-        const issuedBanknotes = Math.floor(Math.random() * (banknotesCount * 0.2 + 1));
-        const droppedBanknotes = (banknotesCount === 0) ? 0 : Math.floor(Math.random() * 3) + 1;
+        // Итоговое количество банкнот в кассете
+        const finalBanknotes = banknotesCount + acceptedBanknotes - issuedBanknotes - droppedBanknotes;
 
+        // Проверка, что число не отрицательное и не превышает 2000
+        const safeFinal = Math.min(0, Math.min(finalBanknotes, 2000));
 
-        const acceptedAmount = acceptedBanknotes * c.nominal;
+        // Суммы остатков банкнот в кассетах
+        const loadedAmount = banknotesCount * c.nominal;
+        const acceptedAmount = acceptedBanknotes * c.nominal
         const issuedAmount = issuedBanknotes * c.nominal;
         const droppedAmount = droppedBanknotes * c.nominal;
-        const balanceAmount = (c.loaded - issuedBanknotes - droppedBanknotes + acceptedBanknotes) * c.nominal;
+        const balanceAmount = safeFinal * c.nominal;
         
-        const remainingBanknotes = c.loaded - issuedBanknotes - droppedBanknotes + acceptedBanknotes;
-        const status = remainingBanknotes < 300 ? 1 : 0;
+        // const remainingBanknotes = c.loaded - issuedBanknotes - droppedBanknotes + acceptedBanknotes;
+        const status = safeFinal < 300 ? 1 : 0;
 
         transactions.cassettes.push({
             number: c.number,
@@ -150,35 +159,122 @@ function showCloseDayScreen() {
         };
     }
 
-    
+    //Генерируем данные за операционный день
+    const transactions = generateDayTransactions(openingDayData);
+
+
     const receiptContent = document.getElementById('closeReceiptContent');
-    console.log('receiptContent', receiptContent);
+    if (!receiptContent) return;
 
-    if (receiptContent) {
-        
+    const now = new Date();
+    const currentDate = now.toLocaleDateString('ru-RU');
+    const currentTime = now.toLocaleTimeString('ru-RU');
 
-     // Временное содержимое для проверки
-    receiptContent.innerHTML = `
-        <div style="padding: 20px; text-align: center; font-family: monospace;">
-            <h3>ЧЕК ЗАКРЫТИЯ ОПЕРАЦИОННОГО ДНЯ</h3>
-            <p>Дата открытия: ${openingDayData.date} ${openingDayData.time}</p>
-            <p>Загружено: ${openingDayData.totalAmount.toLocaleString()} руб.</p>
-            <hr>
-            <p>Функция в разработке</p>
-        </div>
-    `;
-    console.log('Содержимое чека добавлено.');
-    } else {
-        console.error('closeReceiptContent НЕ НАЙДЕН!');
+    let receiptHtml = '';
+    receiptHtml += '<div style="font-family: monospace; font-size: 12px;">';
+    receiptHtml += '<div style="text-align: center;">';
+    receiptHtml += '<strong>СБЕРБАНК РОССИИ ПАО</strong><br>';
+    receiptHtml += 'ОТДЕЛ СЕРВИСНОГО ОБСЛУЖИВАНИЯ<br>';
+    receiptHtml += 'Волгоградский пр-т д. 32 к. 45<br>';
+    receiptHtml += `ДАТА: ${currentDate} ВРЕМЯ: ${currentTime}<br>`;
+    receiptHtml += 'НОМЕР БАНКОМАТА: 10869631<br>';
+    receiptHtml += '--------------------------------<br>';
+    receiptHtml += '<strong>ЗАКРЫТИЕ ОПЕРАЦИОННОГО ДНЯ</strong><br>';
+    receiptHtml += `ВРЕМЯ ОТКРЫТИЯ: ${openingDayData.time} ${openingDayData.date}<br>`;
+    receiptHtml += '--------------------------------<br>';
+    receiptHtml += '</div>';
+
+    // Таблица
+    receiptHtml += '<table style="width: 100%; border-collapse: collapse; text-align: center;">';
+    receiptHtml += '<tr style="border: 1px solid #000;">';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">№</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Ном</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Вал</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Загружено</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Принято</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Выдано</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Сбр</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">С</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Остаток</th>';
+    receiptHtml += '</tr>';
+
+    for (let i=0; i<transactions.cassettes.length; i++) {
+        const c = transactions.cassettes[i];
+        receiptHtml += '<tr style="border: 1px solid #000;">';
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.number}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.nominal}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">643</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.loadedAmount.toLocaleString()}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.acceptedAmount.toLocaleString()}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.issuedAmount.toLocaleString()}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.droppedAmount.toLocaleString()}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.status}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.balanceAmount.toLocaleString()}</td>`;
+        receiptHtml += '</tr>';
     }
+
+    // Депозит, Реджект, Ретракт
+    receiptHtml += '<tr style="border: 1px solid #000;">';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">Депозит</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${transactions.depositAccepted.toLocaleString()}</td>`;
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '</tr>';
+    
+    receiptHtml += '<tr style="border: 1px solid #000;">';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">Реджект</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${transactions.totalRejected}</td>`;
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '</tr>';
+    
+    receiptHtml += '<tr style="border: 1px solid #000;">';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">Ретракт</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${transactions.totalRetracted}</td>`;
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '</tr>';
+    
+    receiptHtml += '</table>';
+
+    //Итоги
+    const totalBalance = openingDayData.totalAmount + transactions.depositAccepted + transactions.totalAccepted - transactions.totalIssued - transactions.totalDropped;
+
+    receiptHtml += '<div style="margin-top: 10px;">';
+    receiptHtml += '--------------------------------<br>';
+    receiptHtml += `<strong>Загружено: ${openingDayData.totalAmount.toLocaleString()} руб.</strong><br>`;
+    receiptHtml += `Принято: ${(transactions.totalAccepted + transactions.depositAccepted).toLocaleString()} руб.<br>`;
+    receiptHtml += `Выдано: ${transactions.totalIssued.toLocaleString()} руб.<br>`;
+    receiptHtml += `Сброшено: ${transactions.totalDropped.toLocaleString()} руб.<br>`;
+    receiptHtml += `Отбраковано: ${transactions.totalRejected} шт.<br>`;
+    receiptHtml += `Ретракт: ${transactions.totalRetracted} шт.<br>`;
+    receiptHtml += '--------------------------------<br>';
+    receiptHtml += `<strong>ОБЩИЙ БАЛАНС: ${totalBalance.toLocaleString()} руб.</strong><br>`;
+    receiptHtml += '--------------------------------<br>';
+    receiptHtml += '</div>';
+    
+    receiptHtml += '</div>';
+    
+    receiptContent.innerHTML = receiptHtml;
 
     const closeReceiptScreen = document.getElementById('closeReceiptScreen');
     if (closeReceiptScreen) {
         closeReceiptScreen.style.display = 'block';
-        console.log('Экран чека закрытия показан');
-    } else {
-        console.error('closeReceiptScreen НЕ НАЙДЕН в DOM!');
-        alert('Ошибка: экран чека закрытия не найден! Проверьте id="closeReceiptScreen" в HTML');
     }
 }
 
