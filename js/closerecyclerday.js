@@ -40,7 +40,7 @@ function setOpeningDayData(data) {
 }
 
 // Генерация случайных данных за рабочий день
-function generateDayTransactions() {
+function generateDayTransactions(openingDayData) {
     const transactions = {
         cassettes: [],
         totalAccepted: 0,
@@ -62,7 +62,29 @@ function generateDayTransactions() {
         const c = cassettes[i];
         const banknotesCount = c.loaded;
 
-        const acceptedBanknotes = Math.floor(Math.random() * (banknotesCount * 0.3 + 1));
+
+
+        // Если кассета пустая, все значения равны 0. 
+        if (banknotesCount === 0){
+            transactions.cassettes.push({
+                number: c.number,
+                nominal: c.nominal,
+                loadedAmount: 0,
+                acceptedAmount: 0, 
+                issuedAmount: 0, 
+                droppedAmount: 0, 
+                balanceAmount: 0, 
+                status: 0
+            });
+            continue;
+        }
+
+        // Принято от клиентов (0 - 30% от загруженных, но не более 2000 шт.)
+        const maxAccepted = Math.min(Math.floor(banknotesCount * 0.3), 2000 - banknotesCount);
+        const acceptedBanknotes = Math.floor(Math.random() * (maxAccepted + 1));
+
+
+
         const issuedBanknotes = Math.floor(Math.random() * (banknotesCount * 0.2 + 1));
         const droppedBanknotes = (banknotesCount === 0) ? 0 : Math.floor(Math.random() * 3) + 1;
 
@@ -129,8 +151,35 @@ function showCloseDayScreen() {
     }
 
     
+    const receiptContent = document.getElementById('closeReceiptContent');
+    console.log('receiptContent', receiptContent);
+
+    if (receiptContent) {
+        
+
+     // Временное содержимое для проверки
+    receiptContent.innerHTML = `
+        <div style="padding: 20px; text-align: center; font-family: monospace;">
+            <h3>ЧЕК ЗАКРЫТИЯ ОПЕРАЦИОННОГО ДНЯ</h3>
+            <p>Дата открытия: ${openingDayData.date} ${openingDayData.time}</p>
+            <p>Загружено: ${openingDayData.totalAmount.toLocaleString()} руб.</p>
+            <hr>
+            <p>Функция в разработке</p>
+        </div>
+    `;
+    console.log('Содержимое чека добавлено.');
+    } else {
+        console.error('closeReceiptContent НЕ НАЙДЕН!');
+    }
+
     const closeReceiptScreen = document.getElementById('closeReceiptScreen');
-    if (closeReceiptScreen) closeReceiptScreen.style.display = 'block';
+    if (closeReceiptScreen) {
+        closeReceiptScreen.style.display = 'block';
+        console.log('Экран чека закрытия показан');
+    } else {
+        console.error('closeReceiptScreen НЕ НАЙДЕН в DOM!');
+        alert('Ошибка: экран чека закрытия не найден! Проверьте id="closeReceiptScreen" в HTML');
+    }
 }
 
 // Функция подтверждения чека закрытия

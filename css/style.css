@@ -29,7 +29,7 @@ body {
 
 /* Экран банкомата */
 .atm-screen {
-    position: relative;
+    position: absolute;
     width: 100%;
     height: 100%;
     background: white;  /* ← белый фон */
@@ -236,6 +236,25 @@ body {
     top: 680px;
     right: 5px;
     background-color: #1976D2;
+}
+
+.close-receipt-confirm-btn {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    width: 450px;
+    height: 130px;
+    font-size: 24px;
+    background-color: #1976D2;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.close-receipt-confirm-btn:hover {
+    background-color: #1565C0;
 }
 
 /* Контент экрана, отступ от заголовка */
