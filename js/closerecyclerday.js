@@ -79,13 +79,46 @@ function generateDayTransactions(openingDayData) {
             continue;
         }
 
-        // Принято от клиентов (0 - 30% от загруженных, но не более 2000 шт.)
-        const maxAccepted = Math.min(Math.floor(banknotesCount * 0.3), 2000 - banknotesCount);
-        const acceptedBanknotes = Math.floor(Math.random() * (maxAccepted + 1));
+        //Функция для определения случайного количества выданных банкнот
+        function issuedNotes(min, max){
+             const minIssuedNotesNumber = Math.ceil(min);
+             const maxIssuedNotesNumber = Math.floor(max);    
+             return Math.floor(Math.random() * (maxIssuedNotesNumber - minIssuedNotesNumber + 1) + minIssuedNotesNumber);
+        }
+
+        //Выдано банкнот из кассеты в течение операционного дня - случайное число
+        let issuedNotesNumbers; //= issuedNotes(1, 1999);
+
+        //Функция для определения случайного количества принятых в кассету банкнот
+        function acceptedNotes(min, max) {
+            const minacceptedNotesNumber = Math.ceil(min);
+            const maxacceptedNotesNumber = Math.floor(max);
+            return Math.floor(Math.random() * (maxacceptedNotesNumber - minacceptedNotesNumber + 1) + minacceptedNotesNumber);
+        }
+        
+        //Принято банкнот в кассету - случайное число
+        let acceptedNotesNumber; //= acceptedNotes(1, 1999);
+        
+        // Цикл подбора числа выданных и принятых банкнот
+        while(true) {
+            issuedNotesNumbers = issuedNotes(1, 1999);
+            acceptedNotesNumber = acceptedNotes(1, 1999);
+            if (((c.loaded + acceptedNotesNumber) - issuedNotesNumbers) <= 2000) {
+                break;
+            }
+        }
+
 
         // Выдано клиентам 0 - 20% от загруженных, но не более остатка
         const maxIssued = Math.min(Math.floor(banknotesCount * 0.2), banknotesCount);
         const issuedBanknotes = Math.floor(Math.random() * (maxIssued + 1));
+
+
+        // Принято от клиентов (0 - 30% от загруженных, но не более 2000 шт.)
+        const maxAccepted = Math.min(Math.floor(banknotesCount * 0.3), 2000 - banknotesCount);
+        const acceptedBanknotes = Math.floor(Math.random() * (maxAccepted + 1));
+
+        
 
         const maxDropped = Math.min(2, banknotesCount - issuedBanknotes)
         const droppedBanknotes = maxDropped > 0 ? Math.floor(Math.random() * (maxDropped + 1)) : 0;
@@ -106,11 +139,12 @@ function generateDayTransactions(openingDayData) {
         // const remainingBanknotes = c.loaded - issuedBanknotes - droppedBanknotes + acceptedBanknotes;
         const status = safeFinal < 300 ? 1 : 0;
 
+        //Банкноты в кассетах в штуках
         transactions.cassettes.push({
             number: c.number,
             nominal: c.nominal,
-            loadedAmount: c.loaded * c.nominal,
-            acceptedAmount: acceptedAmount,
+            loadedCount: banknotesCount,
+            acceptedCount: acceptedCount,
             issuedAmount: issuedAmount,
             droppedAmount: droppedAmount,
             balanceAmount: balanceAmount,
