@@ -7,10 +7,217 @@ function setOpeningDayData(data) {
     openingDayData = data;
 }
 
+function generateDayTransactions(openingDayData) {
+    const transactions = {
+        cassettes: [],
+        totalAccepted: 0,
+        totalIssued: 0, 
+        totalRejected: 0,
+        totalDropped: 0,
+        totalRetracted: 0, 
+        depositAccepted: 0
+    };
+
+    const cassettes = [
+        {number: 1000, nominal: 100, loaded: openingDayData?.cassetteLoads[1] || 0},
+        {number: 2000, nominal: 500, loaded: openingDayData?.cassetteLoads[2] || 0},
+        {number: 3000, nominal: 1000, loaded: openingDayData?.cassetteLoads[3] || 0},
+        {number: 4000, nominal: 5000, loaded: openingDayData?.cassetteLoads[4] || 0}
+    ];
+
+    function random(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    for (let i = 0; i < cassettes.length; i++) {
+        const c = cassettes[i];
+        const loadedCount = c.loaded;
+
+        if (loadedCount === 0) {
+            transactions.cassettes.push({
+                number: c.number,
+                nominal: c.nominal,
+                loadedCount: 0, 
+                acceptedCount: 0, 
+                issuedCount: 0,
+                droppedCount: 0,
+                balanceCount: 0,
+                status: 0
+            });
+            continue;
+        }
+
+        let issuedCount, acceptedCount, finalCount;
+        let attempts = 0;
+
+        do {
+            issuedCount = random(0, 2000);
+            acceptedCount = random(0, 2000);
+            finalCount = loadedCount + acceptedCount - issuedCount;
+            attempts++;
+            if (attempts > 100) break;
+        } while (finalCount < 0 || finalCount > 2000);
+
+        if (attempts > 100) {
+            finalCount = loadedCount;
+            acceptedCount = 0, 
+            issuedCount = 0;
+        }
+        const droppedCount = random(0, Math.min(2, finalCount));
+        const finalBalance = finalCount - droppedCount;
+        const status = finalBalance < 300 ? 1 : 0;
+
+        transactions.cassettes.push({
+            number: c.number,
+            nominal: c.nominal,
+            loadedCount: loadedCount,
+            acceptedCount: acceptedCount,
+            issuedCount: issuedCount,
+            droppedCount: droppedCount,
+            balanceCount: finalBalance,
+            status: status
+        });
+
+        transactions.totalAccepted += acceptedCount * c.nominal;
+        transactions.totalIssued += issuedCount * c.nominal;
+        transactions.totalDropped += droppedCount * c.nominal;
+    }
+    transactions.totalRejected = random(0, 4);
+    transactions.totalRetracted = random(0, 2);
+    transactions.depositAccepted = random(10000, 110000);
+    
+    return transactions;
+}
+
 function showCloseDayScreen() {
     console.log('showCloseDayScreen вызвана');
-    alert('showCloseDayScreen сработала!');
+
+    if (typeof isDayOpened === 'function' && !isDayOpened()) {
+        alert('Операционный день не был открыт!');
+        return;
+    }
+
+    if (!openingDayData) {
+        alert('Нет данных об открытии опер дня.');
+        return;
+    }
+
+    //Получаем данные о транзакциях за день
+    const transactions = generateDayTransactions(openingDayData);
+
+    const receiptContent = document.getElementById('closeReceiptContent');
+    if (!receiptContent) return;
+
+    const now = new Date;
+    const currentDate = now.toLocaleDateString('ru-RU');
+    const currentTime = now.toLocaleTimeString('ru-RU');
+
+    let receiptHtml = '';
+    receiptHtml += '<div style="font-family: monospace; font-size: 12px;">';
+    receiptHtml += '<div style="text-align: center;">';
+    receiptHtml += '<strong>СБЕРБАНК РОССИИ ПАО</strong><br>';
+    receiptHtml += 'ОТДЕЛ СЕРВИСНОГО ОБСЛУЖИВАНИЯ<br>';
+    receiptHtml += 'Волгоградский пр-т д. 32 к. 45<br>';
+    receiptHtml += `ДАТА: ${currentDate} ВРЕМЯ: ${currentTime}<br>`;
+    receiptHtml += 'НОМЕР БАНКОМАТА: 10869631<br>';
+    receiptHtml += '--------------------------------<br>';
+    receiptHtml += '<strong>ЗАКРЫТИЕ ОПЕРАЦИОННОГО ДНЯ</strong><br>';
+    receiptHtml += `ВРЕМЯ ОТКРЫТИЯ: ${openingDayData.time} ${openingDayData.date}<br>`;
+    receiptHtml += '--------------------------------<br>';
+    receiptHtml += '</div>';
     
+    // Таблица
+    receiptHtml += '<table style="width: 100%; border-collapse: collapse; text-align: center;">';
+    receiptHtml += '<tr style="border: 1px solid #000;">';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">№</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Ном</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Вал</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Загружено</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Принято</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Выдано</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Сбр</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">С</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Остаток</th>';
+    receiptHtml += '</tr>';
+
+    for (let i = 0; i < transactions.cassettes.length; i++) {
+        const c = transactions.cassettes[i];
+        receiptHtml += '<tr style="border: 1px solid #000;">';
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.number}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.nominal}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">643</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.loadedCount}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.acceptedCount}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.issuedCount}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.droppedCount}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.status}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.balanceCount}</td>`;
+        receiptHtml += '</tr>';
+    }
+
+    // Депозит, Реджект, Ретракт
+    receiptHtml += '<tr style="border: 1px solid #000;">';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">Депозит</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${transactions.depositAccepted.toLocaleString()}</td>`;
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<tr>';
+    
+    receiptHtml += '<tr style="border: 1px solid #000;">';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">Реджект</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${transactions.totalRejected}</td>`;
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<tr>';
+    
+    receiptHtml += '<tr style="border: 1px solid #000;">';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">Ретракт</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${transactions.totalRetracted}</td>`;
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '</tr>';
+    
+    receiptHtml += '</table>';
+
+    // Итоги
+    const totalLoadedAmount = openingDayData.totalAmount;
+    const totalAcceptedAmount = transactions.totalAccepted;
+    const totalIssuedAmount = transactions.totalIssued;
+    const totalDroppedAmount = transactions.totalDropped;
+    const totalBalance = totalLoadedAmount + transactions.depositAccepted + totalAcceptedAmount - totalIssuedAmount - totalDroppedAmount;
+    
+    receiptHtml += '<div style="margin-top: 10px;">';
+    receiptHtml += '--------------------------------<br>';
+    receiptHtml += `<strong>Загружено: ${totalLoadedAmount.toLocaleString()} руб.</strong><br>`;
+    receiptHtml += `Принято: ${(totalAcceptedAmount + transactions.depositAccepted).toLocaleString()} руб.<br>`;
+    receiptHtml += `Выдано: ${totalIssuedAmount.toLocaleString()} руб.<br>`;
+    receiptHtml += `Сброшено: ${totalDroppedAmount.toLocaleString()} руб.<br>`;
+    receiptHtml += `Отбраковано: ${transactions.totalRejected} шт.<br>`;
+    receiptHtml += `Ретракт: ${transactions.totalRetracted} шт.<br>`;
+    receiptHtml += '--------------------------------<br>';
+    receiptHtml += `<strong>ОБЩИЙ БАЛАНС: ${totalBalance.toLocaleString()} руб.</strong><br>`;
+    receiptHtml += '--------------------------------<br>';
+    receiptHtml += '</div>';
+    
+    receiptHtml += '</div>';
+    
+    receiptContent.innerHTML = receiptHtml;
+
     const closeReceiptScreen = document.getElementById('closeReceiptScreen');
     if (closeReceiptScreen) {
         closeReceiptScreen.style.display = 'block';
