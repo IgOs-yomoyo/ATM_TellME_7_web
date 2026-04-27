@@ -1,20 +1,41 @@
 // Общие функции для переключения экранов
 
 function showMainMenu() {
+    console.log('showMainMenu вызвана')
     const mainScreen = document.getElementById('mainScreen');
     const supervisorScreen = document.getElementById('supervisorScreen');
-    
-    if (mainScreen) mainScreen.style.display = 'block';
+    const opencloseday = document.getElementById('opencloseday');
+    const recyclerday = document.getElementById('recyclerday');
+
+    console.log('mainScreen:', mainScreen);
+    console.log('supervisorScreen:', supervisorScreen);
+    console.log('opencloseday:', opencloseday);
+    console.log('recyclerday:', recyclerday);
+
+
+    if (mainScreen) {
+         mainScreen.style.display = 'block';
+        console.log('mainScreen display установлен в block');
+    } else {
+        console.error('mainScreen не найден!');
+    }    
     if (supervisorScreen) supervisorScreen.style.display = 'none';
+    if (opencloseday) opencloseday.style.display = 'none';
+    if (recyclerday) recyclerday.style.display = 'none';
 }
 
+//Функция перехода из меню "Сервисная карта" - mainScreen к главному экрану меню оператора (supervisor).
 function showSupervisorMenu() {
+    console.log('showSupervisorMenu вызвана')
     const mainScreen = document.getElementById('mainScreen');
     const supervisorScreen = document.getElementById('supervisorScreen');
     
     if (mainScreen) mainScreen.style.display = 'none';
     if (supervisorScreen) supervisorScreen.style.display = 'block';
 }
+
+//Функция возврата к предыдущему экрану меню supervisor. От opencloseday в supervisorscreen, от recyclerday в opencloseday и так далее. 
+//Не стал её писать здесь. Попробуем сделать на каждом экране отдельно. 
 
 function exitApp() {
     let answer = confirm("Вы уверены, что хотите выйти?");
@@ -36,6 +57,11 @@ function exitApp() {
 function showopenclosedaymenu(){
     const supervisorScreen = document.getElementById('supervisorScreen')
     const opencloseday = document.getElementById('opencloseday')
+
+    console.log('supervisorScreen элемент:', supervisorScreen);
+    console.log('opencloseday элемент:', opencloseday);
+    console.log('supervisorScreen display до:', supervisorScreen?.style.display);
+    console.log('opencloseday display до:', opencloseday?.style.display);
 
     if (supervisorScreen) supervisorScreen.style.display = 'none';
     if (opencloseday) opencloseday.style.display = 'block';

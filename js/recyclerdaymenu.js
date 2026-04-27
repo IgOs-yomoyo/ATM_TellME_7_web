@@ -1,6 +1,12 @@
 
-function рrevious() {
-    showopenclosedaymenu();
+function backtoOpenCloseDay() {
+    console.log('функция backtoOpenCloseDay вызвана');
+    const recyclerday = document.getElementById('recyclerday');
+    const opencloseday = document.getElementById('opencloseday');
+    // showopenclosedaymenu();
+
+    if(recyclerday) recyclerday.style.display = 'none';
+    if(opencloseday) opencloseday.style.display = 'block';
 }
 
 function closerecyclerday() {
