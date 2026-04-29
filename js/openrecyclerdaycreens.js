@@ -6,6 +6,9 @@
         4: null
     }
 
+    //Сброшенные банкноты. Глобальная переменная. Теперь её нужно использовать в closerecyclerday.js. 
+    // let openingDroppedData = {1: 0, 2: 0, 3: 0, 4: 0}; //Пока закомментирую. Считаю, что это лишняя переменная. 
+
     // Ограничения по кассетам
     const cassetteLimits = {
         1: { nominal: 100, maxBanknotes: 2000, number: '001' },
@@ -111,14 +114,7 @@
         const input = document.getElementById(`LoadInput_${cassetteNumber}`);
         let value = input ? input.value : '';
         
-        // Проверка, что поле не пустое
-        // if (!value || value === '') {
-        //     // alert('Пожалуйста, введите количество банкнот');
-        //     input.focus();
-        //     return;
-        // }
-        
-
+       
         // Если поле пустое, то это 0
         if (!value || value === '') {
             value = '0';
@@ -177,16 +173,21 @@
         console.log(`setDayOpened: день ${status ? 'ОТКРЫТ' : 'ЗАКРЫТ'}`);
     }
 
-    // Завершение открытия операционного дня
+    // Завершение открытия операционного дня. Функция completeOpeningDay. Она используется в функции Enter. 
     function completeOpeningDay() {
         // Подсчёт итогов (можно убрать)
-        let totalBanknotes = 0;
+        // let totalLoaded = 0; // Это лишняя переменная. Общее количество загруженных банкнот нам не нужно. 
         let totalAmount = 0;
+        let dropped = {1: 0, 2: 0, 3: 0, 4: 0};
+        let totalDroppedAmount = 0; //Не факт, что эта переменная нужна. Нужно посмотреть.
+
         
         for (let i = 1; i <= 4; i++) {
             if (cassetteLoads[i]) {
-                totalBanknotes += cassetteLoads[i];
+                // totalLoaded += cassetteLoads[i];
                 totalAmount += cassetteLoads[i] * cassetteLimits[i].nominal;
+                dropped[i] = (cassetteLoads[i] === 0) ? 0 : Math.floor(Math.random() * 3) + 1;
+                totalDroppedAmount += dropped[i] * cassetteLimits[i].nominal;
             }
         }
 
@@ -195,22 +196,26 @@
         date: new Date().toLocaleDateString('ru-RU'),
         time: new Date().toLocaleTimeString('ru-RU'),
         cassetteLoads: { ...cassetteLoads },
-        totalAmount: totalAmount
+        dropped: {...dropped},
+        totalAmount: totalAmount,
+        totalDroppedAmount: totalDroppedAmount
     };
+
+    console.log(`openingData:`, openingData);
+
+    console.log(`=== openingData ===`);
+    console.log(`dropped:`, openingData.dropped);
+    console.log(`cassetteLoads:`, openingData.cassetteLoads);
+    console.log(`totalAmount:`, openingData.totalAmount);
+    console.log(`totalDropped:`, openingData.totalDroppedAmount);
         
-        // console.log(`Всего банкнот: ${totalBanknotes} шт.`); // Это логи для консоли. Они не нужны. 
-        // console.log(`Общая сумма: ${totalAmount.toLocaleString()} ₽`);
-
-        // Устанавливаем флаг
-        // setDayOpened(true);
-
         // Передаём данные в closerecyclerday.js
         if (typeof setOpeningDayData === 'function') {
             setOpeningDayData(openingData);
         }
 
         // Показываем чек
-        showReceiptScreen();
+        showReceiptScreen(openingData);
 
     }
 
@@ -257,7 +262,7 @@
     // input.dispatchEvent(new KeyboardEvent('keydown', {key: 'Tab', bubbles: true}));
 
     // Функция для отображения чека открытия операционного дня
-    function showReceiptScreen() {
+    function showReceiptScreen(openingData) {
         // Скрываем экран загрузки кассеты 4
         const replenishScreen4 = document.getElementById('replenishcassette_4');
         if (replenishScreen4) replenishScreen4.style.display = 'none';
@@ -267,11 +272,11 @@
         if (receiptScreen) receiptScreen.style.display = 'block';
     
         // Формируем содержимое чека
-        generateReceiptContent();
+        generateReceiptContent(openingData);
     }
 
     // Функция для генерации содержимого чека
-    function generateReceiptContent() {
+    function generateReceiptContent(openingData) {
         const receiptContent = document.getElementById('receiptContent');
         if (!receiptContent) return;
     
@@ -311,52 +316,74 @@
     receiptHtml += '</tr>';
 
     // Данные по кассетам
-    let totalLoaded = 0;
+    // let totalLoaded = 0;
     const cassettes = [
-        { number: 1000, nominal: 100, loaded: cassetteLoads[1] || 0 },
-        { number: 2000, nominal: 500, loaded: cassetteLoads[2] || 0 },
-        { number: 3000, nominal: 1000, loaded: cassetteLoads[3] || 0 },
-        { number: 4000, nominal: 5000, loaded: cassetteLoads[4] || 0 }
+        { number: 1000, nominal: 100, loaded: cassetteLoads[1] || 0, index: 1},
+        { number: 2000, nominal: 500, loaded: cassetteLoads[2] || 0, index: 2}, 
+        { number: 3000, nominal: 1000, loaded: cassetteLoads[3] || 0, index: 3},
+        { number: 4000, nominal: 5000, loaded: cassetteLoads[4] || 0, index: 4}
     ];
 
-    let totalDroppedAmount = 0; //Переменная для хранения суммы сброшенных банкнот
+    // function completeOpeningDay() {
+    //     // Подсчёт итогов (можно убрать)
+    //     // let totalLoaded = 0; // Это лишняя переменная. Общее количество загруженных банкнот нам не нужно. 
+    //     let totalAmount = 0;
+    //     let dropped = {1: 0, 2: 0, 3: 0, 4: 0};
+    //     let totalDroppedAmount = 0; //Не факт, что эта переменная нужна. Нужно посмотреть.
 
+        
+    //     for (let i = 1; i <= 4; i++) {
+    //         if (cassetteLoads[i]) {
+    //             // totalLoaded += cassetteLoads[i];
+    //             totalAmount += cassetteLoads[i] * cassetteLimits[i].nominal;
+    //             dropped[i] = (cassetteLoads[i] === 0) ? 0 : Math.floor(Math.random() * 3) + 1;
+    //             totalDroppedAmount += dropped[i] * cassetteLimits[i].nominal;
+    //         }
+    //     }
+
+    //     // Сохраняем данные открытия дня
+    //     const openingData = {
+    //     date: new Date().toLocaleDateString('ru-RU'),
+    //     time: new Date().toLocaleTimeString('ru-RU'),
+    //     cassetteLoads: { ...cassetteLoads },
+    //     dropped: {...dropped},
+    //     totalAmount: totalAmount,
+    //     totalDroppedAmount: totalDroppedAmount
+    
+
+    let totalLoaded = 0; //Загруженная сумма общая
+    let totalDroppedAmount = 0;
+    
+    // строка 142 cassetteLoads - данные о загрузке кассет. 
     for (let i = 0; i < cassettes.length; i++) {
         const c = cassettes[i];
 
         const loadedAmount = c.loaded * c.nominal;
-    
-        // const maxDropped = Math.min(c.loaded, 2);
-        // const banknotesCount = c.loaded / c.nominal;
-        // const dropped = c.loaded > 0 ? Math.floor(Math.random() * (maxDropped + 1)) : 0;
-        // Сброшенные банкноты, от 1 до 3
-        const dropped = (c.loaded === 0) ? 0 : Math.floor(Math.random() * 3) + 1;
-
-        // Сумма сброшенных банкнот
-        const droppedAmount = dropped * c.nominal;
-        totalDroppedAmount += droppedAmount; // Сумма сброшенных банкнот
-        // Статус кассеты. Логику добавим позже
-        const status = 0;
-        
-
-        const remainingBanknotes = c.loaded - dropped;
-
+        const droppedNotes = openingData?.dropped[c.index] || 0;
+        const droppedAmount = droppedNotes * c.nominal;
+        const remainingBanknotes = c.loaded - droppedNotes; //dropped не определена. 
         const remainingAmount = remainingBanknotes * c.nominal;
         const issued = 0;  // При открытии опер дня выдано 0
         const accepted = 0;   // При загрузке принято 0
         
-         receiptHtml += '<tr style="border: 1px solid #000;">';
+        
+        // Статус кассеты. Логику добавим позже
+        const status = 0;
+        
+
+        receiptHtml += '<tr style="border: 1px solid #000;">';
         receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.number}</td>`;
         receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.nominal}</td>`;
         receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">643</td>`;      // Валюта
-        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.loaded}</td>`;  // Загружено ${loadedAmount.toLocaleString()}</td>
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${loadedAmount}</td>`;  // Загружено ${loadedAmount.toLocaleString()}</td>
         receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${accepted}</td>`;  // Принято
         receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${issued}</td>`;    // Выдано
-        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${dropped}</td>`;   // Сбр
-        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.loaded - dropped}</td>`; // Остаток {remainingAmount.toLocaleString()}
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${droppedNotes}</td>`;   // Сбр
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.loaded - droppedNotes}</td>`; // Остаток {remainingAmount.toLocaleString()}
         receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${status}</td>`;    // С    receiptHtml += '</tr>';
         
         totalLoaded += loadedAmount;
+        totalDroppedAmount += droppedAmount
     }
 
     receiptHtml += '</table>';

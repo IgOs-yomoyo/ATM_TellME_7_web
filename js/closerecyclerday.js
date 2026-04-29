@@ -25,6 +25,8 @@ function generateDayTransactions(openingDayData) {
         {number: 4000, nominal: 5000, loaded: openingDayData?.cassetteLoads[4] || 0}
     ];
 
+    const openingDropped = openingDayData?.openingDropped || {1: 0, 2: 0, 3: 0, 4: 0};
+
     function random(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
@@ -63,7 +65,8 @@ function generateDayTransactions(openingDayData) {
             acceptedCount = 0, 
             issuedCount = 0;
         }
-        const droppedCount = random(0, Math.min(2, finalCount));
+        // const droppedCount = random(0, Math.min(2, finalCount));
+        const droppedCount = openingDropped[i + 1] || 0;
         const finalBalance = finalCount - droppedCount;
         const status = finalBalance < 300 ? 1 : 0;
 
