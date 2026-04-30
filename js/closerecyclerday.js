@@ -14,7 +14,7 @@ function generateDayTransactions(openingDayData) {
         cassettes: [],
         totalAccepted: 0,
         totalIssued: 0, 
-        totalRejected: 0,
+        // totalRejected: 0,
         totalDropped: 0,
         totalRetracted: 0, 
         depositAccepted: 0
@@ -88,10 +88,30 @@ function generateDayTransactions(openingDayData) {
         transactions.totalIssued += issuedCount * c.nominal;
         transactions.totalDropped += droppedCount * c.nominal;
     }
-    transactions.totalRejected = random(0, 4);
-    transactions.totalRetracted = random(0, 2);
+
+    function generateRetractedAmount() {
+        const nominals = [100, 500, 1000, 5000];
+        let total = 0;
+        let notesCount = 0;
+
+        const count = Math.floor(Math.random() * 21);
+
+        for (let i = 0; i < count; i++) {
+            const nominal = nominals[Math.floor(Math.random() * nominals.length)];
+            total += nominal;
+            notesCount ++;
+        }
+        console.log(`Ретракт: ${notesCount} банкноты на сумму: ${total} руб`);
+        return total;
+
+    }
+    // transactions.totalRejected = random(0, 4);
+    // console.log(`transactions.totalRejected: ${transactions.totalRejected}` )
+    //console.log(`2. Экран отображён, display: ${screen.style.display}`);
+    transactions.totalRetracted = generateRetractedAmount();
+    console.log(`transactions.totalRetracted: ${transactions.totalRetracted}`)
     transactions.depositAccepted = random(10000, 110000);
-    
+    console.log(`transactions.depositAccepted: ${transactions.depositAccepted}`)
     return transactions;
 }
 
@@ -179,7 +199,7 @@ function showCloseDayScreen() {
     receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
     receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
     receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
-    receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${transactions.totalRejected}</td>`;
+    // receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${transactions.totalRejected}</td>`;
     receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
     receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
     receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
@@ -205,6 +225,7 @@ function showCloseDayScreen() {
     const totalAcceptedAmount = transactions.totalAccepted;
     const totalIssuedAmount = transactions.totalIssued;
     const totalDroppedAmount = transactions.totalDropped;
+    const depositAccepted = transactions.depositAccepted;
     const totalBalance = totalLoadedAmount + transactions.depositAccepted + totalAcceptedAmount - totalIssuedAmount - totalDroppedAmount;
     
     receiptHtml += '<div style="margin-top: 10px;">';
@@ -215,6 +236,8 @@ function showCloseDayScreen() {
     receiptHtml += `Сброшено: ${totalDroppedAmount.toLocaleString()} руб.<br>`;
     receiptHtml += `Отбраковано: ${transactions.totalRejected} шт.<br>`;
     receiptHtml += `Ретракт: ${transactions.totalRetracted} шт.<br>`;
+    receiptHtml += '--------------------------------<br>';
+    receiptHtml += `<strong>Принято в депозитную кассету: ${depositAccepted.toLocaleString()}</strong><br>`;
     receiptHtml += '--------------------------------<br>';
     receiptHtml += `<strong>ОБЩИЙ БАЛАНС: ${totalBalance.toLocaleString()} руб.</strong><br>`;
     receiptHtml += '--------------------------------<br>';
