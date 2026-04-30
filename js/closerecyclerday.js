@@ -8,6 +8,8 @@ function setOpeningDayData(data) {
 }
 
 function generateDayTransactions(openingDayData) {
+    console.log('generateDayTransactions: openingDayData=', openingDayData);
+    console.log('openingDayData?.dropped=', openingDayData?.dropped);
     const transactions = {
         cassettes: [],
         totalAccepted: 0,
@@ -25,7 +27,8 @@ function generateDayTransactions(openingDayData) {
         {number: 4000, nominal: 5000, loaded: openingDayData?.cassetteLoads[4] || 0}
     ];
 
-    const openingDropped = openingDayData?.openingDropped || {1: 0, 2: 0, 3: 0, 4: 0};
+    const openingDropped = openingDayData?.dropped || {1: 0, 2: 0, 3: 0, 4: 0};
+    console.log('openingDropped=', openingDropped);
 
     function random(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -139,8 +142,8 @@ function showCloseDayScreen() {
     receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Принято</th>';
     receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Выдано</th>';
     receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Сбр</th>';
-    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">С</th>';
     receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">Остаток</th>';
+    receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">С</th>';
     receiptHtml += '</tr>';
 
     for (let i = 0; i < transactions.cassettes.length; i++) {
@@ -153,8 +156,8 @@ function showCloseDayScreen() {
         receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.acceptedCount}</td>`;
         receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.issuedCount}</td>`;
         receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.droppedCount}</td>`;
-        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.status}</td>`;
         receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.balanceCount}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.status}</td>`;
         receiptHtml += '</tr>';
     }
 

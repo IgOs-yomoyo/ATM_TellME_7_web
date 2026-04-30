@@ -353,7 +353,6 @@
 
     let totalLoaded = 0; //Загруженная сумма общая
     let totalDroppedAmount = 0;
-    
     // строка 142 cassetteLoads - данные о загрузке кассет. 
     for (let i = 0; i < cassettes.length; i++) {
         const c = cassettes[i];
@@ -375,10 +374,10 @@
         receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.number}</td>`;
         receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.nominal}</td>`;
         receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">643</td>`;      // Валюта
-        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${loadedAmount}</td>`;  // Загружено ${loadedAmount.toLocaleString()}</td>
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.loaded}</td>`;  // Загружено ${loadedAmount.toLocaleString()}</td>
         receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${accepted}</td>`;  // Принято
         receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${issued}</td>`;    // Выдано
-        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${droppedNotes}</td>`;   // Сбр
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${droppedNotes}</td>`;   // Сброшено
         receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.loaded - droppedNotes}</td>`; // Остаток {remainingAmount.toLocaleString()}
         receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${status}</td>`;    // С    receiptHtml += '</tr>';
         
