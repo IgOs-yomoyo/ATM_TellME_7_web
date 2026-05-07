@@ -38,11 +38,19 @@ function showWelcomeScreen() {
     startCarousel();
 }
 
-function hideWelcomScreen() {
+function hideWelcomeScreen() {
+    stopCarousel();
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    if (welcomeScreen) welcomeScreen.style.display = 'none';
+    setUpPinInput();
+}
+
+function showPinScreen() {
     const pinScreen = document.getElementById('pinScreen');
     if (pinScreen) pinScreen.style.display = 'block';
     clearPin();
 }
+
 
 function hidePinScreen() {
     const pinScreen = document.getElementById('pinScreen');
@@ -52,25 +60,19 @@ function hidePinScreen() {
 
 
 // Функция имитации предъявления карты. 
-function insertcard() {
+function insertCard() {
     console.log ('Карта вставлена');
-    hidePinScreen();
+    hideWelcomeScreen();
     showPinScreen();
 }
 
-function backToWellcome() {
+function backToWelcome() {
     hidePinScreen();
     showWelcomeScreen();
     clearPin();
 }
 
 // ========== ЛОГИКА PIN-КОДА ==========
-function pinKeyPress(number) {
-    if (pinCode.length < 4) {
-        pinCode += number.toString();
-        updatePinDisplay();
-    }
-}
 
 function updatePinDisplay() {
     const pinInput = document.getElementById('pinInput');
@@ -105,6 +107,42 @@ function submitPin() {
     }
 }
 
+function setUpPinInput() {
+    const pinInput = document.getElementById('pinInput');
+    if (!pinInput) return;
+
+    // Удаляем старый обработчик, если был
+    pinInput.removeEventListener('keydown', pinInput._listener);
+    
+    const handler = function(e) {
+        const key = e.key;
+        if (/^[0-9]$/.test(key)) {
+            if (pinCode.length < 4) {
+                pinCode += key;
+                updatePinDisplay();
+                // Если после добавления длина стала 4, сразу проверяем
+                if (pinCode.length === 4) {
+                    submitPin();
+                }
+            }
+            e.preventDefault();
+        } else if (key === 'Backspace') {
+            pinCode = pinCode.slice(0, -1);
+            updatePinDisplay();
+            e.preventDefault();
+        } else if (key === 'Enter') {
+            submitPin();
+            e.preventDefault();
+        }
+    };
+    
+    pinInput.addEventListener('keydown', handler);
+    pinInput._listener = handler;
+    
+    // Фокус на поле ввода
+    pinInput.focus();
+}
+
 // Запускаем карусель при загрузке страницы, если виден экран приветствия
 document.addEventListener('DOMContentLoaded', () => {
     const welcomeScreen = document.getElementById('welcomeScreen');
@@ -113,76 +151,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// //     // Показываем анимацию
-// //     const welcomeScreen = document.getElementById('welcomeScreen');
-// //     const cardAnimaton = document.getElementById('.card-animation');
-
-// //     if (cardAnimaton) {
-// //         cardAnimaton.style.animation = 'cardInsert 0.5s ease-in-out';
-// //     }
-// // }
-
-// // Переход на экран ввода PIN-кода
-// function showPinScreen() {
-//     // Скрываем экран приветствия
-//     const welcomeScreen = document.getElementById('welcomeScreen');
-//     if (welcomeScreen) welcomeScreen.style.display = 'none';
-    
-//     // Показываем экран ввода PIN-кода
-//     const pinScreen = document.getElementById('pinScreen');
-//     if (pinScreen) pinScreen.style.display = 'block';
-// }
-
-// // ЭКРАН ВВОДА ПИН-КОДА
-// let pinCode = '';
-
-// function pinKeyPress(number) {
-//     if (pinCode.length < 4) {
-//         pinCode += number.toString();
-//         updatePinDisplay();
-//     }
-// }
-
-// function updatePinDisplay() {
-//     const pinInput = document.getElementById('pinInput');
-//     if (pinInput) {
-//         pinInput.value = '*'.repeat(pinCode.length);
-//     }
-// }
-
-// function clearPin() {
-//     pinCode = '';
-//     updatePinDisplay();
-// }
-
-// function submitPin() {
-//     if (pinCode.length === 4) {
-//         console.log('PIN введён:', pinCode);
-        
-//         // Проверка PIN-кода (пока тестовый)
-//         if (pinCode === '1234') {
-//             console.log('PIN верный');
-//             // Переход в главное меню
-//             const pinScreen = document.getElementById('pinScreen');
-//             if (pinScreen) pinScreen.style.display = 'none';
-            
-//             const mainScreen = document.getElementById('mainScreen');
-//             if (mainScreen) mainScreen.style.display = 'block';
-//         } else {
-//             alert('Неверный PIN-код. Попробуйте ещё раз.');
-//             clearPin();
-//         }
-//     } else {
-//         alert('Введите 4 цифры PIN-кода');
-//     }
-// }
-
-// function backToWelcome() {
-//     const pinScreen = document.getElementById('pinScreen');
-//     if (pinScreen) pinScreen.style.display = 'none';
-    
-//     const welcomeScreen = document.getElementById('welcomeScreen');
-//     if (welcomeScreen) welcomeScreen.style.display = 'block';
-    
-//     clearPin();
-// }

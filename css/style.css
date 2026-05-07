@@ -155,9 +155,9 @@ body {
 /* ========== КАРУСЕЛЬ НА ЭКРАНЕ ПРИВЕТСТВИЯ ========== */
 .carousel-container {
     position: relative;
-    width: 80%;
-    max-width: 500px;
-    height: 200px;        /* высота контейнера, подберите под свои изображения */
+    width: 100%;
+    max-width: 800px;
+    height: 500px;        /* высота контейнера, подберите под свои изображения */
     margin: 20px auto;
     overflow: hidden;
     border-radius: 15px;
@@ -318,14 +318,15 @@ body {
 }
 
 .pin-input {
-     width: 200px;
-    padding: 15px;
-    font-size: 24px;
+    width: 250px;
+    padding: 20px;
+    font-size: 28px;
     text-align: center;
-    letter-spacing: 5px;
+    letter-spacing: 8px;
     border: 2px solid #1976D2;
     border-radius: 10px;
     outline: none;
+    background-color: #f9f9f9;
 }
 
 .pin-keypad {
