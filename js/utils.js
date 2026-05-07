@@ -94,6 +94,8 @@ function replenishfirstcassette() {
     if (replenishcassette_1) replenishcassette_1.style.display = 'block';
 }
 
+
+
 // Фнкция для возврата из экрана "Введите загрузку кассеты ..." на экран "Операционный день ресайклера" 
 // через кнопку "Отмена"
 // function cancelreplenishcassette(){

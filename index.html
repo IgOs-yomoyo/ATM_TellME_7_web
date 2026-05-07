@@ -8,14 +8,57 @@
 </head>
 <body>
     <div class="atm-container">
+        <!-- Режим обслуживания клиентов -->
+         <div id="welcomeScreen" class="atm-screen">
+            <div class="screen-title">БАНК ОЗОН</div>
+            <div class="carousel-container">
+                <img src="images/ozon-bank-logo_3.png" alt="Озон Банк" class="carousel-img active">
+                <img src="images/ozon-bank-logo_4.png" alt="Озон Банк" class="carousel-img">
+                <img src="images/ozon-bank-logo_5.png" alt="Озон Банк" class="carousel-img">
+            </div>
+            <button class="atm-button insert-card-btn" onclick="insertCard()">Вставьте карту</button>
+            <button class="atm-button exit-button" onclick="exitApp()">Выход</button>
+         </div>
+         <!-- ЭКРАН ВВОДА ПИН-КОДА -->
+        <div id="pinScreen" class="atm-screen" style="display: none;">
+            <div class="screen-title">БАНК ОЗОН</div>
+            <div class="pin-content">
+                <div class="card-info">
+                    <img src="images/card-icon.png" alt="Карта" class="card-icon">
+                    <span class="card-number">•••• 1234</span>
+                </div>
+                <div class="pin-input-area">
+                    <p class="pin-label">Введите PIN-код</p>
+                    <div class="pin-display">
+                        <input type="password" id="pinInput" class="pin-input" maxlength="4" inputmode="numeric">
+                    </div>
+                    <div class="pin-keypad">
+                        <button class="pin-key" onclick="pinKeyPress(1)">1</button>
+                            <button class="pin-key" onclick="pinKeyPress(2)">2</button>
+                            <button class="pin-key" onclick="pinKeyPress(3)">3</button>
+                            <button class="pin-key" onclick="pinKeyPress(4)">4</button>
+                            <button class="pin-key" onclick="pinKeyPress(5)">5</button>
+                            <button class="pin-key" onclick="pinKeyPress(6)">6</button>
+                            <button class="pin-key" onclick="pinKeyPress(7)">7</button>
+                            <button class="pin-key" onclick="pinKeyPress(8)">8</button>
+                            <button class="pin-key" onclick="pinKeyPress(9)">9</button>
+                            <button class="pin-key" onclick="pinKeyPress(0)">0</button>
+                            <button class="pin-key clear-btn" onclick="clearPin()">C</button>
+                            <button class="pin-key enter-btn" onclick="submitPin()">↵</button>
+                    </div>
+                </div>
+            </div>
+            <button class="atm-button back-to-welcome" onclick="backToWelcome()">Назад</button>
+        </div>
+
         <!-- Главный экран -->
-        <div id="mainScreen" class="atm-screen">
+        <div id="mainScreen" class="atm-screen" style="display: none;">
             <button class="atm-button top-left" onclick="initCassettes()">ИНИЦИАЛИЗАЦИЯ КАССЕТ</button>
             <button class="atm-button top-right" onclick="recyclCollection()">ИНКАССАЦИЯ РЕСАЙКЛЕРА</button>
             <button class="atm-button bottom-right" onclick="showSupervisorMenu()">МЕНЮ ОПЕРАТОРА</button>
             <button class="atm-button exit-button" onclick="exitApp()">Выход</button>
         </div>
-
+        
         <!-- Экран меню оператора -->
         <div id="supervisorScreen" class="atm-screen" style="display: none;">
             <!-- Заголовок экрана -->
@@ -278,6 +321,7 @@
 
 
     <script src="js/utils.js"></script>
+    <script src="js/clientMode.js"></script>
     <script src="js/main.js"></script>
     <script src="js/supervisor.js"></script> 
     <script src="js/openclosedaymenu.js"></script>

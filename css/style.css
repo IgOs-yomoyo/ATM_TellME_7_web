@@ -119,6 +119,265 @@ body {
     justify-content: center;
 }
 
+/* ===========ПОЗИЦИОНИРОВАНИЕ ДЛЯ ЭКРАНА РЕЖИМА ОБСЛУЖИВАНИЯ КЛИЕНТОВ============ */
+#welcomeScreen {
+    background: white;
+    /* background: linear-gradient(135deg, #0a0f2a 0%, #0d1b3e 100%); */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#welcomeScreen .screen-title {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    background-color: #1976D2;
+    color: white;
+    font-size: 48px;
+    font-weight: bold;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 20px;
+    box-shadow: none;
+    height: 150px;
+    display: flex;
+    padding: 15px 20px;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    border-bottom: 3px solid white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* ========== КАРУСЕЛЬ НА ЭКРАНЕ ПРИВЕТСТВИЯ ========== */
+.carousel-container {
+    position: relative;
+    width: 80%;
+    max-width: 500px;
+    height: 200px;        /* высота контейнера, подберите под свои изображения */
+    margin: 20px auto;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.carousel-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;    /* изображение покрывает всю область */
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.carousel-img.active {
+    opacity: 1;
+}
+
+/* Логотип банка на весь экран */
+/* .bank-logo-full {
+    text-align: center;
+    margin-bottom: 70px;
+    margin-top: 90px;
+}
+
+.bank-logo-full-img {
+    width: 150%;
+    max-width: 1000px;
+    height: auto;
+} */
+
+.insert-card-btn {
+    position: absolute;
+    bottom: 45px;
+    right: 50px;
+    width: 250px;
+    height: 100px;
+    font-size: 24px;
+    background-color: #1976D2;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 1000;
+    
+}
+
+.insert-card-btn:hover {
+    background-color: #0099CC;
+    transform: scale(1.02);
+}
+
+/* Анимированная карта (кнопка) */
+/* .animated-card {
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    padding: 25px 20px;
+    background: linear-gradient(135deg, #1e2a5e, #0f1a3a);
+    border-radius: 20px;
+    border: 2px solid #00BFFF;
+    box-shadow: 0 0 20px rgba(0,191,255,0.3);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 20;
+    animation: cardPulse 1.5s infinite;
+}
+
+@keyframes cardPulse {
+    0% { transform: translateX(-50%) scale(1); box-shadow: 0 0 20px rgba(0,191,255,0.3); }
+    50% { transform: translateX(-50%) scale(1.02); box-shadow: 0 0 30px rgba(0,191,255,0.6); }
+    100% { transform: translateX(-50%) scale(1); box-shadow: 0 0 20px rgba(0,191,255,0.3); }
+} */
+
+/* .animated-card:hover {
+    transform: translateX(-50%) scale(1.05);
+    background: linear-gradient(135deg, #2a3a7a, #1a2a5a);
+} */
+
+/* .card-icon-large {
+    font-size: 60px;
+    margin-bottom: 15px;
+    color: #FFD700;
+}
+
+.card-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    letter-spacing: 2px;
+}
+
+.card-subtext {
+    font-size: 14px;
+    color: #ccc;
+    margin-top: 10px;
+} */
+
+/* Кнопка выхода */
+.welcome-exit {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 100px;
+    height: 40px;
+    background-color: #f44336;
+    font-size: 14px;
+    z-index: 10;
+}
+
+
+/* ===========ЭКРАН ВВОДА ПИН-КОДА========= */
+.pin-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 400px;
+}
+
+.card-info {
+    background: #f0f0f0;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.card-icon {
+    width: 40px;
+    height: auto;
+}
+
+.card-number {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.pin-label {
+     font-size: 20px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.pin-display {
+    margin-bottom: 20px;
+}
+
+.pin-input {
+     width: 200px;
+    padding: 15px;
+    font-size: 24px;
+    text-align: center;
+    letter-spacing: 5px;
+    border: 2px solid #1976D2;
+    border-radius: 10px;
+    outline: none;
+}
+
+.pin-keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.pin-key {
+    padding: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #1976D2;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.pin-key:hover {
+    background-color: #1565C0;
+    transform: scale(1.05);
+}
+
+.clear-btn {
+    background-color: #f44336;
+}
+
+.clear-btn:hover {
+    background-color: #d32f2f;
+}
+
+.enter-btn {
+    background-color: #4CAF50;
+}
+
+.enter-btn:hover {
+    background-color: #45a049;
+}
+
+.back-to-welcome {
+    bottom: 150px;
+    right: 50px;
+    width: 200px;
+    height: 60px;
+    background-color: #9E9E9E;
+}
+
+
+
 /* ========== ПОЗИЦИОНИРОВАНИЕ ДЛЯ ГЛАВНОГО МЕНЮ ========== */
 .top-left {
     top: 200px;
