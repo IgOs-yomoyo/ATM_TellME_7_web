@@ -1,5 +1,25 @@
 // Общие функции для переключения экранов
 
+// Функция кнопки "В режим обслуживания клиентов". Новая. 
+function backToWelcomeScreen() {
+    console.log('Функция backToWelcomeScreen вызвана');
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const supervisorScreen = document.getElementById('supervisorScreen');
+    const opencloseday = document.getElementById('opencloseday');
+    const recyclerday = document.getElementById('recyclerday');
+
+    if (welcomeScreen) {
+        welcomeScreen.style.display = 'block';
+        console.log('welcomeScreen display установлен в block');
+    }else{
+        console.error('welcomeScreen не найден');
+    }
+    if (supervisorScreen) supervisorScreen.style.display = 'none';
+    if (opencloseday) opencloseday.style.display = 'none';
+    if (recyclerday) recyclerday.style.display = 'none';
+}
+
+//Функция кнопки "В режим обслуживания клиентов". Переход на экран режима инкассации. Устарело. 
 function showMainMenu() {
     console.log('showMainMenu вызвана')
     const mainScreen = document.getElementById('mainScreen');

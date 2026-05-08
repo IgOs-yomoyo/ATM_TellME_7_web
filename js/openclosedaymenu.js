@@ -22,7 +22,8 @@ function backtosupervisorScreen() {
 
 function backtonormal() {
     console.log('backtonormal вызвана');
-    showMainMenu();
+    // showMainMenu();
+    backToWelcomeScreen();
 }
 
 function recyclerday() {

@@ -17,7 +17,8 @@ function openCloseDay() {
 }
 
 function gotoNormalMode() {
-    showMainMenu();
+    // showMainMenu();
+    backToWelcomeScreen();
 }
 
 function NottoService(){

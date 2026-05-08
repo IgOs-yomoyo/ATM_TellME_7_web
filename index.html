@@ -23,10 +23,7 @@
         <div id="pinScreen" class="atm-screen" style="display: none;">
             <div class="screen-title">БАНК ОЗОН</div>
             <div class="pin-content">
-                <div class="card-info">
-                    <img src="images/card-icon.png" alt="Карта" class="card-icon">
-                    <span class="card-number">•••• 1234</span>
-                </div>
+                <div class="pin-mode-title">РЕЖИМ ИНКАССАЦИИ</div>
                 <div class="pin-input-area">
                     <p class="pin-label">Введите PIN-код</p>
                     <div class="pin-display">
@@ -53,7 +50,7 @@
                 НЕ ОБСЛУЖИВАЕТ</button>
             <button class="atm-button supervisor-shutdown" onclick="shutdownATM()">ВЫКЛЮЧИТЬ<br>БАНКОМАТ
             </button>
-            <button class="atm-button supervisor-service" onclick="showMainMenu()">В РЕЖИМ ОБСЛУЖИВАНИЯ<br>КЛИЕНТОВ
+            <button class="atm-button supervisor-service" onclick="backToWelcomeScreen()">В РЕЖИМ ОБСЛУЖИВАНИЯ<br>КЛИЕНТОВ
             </button>
             <button class="atm-button supervisor-openclose" onclick="openCloseDay()">ОТКРЫТИЕ/ЗАКРЫТИЕ
                 <br>ОПЕРАЦИОННОГО ДНЯ</button>

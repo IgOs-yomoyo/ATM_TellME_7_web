@@ -125,9 +125,11 @@ body {
     /* background: linear-gradient(135deg, #0a0f2a 0%, #0d1b3e 100%); */
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    height: 100%;
     position: relative;
+    padding: 80px 0;
 }
 
 #welcomeScreen .screen-title {
@@ -158,9 +160,11 @@ body {
     width: 100%;
     max-width: 800px;
     height: 500px;        /* высота контейнера, подберите под свои изображения */
-    margin: 20px auto;
+    margin: 0px auto;
     overflow: hidden;
     border-radius: 15px;
+    margin-top: 100px;
+    margin-bottom: auto;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
@@ -278,12 +282,26 @@ body {
 
 /* ===========ЭКРАН ВВОДА ПИН-КОДА========= */
 .pin-content {
-    position: absolute;
-    top: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 400px;
+    /* position: absolute; */
+    /* top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    width: 400px;
+    width: 400px; */
+}
+
+.pin-mode-title {
+    font-size: 38px;
+    font-weight: bold;
+    color: #0a0a0a;
+    margin-bottom: 40px;
+    text-align: center;
+    letter-spacing: 2px;
 }
 
 .card-info {
@@ -308,9 +326,10 @@ body {
 }
 
 .pin-label {
-     font-size: 20px;
-    margin-bottom: 20px;
-    color: #333;
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #050505;
 }
 
 .pin-display {
@@ -353,7 +372,7 @@ body {
     transform: scale(1.05);
 }
 
-.clear-btn {
+/* .clear-btn {
     background-color: #f44336;
 }
 
@@ -363,18 +382,26 @@ body {
 
 .enter-btn {
     background-color: #4CAF50;
-}
+} */
 
 .enter-btn:hover {
     background-color: #45a049;
 }
 
 .back-to-welcome {
-    bottom: 150px;
+    position: absolute;
+    bottom: 45px;
     right: 50px;
-    width: 200px;
-    height: 60px;
-    background-color: #9E9E9E;
+    width: 250px;
+    height: 100px;
+    font-size: 24px;
+    background-color: #1976D2;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 1000;
 }
 
 
