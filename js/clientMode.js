@@ -149,5 +149,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (welcomeScreen && getComputedStyle(welcomeScreen).display !== 'none') {
         startCarousel();
     }
+    // Инициализация переключателя режимов (Normal/Supervisor)
+    if (typeof initModeSwitch === 'function') {
+        initModeSwitch();
+    }
 });
 

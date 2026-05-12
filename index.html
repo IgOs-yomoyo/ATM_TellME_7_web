@@ -9,7 +9,17 @@
 <body>
     <div class="atm-container">
         <!-- normal/supervisor button -->
-        <button id="modeToggleBtn" class="mode-toggle" onclick="toggleMode()">Normal/Supervisor</button>
+        <!-- <button id="modeToggleBtn" class="mode-toggle" onclick="toggleMode()">Normal/Supervisor</button> -->
+        <div class="mode-toggle-container">
+            <div class="mode-labels">
+                <span class="mode-label mode-supervisor">SUPERVISOR</span>
+                <span class="mode-label mode-normal">NORMAL</span>
+            </div>
+            <label class="switch-vertical">
+                <input type="checkbox" id="modeCheckbox">
+                <span class="slider-vertical"></span>
+            </label>        
+    </div>
         <!-- Режим обслуживания клиентов -->
          <div id="welcomeScreen" class="atm-screen">
             <div class="screen-title">БАНК ОЗОН</div>
@@ -21,6 +31,14 @@
             <button class="atm-button insert-card-btn" onclick="insertCard()">Вставьте карту</button>
             <button class="atm-button exit-button" onclick="exitApp()">Выход</button>
          </div>
+         <!-- ЭКРАН "БАНКОМАТ НЕ ОБСЛУЖИВАЕТ" -->
+        <div id="outOfServiceScreen" class="atm-screen" style = 'display: none;'>
+            <div class="screen-title">OZON БАНК</div>
+            <div class="out-of-service-content">
+                <div class="service-icon">🔧</div>
+                <div class="service-message">БАНКОМАТ ВРЕМЕННО НЕ ОБСЛУЖИВАЕТ</div>
+            </div>
+        </div>
          <!-- ЭКРАН ВВОДА ПИН-КОДА -->
         <div id="pinScreen" class="atm-screen" style="display: none;">
             <div class="screen-title">БАНК ОЗОН</div>

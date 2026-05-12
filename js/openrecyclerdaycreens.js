@@ -324,32 +324,7 @@
         { number: 4000, nominal: 5000, loaded: cassetteLoads[4] || 0, index: 4}
     ];
 
-    // function completeOpeningDay() {
-    //     // Подсчёт итогов (можно убрать)
-    //     // let totalLoaded = 0; // Это лишняя переменная. Общее количество загруженных банкнот нам не нужно. 
-    //     let totalAmount = 0;
-    //     let dropped = {1: 0, 2: 0, 3: 0, 4: 0};
-    //     let totalDroppedAmount = 0; //Не факт, что эта переменная нужна. Нужно посмотреть.
-
-        
-    //     for (let i = 1; i <= 4; i++) {
-    //         if (cassetteLoads[i]) {
-    //             // totalLoaded += cassetteLoads[i];
-    //             totalAmount += cassetteLoads[i] * cassetteLimits[i].nominal;
-    //             dropped[i] = (cassetteLoads[i] === 0) ? 0 : Math.floor(Math.random() * 3) + 1;
-    //             totalDroppedAmount += dropped[i] * cassetteLimits[i].nominal;
-    //         }
-    //     }
-
-    //     // Сохраняем данные открытия дня
-    //     const openingData = {
-    //     date: new Date().toLocaleDateString('ru-RU'),
-    //     time: new Date().toLocaleTimeString('ru-RU'),
-    //     cassetteLoads: { ...cassetteLoads },
-    //     dropped: {...dropped},
-    //     totalAmount: totalAmount,
-    //     totalDroppedAmount: totalDroppedAmount
-    
+       
 
     let totalLoaded = 0; //Загруженная сумма общая
     let totalDroppedAmount = 0;

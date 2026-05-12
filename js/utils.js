@@ -3,20 +3,49 @@
 // Функция кнопки "В режим обслуживания клиентов". Новая. 
 function backToWelcomeScreen() {
     console.log('Функция backToWelcomeScreen вызвана');
+
+    // Определяем, какой экран показывать в зависимости от состояния флага
+    let isDayOpen = false;
+    if (typeof isDayOpened === 'function') {
+        isDayOpen = isDayOpened();
+        console.log('Статус операционного дня (isDayOpened):', isDayOpen);
+    }else{
+        console.warn('isDayOpened не найдена');
+    }
+    
+    // Получаем нужные экраны
     const welcomeScreen = document.getElementById('welcomeScreen');
+    const outOfServiceScreen = document.getElementById('outOfServiceScreen');
     const supervisorScreen = document.getElementById('supervisorScreen');
     const opencloseday = document.getElementById('opencloseday');
     const recyclerday = document.getElementById('recyclerday');
 
-    if (welcomeScreen) {
-        welcomeScreen.style.display = 'block';
-        console.log('welcomeScreen display установлен в block');
-    }else{
-        console.error('welcomeScreen не найден');
-    }
+    // Скрываем все экраны, кроме одного из двух
     if (supervisorScreen) supervisorScreen.style.display = 'none';
     if (opencloseday) opencloseday.style.display = 'none';
     if (recyclerday) recyclerday.style.display = 'none';
+
+    if (isDayOpen) {
+        if (welcomeScreen) {
+            welcomeScreen.style.display = 'block';
+            console.log('welcomeScreen показан (день открыт)');
+        }else{
+            console.log('welcomeScreen не найден');
+        }
+        if (outOfServiceScreen) outOfServiceScreen.style.display = 'none';
+        // Запускаем карусель, если она есть
+        if (typeof startCarousel === 'function') startCarousel();
+    }else{
+        // День закрыт - показываем экран outofServece
+        if (outOfServiceScreen) {
+            outOfServiceScreen.style.display = 'block';
+            console.log('outofService показан, день закрыт');
+        }else{
+            console.log('outofService не найден');
+        }
+        if (welcomeScreen) welcomeScreen.style.display = 'none';
+    }
+    
 }
 
 //Функция кнопки "В режим обслуживания клиентов". Переход на экран режима инкассации. Устарело. 
@@ -115,31 +144,75 @@ function replenishfirstcassette() {
 }
 
 
+// Функция инициализации переключателя
+let currentMode = 'normal';
 
-// Фнкция для возврата из экрана "Введите загрузку кассеты ..." на экран "Операционный день ресайклера" 
-// через кнопку "Отмена"
-// function cancelreplenishcassette(){
-//     const replenishcassette_1 = document.getElementById('replenishcassette_1')
-//     const recyclerday = document.getElementById('recyclerday')
+// Функция инициализации переключателя
+function initModeSwitch() {
+    console.log('initModeSwitch вызвана');
+    const checkbox = document.getElementById('modeCheckbox');
+    if (!checkbox) return;
 
-//     if (replenishcassette_1) replenishcassette_1.style.display = 'none';
-//     if (recyclerday) recyclerday.style.display = 'block';
-// }
+    // При загрузке, если текущий режим supervisor, ставим галочку
+    checkbox.checked = (currentMode === 'supervisor');
 
-// // Функция подтверждения загрузки кассеты 1 и переход на экран загрузки кассеты 2
-// function EnterReplenishCassette_1() {
-//     const replenishcassette_1 = document.getElementById('replenishcassette_1')
-//     const replenishcassette_2 = document.getElementById('replenishcassette_2')
+    checkbox.addEventListener('change', function(e){
+        if (this.checked) {
+            //Хотят переключиться в supervisor
+            requestSupervisorMode();
+        }else{
+            // Переключиться в normal
+            switchToNormalMode();
+        }
+    });
+}
 
-//     if (replenishcassette_1) replenishcassette_1.style.display = 'none';
-//     if (replenishcassette_2) replenishcassette_2.style.display = 'block';
-// }
+function requestSupervisorMode() {
+    // Показываем экран авторизации
+    const authScreen = document.getElementById('authScreen');
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const outScreen = document.getElementById('outOfServiceScreen');
+    if (welcomeScreen && welcomeScreen.style.display === 'block') welcomeScreen.style.display = 'none';
+    if (outScreen && outScreen.style.display === 'block') outScreen.style.display = 'none';
+    if (authScreen) authScreen.style.display = 'block';
+    // Сохраняем, что мы пытались переключиться в Supervisor (чтобы после успешной авторизации поставить галочку)
+    window.pendingModeSwitch = 'supervisor';
+}
 
-// // Функция подтверждения загрузки кассеты 2 и переход на экран загрузки кассеты 3
-// function EnterReplenishCassette_2() {
-//     const replenishcassette_2 = document.getElementById('replenishcassette_2')
-//     const replenishcassette_3 = document.getElementById('replenishcassette_3')
+function switchToNormalMode() {
+    // Переключаем в Normal режим
+    if (currentMode === 'supervisor') {
+        exitSupervisorMode(); // выходим из режима оператора (уже есть)
+    } else {
+        // Просто обновляем экран
+        if (typeof backToWelcomeScreen === 'function') backToWelcomeScreen();
+    }
+    const checkbox = document.getElementById('modeCheckbox');
+    if (checkbox) checkbox.checked = false;
+}
 
-//     if (replenishcassette_2) replenishcassette_2.style.display = 'none';
-//     if (replenishcassette_3) replenishcassette_3.style.display = 'block';
-// }
+function onAuthSuccess() {
+    // Вызывается после успешной авторизации
+    if (window.pendingModeSwitch === 'supervisor') {
+        currentMode = 'supervisor';
+        const checkbox = document.getElementById('modeCheckbox');
+        if (checkbox) checkbox.checked = true;
+        // Показываем меню оператора
+        const supervisorScreen = document.getElementById('supervisorScreen');
+        const authScreen = document.getElementById('authScreen');
+        if (authScreen) authScreen.style.display = 'none';
+        if (supervisorScreen) supervisorScreen.style.display = 'block';
+        window.pendingModeSwitch = null;
+    }
+}
+
+function exitSupervisorMode() {
+    currentMode = 'normal';
+    const supervisorScreen = document.getElementById('supervisorScreen');
+    if (supervisorScreen) supervisorScreen.style.display = 'none';
+    if (typeof backToWelcomeScreen === 'function') backToWelcomeScreen();
+    const checkbox = document.getElementById('modeCheckbox');
+    if (checkbox) checkbox.checked = false;
+    // Меняем текст на кнопке переключения? Не нужно, используем радио.
+}
+
