@@ -1,8 +1,16 @@
 // Общие функции для переключения экранов
+let currentMode = 'normal'; 
 
 // Функция кнопки "В режим обслуживания клиентов". Новая. 
 function backToWelcomeScreen() {
     console.log('Функция backToWelcomeScreen вызвана');
+
+    // ======== НОВАЯ ПРОВЕРКА =======
+    // Показываем предупреждение, если supervisor
+    if (currentMode === 'supervisor') {
+        alert('Переведите ключ оператора в рабочее положение');
+        return;
+    }
 
     // Определяем, какой экран показывать в зависимости от состояния флага
     let isDayOpen = false;
@@ -145,7 +153,7 @@ function replenishfirstcassette() {
 
 
 // Функция инициализации переключателя
-let currentMode = 'normal';
+// let currentMode = 'normal';
 
 // Функция инициализации переключателя
 function initModeSwitch() {
@@ -168,18 +176,32 @@ function initModeSwitch() {
 }
 
 function requestSupervisorMode() {
+    console.log('requestSupervisorMode: переключение в supervisor');
+    // Меняем глобальный режим
+    currentMode = 'supervisor';
+
     // Показываем экран авторизации
+    const supervisorScreen = document.getElementById('supervisorScreen');
     const authScreen = document.getElementById('authScreen');
     const welcomeScreen = document.getElementById('welcomeScreen');
     const outScreen = document.getElementById('outOfServiceScreen');
-    if (welcomeScreen && welcomeScreen.style.display === 'block') welcomeScreen.style.display = 'none';
-    if (outScreen && outScreen.style.display === 'block') outScreen.style.display = 'none';
+    // if (welcomeScreen && welcomeScreen.style.display === 'block') welcomeScreen.style.display = 'none';
+    // if (outScreen && outScreen.style.display === 'block') outScreen.style.display = 'none';
+    // if (authScreen) authScreen.style.display = 'block';
+    if (welcomeScreen) welcomeScreen.style.display = 'none';
+    if (outOfServiceScreen) outOfServiceScreen.style.display = 'none';
+    if (supervisorScreen) supervisorScreen.style.display = 'none';
     if (authScreen) authScreen.style.display = 'block';
     // Сохраняем, что мы пытались переключиться в Supervisor (чтобы после успешной авторизации поставить галочку)
-    window.pendingModeSwitch = 'supervisor';
+    // window.pendingModeSwitch = 'supervisor';
+
+    // Синхронизируем checkbox
+    const checkbox = document.getElementById('modeCheckbox');
+    if (checkbox && !checkbox.checked)checkbox.checked = true;
 }
 
 function switchToNormalMode() {
+    console.log('switchToNormalMode: переключение в normal');
     // Переключаем в Normal режим
     if (currentMode === 'supervisor') {
         exitSupervisorMode(); // выходим из режима оператора (уже есть)
@@ -188,7 +210,7 @@ function switchToNormalMode() {
         if (typeof backToWelcomeScreen === 'function') backToWelcomeScreen();
     }
     const checkbox = document.getElementById('modeCheckbox');
-    if (checkbox) checkbox.checked = false;
+    if (checkbox && checkbox.checked) checkbox.checked = false;
 }
 
 function onAuthSuccess() {
@@ -207,12 +229,15 @@ function onAuthSuccess() {
 }
 
 function exitSupervisorMode() {
+    console.log('exitSupervisorMode: выход из Supervisor');
     currentMode = 'normal';
     const supervisorScreen = document.getElementById('supervisorScreen');
+    const authScreen = document.getElementById('authScreen');
     if (supervisorScreen) supervisorScreen.style.display = 'none';
+    if (authScreen) authScreen.style.display = 'none';
+    // Показываем экран в зависимости от состояния опер дня
     if (typeof backToWelcomeScreen === 'function') backToWelcomeScreen();
     const checkbox = document.getElementById('modeCheckbox');
-    if (checkbox) checkbox.checked = false;
-    // Меняем текст на кнопке переключения? Не нужно, используем радио.
+    if (checkbox && checkbox.checked) checkbox.checked = false;
 }
 
