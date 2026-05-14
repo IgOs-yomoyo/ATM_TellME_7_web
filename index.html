@@ -60,20 +60,17 @@
                 <div class="load-cassette-container">
                     <div class="info-row">
                         <div class="info-label">КОД ПОЛЬЗОВАТЕЛЯ</div>
-                        <input type="text" id="loginInput" class="auth-input" placeholder="Код пользователя" autocomplete="off">
+                        <input type="text" id="loginInput" class="info-input" placeholder="Код пользователя" autocomplete="off">
                     </div>
                     <div class="info-row">
                         <div class="info-label">Пароль</div>
-                        <input type="password" id="passwordInput" class="auth-input" placeholder="Пароль">
+                        <input type="password" id="passwordInput" class="info-input" placeholder="Пароль">
                     </div>
                 </div>
             </div>    
-            <div class="auth-buttons">
-                <button class="atm-button auth-cancel-btn" onclick="cancelAuth()">Отмена</button>
-                <button class="atm-button auth-reset-btn" onclick="resetAuth()">Сброс</button>
-                <button class="atm-button auth-submit-btn" onclick="submitAuth()">Ввод</button>
-            </div>
-            </div>
+            <button class="atm-button cancel-btn" onclick="cancelAuth()">Отмена</button>
+            <button class="atm-button reset-btn" onclick="resetAuth()">Сброс</button>
+            <button class="atm-button enter-btn" onclick="submitAuth()">Ввод</button>
         </div>
         <!-- Главный экран -->
         <div id="mainScreen" class="atm-screen" style="display: none;">
