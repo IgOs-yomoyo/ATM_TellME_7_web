@@ -55,21 +55,24 @@
         </div>
         <!-- Экран авторизации в TellME7 -->
         <div id="authScreen" class="atm-screen" style="display: none;">
-            <div class="screen-title">АВТОРИЗАЦИЯ</div>
-            <div class="auth-conteiner">
-                <div class="auth-field">
-                    <label>КОД ПОЛЬЗОВАТЕЛЯ</label>
-                    <input type="text" id="loginInput" class="auth-input" placeholder="Код пользователя" autocomplete="off">
+            <div class="screen-title">Вход в TellME7</div>
+            <div class="screen-content">
+                <div class="load-cassette-container">
+                    <div class="info-row">
+                        <div class="info-label">КОД ПОЛЬЗОВАТЕЛЯ</div>
+                        <input type="text" id="loginInput" class="auth-input" placeholder="Код пользователя" autocomplete="off">
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Пароль</div>
+                        <input type="password" id="passwordInput" class="auth-input" placeholder="Пароль">
+                    </div>
                 </div>
-                <div class="auth-field">
-                    <label>Пароль</label>
-                    <input type="password" id="passwordInput" class="auth-input" placeholder="Пароль">
-                </div>
-                <div class="auth-buttons">
-                    <button class="atm-button auth-cancel-btn" onclick="cancelAuth()">Отмена</button>
-                    <button class="atm-button auth-reset-btn" onclick="resetAuth()">Сброс</button>
-                    <button class="atm-button auth-submit-btn" onclick="submitAuth()">Ввод</button>
-                </div>
+            </div>    
+            <div class="auth-buttons">
+                <button class="atm-button auth-cancel-btn" onclick="cancelAuth()">Отмена</button>
+                <button class="atm-button auth-reset-btn" onclick="resetAuth()">Сброс</button>
+                <button class="atm-button auth-submit-btn" onclick="submitAuth()">Ввод</button>
+            </div>
             </div>
         </div>
         <!-- Главный экран -->
