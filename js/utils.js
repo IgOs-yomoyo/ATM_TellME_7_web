@@ -152,92 +152,17 @@ function replenishfirstcassette() {
 }
 
 
-// Функция инициализации переключателя
-// let currentMode = 'normal';
 
-// Функция инициализации переключателя
-function initModeSwitch() {
-    console.log('initModeSwitch вызвана');
-    const checkbox = document.getElementById('modeCheckbox');
-    if (!checkbox) return;
 
-    // При загрузке, если текущий режим supervisor, ставим галочку
-    checkbox.checked = (currentMode === 'supervisor');
 
-    checkbox.addEventListener('change', function(e){
-        if (this.checked) {
-            //Хотят переключиться в supervisor
-            requestSupervisorMode();
-        }else{
-            // Переключиться в normal
-            switchToNormalMode();
-        }
-    });
-}
 
-function requestSupervisorMode() {
-    console.log('requestSupervisorMode: переключение в supervisor');
-    // Меняем глобальный режим
-    currentMode = 'supervisor';
 
-    // Показываем экран авторизации
-    const supervisorScreen = document.getElementById('supervisorScreen');
-    const authScreen = document.getElementById('authScreen');
-    const welcomeScreen = document.getElementById('welcomeScreen');
-    const outScreen = document.getElementById('outOfServiceScreen');
-    // if (welcomeScreen && welcomeScreen.style.display === 'block') welcomeScreen.style.display = 'none';
-    // if (outScreen && outScreen.style.display === 'block') outScreen.style.display = 'none';
-    // if (authScreen) authScreen.style.display = 'block';
-    if (welcomeScreen) welcomeScreen.style.display = 'none';
-    if (outOfServiceScreen) outOfServiceScreen.style.display = 'none';
-    if (supervisorScreen) supervisorScreen.style.display = 'none';
-    if (authScreen) authScreen.style.display = 'block';
-    // Сохраняем, что мы пытались переключиться в Supervisor (чтобы после успешной авторизации поставить галочку)
-    // window.pendingModeSwitch = 'supervisor';
 
-    // Синхронизируем checkbox
-    const checkbox = document.getElementById('modeCheckbox');
-    if (checkbox && !checkbox.checked)checkbox.checked = true;
-}
 
-function switchToNormalMode() {
-    console.log('switchToNormalMode: переключение в normal');
-    // Переключаем в Normal режим
-    if (currentMode === 'supervisor') {
-        exitSupervisorMode(); // выходим из режима оператора (уже есть)
-    } else {
-        // Просто обновляем экран
-        if (typeof backToWelcomeScreen === 'function') backToWelcomeScreen();
-    }
-    const checkbox = document.getElementById('modeCheckbox');
-    if (checkbox && checkbox.checked) checkbox.checked = false;
-}
 
-function onAuthSuccess() {
-    // Вызывается после успешной авторизации
-    if (window.pendingModeSwitch === 'supervisor') {
-        currentMode = 'supervisor';
-        const checkbox = document.getElementById('modeCheckbox');
-        if (checkbox) checkbox.checked = true;
-        // Показываем меню оператора
-        const supervisorScreen = document.getElementById('supervisorScreen');
-        const authScreen = document.getElementById('authScreen');
-        if (authScreen) authScreen.style.display = 'none';
-        if (supervisorScreen) supervisorScreen.style.display = 'block';
-        window.pendingModeSwitch = null;
-    }
-}
 
-function exitSupervisorMode() {
-    console.log('exitSupervisorMode: выход из Supervisor');
-    currentMode = 'normal';
-    const supervisorScreen = document.getElementById('supervisorScreen');
-    const authScreen = document.getElementById('authScreen');
-    if (supervisorScreen) supervisorScreen.style.display = 'none';
-    if (authScreen) authScreen.style.display = 'none';
-    // Показываем экран в зависимости от состояния опер дня
-    if (typeof backToWelcomeScreen === 'function') backToWelcomeScreen();
-    const checkbox = document.getElementById('modeCheckbox');
-    if (checkbox && checkbox.checked) checkbox.checked = false;
-}
+
+
+
+
 
