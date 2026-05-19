@@ -1,5 +1,5 @@
 // Общие функции для переключения экранов
-let currentMode = 'normal'; 
+// let currentMode = 'normal'; 
 
 // Функция кнопки "В режим обслуживания клиентов". Новая. 
 function backToWelcomeScreen() {

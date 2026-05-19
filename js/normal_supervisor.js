@@ -80,20 +80,28 @@ function requestSupervisorMode() {
 }
 
 // Переключение в Normal (слайдер вниз)
+// Просто переключаем клавишу (переключаем режим), но без переключения экранов. 
 function switchToNormalMode() {
-    if (currentMode === 'supervisor') {
-        exitSupervisorMode();
-    } else {
-        showClientScreen();
-    }
-    const checkbox = document.getElementById('modeCheckbox');
-    if (checkbox && checkbox.checked) checkbox.checked = false;
-    window.pendingModeSwitch = null;
+        currentMode = 'normal';
+        window.pendingModeSwitch = null;
+        console.log('currentMode установлен в Normal, экран не изменён');
 }
+// function switchToNormalMode() {
+//     if (currentMode === 'supervisor') {
+//         exitSupervisorMode();
+//     } else {
+//         showClientScreen();
+//     }
+//     const checkbox = document.getElementById('modeCheckbox');
+//     if (checkbox && checkbox.checked) checkbox.checked = false;
+//     window.pendingModeSwitch = null;
+// }
 
 // Выход из режима Supervisor (например, по кнопке в меню оператора)
 function exitSupervisorMode() {
+    console.log('Функция exitSupervisorMode');
     currentMode = 'normal';
+    // console.log('Текущий режим:' [currentMode]);
     const supervisorScreen = document.getElementById('supervisorScreen');
     const authScreen = document.getElementById('authScreen');
     if (supervisorScreen) supervisorScreen.style.display = 'none';
