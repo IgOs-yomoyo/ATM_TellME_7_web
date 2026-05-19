@@ -74,12 +74,47 @@
         </div>
         <!-- Главный экран -->
         <div id="mainScreen" class="atm-screen" style="display: none;">
-            <button class="atm-button top-left" onclick="initCassettes()">ИНИЦИАЛИЗАЦИЯ КАССЕТ</button>
+            <div class="screen-title">МЕНЮ ИНКАССАЦИИ</div>
+            <div class="main-menu-buttons">
+                <div class="atm-button main-btn" onclick="getBalance()">ПОЛУЧИТЬ БАЛАНС</div>
+                <div class="atm-button main-btn" onclick="performCollection()">ПРОВЕСТИ ИНКАССАЦИЮ</div>
+                <div class="atm-button main-btn exit" onclick="exitCollectionScreen()">Выход</div>
+            </div>
+            <!-- <button class="atm-button top-left" onclick="initCassettes()">ИНИЦИАЛИЗАЦИЯ КАССЕТ</button>
             <button class="atm-button top-right" onclick="recyclCollection()">ИНКАССАЦИЯ РЕСАЙКЛЕРА</button>
             <button class="atm-button bottom-right" onclick="showSupervisorMenu()">МЕНЮ ОПЕРАТОРА</button>
-            <button class="atm-button exit-button" onclick="exitApp()">Выход</button>
+            <button class="atm-button exit-button" onclick="exitApp()">Выход</button> -->
         </div>
-        
+        <!-- Экран с чеком "Получить баланс" -->
+        <div id="balanceReceiptScreen" class="atm-screen" style="display: none;">
+            <div class="screen-title">ЧЕК БАЛАНС</div>
+            <div class="receipt-container">
+                <div class="receipt-content" id="balanceReceiptContent">
+                    <!-- Здесь будет чек -->
+                </div>
+            </div>
+            <button class="atm-button take-receipt-btn" onclick="closeBalanceReceipt()">ЗАБРАТЬ ЧЕК</button>
+         </div>
+         <!-- Экран с чеком "Провести инкассацию" -->
+        <div id="collectionReceiptScreen" class="atm-screen" style="display: none;">
+            <div class="screen-title">ЧУК ИНКАССАЦИИ</div>
+            <div class="receipt-container">
+                <div class="receipt-content" id="collectionReceiptContent">
+                    <!-- Здесь будет чек -->
+                </div>
+            </div>
+            <button class="atm-button take-receipt-btn" onclick="closeCollectionReceipt()">ЗАБРАТЬ ЧЕК</button>
+        </div>
+
+        <!-- Экран "Заберите карту" -->
+        <div id="takeCardScreen" class="atm-screen" style="display: none;">
+            <div class="atm-screen">БАНК ОЗОН</div>
+            <div class="take-card-content">
+                <div class="card-return-icon">💳</div>
+                <div class="take-card-message">ЗАБЕРИТЕ КАРТУ</div>
+                <button class="atm-button take-card-btn" onclick="takeCard()">Забрать карту</button>  
+            </div>
+        </div>
         <!-- Экран меню оператора -->
         <div id="supervisorScreen" class="atm-screen" style="display: none;">
             <!-- Заголовок экрана -->
@@ -344,11 +379,12 @@
     <script src="js/utils.js"></script>
     <script src="js/normal_supervisor.js"></script>
     <script src="js/clientMode.js"></script>
+    <script src="js/closerecyclerday.js"></script>
     <script src="js/main.js"></script>
     <script src="js/supervisor.js"></script> 
     <script src="js/openclosedaymenu.js"></script>
     <script src="js/recyclerdaymenu.js"></script> 
     <script src="js/openrecyclerdaycreens.js"></script>
-    <script src="js/closerecyclerday.js?v=2"></script>
+    <!-- <script src="js/closerecyclerday.js?v=2"></script> -->
 </body>
 </html>

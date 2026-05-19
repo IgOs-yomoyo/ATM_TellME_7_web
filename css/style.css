@@ -406,6 +406,58 @@ input:checked + .slider-vertical {
     z-index: 1000;
 }
 
+/* ======= Стили для экрана mainScreen ======= */
+.main-menu-buttons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 80%;
+    max-width: 400px;
+}
+
+.main-btn {
+    position: static;
+    width: 100%;
+    padding: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: #1976D2;
+    color: white;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.main-btn:hover {
+    transform: scale(1.02);
+    filter: brightness(1.05);
+}
+
+.main-btn.exit {
+    background-color: #f44336;
+}
+
+.main-btn:hover {
+    background-color: #d32f2f;
+}
+
+.take-receipt-btn {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    width: 250px;
+    height: 70px;
+    font-size: 24px;
+    background-color: #1976D2;
+}
+
+
+
 /* ========== Экран outOfService ========== */
 .out-of-service-content {
     position: absolute;
