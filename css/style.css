@@ -407,13 +407,18 @@ input:checked + .slider-vertical {
 }
 
 /* ======= Стили для экрана mainScreen ======= */
-.main-menu-buttons {
-    position: absolute;
-    bottom: 150px;
-    left: 20px;
-    right: 20px;
-    display: flex;
-    gap: 20px;
+.main-menu-buttons .atm-button.main-btn {
+    flex: 1 !important;
+    padding: 20px;
+    font-size: 24px;
+    background-color: #1976D2;
+    color: white;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    text-align: center;
+    width: auto;           /* уберите возможную ширину 100% */
+    display: inline-block !important; /* или block, но с учётом flex */
 }
 
 .main-menu-buttons .main-btn {
