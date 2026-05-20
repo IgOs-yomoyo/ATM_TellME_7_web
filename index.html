@@ -75,15 +75,15 @@
         <!-- Главный экран -->
         <div id="mainScreen" class="atm-screen" style="display: none;">
             <div class="screen-title">МЕНЮ ИНКАССАЦИИ</div>
+                <!-- <div style="position: absolute; bottom: 150px; left: 20px; right: 20px; display: flex; gap: 20px;">
+                <button style="flex: 1; padding: 20px; font-size: 24px; background-color: #1976D2; color: white; border: none; border-radius: 16px; cursor: pointer;" onclick="getBalance()">ПОЛУЧИТЬ БАЛАНС</button>
+                <button style="flex: 1; padding: 20px; font-size: 24px; background-color: #1976D2; color: white; border: none; border-radius: 16px; cursor: pointer;" onclick="performCollection()">ПРОВЕСТИ ИНКАССАЦИЮ</button>
+            </div> -->
             <div class="main-menu-buttons">
-                <div class="atm-button main-btn" onclick="getBalance()">ПОЛУЧИТЬ БАЛАНС</div>
-                <div class="atm-button main-btn" onclick="performCollection()">ПРОВЕСТИ ИНКАССАЦИЮ</div>
-                <div class="atm-button main-btn exit" onclick="exitCollectionScreen()">Выход</div>
+                <button class="atm-button main-btn" onclick="getBalance()">ПОЛУЧИТЬ БАЛАНС</button>
+                <button class="atm-button main-btn" onclick="performCollection()">ПРОВЕСТИ ИНКАССАЦИЮ</button>
             </div>
-            <!-- <button class="atm-button top-left" onclick="initCassettes()">ИНИЦИАЛИЗАЦИЯ КАССЕТ</button>
-            <button class="atm-button top-right" onclick="recyclCollection()">ИНКАССАЦИЯ РЕСАЙКЛЕРА</button>
-            <button class="atm-button bottom-right" onclick="showSupervisorMenu()">МЕНЮ ОПЕРАТОРА</button>
-            <button class="atm-button exit-button" onclick="exitApp()">Выход</button> -->
+            <button class="atm-button exit-top-right" onclick="exitCollectionScreen()">Выход</button>
         </div>
         <!-- Экран с чеком "Получить баланс" -->
         <div id="balanceReceiptScreen" class="atm-screen" style="display: none;">
