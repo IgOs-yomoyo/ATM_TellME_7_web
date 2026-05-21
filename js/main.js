@@ -12,6 +12,9 @@
 //     showSupervisorMenu();
 // }
 
+// Флаг для правильной работы функций
+let isCollectionMode = false; //false - баланс, true - инкассация
+
 
 // Функция для генерации содержимого чека (общая для баланса и инкассации)
 // использует данные из openingDayData или cassetteLoads
@@ -96,10 +99,17 @@ function showBalanceReceipt() {
 function closeBalanceReceipt() {
     const balanceScreen = document.getElementById('balanceReceiptScreen');
     if (balanceScreen) balanceScreen.style.display = 'none';
-    // Возвращаемся в меню инкассации
-    const mainScreen = document.getElementById('mainScreen');
-    if (mainScreen) mainScreen.style.display = 'block';
+
+    if (isCollectionMode) {
+        //Если после кнопки Провести инкассацию, то показываем экран Заберите карту
+        showTakeCardScreen();
+    }else{
+        //После кнопки Получить баланс возвращаемся в Меню инкассации
+        const mainScreen = document.getElementById('mainScreen');
+        if (mainScreen) mainScreen.style.display = 'block';
+    }
 }
+
 
 function showCollectionReceipt() {
     const mainScreen = document.getElementById('mainScreen');
@@ -112,68 +122,51 @@ function showCollectionReceipt() {
 function closeCollectionReceipt() {
     const collectionScreen = document.getElementById('collectionReceiptScreen');
     if (collectionScreen) collectionScreen.style.display = 'none';
-    const mainScreen = document.getElementById('mainScreen');
-    if (mainScreen) mainScreen.style.display = 'block';
+
+    if (isCollectionMode) {
+        showTakeCardScreen();
+    }else{
+        const mainScreen = document.getElementById('mainScreen');
+        if (mainScreen) mainScreen.style.display = 'block';    
+    }
 }
 
 function exitCollectionScreen(){
     const mainScreen = document.getElementById('mainScreen');
     if (mainScreen) mainScreen.style.display = 'none';
-    const outOfServiceScreen = document.getElementById('outOfServiceScreen');
-    if (outOfServiceScreen) outOfServiceScreen.style.display = 'block';
+
+    if (typeof backToWelcomeScreen === 'function') {
+        backToWelcomeScreen();
+    }
+    // const outOfServiceScreen = document.getElementById('outOfServiceScreen');
+    // if (outOfServiceScreen) outOfServiceScreen.style.display = 'block';
 }
 
 // Обновляем кнопки в mainScreen
 function getBalance() {
+    isCollectionMode = false; //Чек Баланс, поэтому false
     showBalanceReceipt();
 }
 
 function performCollection() {
+    isCollectionMode = true; //Чек Инкассация, поэтому true
     showCollectionReceipt();
 }
 
+//Функция демонстрации экрана "Заберите карту"
+function showTakeCardScreen() {
+    const mainScreen = document.getElementById('mainScreen');
+    if (mainScreen) mainScreen.style.display = 'none';
+    const takeCardScreen = document.getElementById('takeCardScreen');
+    if (takeCardScreen) takeCardScreen.style.display = 'block';
+}
 
-// exitCollectionScreen()
+//Функция для кнопки "Забрать карту"
+function takeCard() {
+    const takeCardScreen = document.getElementById('takeCardScreen');
+    if (takeCardScreen) takeCardScreen.style.display = 'none';
 
-//<script>
-        // Функции переключения экранов
-        // function showMainMenu() {
-        //     document.getElementById('mainScreen').style.display = 'block';
-        //     document.getElementById('supervisorScreen').style.display = 'none';
-        // }
+    const outOfServiceScreen = document.getElementById('outOfServiceScreen');
+    if (outOfServiceScreen) outOfServiceScreen.style.display = 'block'; 
+}
 
-        // function showSupervisorMenu() {
-        //     document.getElementById('mainScreen').style.display = 'none';
-        //     document.getElementById('supervisorScreen').style.display = 'block';
-        // }
-
-        // // Функции главного меню
-        // function initCassettes() {
-        //     alert("Инициализация кассет выполнена!");
-        // }
-
-        // function recyclCollection() {
-        //     alert("Инкассация ресайклера выполнена!");
-        // }
-
-        // function exitApp() {
-        //     if (confirm("Вы уверены, что хотите выйти?")) {
-        //         document.body.innerHTML = '<div style="text-align:center; margin-top:50px;"><h1>🔌 Банкомат выключен</h1><button onclick="location.reload()">Включить</button></div>';
-        //     }
-        // }
-
-        // Функции меню оператора
-        // function shutdownATM() {
-        //     if (confirm("Выключить банкомат?")) {
-        //         alert("Банкомат выключается...");
-        //     }
-        // }
-
-        // function deviceStatus() {
-        //     alert("Состояние устройств:\n- Кассеты: OK\n- Принтер: OK\n- Дисплей: OK");
-        // }
-
-        // function openCloseDay() {
-        //     alert("Открытие/закрытие операционного дня");
-        // }
-    // </script>
