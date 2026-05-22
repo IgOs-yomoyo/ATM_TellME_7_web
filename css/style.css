@@ -445,13 +445,13 @@ input:checked + .slider-vertical {
     }
 }
 
-.main-btn:hover {
+.main-menu-buttons button:hover {
     transform: scale(1.02);
     filter: brightness(1.05);
 }
 
 
-.main-btn:hover {
+.main-menu-buttons button:hover {
     background-color: #1976D2;
 }
 
@@ -493,7 +493,61 @@ input:checked + .slider-vertical {
     background-color: #1976D2;
 }
 
+/* ======= Стили для экрана Заберите карту ======= */
+/* Экран "Заберите карту" */
+#takeCardScreen {
+    background: white;
+}
 
+.take-card-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-return-icon {
+    font-size: 120px;
+    margin-bottom: 20px;
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    animation: cardEject 0.5s ease-out forwards;
+}
+
+@keyframes cardEject {
+    0% { transform: translateX(-50px) rotate(-10deg); opacity: 0; }
+    100% { transform: translateX(0) rotate(0); opacity: 1; }
+}
+
+.take-card-message {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 40px;
+}
+
+.take-card-btn {
+    width: 250px;
+    height: 70px;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: #667eea;
+    color: white;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-top: 450px;
+}
 
 /* ========== Экран outOfService ========== */
 .out-of-service-content {
