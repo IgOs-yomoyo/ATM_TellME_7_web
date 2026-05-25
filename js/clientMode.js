@@ -72,7 +72,7 @@ function backToWelcome() {
     clearPin();
 }
 
-// ========== ЛОГИКА PIN-КОДА ==========
+// ========== ЛОГИКА ЭКРАНА ВВОДА PIN-КОДА ==========
 
 function updatePinDisplay() {
     const pinInput = document.getElementById('pinInput');
@@ -92,7 +92,7 @@ function submitPin() {
         
         // Здесь будет проверка PIN-кода (сравнение с базой данных)
         // Пока тестовый PIN 1234
-        if (pinCode === '1234') {
+        if (pinCode === '1478') {
             console.log('PIN верный');
             // Переход в главное меню
             hidePinScreen();

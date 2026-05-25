@@ -39,6 +39,43 @@ function cancelAuth() {
     showClientScreen();
 }
 
+//Настройка обработчиков ввода. Вызывается при открытии экрана авторизации
+function setupAuthInput() {
+    console.log('setupAuthInput запущена')
+    const loginInput = document.getElementById('loginInput');
+    const passwordInput = document.getElementById('passwordInput');
+
+    if (!loginInput || !passwordInput) return;
+
+    // Удаляем старые обработчики, чтобы не дублировать. 
+    loginInput.removeEventListener('keypress', onLoginKeyPress);
+    passwordInput.removeEventListener('keypress', onPasswordKeyPress);
+
+    // Добавляем новые обработчики
+    loginInput.addEventListener('keypress', onLoginKeyPress);
+    passwordInput.addEventListener('keypress', onPasswordKeyPress);
+}
+
+// Обработчик для поля "Код пользователя"
+function onLoginKeyPress(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        const passwordInput = document.getElementById('passwordInput');
+        if (passwordInput) {
+            passwordInput.focus();
+        }
+    }
+}
+
+// Обработчик для поля "Пароль"
+function onPasswordKeyPress(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        // Вызываем проверку авторизации
+        submitAuth();
+    }
+}
+
 // Отправка формы авторизации
 function submitAuth() {
     const login = document.getElementById('loginInput').value;
@@ -49,7 +86,9 @@ function submitAuth() {
     } else {
         alert('Неверный код пользователя или пароль');
         resetAuth();
-        // Не сбрасываем чекбокс, не меняем режим – остаёмся на authScreen
+        // Не сбрасываем чекбокс, не меняем режим – остаёмся на authScreen, фокус на поле Код пользователя
+        const loginInput = document.getElementById('loginInput');
+        if (loginInput) loginInput.focus();
     }
 }
 
@@ -75,6 +114,12 @@ function requestSupervisorMode() {
     if (welcomeScreen) welcomeScreen.style.display = 'none';
     if (outOfServiceScreen) outOfServiceScreen.style.display = 'none';
     if (authScreen) authScreen.style.display = 'block';
+    setupAuthInput();
+    // Ставим фокус на поле "Код пользователя"
+    setTimeout(() => {
+        const loginInput = document.getElementById('loginInput');
+        if (loginInput) loginInput.focus();
+    }, 100);
     window.pendingModeSwitch = 'supervisor';
     resetAuth();
 }
