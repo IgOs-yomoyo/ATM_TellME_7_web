@@ -58,13 +58,6 @@ function backToWelcomeScreen() {
 
 // Функция для кнопки "В режим банкомат не обслуживает"
 function toOutOfService() {
-    // Показываем предупреждение, если режим supervisor
-    // console.log('toOutOfService запущена');
-    // console.log('currentMode=', currentMode);
-    // if (currentMode === 'supervisor') {
-    //     alert('Переведите ключ оператора в рабочее положение');
-    //     return;
-    // }
     //Проверяем положение переключателя
     const checkbox = document.getElementById('modeCheckbox');
     const isSupervisorMode = checkbox && checkbox.checked;
@@ -86,30 +79,6 @@ function toOutOfService() {
     if (outOfServiceScreen) outOfServiceScreen.style.display = 'block';
 
 }
-//Функция кнопки "В режим обслуживания клиентов". Переход на экран режима инкассации. Устарело. 
-// function showMainMenu() {
-//     console.log('showMainMenu вызвана')
-//     const mainScreen = document.getElementById('mainScreen');
-//     const supervisorScreen = document.getElementById('supervisorScreen');
-//     const opencloseday = document.getElementById('opencloseday');
-//     const recyclerday = document.getElementById('recyclerday');
-
-//     console.log('mainScreen:', mainScreen);
-//     console.log('supervisorScreen:', supervisorScreen);
-//     console.log('opencloseday:', opencloseday);
-//     console.log('recyclerday:', recyclerday);
-
-
-//     if (mainScreen) {
-//          mainScreen.style.display = 'block';
-//         console.log('mainScreen display установлен в block');
-//     } else {
-//         console.error('mainScreen не найден!');
-//     }    
-//     if (supervisorScreen) supervisorScreen.style.display = 'none';
-//     if (opencloseday) opencloseday.style.display = 'none';
-//     if (recyclerday) recyclerday.style.display = 'none';
-// }
 
 //Функция перехода из меню "Сервисная карта" - mainScreen к главному экрану меню оператора (supervisor).
 function showSupervisorMenu() {
