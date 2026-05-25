@@ -56,6 +56,36 @@ function backToWelcomeScreen() {
     
 }
 
+// Функция для кнопки "В режим банкомат не обслуживает"
+function toOutOfService() {
+    // Показываем предупреждение, если режим supervisor
+    // console.log('toOutOfService запущена');
+    // console.log('currentMode=', currentMode);
+    // if (currentMode === 'supervisor') {
+    //     alert('Переведите ключ оператора в рабочее положение');
+    //     return;
+    // }
+    //Проверяем положение переключателя
+    const checkbox = document.getElementById('modeCheckbox');
+    const isSupervisorMode = checkbox && checkbox.checked;
+    
+    if (isSupervisorMode) {
+        alert('Переведите ключ оператора в рабочее положение');
+        return;
+    }
+    // Получаем экраны
+    const supervisorScreen = document.getElementById('supervisorScreen');
+    const openCloseDay = document.getElementById('openCloseDay');
+    const recyclerday = document.getElementById('recyclerday');
+    if (supervisorScreen) supervisorScreen.style.display = 'none';
+    if (openCloseDay) openCloseDay.style.display = 'none';
+    if (recyclerday) recyclerday.style.display = 'none';
+    
+
+    const outOfServiceScreen = document.getElementById('outOfServiceScreen');
+    if (outOfServiceScreen) outOfServiceScreen.style.display = 'block';
+
+}
 //Функция кнопки "В режим обслуживания клиентов". Переход на экран режима инкассации. Устарело. 
 // function showMainMenu() {
 //     console.log('showMainMenu вызвана')
