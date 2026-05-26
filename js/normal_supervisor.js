@@ -44,17 +44,29 @@ function setupAuthInput() {
     console.log('setupAuthInput запущена')
     const loginInput = document.getElementById('loginInput');
     const passwordInput = document.getElementById('passwordInput');
+    const submitBtn = document.querySelector('#authScreen .enter-btn');
+    // const submitBtn = document.querySelector('#authScreen .auth-submit-btn');
 
     if (!loginInput || !passwordInput) return;
 
     // Удаляем старые обработчики, чтобы не дублировать. 
     loginInput.removeEventListener('keypress', onLoginKeyPress);
     passwordInput.removeEventListener('keypress', onPasswordKeyPress);
+    if (submitBtn) {
+        submitBtn.removeEventListener('click', onAuthSubmitClick);
+    }
 
     // Добавляем новые обработчики
     loginInput.addEventListener('keypress', onLoginKeyPress);
     passwordInput.addEventListener('keypress', onPasswordKeyPress);
+
+    // Обработчик для кнопки Ввод - переключает фокус или отправляет форму
+    if (submitBtn) {
+        submitBtn.addEventListener('click', onAuthSubmitClick);
+    }
 }
+
+
 
 // Обработчик для поля "Код пользователя"
 function onLoginKeyPress(event) {
@@ -73,6 +85,34 @@ function onPasswordKeyPress(event) {
         event.preventDefault();
         // Вызываем проверку авторизации
         submitAuth();
+    }
+}
+
+// Обработчик для кнопки Ввод
+function onAuthSubmitClick(event) {
+    event.preventDefault();
+
+    // Определяем, какое поле сейчас в фокусе
+    const loginInput = document.getElementById('loginInput');
+    const passwordInput = document.getElementById('passwordInput');
+    const activeElement = document.activeElement;
+
+    if (activeElement === loginInput) {
+        // Если фокус на поле Код пользователя, переключаемся на поле Пароль
+        if (passwordInput) {
+            passwordInput.focus();
+        }
+    }else if (activeElement === passwordInput) {
+        submitAuth();
+    }else {
+        if (loginInput.value && !passwordInput.value) {
+            //Логин есть, пароля нет - переключаемся на пароль
+            passwordInput.focus();
+        }else if (loginInput.value && passwordInput.value) {
+            submitAuth();
+        } else {
+            loginInput.focus();
+        }
     }
 }
 
