@@ -2,6 +2,7 @@ console.log('closerecyclerday.js начал загрузку');
 
 let openingDayData = null;
 
+
 function setOpeningDayData(data) {
     console.log('setOpeningDayData вызвана', data);
     openingDayData = data;
@@ -129,7 +130,13 @@ function showCloseDayScreen() {
     }
 
     //Получаем данные о транзакциях за день
-    const transactions = generateDayTransactions(openingDayData);
+    // const transactions = generateDayTransactions(openingDayData);
+    const transactions = getCurrentTransactionData();
+
+    if (!transactions) {
+        alert('Нет данных о транзакциях.');
+        return;
+    }
 
     const receiptContent = document.getElementById('closeReceiptContent');
     if (!receiptContent) return;
@@ -270,6 +277,8 @@ function confirmCloseReceipt() {
     }
     
     openingDayData = null;
+
+    resetCurrentTransactionData();
     
     const recyclerday = document.getElementById('recyclerday');
     if (recyclerday) {
@@ -278,3 +287,35 @@ function confirmCloseReceipt() {
 }
 
 console.log('closerecyclerday.js загружен полностью');
+
+function getCurrentDayData() {
+    if(!openingDayData) {
+        return{
+            date: new Date().toLocaleDateString('ru-RU'), 
+            time: new Time().toLocaleTimeString('ru-RU'),
+            cassetteLoads: {1: 0, 2: 0, 3: 0, 4: 0},
+            totalAmount: 0, 
+            dropped: {1: 0, 2: 0, 3: 0, 4: 0}
+        };
+    }
+    return openingDayData;
+}
+
+
+let currentTransactionData = null;
+
+// Функция для получения или генерации данных транзакций для текущего дня
+function getCurrentTransactionData() {
+    if(!openingDayData) return null;
+
+    if (!currentTransactionData) {
+        currentTransactionData = generateDayTransactions(openingDayData);
+    }
+    return currentTransactionData;
+}
+
+// Функция сброса, обнуления данных о текущем опер дне
+function resetCurrentTransactionData() {
+    currentTransactionData = null;
+    consol.log('Кэш транзакций сброшен');
+}

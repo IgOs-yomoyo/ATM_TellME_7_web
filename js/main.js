@@ -26,21 +26,32 @@ function generateReceiptContentForScreen(receiptContentId, isCollectionMode) {
     // Получаем данные дня (если день не открыт, то нули)
     let dayData = openingDayData;
     if (!dayData) {
-        const totalAmount = 0;
-        const cassetteLoads = {
-            1: 0, 2: 0, 3: 0, 4: 0
-        };
         dayData = {
             date: new Date().toLocaleDateString('ru-RU'),
             time: new Date().toLocaleTimeString('ru-RU'),
-            cassetteLoads: cassetteLoads,
-            totalAmount: totalAmount,
+            cassetteLoads: {1: 0, 2: 0, 3: 0, 4: 0},
+            totalAmount: 0,
             dropped: { 1: 0, 2: 0, 3: 0, 4: 0 }
         };
 
     }
-    // Генерируем транзакции (принято/выдано/сброшено) на основе загрузки
-    const transactions = generateDayTransactions(dayData);
+
+    //Используем единые данные о транзакциях текущего периода
+    let transactions;
+    if (typeof getCurrentDayData === 'function') {
+        transactions = getCurrentTransactionData();
+    }else{
+        transactions = generateDayTransactions(dayData);
+    }
+
+    if(!transactions) {
+        receiptContent.innerHTML = '<div style="padding:20px;">Нет данных для отображения</div>';
+        return;
+    }
+
+
+    // // Генерируем транзакции (принято/выдано/сброшено) на основе загрузки
+    // const transactions = generateDayTransactions(dayData);
     
     const now = new Date();
     const currentDate = now.toLocaleDateString('ru-RU');
@@ -60,10 +71,11 @@ function generateReceiptContentForScreen(receiptContentId, isCollectionMode) {
     } else {
         receiptHtml += '<strong>ЧЕК БАЛАНСА</strong><br>';
     }
+    receiptHtml += `ВРЕМЯ ОТКРЫТИЯ: ${dayData.time} ${dayData.date}<br>`;
     receiptHtml += '--------------------------------<br>';
     receiptHtml += '</div>';
     
-    // Таблица (как в чеке закрытия)
+    // Таблица
     receiptHtml += '<table style="width: 100%; border-collapse: collapse; text-align: center;">';
     receiptHtml += '<tr style="border: 1px solid #000;">';
     receiptHtml += '<th style="border: 1px solid #000; padding: 4px;">№</th>';
@@ -80,30 +92,67 @@ function generateReceiptContentForScreen(receiptContentId, isCollectionMode) {
     for (let i = 0; i < transactions.cassettes.length; i++) {
         const c = transactions.cassettes[i];
         receiptHtml += '<tr style="border: 1px solid #000;">';
-    receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.number}</td>`;
-    receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.nominal}</td>`;
-    receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">643</td>`;
-    // Используем правильные поля
-    receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${(c.loadedCount * c.nominal).toLocaleString()}</td>`;
-    receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${(c.acceptedCount * c.nominal).toLocaleString()}</td>`;
-    receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${(c.issuedCount * c.nominal).toLocaleString()}</td>`;
-    receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${(c.droppedCount * c.nominal).toLocaleString()}</td>`;
-    receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.status}</td>`;
-    receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${(c.balanceCount * c.nominal).toLocaleString()}</td>`;
-    receiptHtml += '</tr>';
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.number}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.nominal}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">643</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.loadedCount}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.acceptedCount}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.issuedCount}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.droppedCount}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.status}</td>`;
+        receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${c.balanceCount}</td>`;
+        receiptHtml += '</tr>';
     }
     
+    // Депозит
+    receiptHtml += '<tr style="border: 1px solid #000;">';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">Депозит</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${transactions.depositAccepted.toLocaleString()}</td>`;
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<tr>';
+    
+    // Ретранс
+    receiptHtml += '<tr style="border: 1px solid #000;">';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">Ретранс</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${transactions.totalRetracted.toLocaleString()}</td>`;
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
+    receiptHtml += '</tr>';
+    
     receiptHtml += '</table>';
+    
+    // Итоги
+    const totalBalance = dayData.totalAmount + transactions.depositAccepted + transactions.totalAccepted - transactions.totalIssued - transactions.totalDropped;
+    
     receiptHtml += '<div style="margin-top: 10px;">';
     receiptHtml += '--------------------------------<br>';
-    receiptHtml += `<strong>ОБЩАЯ СУММА: ${dayData.totalAmount.toLocaleString()} руб.</strong><br>`;
+    receiptHtml += `<strong>Загружено: ${dayData.totalAmount.toLocaleString()} руб.</strong><br>`;
+    receiptHtml += `Принято: ${(transactions.totalAccepted + transactions.depositAccepted).toLocaleString()} руб.<br>`;
+    receiptHtml += `Выдано: ${transactions.totalIssued.toLocaleString()} руб.<br>`;
+    receiptHtml += `Сброшено: ${transactions.totalDropped.toLocaleString()} руб.<br>`;
+    receiptHtml += `Ретранс: ${transactions.totalRetracted.toLocaleString()} руб.<br>`;
+    receiptHtml += '--------------------------------<br>';
+    receiptHtml += `<strong>Принято в депозитную кассету: ${transactions.depositAccepted.toLocaleString()} руб.</strong><br>`;
+    receiptHtml += '--------------------------------<br>';
+    receiptHtml += `<strong>ОБЩИЙ БАЛАНС: ${totalBalance.toLocaleString()} руб.</strong><br>`;
     receiptHtml += '--------------------------------<br>';
     receiptHtml += '</div>';
+    
     receiptHtml += '</div>';
     
     receiptContent.innerHTML = receiptHtml;
-
-    
+    console.log('Чек успешно сгенерирован');
 }
 
 function showBalanceReceipt() {
