@@ -38,17 +38,14 @@ function generateReceiptContentForScreen(receiptContentId, isCollectionMode) {
 
     //Используем единые данные о транзакциях текущего периода
     let transactions;
-    if (typeof getCurrentDayData === 'function') {
+    if (typeof getCurrentTransactionData === 'function') {
         transactions = getCurrentTransactionData();
-    }else{
+    }
+
+
+    if (!transactions) {
         transactions = generateDayTransactions(dayData);
     }
-
-    if(!transactions) {
-        receiptContent.innerHTML = '<div style="padding:20px;">Нет данных для отображения</div>';
-        return;
-    }
-
 
     // // Генерируем транзакции (принято/выдано/сброшено) на основе загрузки
     // const transactions = generateDayTransactions(dayData);

@@ -292,7 +292,7 @@ function getCurrentDayData() {
     if(!openingDayData) {
         return{
             date: new Date().toLocaleDateString('ru-RU'), 
-            time: new Time().toLocaleTimeString('ru-RU'),
+            time: new Date().toLocaleTimeString('ru-RU'),
             cassetteLoads: {1: 0, 2: 0, 3: 0, 4: 0},
             totalAmount: 0, 
             dropped: {1: 0, 2: 0, 3: 0, 4: 0}
@@ -303,10 +303,23 @@ function getCurrentDayData() {
 
 
 let currentTransactionData = null;
+let closedDayTransactionData = null; // Отдельный кэш для закрытого дня
 
 // Функция для получения или генерации данных транзакций для текущего дня
 function getCurrentTransactionData() {
-    if(!openingDayData) return null;
+    if(!openingDayData) {
+        if (!closedDayTransactionData) {
+            const zeroDayData = {
+                date: new Date().toLocaleDateString('ru-RU'),
+                time: new Date().toLocaleTimeString('ru-RU'),
+                cassetteLoads: {1: 0, 2: 0, 3: 0, 4: 0},
+                totalAmount: 0, 
+                dropped: {1: 0, 2: 0, 3: 0, 4: 0}
+            };
+            closedDayTransactionData = generateDayTransactions(zeroDayData);
+        }
+        return closedDayTransactionData;
+    }
 
     if (!currentTransactionData) {
         currentTransactionData = generateDayTransactions(openingDayData);
@@ -314,8 +327,11 @@ function getCurrentTransactionData() {
     return currentTransactionData;
 }
 
+        
+
+
 // Функция сброса, обнуления данных о текущем опер дне
 function resetCurrentTransactionData() {
     currentTransactionData = null;
-    consol.log('Кэш транзакций сброшен');
+    console.log('Кэш транзакций сброшен');
 }
