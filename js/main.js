@@ -116,7 +116,7 @@ function generateReceiptContentForScreen(receiptContentId, isCollectionMode) {
     
     // Ретранс
     receiptHtml += '<tr style="border: 1px solid #000;">';
-    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">Ретранс</td>';
+    receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">Ретракт</td>';
     receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
     receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
     receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
@@ -138,7 +138,7 @@ function generateReceiptContentForScreen(receiptContentId, isCollectionMode) {
     receiptHtml += `Принято: ${(transactions.totalAccepted + transactions.depositAccepted).toLocaleString()} руб.<br>`;
     receiptHtml += `Выдано: ${transactions.totalIssued.toLocaleString()} руб.<br>`;
     receiptHtml += `Сброшено: ${transactions.totalDropped.toLocaleString()} руб.<br>`;
-    receiptHtml += `Ретранс: ${transactions.totalRetracted.toLocaleString()} руб.<br>`;
+    receiptHtml += `Ретракт: ${transactions.totalRetracted.toLocaleString()} руб.<br>`;
     receiptHtml += '--------------------------------<br>';
     receiptHtml += `<strong>Принято в депозитную кассету: ${transactions.depositAccepted.toLocaleString()} руб.</strong><br>`;
     receiptHtml += '--------------------------------<br>';

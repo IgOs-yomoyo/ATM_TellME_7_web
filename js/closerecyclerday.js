@@ -200,18 +200,7 @@ function showCloseDayScreen() {
     receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
     receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
     receiptHtml += '<tr>';
-    
-    // receiptHtml += '<tr style="border: 1px solid #000;">';
-    // // receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">Реджект</td>';
-    // receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
-    // receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
-    // receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
-    // // receiptHtml += `<td style="border: 1px solid #000; padding: 4px;">${transactions.totalRejected}</td>`;
-    // receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
-    // receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
-    // receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
-    // receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">-</td>';
-    // receiptHtml += '<tr>';
+
     
     receiptHtml += '<tr style="border: 1px solid #000;">';
     receiptHtml += '<td style="border: 1px solid #000; padding: 4px;">Ретракт</td>';
@@ -241,7 +230,6 @@ function showCloseDayScreen() {
     receiptHtml += `Принято: ${(totalAcceptedAmount + transactions.depositAccepted).toLocaleString()} руб.<br>`;
     receiptHtml += `Выдано: ${totalIssuedAmount.toLocaleString()} руб.<br>`;
     receiptHtml += `Сброшено: ${totalDroppedAmount.toLocaleString()} руб.<br>`;
-    // receiptHtml += `Отбраковано: ${transactions.totalRejected} шт.<br>`;
     receiptHtml += `Ретракт: ${transactions.totalRetracted} руб.<br>`;
     receiptHtml += '--------------------------------<br>';
     receiptHtml += `<strong>Принято в депозитную кассету: ${depositAccepted.toLocaleString()}</strong><br>`;
@@ -316,7 +304,10 @@ function getCurrentTransactionData() {
                 totalAmount: 0, 
                 dropped: {1: 0, 2: 0, 3: 0, 4: 0}
             };
-            closedDayTransactionData = generateDayTransactions(zeroDayData);
+            const transactions = generateDayTransactions(zeroDayData);
+            transactions.depositAccepted = 0;
+            transactions.totalRetracted = 0;
+            closedDayTransactionData = transactions;
         }
         return closedDayTransactionData;
     }

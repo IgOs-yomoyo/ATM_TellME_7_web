@@ -134,8 +134,21 @@
             <button class="atm-button opencloseday-backtonormal" onclick="backtonormal()">В РЕЖИМ ОБСЛУЖИВАНИЯ 
                 <br>КЛИЕНТОВ
             </button>
-            <button class="atm-button opencloseday-extraoperation" onclick="extraoperation()">ДОПОЛНИТЕЛЬНЫЕ<br>
+            <button class="atm-button opencloseday-extraoperation" onclick="additionalOperations()">ДОПОЛНИТЕЛЬНЫЕ<br>
                 ОПЕРАЦИИ</button>
+        </div>
+        <!-- Экран Дополнительные операции -->
+        <div id="additionalOperations" class="atm-screen" style="display: none;">
+            <div class="screen-title">ДОПОЛНИТЕЛЬНЫЕ ОПЕРАЦИИ</div>
+
+            <!-- Контейнер для чека. По умолчанию скрыт -->
+            <div class="receipt-container">
+                    <div class="receipt-content" id="heldCardReceiptContent">
+                    <!-- Чек задержанных карт -->
+                    </div>
+            </div>
+            <button class="atm-button take-receipt-btn" onclick="resetHeldCardCounter()">СБРОС СЧЁТЧИКА ЗАДЕРЖАННЫХ КАРТ</button>
+            <button class="atm-button take-receipt-btn" onclick="takeHeldCardReceipt()">ЗАБРАТЬ ЧЕК</button>
         </div>
         <!-- Экран "ОПЕРАЦИОННЫЙ ДЕНЬ РЕСАЙКЛЕРА" -->
          <div id="recyclerday" class="atm-screen" style="display: none;">
@@ -378,6 +391,7 @@
     <script src="js/main.js"></script>
     <script src="js/supervisor.js"></script> 
     <script src="js/openclosedaymenu.js"></script>
+    <script src="js/additionaloperations.js"></script>
     <script src="js/recyclerdaymenu.js"></script> 
     <script src="js/openrecyclerdaycreens.js"></script>
     <!-- <script src="js/closerecyclerday.js?v=2"></script> -->
