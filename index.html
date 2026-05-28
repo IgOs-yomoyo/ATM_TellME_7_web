@@ -140,15 +140,13 @@
         <!-- Экран Дополнительные операции -->
         <div id="additionalOperations" class="atm-screen" style="display: none;">
             <div class="screen-title">ДОПОЛНИТЕЛЬНЫЕ ОПЕРАЦИИ</div>
-
-            <!-- Контейнер для чека. По умолчанию скрыт -->
-            <div class="receipt-container">
-                    <div class="receipt-content" id="heldCardReceiptContent">
-                    <!-- Чек задержанных карт -->
-                    </div>
-            </div>
-            <button class="atm-button take-receipt-btn" onclick="resetHeldCardCounter()">СБРОС СЧЁТЧИКА ЗАДЕРЖАННЫХ КАРТ</button>
+            <button class="atm-button additional-resetcardcount" onclick="resetHeldCardCounter()">СБРОС СЧЁТЧИКА<br>ЗАДЕРЖАННЫХ КАРТ</button>
+            <button class="atm-button additional-backtoopenclosedaymenu" onclick="backToOpenCloseDay()">ВОЗВРАТ</button>
             <button class="atm-button take-receipt-btn" onclick="takeHeldCardReceipt()">ЗАБРАТЬ ЧЕК</button>
+        </div>
+            <!-- Контейнер для чека. По умолчанию скрыт -->
+        <div id="receiptContainer" class="receipt-container" style="display: none;">
+            <div class="receipt-content" id="heldCardReceiptContent"></div>
         </div>
         <!-- Экран "ОПЕРАЦИОННЫЙ ДЕНЬ РЕСАЙКЛЕРА" -->
          <div id="recyclerday" class="atm-screen" style="display: none;">

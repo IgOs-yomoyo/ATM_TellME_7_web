@@ -4,10 +4,31 @@ let heldCardsCount = 0;
 function additionalOperations() {
     console.log('additionalOperations вызвана');
 
+    // Скрываем экран opencloseday.
     const opencloseday = document.getElementById('opencloseday');
     if (opencloseday) opencloseday.style.display = 'none';
 
+    // Показываем экран additionaloperations
+    const additionalOperations = document.getElementById('additionalOperations');
+    if (additionalOperations) additionalOperations.style.display = 'block';
+
+    const takeReceiptButton = document.querySelector('.take-receipt-btn');
+    console.log('takeReceiptButton найдена:', takeReceiptButton);
+    // console.log('Найдено кнопок:', takeReceiptButtons.length);
+    
+    const takeReceiptButtons = document.querySelectorAll('.take-receipt-btn');
+    console.log('Найдено кнопок:', takeReceiptButtons.length);
+    
+    takeReceiptButtons.forEach((btn, index) => {
+        console.log(`Кнопка ${index}:`, btn);
+        btn.style.display = 'none';  // Скрываем каждую
+    });
+}
+
+
+function resetHeldCardCounter() {
     heldCardsCount = Math.floor(Math.random() * 5);
+    console.log('HeldCardsCount', heldCardsCount);
 
     //Формируем содержание чека
     const heldCardReceiptContent = document.getElementById('heldCardReceiptContent');
@@ -66,17 +87,44 @@ function additionalOperations() {
         receiptHtml += '</div>';
         
         heldCardReceiptContent.innerHTML = receiptHtml;
+        
     }
+     
 
-     const additionalOperations = document.getElementById('additionalOperations')
-     if (additionalOperations) additionalOperations.style.display = 'block';
+    // Прячем кнопки, показываем чек - просто показываем чек, ничего не прячем!
+     const receiptContainer = document.getElementById('receiptContainer');
+    //  const takeReceiptButton = document.querySelector('.take-receipt-btn');
+     if (receiptContainer) receiptContainer.style.display = 'block';
+    //  if (takeReceiptButton) takeReceiptButton.style.display = 'block';
+
+    // Показываем ТОЛЬКО нужную кнопку (для задержанных карт)
+    const takeReceiptButtons = document.querySelectorAll('.take-receipt-btn');
+    console.log('Найдено кнопок:', takeReceiptButtons.length);
+    
+    takeReceiptButtons.forEach((btn, index) => {
+        // Показываем только кнопку с takeHeldCardReceipt
+        if (btn.getAttribute('onclick') === 'takeHeldCardReceipt()') {
+            btn.style.display = 'block';
+            console.log('Показана кнопка takeHeldCardReceipt');
+        } else {
+            btn.style.display = 'none';  // Остальные скрыты
+            console.log('Скрыта другая кнопка:', btn.getAttribute('onclick'));
+        }
+    });
 }
 
-function resetHeldCardCounter() {
-    heldCardsCount = 0;
-}
-
+// Скрываем чек, показываем кнопки (просто скрываем чек)
 function takeHeldCardReceipt() {
+    const receiptContainer = document.getElementById('receiptContainer');
+    const additionalOperations = document.getElementById('additionalOperations');
+    const takeReceiptButton = document.querySelector('.take-receipt-btn');
+    if (receiptContainer) receiptContainer.style.display = 'none';
+    if (takeReceiptButton) takeReceiptButton.style.display = 'none';
+    if (additionalOperations) additionalOperations.style.display = 'block';
+}
+
+
+function backToOpenCloseDay() {
     const additionalOperations = document.getElementById('additionalOperations');
     if (additionalOperations) additionalOperations.style.display = 'none';
 
@@ -84,4 +132,3 @@ function takeHeldCardReceipt() {
     if (opencloseday) opencloseday.style.display = 'block';
 }
 
-// resetHeldCardCounter
