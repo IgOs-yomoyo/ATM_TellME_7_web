@@ -1,6 +1,8 @@
 // Глобальная переменная для хранения сгенерированного количества задержанных карт. 
 let heldCardsCount = 0;
 
+//<button id="takeReceiptBtn" class="atm-button" style="display: none;" onclick="takeHeldCardReceipt()">ЗАБРАТЬ ЧЕК</button>
+
 function additionalOperations() {
     console.log('additionalOperations вызвана');
 
@@ -12,17 +14,11 @@ function additionalOperations() {
     const additionalOperations = document.getElementById('additionalOperations');
     if (additionalOperations) additionalOperations.style.display = 'block';
 
-    const takeReceiptButton = document.querySelector('.take-receipt-btn');
-    console.log('takeReceiptButton найдена:', takeReceiptButton);
-    // console.log('Найдено кнопок:', takeReceiptButtons.length);
+    //Прячем кнопку Забрать чек
+    const takeReceiptBtn = document.getElementById('takeReceiptBtn');
+    console.log('takeReceiptBtn найдена:', takeReceiptBtn);
+    if(takeReceiptBtn) takeReceiptBtn.style.display = 'none';
     
-    const takeReceiptButtons = document.querySelectorAll('.take-receipt-btn');
-    console.log('Найдено кнопок:', takeReceiptButtons.length);
-    
-    takeReceiptButtons.forEach((btn, index) => {
-        console.log(`Кнопка ${index}:`, btn);
-        btn.style.display = 'none';  // Скрываем каждую
-    });
 }
 
 
@@ -98,28 +94,18 @@ function resetHeldCardCounter() {
     //  if (takeReceiptButton) takeReceiptButton.style.display = 'block';
 
     // Показываем ТОЛЬКО нужную кнопку (для задержанных карт)
-    const takeReceiptButtons = document.querySelectorAll('.take-receipt-btn');
-    console.log('Найдено кнопок:', takeReceiptButtons.length);
+    const takeReceiptBtn = document.getElementById('takeReceiptBtn');
+    if (takeReceiptBtn) takeReceiptBtn.style.display = 'block';
     
-    takeReceiptButtons.forEach((btn, index) => {
-        // Показываем только кнопку с takeHeldCardReceipt
-        if (btn.getAttribute('onclick') === 'takeHeldCardReceipt()') {
-            btn.style.display = 'block';
-            console.log('Показана кнопка takeHeldCardReceipt');
-        } else {
-            btn.style.display = 'none';  // Остальные скрыты
-            console.log('Скрыта другая кнопка:', btn.getAttribute('onclick'));
-        }
-    });
 }
 
 // Скрываем чек, показываем кнопки (просто скрываем чек)
 function takeHeldCardReceipt() {
     const receiptContainer = document.getElementById('receiptContainer');
     const additionalOperations = document.getElementById('additionalOperations');
-    const takeReceiptButton = document.querySelector('.take-receipt-btn');
+    const takeReceiptBtn = document.getElementById('takeReceiptBtn');
     if (receiptContainer) receiptContainer.style.display = 'none';
-    if (takeReceiptButton) takeReceiptButton.style.display = 'none';
+    if (takeReceiptBtn) takeReceiptBtn.style.display = 'none';
     if (additionalOperations) additionalOperations.style.display = 'block';
 }
 
