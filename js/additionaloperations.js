@@ -1,5 +1,7 @@
 // Глобальная переменная для хранения сгенерированного количества задержанных карт. 
 let heldCardsCount = 0;
+//Проверка состояния счётчик - сбрасывался/не сбрасывался. 
+let isCounterReset = false; //Флаг, был ли уже сброс в текущем опер дне. 
 
 //<button id="takeReceiptBtn" class="atm-button" style="display: none;" onclick="takeHeldCardReceipt()">ЗАБРАТЬ ЧЕК</button>
 
@@ -23,8 +25,16 @@ function additionalOperations() {
 
 
 function resetHeldCardCounter() {
-    heldCardsCount = Math.floor(Math.random() * 5);
-    console.log('HeldCardsCount', heldCardsCount);
+
+    if (isCounterReset) {
+        heldCardsCount = 0;
+        console.log('Сброс уже был выполнен. Задержанных карт 0');
+    }else{
+        heldCardsCount = Math.floor(Math.random() * 5);
+        isCounterReset = true;
+        console.log('HeldCardsCount', heldCardsCount);
+    }
+    
 
     //Формируем содержание чека
     const heldCardReceiptContent = document.getElementById('heldCardReceiptContent');
