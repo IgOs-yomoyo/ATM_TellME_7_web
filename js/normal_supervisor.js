@@ -50,7 +50,41 @@ function cancelAuth() {
     const authScreen = document.getElementById('authScreen');
     if (authScreen) authScreen.style.display = 'none';
     window.pendingModeSwitch = null;
-    showClientScreen();
+    // showClientScreen();
+    //Показываем outOfServiceScreen
+    const outOfServiceScreen = document.getElementById('outOfServiceScreen');
+    const welcomeScreen = document.getElementById('welcomeScreen');
+
+    if (outOfServiceScreen) {
+        outOfServiceScreen.style.display = 'block';
+    }
+    if (welcomeScreen) {
+        welcomeScreen.style.display = 'none';
+    }
+    // Запускае таймер на 5 секунд
+    if (window.outOfServiceScreenTimer) {
+        clearTimeout(window.outOfServiceScreenTimer);
+    }
+
+    window.outOfServiceScreenTimer = setTimeout(() => {
+
+        const outOfService = document.getElementById('outOfService');
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        // Через 5 секунд показывает welcomeScreen. 
+        const isDayOpen = (typeof isDayOpened === 'function') ? isDayOpened() : false;
+
+        if (isDayOpen) {
+            if (welcomeScreen) {
+                welcomeScreen.style.display = 'block';
+            }
+            if (outOfServiceScreen) {
+                outOfServiceScreen.style.display = 'none';
+            }
+
+            if (typeof startCarousel === 'function') startCarousel();
+        }
+        window.outOfServiceScreenTimer = null;
+    }, 5000);
 }
 
 //Настройка обработчиков ввода. Вызывается при открытии экрана авторизации

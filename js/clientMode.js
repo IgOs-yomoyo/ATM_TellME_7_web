@@ -121,9 +121,9 @@ function setUpPinInput() {
                 pinCode += key;
                 updatePinDisplay();
                 // Если после добавления длина стала 4, сразу проверяем
-                if (pinCode.length === 4) {
-                    submitPin();
-                }
+                // if (pinCode.length === 4) {
+                //     submitPin();
+                // }
             }
             e.preventDefault();
         } else if (key === 'Backspace') {
