@@ -7,7 +7,7 @@ function backToWelcomeScreen() {
 
     // ======== НОВАЯ ПРОВЕРКА =======
     // Показываем предупреждение, если supervisor
-    if (currentMode === 'supervisor') {
+    if (getCurrentMode() === 'supervisor') {
         alert('Переведите ключ оператора в рабочее положение');
         return;
     }

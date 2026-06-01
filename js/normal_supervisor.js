@@ -1,12 +1,26 @@
 // ====== normal_supervisor.js =======
 // ====== логика переключения между режимами normal и supervisor ========
 
-let currentMode = 'normal';
+// let currentMode = 'normal';
 window.pendingModeSwitch = null;
 
+//Функция для получения текущего режима переключателя
+function getCurrentMode() {
+    const checkbox = document.getElementById('modeCheckbox');
+    console.log('Current Mode:', getCurrentMode);
+    return checkbox && checkbox.checked ? 'supervisor' : 'normal';
+    
+}
 
 // Показывает клиентский экран (welcome или outOfService) в зависимости от состояния дня
 function showClientScreen() {
+    // Проверяем положение переключателя
+    if (getCurrentMode() === 'supervisor') {
+        console.log('Переключатель в режиме supervisor. Остаёмся в режиме оператора');
+        return;
+    }
+
+    // Переключатель в normal
     const welcomeScreen = document.getElementById('welcomeScreen');
     const outOfServiceScreen = document.getElementById('outOfServiceScreen');
     const isDayOpen = (typeof isDayOpened === 'function') ? isDayOpened() : false;
@@ -135,7 +149,7 @@ function submitAuth() {
 // Успешная авторизация – переключаем в режим Supervisor
 function onAuthSuccess() {
     if (window.pendingModeSwitch === 'supervisor') {
-        currentMode = 'supervisor';
+        // currentMode = 'supervisor';
         const checkbox = document.getElementById('modeCheckbox');
         if (checkbox && !checkbox.checked) checkbox.checked = true;
         const authScreen = document.getElementById('authScreen');
@@ -167,7 +181,7 @@ function requestSupervisorMode() {
 // Переключение в Normal (слайдер вниз)
 // Просто переключаем клавишу (переключаем режим), но без переключения экранов. 
 function switchToNormalMode() {
-        currentMode = 'normal';
+        // currentMode = 'normal';
         window.pendingModeSwitch = null;
         console.log('currentMode установлен в Normal, экран не изменён');
 }
@@ -185,7 +199,7 @@ function switchToNormalMode() {
 // Выход из режима Supervisor (например, по кнопке в меню оператора)
 function exitSupervisorMode() {
     console.log('Функция exitSupervisorMode');
-    currentMode = 'normal';
+    // currentMode = 'normal';
     // console.log('Текущий режим:' [currentMode]);
     const supervisorScreen = document.getElementById('supervisorScreen');
     const authScreen = document.getElementById('authScreen');
@@ -200,7 +214,8 @@ function exitSupervisorMode() {
 function initModeSwitch() {
     const checkbox = document.getElementById('modeCheckbox');
     if (!checkbox) return;
-    checkbox.checked = (currentMode === 'supervisor');
+    // checkbox.checked = (currentMode === 'supervisor');
+    checkbox.checked = false;
     checkbox.addEventListener('change', function(e) {
         if (this.checked) {
             requestSupervisorMode();
