@@ -59,10 +59,8 @@ function backToWelcomeScreen() {
 // Функция для кнопки "В режим банкомат не обслуживает"
 function toOutOfService() {
     //Проверяем положение переключателя
-    const checkbox = document.getElementById('modeCheckbox');
-    const isSupervisorMode = checkbox && checkbox.checked;
     
-    if (isSupervisorMode) {
+    if (getCurrentMode() === 'supervisor') {
         alert('Переведите ключ оператора в рабочее положение');
         return;
     }
@@ -79,6 +77,14 @@ function toOutOfService() {
     if (outOfServiceScreen) outOfServiceScreen.style.display = 'block';
 
 }
+
+// const checkbox = document.getElementById('modeCheckbox');
+    // const isSupervisorMode = checkbox && checkbox.checked;
+    
+    // if (isSupervisorMode) {
+    //     alert('Переведите ключ оператора в рабочее положение');
+    //     return;
+    // }
 
 //Функция перехода из меню "Сервисная карта" - mainScreen к главному экрану меню оператора (supervisor).
 function showSupervisorMenu() {

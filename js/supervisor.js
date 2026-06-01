@@ -45,4 +45,5 @@ function gotoNormalMode() {
 function NottoService(){
     // alert('Переход в режим "Банкомат не обслуживает"')
     toOutOfService();
+    console.log('Функция toOutOfService запущена')
 }
