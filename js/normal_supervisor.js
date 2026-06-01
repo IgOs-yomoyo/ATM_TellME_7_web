@@ -43,14 +43,17 @@ function resetAuth() {
 function cancelAuth() {
     const checkbox = document.getElementById('modeCheckbox');
     const isSupervisorMode = checkbox && checkbox.checked;
+
     if (isSupervisorMode) {
         alert('Переведите ключ оператора в рабочее положение');
         return; // не закрываем authScreen
     }
+
     const authScreen = document.getElementById('authScreen');
     if (authScreen) authScreen.style.display = 'none';
     window.pendingModeSwitch = null;
     // showClientScreen();
+
     //Показываем outOfServiceScreen
     const outOfServiceScreen = document.getElementById('outOfServiceScreen');
     const welcomeScreen = document.getElementById('welcomeScreen');
@@ -61,19 +64,32 @@ function cancelAuth() {
     if (welcomeScreen) {
         welcomeScreen.style.display = 'none';
     }
-    // Запускае таймер на 5 секунд
+
+    // Очищаем предыдущий таймер
     if (window.outOfServiceScreenTimer) {
         clearTimeout(window.outOfServiceScreenTimer);
+        window.outOfServiceScreenTimer = null;
     }
 
-    window.outOfServiceScreenTimer = setTimeout(() => {
+    // Запускае новый таймер на 5 секунд
+    // if (window.outOfServiceScreenTimer) {
+    //     clearTimeout(window.outOfServiceScreenTimer);
+    // }
 
-        const outOfService = document.getElementById('outOfService');
-        const welcomeScreen = document.getElementById('welcomeScreen');
-        // Через 5 секунд показывает welcomeScreen. 
+    window.outOfServiceScreenTimer = setTimeout(() => {
+        // Проверяем положение переключателя
+        if (getCurrentMode() === 'supervisor') {
+            console.log('Таймер: переключатель в supervisor, welcomeScreen не показываем');
+            window.outOfServiceScreenTimer = null;
+            return;
+        }
+        // Проверяем, что день открыт и что режим не изменился
         const isDayOpen = (typeof isDayOpened === 'function') ? isDayOpened() : false;
 
         if (isDayOpen) {
+            const outOfServiceScreen = document.getElementById('outOfServiceScreen');
+            const welcomeScreen = document.getElementById('welcomeScreen');
+
             if (welcomeScreen) {
                 welcomeScreen.style.display = 'block';
             }
