@@ -69,3 +69,22 @@ function openrecyclerday() {
    replenishfirstcassette(); 
 }
 
+// Функция - печать баланса
+function printbalance() {
+     console.log('printBalanceReceipt вызвана');
+
+     if (typeof generateReceiptContentForScreen === 'function') {
+        generateReceiptContentForScreen('balanceReceiptContent', false);
+     }else{
+        console.error('generateReceiptContentForScreen не найдена');
+        alert('Ошибка генерации чека');
+        return;
+     }
+
+     //Показываем экран с чеком
+     const supervisorbalanceprint = document.getElementById('supervisorbalanceprint');
+     if ('supervisorbalanceprint') {
+        supervisorbalanceprint.style.display = 'block';
+     }
+}
+
