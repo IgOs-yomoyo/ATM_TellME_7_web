@@ -249,8 +249,12 @@ function showCloseDayScreen() {
     } else {
         console.error('closeReceiptScreen не найден');
     }
+
+    const closeDayConfirmScreen = document.getElementById('closeDayConfirmScreen');
+    if (closeDayConfirmScreen) closeDayConfirmScreen.style.display = 'none';
 }
 
+// Функция, подтверждающая закрытие опер дня при нажатии кнопки "Продолжить"
 function confirmCloseReceipt() {
     console.log('confirmCloseReceipt вызвана');
     

@@ -841,6 +841,50 @@ input:checked + .slider-vertical {
     z-index: 5;
 }
 
+/* ======= ПОЗИЦОНИРОВАНИЕ ДЛЯ ЭКРАНА ПОДТВЕРЖДЕНИЯ ЗАКРЫТИЯ ОПЕР ДНЯ ======= */
+/* Стили для экрана подтверждения */
+.confirm-message {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* Кнопка ПОДТВЕРДИТЬ */
+.atm-button.confirmCloseDay {
+    position: absolute;
+    bottom: 30px;
+    left: 230px;
+    width: 400px;
+    height: 120px;
+    transform: translateX(-50%);
+    background-color: #1976D2;
+}
+
+.atm-button.confirmCloseDay:hover {
+    background-color: #1976D2;
+}
+
+/* Кнопка ОТМЕНА */
+.atm-button.cancelCloseDay {
+    position: absolute;
+    bottom: 30px;
+    left: 970px;
+    width: 400px;
+    height: 120px;
+    transform: translateX(-50%);
+    background-color: #1976D2;
+}
+
+.atm-button.cancelCloseDay:hover {
+    background-color: #1976D2;
+}
+
 /* ========== СТИЛИ ДЛЯ ЭКРАНОВ ЗАГРУЗКИ КАССЕТ ========== */
 .info-row {
     /* min-width: 300px; */

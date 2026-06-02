@@ -164,6 +164,13 @@
             <button class="atm-button recyclerday-intermediateresult" onclick="intermediateresult()">ПРОМЕЖУТОЧНЫЕ
                  РЕЗУЛЬТАТЫ</button>    
          </div>
+         <!-- ЭКРАН ПОДТВЕРЖДЕНИЯ ЗАКРЫТИЯ ОПЕРАЦИОННОГО ДНЯ -->
+         <div id="closeDayConfirmScreen" class="atm-screen" style="display: none;">
+            <div class="screen-title">ПОДТВЕРЖДЕНИЕ ЗАКРЫТИЯ<br>ОПЕРАЦИОННОГО ДНЯ</div>
+            <div class="confirm-message">ОПЕРАЦИОННЫЙ ДЕНЬ БУДЕТ ЗАКРЫТ</div>
+            <button class="atm-button confirmCloseDay" onclick="confirmCloseDay()">ПОДТВЕРДИТЬ</button>
+            <button class="atm-button cancelCloseDay" onclick="cancelCloseDay()">ОТМЕНА</button>
+          </div>
          <!-- ЭКРАН "ЗАКРЫТИЕ ОПЕРАЦИОННОГО ДНЯ"  -->
          <div id="closeReceiptScreen" class="atm-screen" style="display: none;">  <!--id="closerecyclerday" class="atm-screen" style="display: none; - было так-->
             <div class="screen-title">ЗАКРЫТИЕ ОПЕРАЦИОННОГО ДНЯ</div>

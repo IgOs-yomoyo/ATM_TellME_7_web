@@ -29,7 +29,8 @@ function shutdownATM() {
 
 
 function deviceStatus() {
-    alert("Состояние устройств:\n- Кассеты: OK\n- Принтер: OK\n- Дисплей: OK");
+    // alert("Состояние устройств:\n- Кассеты: OK\n- Принтер: OK\n- Дисплей: OK");
+    alert("Функция в разработке");
 }
 
 function openCloseDay() {
