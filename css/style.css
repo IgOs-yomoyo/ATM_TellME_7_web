@@ -77,8 +77,8 @@ body {
 /* Кнопка выхода */
 .exit-button {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 10px;
+    left: 900px;
     background-color: #07f068;
     color: white;
     padding: 12px, 24px;
@@ -450,7 +450,7 @@ input:checked + .slider-vertical {
 }
 
 /* если экран слишком узкий, разрешим перенос текста и уменьшим отступы */
-@media (max-width: 700px) {
+/* @media (max-width: 700px) {
     .main-menu-buttons {
         padding: 0 15px;
         gap: 10px;
@@ -460,7 +460,7 @@ input:checked + .slider-vertical {
         padding: 15px;
         white-space: normal;
     }
-}
+} */
 
 .main-menu-buttons button:hover {
     transform: scale(1.02);
@@ -475,7 +475,7 @@ input:checked + .slider-vertical {
 /* Кнопка выхода – справа сверху */
 .exit-top-right {
     position: absolute;
-    top: 300px;             /* отступ сверху */
+    top: 600px;             /* отступ сверху */
     right: 30px;            /* отступ справа */
     width: 150px;
     height: 60px;
