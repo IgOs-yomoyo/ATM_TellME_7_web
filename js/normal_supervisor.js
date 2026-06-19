@@ -279,3 +279,92 @@ function initModeSwitch() {
 document.addEventListener('DOMContentLoaded', () => {
     if (typeof initModeSwitch === 'function') initModeSwitch();
 });
+
+// Экран 4-5-6
+let diagnosticKeySequence = [];
+const DIAGNOSTIC_CODE = ['4', '5', '6'];
+let diagnosticTimer = null;
+
+function checkDiagnosticSequence(key) {
+    diagnosticKeySequence.push(key);
+
+    if (diagnosticKeySequence.length > 3) {
+        diagnosticKeySequence.shift();
+    }
+
+    if (diagnosticKeySequence.length === 3) {
+        if (diagnosticKeySequence.join('') === DIAGNOSTIC_CODE.join('')) {
+            diagnosticKeySequence = [];
+            openDiagnostics();
+            return true;
+        }
+    }
+    return false;
+}
+
+function openDiagnostics() {
+    // Проверяем переключатель
+    if (getCurrentMode() === 'supervisor') {
+        console.log('Режим диагностики доступен в режиме "Normal"');
+        return;
+    }
+    
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const outOfServiceScreen = document.getElementById('outOfServiceScreen');
+    const diagnosticScreen = document.getElementById('diagnosticScreen');
+
+    if (!diagnosticScreen) return;
+
+    // Сохраняем текущий экран
+    let previousScreen = null;
+    if (welcomeScreen && welcomeScreen.style.display === 'block') {
+        previousScreen = 'welcome';
+    }else{
+        if (outOfServiceScreen && outOfServiceScreen.style.display === 'block') {
+            previousScreen = 'outOfService';
+        }else{
+            return;
+        }
+    }
+
+    // Скрываем текущий экран
+    if (welcomeScreen) welcomeScreen.style.display = 'none';
+    if (outOfServiceScreen) outOfServiceScreen.style.display = 'none';
+
+    // Показываем экран диагностики
+    diagnosticScreen.style.display = 'block';
+    console.log('Экран диагностики показан на 5 секунд');
+
+    //Запускаем таймер
+    if (diagnosticTimer) {
+        clearTimeout(diagnosticTimer);
+    }
+
+    diagnosticTimer = setTimeout(() => {
+        if (diagnosticScreen) {
+            diagnosticScreen.style.display = 'none';
+        }
+        if (previousScreen === 'welcome' && welcomeScreen) {
+            welcomeScreen.style.display = 'block';
+            if (typeof startCarousel === 'function') startCarousel(); 
+        }else if (previousScreen === 'outOfServiceScreen' && outOfServiceScreen) {
+            outOfServiceScreen.style.display = 'block';
+        }
+        diagnosticTimer = null;
+        console.log('Диагностика закрыта');
+    }, 5000);
+
+}
+
+// Обработчик клавиш
+document.addEventListener('keydown', function(event) {
+    // Игнорируем, есил фокус в поле ввода
+    if (event.target.tagName === 'INPUT') return;
+
+    //Проверяем введённые цифры
+    if (event.key >= '0' && event.key <= '9') {
+        checkDiagnosticSequence(event.key);
+    }
+});
+
+console.log('Диагностика запущена');
