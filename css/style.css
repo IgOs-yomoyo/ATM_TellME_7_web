@@ -637,116 +637,103 @@ input:checked + .slider-vertical {
     text-align: center;
 }
 
+
+
+
 /* ========== ЭКРАН 456 ========== */
 #diagnosticsScreen {
     background: white;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;  /* ← прижимаем к верху */
+    height: 100%;
 }
 
 .diagnostics-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    max-width: 900px;
-    margin: 100px auto 0;
-    padding: 20px;
+    gap: 10px 20px;              /* ← уменьшили расстояние между иконками */
+    max-width: 600px;            /* ← уже, чтобы было плотнее */
+    margin-top: 250px;            /* ← отступ сверху */
+    padding: 10px;
+    justify-items: center;
 }
 
 .diagnostic-item {
-    background: #f5f5f5;
-    border-radius: 12px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 90px;             /* ← уже ячейка */
+    padding: 5px;
+    background: transparent;
+    /* margin-top: 150px; */
 }
 
-/* .diagnostic-item:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-} */
-
 .diagnostic-icon {
-    font-size: 32px;
+    width: 48px;                 
+    height: 48px;
     display: block;
-    margin-bottom: 8px;
+    margin-top: 150px;
+    margin-bottom: 10px;
+    object-fit: contain;
 }
 
 .diagnostic-name {
-    display: block;
-    font-size: 14px;
+    font-size: 12px;            
     font-weight: bold;
     color: #333;
-    margin-bottom: 6px;
+    text-align: center;
+    letter-spacing: 0.3px;
+    line-height: 1.2;
 }
 
-/* .diagnostic-status {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: bold;
-} */
-
-/* .diagnostic-status.ok {
-    background: #e8f5e9;
-    color: #2e7d32;
-} */
-
-/* .diagnostic-status.error {
-    background: #ffebee;
-    color: #c62828;
+/* Для длинных названий (например, ВИМ-МОДУЛЬ) */
+.diagnostic-name.long {
+    font-size: 11px;
 }
-
-.diagnostic-status.warning {
-    background: #fff3e0;
-    color: #e65100;
-} */
-
-
 
 /* Адаптация для ноутбуков */
-@media (max-width: 1366px) and (max-height: 768px) {
+/* @media (max-width: 1366px) and (max-height: 768px) {
+    .diagnostics-subtitle {
+        font-size: 13px;
+        margin-top: 60px;
+    }
+    
     .diagnostics-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 12px;
-        margin-top: 80px;
+        gap: 20px 30px;
+        max-width: 700px;
         padding: 10px;
     }
     
-    .diagnostic-item {
-        padding: 12px;
-    }
-    
     .diagnostic-icon {
-        font-size: 24px;
+        width: 36px;
+        height: 36px;
     }
     
     .diagnostic-name {
-        font-size: 12px;
-    }
-    
-    .diagnostic-exit-btn {
-        bottom: 20px;
-        right: 20px;
-        width: 160px;
-        height: 50px;
-        font-size: 16px;
+        font-size: 11px;
     }
 }
 
 @media (max-width: 768px) {
     .diagnostics-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-        margin-top: 70px;
+        gap: 15px;
     }
     
-    .diagnostic-item {
-        padding: 10px;
+    .diagnostic-icon {
+        width: 30px;
+        height: 30px;
     }
-}
-
+    
+    .diagnostic-name {
+        font-size: 10px;
+    }
+} */
 
 
 /* ========== ПОЗИЦИОНИРОВАНИЕ ДЛЯ ГЛАВНОГО МЕНЮ ========== */
