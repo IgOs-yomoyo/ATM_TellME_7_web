@@ -641,7 +641,7 @@ input:checked + .slider-vertical {
 
 
 /* ========== ЭКРАН 456 ========== */
-#diagnosticsScreen {
+#diagnosticScreen {
     background: white;
     padding: 20px;
     display: flex;
@@ -651,24 +651,32 @@ input:checked + .slider-vertical {
     height: 100%;
 }
 
-.diagnostics-grid {
+.diagnostic-grid {
+    /* border: 2px solid red; */
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px 20px;              /* ← уменьшили расстояние между иконками */
-    max-width: 600px;            /* ← уже, чтобы было плотнее */
-    margin-top: 250px;            /* ← отступ сверху */
-    padding: 10px;
-    justify-items: center;
+    max-width: 900px;            /* ← уже, чтобы было плотнее */
+    margin-top: 10px;            /* ← отступ сверху */
+    width: 90%;
+    margin: 150px 0 0 20px;
+    /* position: relative; */
+    /* top: 50px; */
+    padding: 20px;
+    justify-items: left;
+    /* align-content: center;
+    height: 70vh; */
 }
 
 .diagnostic-item {
+    /* border: 2px solid blue; */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
-    max-width: 90px;             /* ← уже ячейка */
-    padding: 5px;
+    max-width: 400px;             /* ← уже ячейка */
+    padding: 10px 10px;
     background: transparent;
     /* margin-top: 150px; */
 }
@@ -677,7 +685,7 @@ input:checked + .slider-vertical {
     width: 48px;                 
     height: 48px;
     display: block;
-    margin-top: 150px;
+    margin-top: 50px;
     margin-bottom: 10px;
     object-fit: contain;
 }
@@ -697,7 +705,7 @@ input:checked + .slider-vertical {
 }
 
 /* Адаптация для ноутбуков */
-/* @media (max-width: 1366px) and (max-height: 768px) {
+@media (max-width: 1366px) and (max-height: 768px) {
     .diagnostics-subtitle {
         font-size: 13px;
         margin-top: 60px;
@@ -733,7 +741,7 @@ input:checked + .slider-vertical {
     .diagnostic-name {
         font-size: 10px;
     }
-} */
+}
 
 
 /* ========== ПОЗИЦИОНИРОВАНИЕ ДЛЯ ГЛАВНОГО МЕНЮ ========== */

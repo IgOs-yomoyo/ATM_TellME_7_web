@@ -286,6 +286,7 @@ const DIAGNOSTIC_CODE = ['4', '5', '6'];
 let diagnosticTimer = null;
 
 function checkDiagnosticSequence(key) {
+    console.log('Проверка клавиш:', key);
     diagnosticKeySequence.push(key);
 
     if (diagnosticKeySequence.length > 3) {
@@ -313,20 +314,47 @@ function openDiagnostics() {
     const outOfServiceScreen = document.getElementById('outOfServiceScreen');
     const diagnosticScreen = document.getElementById('diagnosticScreen');
 
-    if (!diagnosticScreen) return;
+    console.log('welcomeScreen:', welcomeScreen);           
+    console.log('outOfServiceScreen:', outOfServiceScreen); 
+    console.log('diagnosticScreen:', diagnosticScreen);     
+
+    if (!diagnosticScreen) {
+        console.log ('Экран диагностики не найден');
+        return;
+    }
+
+
+    // Проверяем видимость экранов
+    const welcomeDisplay = welcomeScreen ? window.getComputedStyle(welcomeScreen).display: 'none';
+    const outOfServiceDisplay = outOfServiceScreen ? window.getComputedStyle(outOfServiceScreen).display: 'none';
+
+
+    console.log('welcomeDisplay:', welcomeDisplay);       
+    console.log('outOfServiceDisplay:', outOfServiceDisplay);
+
+
+    const welcomeVisible = welcomeDisplay !== 'none';
+    const outOfServiceVisible = outOfServiceDisplay !== 'none';
+
+    console.log('welcomeVisible:', welcomeVisible);         
+    console.log('outOfServiceVisible:', outOfServiceVisible);
+
+
+    if (!welcomeVisible && !outOfServiceVisible) {
+        console.log('Диагностика доступна только на главном экране');
+        return;
+    }
+
+
 
     // Сохраняем текущий экран
     let previousScreen = null;
-    if (welcomeScreen && welcomeScreen.style.display === 'block') {
+    if (welcomeVisible) {
         previousScreen = 'welcome';
-    }else{
-        if (outOfServiceScreen && outOfServiceScreen.style.display === 'block') {
-            previousScreen = 'outOfService';
-        }else{
-            return;
-        }
+    }else if (outOfServiceVisible) {
+        previousScreen = 'outOfService';
     }
-
+    
     // Скрываем текущий экран
     if (welcomeScreen) welcomeScreen.style.display = 'none';
     if (outOfServiceScreen) outOfServiceScreen.style.display = 'none';
