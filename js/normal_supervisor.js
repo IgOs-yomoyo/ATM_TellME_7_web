@@ -375,7 +375,7 @@ function openDiagnostics() {
         if (previousScreen === 'welcome' && welcomeScreen) {
             welcomeScreen.style.display = 'block';
             if (typeof startCarousel === 'function') startCarousel(); 
-        }else if (previousScreen === 'outOfServiceScreen' && outOfServiceScreen) {
+        }else if (previousScreen === 'outOfService' && outOfServiceScreen) {
             outOfServiceScreen.style.display = 'block';
         }
         diagnosticTimer = null;
