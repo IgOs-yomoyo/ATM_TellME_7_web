@@ -156,6 +156,59 @@ function replenishfirstcassette() {
     if (replenishcassette_1) replenishcassette_1.style.display = 'block';
 }
 
+// Универсальная заявка для экрана тестирования BRM
+function showTestingScreen (duration = 8000, callback = null) {
+    const testingScreen = document.getElementById('testingScreen');
+    if (!testingScreen) {
+        console.error('Экран тестирования не найден');
+        if (callback) callback();
+        return;
+    }
+    // Показываем заставку
+    testingScreen.style.display = 'flex'; 
+    console.log('Тестирование модуля рециркуляции...(${duration/1000}сек)');
+
+    // Воспроизводим звук
+    playTestingSound();
+
+    // Запускаем таймер
+    setTimeout (() => {
+        testingScreen.style.display = 'none';
+        console.log('Тестирование завершено');
+
+        // Выполняем действие, если передано
+        if (callback && typeof callback == 'function') {
+            callback;
+        }
+    }, duration);
+
+}
+
+// Имитация звука
+function playTestingSound() {
+    try {
+        const audio = new Audio('audio/testing_sound.mp4');
+        audio.loop = true;
+        audio.volume = 0.5;
+
+        window.testingAudio = audio;
+
+        audio.play().catch(function(error) {
+            console.log('Не удалось воспроизвести звук:', error);
+        });
+
+        // Останавливаем звук по таймауту
+        setTimeout(function() {
+            if (window.testingAudio) {
+                window.testingAudio.pause();
+                window.testingAudio.currentTime = 0;
+                window.testingAudio = null;
+            }
+        }, 8000);
+    } catch (e) {
+        console.log('Ошибка воспроизведения звука:', e);
+    }
+}
 
 
 

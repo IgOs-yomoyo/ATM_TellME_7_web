@@ -410,11 +410,16 @@
         if (typeof setDayOpened === 'function') {
             setDayOpened(true);
         }
+    
+        // Тестирование BRM
+        showTestingScreen(8000, function() {
+            const recyclerday = document.getElementById('recyclerday');
+            if (recyclerday) recyclerday.style.display = 'block';
+        });
 
-
-        // Показываем меню оператора (или главное меню)
-        const recyclerday = document.getElementById('recyclerday');
-        if (recyclerday) recyclerday.style.display = 'block';
+        // Показываем меню оператора (или главное меню) Временно закомментируем, ради теста экрана тестирования BRM
+        // const recyclerday = document.getElementById('recyclerday');
+        // if (recyclerday) recyclerday.style.display = 'block';
     
         // Сбрасываем данные кассет для следующего раза
         resetAllInputFields();
