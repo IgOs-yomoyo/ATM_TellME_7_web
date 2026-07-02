@@ -24,14 +24,23 @@ function showClientScreen() {
     const welcomeScreen = document.getElementById('welcomeScreen');
     const outOfServiceScreen = document.getElementById('outOfServiceScreen');
     const isDayOpen = (typeof isDayOpened === 'function') ? isDayOpened() : false;
+
     if (isDayOpen) {
         if (welcomeScreen) welcomeScreen.style.display = 'block';
         if (outOfServiceScreen) outOfServiceScreen.style.display = 'none';
+        // if (typeof startCarousel === 'function') startCarousel(); 
     } else {
         if (welcomeScreen) welcomeScreen.style.display = 'none';
         if (outOfServiceScreen) outOfServiceScreen.style.display = 'block';
     }
 }
+    //     if (welcomeScreen) welcomeScreen.style.display = 'block';
+    //     if (outOfServiceScreen) outOfServiceScreen.style.display = 'none';
+    // } else {
+    //     if (welcomeScreen) welcomeScreen.style.display = 'none';
+    //     if (outOfServiceScreen) outOfServiceScreen.style.display = 'block';
+    // }
+// }
 
 // Функция для экрана авторизации – очистка полей
 function resetAuth() {

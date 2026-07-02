@@ -1,6 +1,67 @@
 // Общие функции для переключения экранов
 // let currentMode = 'normal'; 
 
+// Универсальная заявка для экрана тестирования BRM
+function showTestingScreen (duration = 8000, callback = null) {
+    console.log('showTestingScreen вызвана, duration:', duration);
+    const testingScreen = document.getElementById('testingScreen');
+    if (!testingScreen) {
+        console.error('Экран тестирования не найден');
+        if (callback) callback();
+        return;
+    }
+    // Показываем заставку
+    testingScreen.style.display = 'flex'; 
+    console.log('testingScreen display установлен в flex');
+    console.log('Тестирование модуля рециркуляции...(${duration/1000}сек)');
+
+    // Проверяем, виден ли экран
+    setTimeout(() => {
+        console.log('Проверка видимости:', window.getComputedStyle(testingScreen).display);
+    }, 100);
+
+    // Воспроизводим звук
+    playTestingSound();
+
+    // Запускаем таймер
+    setTimeout (() => {
+        testingScreen.style.display = 'none';
+        console.log('Тестирование завершено');
+
+        // Выполняем действие, если передано
+        if (callback && typeof callback == 'function') {
+            callback();
+        }
+    }, duration);
+
+}
+
+// Имитация звука
+function playTestingSound() {
+    try {
+        const audio = new Audio('audio/testing_sound.mp4');
+        audio.loop = true;
+        audio.volume = 0.5;
+
+        window.testingAudio = audio;
+
+        audio.play().catch(function(error) {
+            console.log('Не удалось воспроизвести звук:', error);
+        });
+
+        // Останавливаем звук по таймауту
+        setTimeout(function() {
+            if (window.testingAudio) {
+                window.testingAudio.pause();
+                window.testingAudio.currentTime = 0;
+                window.testingAudio = null;
+            }
+        }, 8000);
+    } catch (e) {
+        console.log('Ошибка воспроизведения звука:', e);
+    }
+}
+
 // Функция кнопки "В режим обслуживания клиентов". Новая. 
 function backToWelcomeScreen() {
     console.log('Функция backToWelcomeScreen вызвана');
@@ -34,15 +95,17 @@ function backToWelcomeScreen() {
     if (recyclerday) recyclerday.style.display = 'none';
 
     if (isDayOpen) {
-        if (welcomeScreen) {
-            welcomeScreen.style.display = 'block';
-            console.log('welcomeScreen показан (день открыт)');
-        }else{
-            console.log('welcomeScreen не найден');
-        }
-        if (outOfServiceScreen) outOfServiceScreen.style.display = 'none';
-        // Запускаем карусель, если она есть
-        if (typeof startCarousel === 'function') startCarousel();
+        showTestingScreen(8000, function() {
+            if (welcomeScreen) {
+                welcomeScreen.style.display = 'block';
+                console.log('welcomeScreen показан (день открыт)');
+            }else{
+                console.log('welcomeScreen не найден');
+            }
+            if (outOfServiceScreen) outOfServiceScreen.style.display = 'none';
+            // Запускаем карусель, если она есть
+            if (typeof startCarousel === 'function') startCarousel();
+        });
     }else{
         // День закрыт - показываем экран outofServece
         if (outOfServiceScreen) {
@@ -156,59 +219,7 @@ function replenishfirstcassette() {
     if (replenishcassette_1) replenishcassette_1.style.display = 'block';
 }
 
-// Универсальная заявка для экрана тестирования BRM
-function showTestingScreen (duration = 8000, callback = null) {
-    const testingScreen = document.getElementById('testingScreen');
-    if (!testingScreen) {
-        console.error('Экран тестирования не найден');
-        if (callback) callback();
-        return;
-    }
-    // Показываем заставку
-    testingScreen.style.display = 'flex'; 
-    console.log('Тестирование модуля рециркуляции...(${duration/1000}сек)');
 
-    // Воспроизводим звук
-    playTestingSound();
-
-    // Запускаем таймер
-    setTimeout (() => {
-        testingScreen.style.display = 'none';
-        console.log('Тестирование завершено');
-
-        // Выполняем действие, если передано
-        if (callback && typeof callback == 'function') {
-            callback;
-        }
-    }, duration);
-
-}
-
-// Имитация звука
-function playTestingSound() {
-    try {
-        const audio = new Audio('audio/testing_sound.mp4');
-        audio.loop = true;
-        audio.volume = 0.5;
-
-        window.testingAudio = audio;
-
-        audio.play().catch(function(error) {
-            console.log('Не удалось воспроизвести звук:', error);
-        });
-
-        // Останавливаем звук по таймауту
-        setTimeout(function() {
-            if (window.testingAudio) {
-                window.testingAudio.pause();
-                window.testingAudio.currentTime = 0;
-                window.testingAudio = null;
-            }
-        }, 8000);
-    } catch (e) {
-        console.log('Ошибка воспроизведения звука:', e);
-    }
-}
 
 
 

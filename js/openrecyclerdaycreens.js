@@ -422,7 +422,7 @@
         // if (recyclerday) recyclerday.style.display = 'block';
     
         // Сбрасываем данные кассет для следующего раза
-        resetAllInputFields();
+        // resetAllInputFields();
         // for (let i = 1; i <= 4; i++) {
         //     cassetteLoads[i] = null;
         // }
