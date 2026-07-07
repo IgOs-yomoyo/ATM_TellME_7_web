@@ -1153,19 +1153,6 @@ input:checked + .slider-vertical {
     padding-top: 240px;          
 }
 
-/* #testingScreen .screen-title {
-    position: relative;
-    top: auto;
-    left: auto;
-    right: auto;
-    width: 90%;
-    text-align: center;
-    font-size: 36px;
-    background: #1976D2;
-    color: white;
-    padding: 20px;
-    border-radius: 16px;
-} */
 
 .testing-message {
     display: flex;
@@ -1184,14 +1171,39 @@ input:checked + .slider-vertical {
 
 
 /* Анимация загрузки (спиннер) */
-.testing-loader {
+.gears-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 80px;
+}
+
+.gear {
+    font-size: 60px;
+    display: inline-block;
+    animation: spin 2s linear infinite;
+    transform-origin: center center;
+}
+
+.gear1 {
+    animation-duration: 2s;
+    animation-direction: normal;
+}
+
+.gear2 {
+    animation-duration: 1.5s;
+    animation-direction: reverse;
+    font-size: 45px;
+}
+/* .testing-loader {
     border: 8px solid #f3f3f3;
     border-top: 8px solid #1976D2;
     border-radius: 50%;
     width: 60px;
     height: 60px;
     animation: spin 1.2s linear infinite;
-}
+} */
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
