@@ -1180,22 +1180,26 @@ input:checked + .slider-vertical {
 }
 
 .gear {
-    font-size: 60px;
+    font-size: 80px;
+    line-height: 1;
     display: inline-block;
     animation: spin 2s linear infinite;
-    transform-origin: center center;
+    /* transform-origin: center center; */
 }
 
-.gear1 {
-    animation-duration: 2s;
-    animation-direction: normal;
-}
-
-.gear2 {
+.gear-medium {
+    font-size: 60px;
     animation-duration: 1.5s;
     animation-direction: reverse;
-    font-size: 45px;
 }
+
+.gear-small {
+    font-size: 45px;
+    animation-duration: 2.5s;
+    /* animation-direction: reverse;
+    font-size: 45px; */
+}
+
 /* .testing-loader {
     border: 8px solid #f3f3f3;
     border-top: 8px solid #1976D2;
