@@ -32,6 +32,26 @@
             <button class="atm-button insert-card-btn" onclick="insertCard()">Вставьте карту</button>
             <button class="atm-button exit-button" onclick="exitApp()">Выход</button>
          </div>
+        <!-- Заглавный экран тренажёра. Выбор режимов. -->
+        <div id="trainerMenuScreen" class="atm-screen" style="display: none;">
+            <div class="screen-title">ОБУЧАЮЩИЙ ТРЕНАЖЁР</div>
+            <div class="trainer-menu-content">
+                <div class="trainer-menu-title">ВЫБЕРИТЕ РЕЖИМ</div>
+                <div class="trainer-menu-buttons">
+                    <button class="trainer-menu-btn" onclick="startTraining('learning')">
+                        <span class="trainer-mode-icon">📖</span>
+                        <span class="trainer-mode-name">ОБУЧЕНИЕ</span>
+                        <span class="trainer-mode-desc">Пошаговые инструкции по обслуживанию банкомата</span>
+                    </button>
+                    <button class="trainer-mode-btn" onclick="startTraining('testing')">
+                        <span class="trainer-mode-icon">📝</span>
+                        <span class="trainer-mode-name">ТЕСТИРОВАНИЕ</span>
+                        <span class="trainer-mode-desc">Проверка знаний</span>
+                    </button>
+                </div>
+                <button class="trainer-back-btn" onclick="backFromTrainerMenu()">К ОБСЛУЖИВАНИЮ БАНКОМАТА</button>
+            </div>
+        </div>
          <!-- ЭКРАН "БАНКОМАТ НЕ ОБСЛУЖИВАЕТ" -->
         <div id="outOfServiceScreen" class="atm-screen" style = 'display: none;'>
             <div class="screen-title">OZON БАНК</div>
@@ -468,6 +488,7 @@
         
 
     <script src="js/utils.js"></script>
+    <script src="js/learningMode.js"></script>
     <script src="js/normal_supervisor.js"></script>
     <script src="js/clientMode.js"></script>
     <script src="js/closerecyclerday.js"></script>

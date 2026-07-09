@@ -1239,6 +1239,89 @@ input:checked + .slider-vertical {
 }
 
 
+/* ===== ЭКРАН ВЫБОРА РЕЖИМА ТРЕНАЖЁРА ===== */
+#trainerMenuScreen {
+    background: white;
+    padding: 20px;
+}
+
+.trainer-menu-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding-top: 80px;
+}
+
+.trainer-menu-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+}
+
+.trainer-menu-buttons {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 50px;
+}
+
+.trainer-mode-btn {
+    width: 300px;
+    padding: 30px 20px;
+    background: #f5f5f5;
+    border: 3px solid #1976D2;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.trainer-mode-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(25, 118, 210, 0.3);
+    background: #e3f2fd;
+}
+
+.trainer-mode-icon {
+    font-size: 48px;
+}
+
+.trainer-mode-name {
+    font-size: 22px;
+    font-weight: bold;
+    color: #1976D2;
+}
+
+.trainer-mode-desc {
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+}
+
+.trainer-back-btn {
+    padding: 15px 40px;
+    font-size: 18px;
+    font-weight: bold;
+    background: #1976D2;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.trainer-back-btn:hover {
+    background: #1565C0;
+    transform: scale(1.02);
+}
+
+
 /* ========== АДАПТАЦИЯ ПОД РАЗНОЕ РАЗРЕШЕНИЕ ЭКРАНОВ ========== */
 
 @media (max-width: 1366px) and (max-height: 768px) {
@@ -1247,6 +1330,53 @@ input:checked + .slider-vertical {
         height: 680px !important;
         transform: scale(0.95);
         transform-origin: center center;
+    }
+}
+
+
+/* Адаптация для ноутбуков */
+@media (max-width: 1366px) and (max-height: 768px) {
+    .trainer-menu-title {
+        font-size: 22px;
+        margin-bottom: 25px;
+    }
+    
+    .trainer-menu-buttons {
+        gap: 25px;
+    }
+    
+    .trainer-mode-btn {
+        width: 240px;
+        padding: 20px 15px;
+    }
+    
+    .trainer-mode-icon {
+        font-size: 36px;
+    }
+    
+    .trainer-mode-name {
+        font-size: 18px;
+    }
+    
+    .trainer-mode-desc {
+        font-size: 12px;
+    }
+    
+    .trainer-back-btn {
+        padding: 12px 30px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .trainer-menu-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .trainer-mode-btn {
+        width: 200px;
+        padding: 15px;
     }
 }
 
