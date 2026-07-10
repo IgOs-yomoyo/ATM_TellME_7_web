@@ -11,3 +11,13 @@ function openTrainingMenu() {
     const trainerMenu = document.getElementById('trainerMenuScreen');
     if (trainerMenu) trainerMenu.style.display = 'block';
 }
+
+function backToATMService() {
+    const trainerMenu = document.getElementById('trainerMenuScreen');
+    if (trainerMenu) trainerMenu.style.display = 'none';
+
+    if (typeof showClientScreen === 'function') {
+        showClientScreen();
+    }
+
+}

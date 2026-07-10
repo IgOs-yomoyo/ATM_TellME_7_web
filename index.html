@@ -9,8 +9,6 @@
 </head>
 <body>
     <div class="atm-container">
-        <!-- normal/supervisor button -->
-        <!-- <button id="modeToggleBtn" class="mode-toggle" onclick="toggleMode()">Normal/Supervisor</button> -->
         <div class="mode-toggle-container">
             <div class="mode-labels">
                 <span class="mode-label mode-supervisor">SUPERVISOR</span>
@@ -19,10 +17,10 @@
             <label class="switch-vertical">
                 <input type="checkbox" id="modeCheckbox">
                 <span class="slider-vertical"></span>
-            </label>        
+            </label> 
     </div>
         <!-- Режим обслуживания клиентов -->
-         <div id="welcomeScreen" class="atm-screen">
+         <div id="welcomeScreen" class="atm-screen" style="display: none;">
             <div class="screen-title">БАНК ОЗОН</div>
             <div class="carousel-container">
                 <img src="images/ozon-bank-logo_3.png" alt="Озон Банк" class="carousel-img active">
@@ -33,7 +31,7 @@
             <button class="atm-button exit-button" onclick="exitApp()">Выход</button>
          </div>
         <!-- Заглавный экран тренажёра. Выбор режимов. -->
-        <div id="trainerMenuScreen" class="atm-screen" style="display: none;">
+        <div id="trainerMenuScreen" class="atm-screen" style="display: block;">
             <div class="screen-title">ОБУЧАЮЩИЙ ТРЕНАЖЁР</div>
             <div class="trainer-menu-content">
                 <div class="trainer-menu-title">ВЫБЕРИТЕ РЕЖИМ</div>
@@ -49,7 +47,7 @@
                         <span class="trainer-mode-desc">Проверка знаний</span>
                     </button>
                 </div>
-                <button class="trainer-back-btn" onclick="backFromTrainerMenu()">К ОБСЛУЖИВАНИЮ БАНКОМАТА</button>
+                <button class="atm-service-btn" onclick="backToATMService()">К ОБСЛУЖИВАНИЮ БАНКОМАТА</button>
             </div>
         </div>
          <!-- ЭКРАН "БАНКОМАТ НЕ ОБСЛУЖИВАЕТ" -->
@@ -484,7 +482,8 @@
             <!-- </div> -->
         </div>
     </div>
-
+    <!-- Кнопка перехода к главному меню тренажёра -->
+    <button class="training-main-menu-btn" onclick="openTrainingMenu()">В ГЛАВНОЕ МЕНЮ</button>
         
 
     <script src="js/utils.js"></script>
