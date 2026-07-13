@@ -50,6 +50,15 @@
                 <button class="atm-service-btn" onclick="backToATMService()">К ОБСЛУЖИВАНИЮ БАНКОМАТА</button>
             </div>
         </div>
+        <!-- Панель инструкций для режима обучения -->
+        <div id="trainingPanel" class="training-panel" style="display: none;">
+            <div class="training-step-counter">Шаг <span id="currentStep">1</span> из <span id="totalSteps">10</span></div>
+            <div class="training-instruction" id="trainingInstruction">Нажмите кнопку "Вставить карту"</div>
+            <div class="training-progress">
+                <div class="training-progress-bar" id="trainingProgressBar" style="width: 10%;"></div>
+            </div>
+            <button class="training-skip-btn" onclick="skipTrainingStep()">Пропустить шаг</button>
+        </div> 
          <!-- ЭКРАН "БАНКОМАТ НЕ ОБСЛУЖИВАЕТ" -->
         <div id="outOfServiceScreen" class="atm-screen" style = 'display: none;'>
             <div class="screen-title">OZON БАНК</div>
