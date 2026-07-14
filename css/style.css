@@ -329,6 +329,82 @@ input:checked + .slider-vertical {
     transition: 0.3s;
 }
 
+/* ===== ПАНЕЛЬ ПОДСКАЗОК ДЛЯ ОБУЧЕНИЯ ===== */
+.training-tooltip {
+    position: absolute;
+    bottom: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.88);
+    color: white;
+    padding: 25px 35px;
+    border-radius: 16px;
+    z-index: 99999;
+    max-width: 600px;
+    width: 90%;
+    backdrop-filter: blur(8px);
+    border: 2px solid #1976D2;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+}
+
+.training-tooltip-content {
+    text-align: center;
+}
+
+.training-tooltip-step {
+    font-size: 13px;
+    color: #aaa;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.training-tooltip-text {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.training-tooltip-progress {
+    width: 100%;
+    height: 4px;
+    background: #333;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.training-tooltip-progress-bar {
+    height: 100%;
+    background: #1976D2;
+    transition: width 0.5s ease;
+    width: 0%;
+}
+
+.training-tooltip-skip {
+    position: absolute;
+    bottom: -40px;
+    right: 0;
+    background: transparent;
+    color: #aaa;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 5px 10px;
+}
+
+.training-tooltip-skip:hover {
+    color: white;
+}
+
+/* Подсветка активной кнопки */
+.training-highlight {
+    box-shadow: 0 0 0 4px #ff9800, 0 0 20px rgba(255, 152, 0, 0.5) !important;
+    transform: scale(1.05);
+    transition: 0.3s;
+    position: relative;
+    z-index: 100;
+}
+
 /* ===========ПОЗИЦИОНИРОВАНИЕ ДЛЯ ЭКРАНА РЕЖИМА ОБСЛУЖИВАНИЯ КЛИЕНТОВ============ */
 #welcomeScreen {
     background: white;
@@ -395,7 +471,7 @@ input:checked + .slider-vertical {
 
 
 .insert-card-btn {
-    position: absolute;
+    position: absolute !important;
     bottom: 45px;
     right: 50px;
     width: 250px;

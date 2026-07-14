@@ -33,15 +33,17 @@ function initTrainingSteps() {
     trainingSteps = [
         {
             id: 1, 
-            instruction: 'Нажмите кнопку "Вставьте карту"',
+            instruction: 'Обслуживание банкоматов банка OZON всегда начинается с сервисной карты. Вставьте сервисную карту в картридер.',
             targetSelector: '.insert-card-btn',
-            action: 'insertCard'
+            action: 'insertCard',
+            targetScreen: 'welcomeScreen'
         },
         {
             id: 2, 
             instruction: 'Введите PIN-код 1478',
-            targetSelector: '.main-btn',
-            action: 'selectOperation'
+            targetSelector: 'pin-input',
+            action: 'enterPin',
+            targetScreen: 'pinScreen'
         }
     ];
 }
@@ -51,30 +53,88 @@ function startTraining() {
     currentStepIndex = 0;
     initTrainingSteps();
 
-    // Показываем панель инструкций
-    const panel = document.getElementById('trainingPanel');
-    if (panel) panel.style.display = 'block';
+    // Скрываем меню тренажёра
+    const trainerMenu = document.getElementById('trainerMenuScreen');
+    if (trainerMenu) trainerMenu.style.display = 'none';
 
-    // Показываем первый шаг
-    showTestingScreen(currentStepIndex);
+    // Принудительно показываем welcomeScreen
+    // Скрываем все экраны
+    document.querySelectorAll('.atm-screen').forEach(screen => {
+        screen.style.display = 'none';
+    });
+
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    if (welcomeScreen) {
+        welcomeScreen.style.display = 'block';
+        console.log('welcomeScreen принудительно запущен');
+    }
+
+    // На всякий случай скрываем outOfService
+    const outOfServiceScreen = document.getElementById('outOfServiceScreen');
+    if (outOfServiceScreen) outOfServiceScreen.style.display = 'none';
+
+    // Показываем первый шаг с задержкой
+    setTimeout(() => {
+        showTrainingStep(currentStepIndex);
+    }, 300);
 }
 
+
+//     if (typeof showClientScreen === 'function') {
+//         showClientScreen();
+//     }
+
+//     // Показываем первый шаг
+//     showTrainingStep(currentStepIndex);
+
+// }
+
 function showTrainingStep(index) {
+    console.log('showTrainingStep вызван, индекс:', index);
+
     if (index >= trainingSteps.length) {
         finishTraining();
         return;
     }
 
     const step = trainingSteps[index];
+    console.log('Текущий шаг:', step);
+    console.log('targetScreen:', step.targetScreen);
+
+    // Проверяем, что мы на нужном экране
+    // Если в шаге указан целевой экран, показываем его
+    if (step.targetScreen) {
+        console.log('Показываем экран:', step.targetScreen);
+        document.querySelectorAll('.atm-screen').forEach(screen => {
+            screen.style.display = 'none';
+        });
+        const targetScreen = document.getElementById(step.targetScreen);
+        if (targetScreen) {
+            targetScreen.style.display = 'block';
+            console.log('Показан экран, display:', targetScreen.style.display);
+        } else {
+            console.warn('Нет targetScreen в шаге!');
+        }
+    }
+
+    // Обновляем панель подсказок
+    const tooltip = document.getElementById('trainingTooltip');
+    if (!tooltip) {
+        console.error('Панель подсказок не найдена');
+        return;
+    }
 
     // Обновляем панель
-    document.getElementById('currntStep').textContent = step.id;
-    document.getElementById('totalSteps').textContent = trainingSteps.length;
-    document.getElementById('trainingInstruction').textContent = step.instruction;
+    document.getElementById('tooltipStep').textContent = step.id;
+    document.getElementById('tooltipTotal').textContent = trainingSteps.length;
+    document.getElementById('tooltipText').textContent = step.instruction;
 
     // Обновляем прогресс
     const progress = ((index + 1) / trainingSteps.length) * 100;
-    document.getElementById('trainingProgressBar').style.width = progress + '%';
+    document.getElementById('tooltipProgressBar').style.width = progress + '%';
+
+    tooltip.style.display = 'block';
+    console.log('Показана панель подсказок');
 
     // Убираем подсветку с предыдущей кнопки
     document.querySelectorAll('.training-highlight').forEach(el => {

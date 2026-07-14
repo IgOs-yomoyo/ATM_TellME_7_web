@@ -61,6 +61,10 @@ function hidePinScreen() {
 
 // Функция имитации предъявления карты. 
 function insertCard() {
+    // ========= ДОБАВЛЯЕМ ПРОВЕРКУ ТРЕНАЖЁРА ==========
+    if (isTrainingMode) {
+        completeTrainingStep('insertCard');
+    }
     console.log ('Карта вставлена');
     hideWelcomeScreen();
     showPinScreen();
@@ -87,6 +91,9 @@ function clearPin() {
 }
 
 function submitPin() {
+    if (isTrainingMode) {
+        completeTrainingStep('enterPin');
+    }
     if (pinCode.length === 4) {
         console.log('PIN введён:', pinCode);
         

@@ -58,6 +58,9 @@ function cancelCloseDay() {
 
 
 function openrecyclerday() {
+    if (isTrainingMode) {
+        completeTrainingStep('openDay');
+    }
     console.log('openrecyclerday вызвана');
     console.log('isDayOpened():', typeof isDayOpened === 'function' ? isDayOpened() : 'функция не найдена');
     // console.log('openingDayData:', openingDayData);
