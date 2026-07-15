@@ -17,8 +17,19 @@
             <label class="switch-vertical">
                 <input type="checkbox" id="modeCheckbox">
                 <span class="slider-vertical"></span>
-            </label> 
-    </div>
+            </label>
+        </div>
+        <!-- ПАНЕЛЬ ПОДСКАЗОК ДЛЯ РЕЖИМА ОБУЧЕНИЯ -->
+        <div id="trainingTooltip" class="training-tooltip" style="display: none;">
+            <div class="training-tooltip-content">
+                <div class="training-tooltip-step">Шаг<span id="tooltipStep">1</span>из<span id="tooltipTotal">10</span></div>
+                <div class="training-tooltip-text" id="tooltipText">Обслуживание банкомата банка OZON всегда начинается с сервисной карты. Вставьте сервисную
+                    карту в картридер.</div>
+                    <div class="training-tooltip-progress">
+                        <div class="training-tooltip-progress-bar" id="tooltipProgressBar" style="width: 10%;"></div>
+                    </div>
+                </div>
+            </div>
         <!-- Режим обслуживания клиентов -->
          <div id="welcomeScreen" class="atm-screen" style="display: none;">
             <div class="screen-title">БАНК ОЗОН</div>
@@ -50,7 +61,7 @@
                 <button class="atm-service-btn" onclick="backToATMService()">К ОБСЛУЖИВАНИЮ БАНКОМАТА</button>
             </div>
         </div>
-        <!-- Панель инструкций для режима обучения -->
+        <!-- Панель инструкций для режима обучения
         <div id="trainingPanel" class="training-panel" style="display: none;">
             <div class="training-step-counter">Шаг <span id="currentStep">1</span> из <span id="totalSteps">10</span></div>
             <div class="training-instruction" id="trainingInstruction">Нажмите кнопку "Вставить карту"</div>
@@ -58,21 +69,8 @@
                 <div class="training-progress-bar" id="trainingProgressBar" style="width: 10%;"></div>
             </div>
             <button class="training-skip-btn" onclick="skipTrainingStep()">Пропустить шаг</button>
-        </div> 
-        <!-- ПАНЕЛЬ ПОДСКАЗОК ДЛЯ РЕЖИМА ОБУЧЕНИЯ -->
-        <div id="trainingTooltip" class="training-tooltip" style="display: none;">
-            <div class="training-tooltip-content">
-                <div class="training-tooltip-step">Шаг<span id="tooltipStep">1</span>из<span id="tooltipTotal">10</span></div>
-                <div class="training-tooltip-text" id="tooltipText">Обслуживание банкомата банка OZON всегда начинается с сервисной карты. Вставьте сервисную
-                    карту в картридер.</div>
-                    <div class="training-tooltip-progress">
-                        <div class="training-tooltip-progress-bar" id="tooltipProgressBar" style="width: 10%;"></div>
-                    </div>
-                </div>
-                <button class="training-tooltip-skip" onclick="skipTrainingStep()">Пропустить шаг</button>
-            </div>
-        </div>
-         <!-- ЭКРАН "БАНКОМАТ НЕ ОБСЛУЖИВАЕТ" -->
+        </div>  -->
+        <!-- ЭКРАН "БАНКОМАТ НЕ ОБСЛУЖИВАЕТ" -->
         <div id="outOfServiceScreen" class="atm-screen" style = 'display: none;'>
             <div class="screen-title">OZON БАНК</div>
             <div class="out-of-service-content">

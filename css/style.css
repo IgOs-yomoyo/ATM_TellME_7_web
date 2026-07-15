@@ -332,29 +332,43 @@ input:checked + .slider-vertical {
 /* ===== ПАНЕЛЬ ПОДСКАЗОК ДЛЯ ОБУЧЕНИЯ ===== */
 .training-tooltip {
     position: absolute;
-    bottom: 200px;
-    left: 50%;
-    transform: translateX(-50%);
+    bottom: 300px;
+    left: 10px;
+    right: auto;
+    transform: none;
     background: rgba(0, 0, 0, 0.88);
     color: white;
     padding: 25px 35px;
     border-radius: 16px;
     z-index: 99999;
     max-width: 600px;
-    width: 90%;
+    max-width: 450px;
+    width: auto;
     backdrop-filter: blur(8px);
     border: 2px solid #1976D2;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+    transition: width 0.2s ease; /*max-width 0.2s ease;  /* ← плавное изменение размера */
 }
 
+.training-tooltip.dragging {
+    cursor: grabbing;
+    opacity: 0.9;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8);
+    transition: none;
+}
+
+
 .training-tooltip-content {
-    text-align: center;
+    text-align: left;
 }
 
 .training-tooltip-step {
     font-size: 13px;
     color: #aaa;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     letter-spacing: 1px;
 }
 
@@ -363,6 +377,7 @@ input:checked + .slider-vertical {
     font-weight: 500;
     line-height: 1.5;
     margin-bottom: 15px;
+    color: white;
 }
 
 .training-tooltip-progress {

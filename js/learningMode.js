@@ -4,9 +4,24 @@
 
 // ========== ОТКРЫТЬ МЕНЮ ТРЕНАЖЁРА
 function openTrainingMenu() {
+    //Скрываем панель закладок
+    const tooltip = document.getElementById('trainingTooltip');
+    if (tooltip) tooltip.style.display = 'none';
+
+    //Сбрасываем режим обучения
+    isTrainingMode = false;
+    currentStepIndex = 0;
+
+    //Убираем подсветку кнопок
+    document.querySelectorAll('.training-hightlight').forEach(el => {
+        el.classList.remove('training-hightlight');
+    });
+    
+    //Скрываем все экраны
     document.querySelectorAll('.atm-screen').forEach(screen => {
         screen.style.display = 'none';
     });
+
     // Показываем меню тренажёра
     const trainerMenu = document.getElementById('trainerMenuScreen');
     if (trainerMenu) trainerMenu.style.display = 'block';
@@ -41,10 +56,22 @@ function initTrainingSteps() {
         {
             id: 2, 
             instruction: 'Введите PIN-код 1478',
-            targetSelector: 'pin-input',
+            targetSelector: '.pin-input',
             action: 'enterPin',
             targetScreen: 'pinScreen'
-        }
+        }, 
+        {
+            id: 3,
+            instruction: 'На экране "Меню инкассации" нажмите кнопку "Полчить баланс".',
+            targetSelector: 'getBalance',
+            action: 'get-balance',
+            targetScreen: 'balanceReceiptScreen'
+        },
+        // {
+        //     id: 4,
+        //     instruction: 'Заберите чек',
+        //     targetSelector: ''
+        // }
     ];
 }
 
@@ -145,8 +172,17 @@ function showTrainingStep(index) {
     const target = document.querySelector(step.targetSelector);
     if (target) {
         target.classList.add('training-highlight');
-        // Прокручиваем к кнопке, если она не видна
-        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+   // Удаляем старый номер
+    const oldLabel = target.querySelector('.step-number');
+    if (oldLabel) oldLabel.remove();
+    
+    // Создаём номер и добавляем его в конец кнопки (не меняя position)
+    const label = document.createElement('span');
+    label.className = 'step-number';
+    label.textContent = step.id;
+    // Не меняем position у target!
+    target.appendChild(label);
     }
     
     // Добавляем номер на кнопку
@@ -204,4 +240,118 @@ function finishTraining() {
     
     alert('🎉 Обучение завершено! Теперь вы знаете, как пользоваться банкоматом.');
 }
+
+// ========== ПЕРЕТАСКИВАНИЕ ПАНЕЛИ ПОДСКАЗОК ==========
+let isDragging = false;
+let dragOffsetX = 0;
+let dragOffsetY = 0;
+let tooltipElement = null;
+
+function initTooltipDrag() {
+    tooltipElement = document.getElementById('trainingTooltip');
+    if (!tooltipElement) return;
+
+    //=== Привязвываем курсор к окну ===
+    tooltipElement.style.position = 'fixed';
+    tooltipElement.style.left = '30px';
+    tooltipElement.style.bottom = '150px';
+    tooltipElement.style.top = 'auto';
+    tooltipElement.style.right = 'auto';
+    tooltipElement.style.transform = 'none';
+
+    // События для мыши
+    tooltipElement.addEventListener('mousedown', startDrag);
+    document.addEventListener('mousemove', onDrag);
+    document.addEventListener('mouseup', stopDrag);
+
+    // События для touch-устройств
+    tooltipElement.addEventListener('touchstart', startDragTouch, {passive: false});
+    document.addEventListener('touchmove', onDragTouch, {passive: false});
+    document.addEventListener('touchend', stopDragTouch, {passive: false});
+}
+
+function startDrag(e) {
+    if (e.target.closest('.training-tooltip-skip')) return; //Не перетаскивать по кнопке
+    isDragging = true;
+    const rect = tooltipElement.getBoundingClientRect();
+    dragOffsetX = e.clientX - rect.left;
+    dragOffsetY = e.clientY - rect.top;
+    tooltipElement.classList.add('dragging');
+    tooltipElement.style.transition = 'none';
+    e.preventDefault();
+}
+
+function onDrag(e) {
+    if (!isDragging) return;
+    //Новые координаты панели: курсор минус смещение
+    let x = e.clientX - dragOffsetX;
+    let y = e.clientY - dragOffsetY;
+
+    const rect = tooltipElement.getBoundingClientRect();
+    const panelWidth = rect.width;
+    const panelHeight = rect.height;
+
+
+    const maxX = window.innerWidth - 20; //const maxX = window.innerWidth - rect.width;
+    const minX = 20; //-panelWidth + 10;
+    const maxY = window.innerHeight - 20; //const maxY = window.innerHeight - rect.height;
+    const minY = 20; //-panelHeight + 10;
+
+    x = Math.max(minX, Math.min(x, maxX));
+    y = Math.max(minY, Math.min(y, maxY));
+    // const x = e.clientX - dragOffsetX;
+    // const y = e.clientY - dragOffsetY;
+    tooltipElement.style.left = x + 'px';
+    tooltipElement.style.top = y + 'px';
+    tooltipElement.style.bottom = 'auto';
+    tooltipElement.style.right = 'auto';
+    tooltipElement.style.transform = 'none';
+}
+
+function stopDrag() {
+    if (isDragging) {
+        isDragging = false;
+        tooltipElement.classList.remove('dragging');
+    }
+}
+
+//Инициализация при загрузке
+document.addEventListener('DOMContentLoaded', function() {
+    //Инициализация только если панель существует
+    if (document.getElementById('trainingTooltip')) {
+        initTooltipDrag();
+    }
+});
+
+// Touch-версия
+// function startDragTouch(e) {
+//     if (e.target.closest('.training-tooltip-skip')) return;
+//     const touch = e.touches[0];
+//     isDragging = true;
+//     const rect = tooltipElement.getBoundingClientRect();
+//     dragOffsetX = touch.clientX - rect.left;
+//     dragOffsetY = touch.clientY - rect.top;
+//     tooltipElement.classList.add('dragging');
+//     e.preventDefault();
+// }
+
+// function onDragTouch(e) {
+//     if (!isDragging) return;
+//     const touch = e.touches[0];
+//     const x = touch.clientX - dragOffsetX;
+//     const y = touch.clientY - dragOffsetY;
+//     tooltipElement.style.left = x + 'px';
+//     tooltipElement.style.top = y + 'px';
+//     tooltipElement.style.bottom = 'auto';
+//     tooltipElement.style.right = 'auto';
+//     tooltipElement.style.transform = 'none';
+//     e.preventDefault();
+// }
+
+// function stopDragTouch() {
+//     if (isDragging) {
+//         isDragging = false;
+//         tooltipElement.classList.remove('dragging');
+//     }
+// }
 
