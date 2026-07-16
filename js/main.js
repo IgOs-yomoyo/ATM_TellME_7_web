@@ -153,6 +153,12 @@ function generateReceiptContentForScreen(receiptContentId, isCollectionMode) {
 }
 
 function showBalanceReceipt() {
+    //====== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ======
+    if (isTrainingMode) {
+        completeTrainingStep('showBalanceReceipt');
+        // return;
+    };
+
     // Скрываем меню инкассации
     const mainScreen = document.getElementById('mainScreen');
     if (mainScreen) mainScreen.style.display = 'none';
@@ -164,6 +170,11 @@ function showBalanceReceipt() {
 }
 
 function closeBalanceReceipt() {
+    //====== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ======
+    if (isTrainingMode) {
+        completeTrainingStep('closeBalanceReceipt');
+    };
+
     const balanceScreen = document.getElementById('balanceReceiptScreen');
     if (balanceScreen) balanceScreen.style.display = 'none';
 
@@ -179,6 +190,11 @@ function closeBalanceReceipt() {
 
 
 function showCollectionReceipt() {
+    //====== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ======
+    if (isTrainingMode) {
+        completeTrainingStep('showCollectionReceipt');
+    };
+
     const mainScreen = document.getElementById('mainScreen');
     if (mainScreen) mainScreen.style.display = 'none';
     generateReceiptContentForScreen('collectionReceiptContent', true);
@@ -187,6 +203,10 @@ function showCollectionReceipt() {
 }
 
 function closeCollectionReceipt() {
+    //====== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ======
+    if (isTrainingMode) {
+        completeTrainingStep('closeCollectionReceipt');
+    };
     const collectionScreen = document.getElementById('collectionReceiptScreen');
     if (collectionScreen) collectionScreen.style.display = 'none';
 

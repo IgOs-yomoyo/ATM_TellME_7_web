@@ -63,15 +63,31 @@ function initTrainingSteps() {
         {
             id: 3,
             instruction: 'На экране "Меню инкассации" нажмите кнопку "Полчить баланс".',
-            targetSelector: 'getBalance',
-            action: 'get-balance',
+            targetSelector: '[onclick="getBalance()"]',
+            action: 'showBalanceReceipt',
+            targetScreen: 'mainScreen'
+        },
+        {
+            id: 4,
+            instruction: 'Заберите чек',
+            targetSelector: '[onclick="closeBalanceReceipt()"]',
+            action: 'closeBalanceReceipt', 
             targetScreen: 'balanceReceiptScreen'
         },
-        // {
-        //     id: 4,
-        //     instruction: 'Заберите чек',
-        //     targetSelector: ''
-        // }
+        {
+            id: 5,
+            instruction: 'На экране "Меню инкассации" нажмите кнопку "Провести инкассацию".',
+            targetSelector: '[onclick="performCollection()"]', 
+            action: 'showCollectionReceipt',
+            targetScreen: 'balanceReceiptScreen'
+        }, 
+        {
+            id: 6,
+            instruction: 'Заберите чек', 
+            targetSelector: '[onclick="closeCollectionReceipt()"]',
+            action: 'closeCollectionReceipt', 
+            targetScreen: 'collectionReceiptScreen'
+        }
     ];
 }
 
@@ -163,10 +179,12 @@ function showTrainingStep(index) {
     tooltip.style.display = 'block';
     console.log('Показана панель подсказок');
 
+    //==== УБИРАЕМ ПОДСТВЕТКУ И НОМЕР КНОПКИ ======
     // Убираем подсветку с предыдущей кнопки
     document.querySelectorAll('.training-highlight').forEach(el => {
         el.classList.remove('training-highlight');
     });
+      
 
     // Подсвечиваем целевую кнопку
     const target = document.querySelector(step.targetSelector);
@@ -181,64 +199,78 @@ function showTrainingStep(index) {
     const label = document.createElement('span');
     label.className = 'step-number';
     label.textContent = step.id;
-    // Не меняем position у target!
-    target.appendChild(label);
-    }
-    
-    // Добавляем номер на кнопку
-    if (target) {
-        const label = document.createElement('span');
-        label.className = 'step-number';
-        label.textContent = step.id;
-        label.style.cssText = `
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            background: #ff9800;
-            color: white;
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
-            font-size: 14px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
+    label.style.cssText = `
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        background: #ff9800;
+        color: white;
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
         `;
-        // Удаляем старый номер, если был
-        const oldLabel = target.querySelector('.step-number');
-        if (oldLabel) oldLabel.remove();
-        target.style.position = 'relative';
+
+        if (window.getComputedStyle(target).position === 'static') {
+            target.style.position = 'relative';
+        }
         target.appendChild(label);
     }
 }
 
 function completeTrainingStep(action) {
+    if (!isTrainingMode) return;
+
     // Проверяем, совпадает ли действие с ожидаемым
     const step = trainingSteps[currentStepIndex];
     if (step && step.action === action) {
+        const currentTarget = document.querySelector(step.targetSelector);
+        if (currentTarget) {
+            const label = currentTarget.querySelector('.step-number');
+            if (label) label.remove();
+            currentTarget.classList.remove('training-highlight');
+        }
         currentStepIndex++;
         showTrainingStep(currentStepIndex);
     }
 }
 
 function skipTrainingStep() {
+    if (!isTrainingMode) return;
+
+    const step = trainingSteps[currentStepIndex];
+    if (step) {
+        const currentTarget = document.querySelector(stap.targetSelector);
+        if (currentTarget) {
+            const label = currentTarget.querySelector('step-number');
+            if (label) label.remove();
+            currentTarget.classList.remove('training-highlight');
+        }
+    }
     currentStepIndex++;
     showTrainingStep(currentStepIndex);
 }
 
 function finishTraining() {
     isTrainingMode = false;
-    const panel = document.getElementById('trainingPanel');
-    if (panel) panel.style.display = 'none';
-    
-    // Убираем подсветку
+    currentStepIndex = 0;
+
+    // === УБИРАЕМ ВСЕ НОМЕРА ===
+    document.querySelectorAll('.step-number').forEach(el => el.remove());
     document.querySelectorAll('.training-highlight').forEach(el => {
         el.classList.remove('training-highlight');
     });
     
-    alert('🎉 Обучение завершено! Теперь вы знаете, как пользоваться банкоматом.');
+    const tooltip = document.getElementById('trainingTooltip');
+    if (tooltip) tooltip.style.display = 'none';
+    
+    openTrainingMenu();
+    
 }
 
 // ========== ПЕРЕТАСКИВАНИЕ ПАНЕЛИ ПОДСКАЗОК ==========

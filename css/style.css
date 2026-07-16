@@ -706,7 +706,7 @@ input:checked + .slider-vertical {
 }
 
 .take-receipt-btn {
-    position: absolute;
+    position: absolute !important;
     bottom: 30px;
     right: 30px;
     width: 250px;
