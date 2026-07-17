@@ -34,13 +34,6 @@ function showClientScreen() {
         if (outOfServiceScreen) outOfServiceScreen.style.display = 'block';
     }
 }
-    //     if (welcomeScreen) welcomeScreen.style.display = 'block';
-    //     if (outOfServiceScreen) outOfServiceScreen.style.display = 'none';
-    // } else {
-    //     if (welcomeScreen) welcomeScreen.style.display = 'none';
-    //     if (outOfServiceScreen) outOfServiceScreen.style.display = 'block';
-    // }
-// }
 
 // Функция для экрана авторизации – очистка полей
 function resetAuth() {
@@ -221,6 +214,11 @@ function onAuthSuccess() {
 
 // Запрос переключения в Supervisor (слайдер вверх)
 function requestSupervisorMode() {
+    // ====== Проверка режима обучения ======
+    if (isTrainingMode) {
+        completeTrainingStep('switchToSupervisor');
+    }
+
     const authScreen = document.getElementById('authScreen');
     const welcomeScreen = document.getElementById('welcomeScreen');
     const outOfServiceScreen = document.getElementById('outOfServiceScreen');
@@ -244,16 +242,7 @@ function switchToNormalMode() {
         window.pendingModeSwitch = null;
         console.log('currentMode установлен в Normal, экран не изменён');
 }
-// function switchToNormalMode() {
-//     if (currentMode === 'supervisor') {
-//         exitSupervisorMode();
-//     } else {
-//         showClientScreen();
-//     }
-//     const checkbox = document.getElementById('modeCheckbox');
-//     if (checkbox && checkbox.checked) checkbox.checked = false;
-//     window.pendingModeSwitch = null;
-// }
+
 
 // Выход из режима Supervisor (например, по кнопке в меню оператора)
 function exitSupervisorMode() {

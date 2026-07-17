@@ -125,7 +125,7 @@ body {
 
 /* Кнопка normal/supervisor. Всегда видна на всех экранах */
 .mode-toggle-container {
-    position: absolute;  /* ← было fixed, стало absolute */
+    position: absolute !important;  /* ← было fixed, стало absolute */
     top: 50%;
     right: -80px;
     transform: translateY(-50%);
@@ -758,6 +758,7 @@ input:checked + .slider-vertical {
 }
 
 .take-card-btn {
+    position: absolute !important;
     width: 250px;
     height: 70px;
     font-size: 24px;

@@ -91,16 +91,16 @@ function clearPin() {
 }
 
 function submitPin() {
-    if (isTrainingMode) {
-        completeTrainingStep('enterPin');
-    }
     if (pinCode.length === 4) {
         console.log('PIN введён:', pinCode);
         
-        // Здесь будет проверка PIN-кода (сравнение с базой данных)
-        // Пока тестовый PIN 1234
         if (pinCode === '1478') {
             console.log('PIN верный');
+
+            if (isTrainingMode) {
+        completeTrainingStep('enterPin');
+            }
+            
             // Переход в главное меню
             hidePinScreen();
             const mainScreen = document.getElementById('mainScreen');

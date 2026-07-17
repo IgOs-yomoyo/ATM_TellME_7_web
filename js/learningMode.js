@@ -87,6 +87,20 @@ function initTrainingSteps() {
             targetSelector: '[onclick="closeCollectionReceipt()"]',
             action: 'closeCollectionReceipt', 
             targetScreen: 'collectionReceiptScreen'
+        }, 
+        {
+            id: 7, 
+            instruction: 'Заберите карту',
+            targetSelector: '[onclick="takeCard()"]',
+            action: 'takeTheCard',
+            targetScreen: 'takeCardScreen'
+        },
+        {
+            id: 8, 
+            instruction: 'Далее нужно перевести переключатель режимов работы банкомата normal/supervisor в положение supervisor, то есть, перевести банкомат в режим оператора.',
+            targetSelector: '.mode-toggle-container', 
+            action: 'switchToSupervisor', 
+            targetScreen: 'outOfServiceScreen'
         }
     ];
 }
@@ -121,16 +135,6 @@ function startTraining() {
         showTrainingStep(currentStepIndex);
     }, 300);
 }
-
-
-//     if (typeof showClientScreen === 'function') {
-//         showClientScreen();
-//     }
-
-//     // Показываем первый шаг
-//     showTrainingStep(currentStepIndex);
-
-// }
 
 function showTrainingStep(index) {
     console.log('showTrainingStep вызван, индекс:', index);
@@ -214,11 +218,12 @@ function showTrainingStep(index) {
         align-items: center;
         justify-content: center;
         z-index: 100;
+        pointer-events: none;
         `;
 
-        if (window.getComputedStyle(target).position === 'static') {
-            target.style.position = 'relative';
-        }
+        // if (window.getComputedStyle(target).position === 'static') {
+        //     target.style.position = 'relative';
+        // }
         target.appendChild(label);
     }
 }

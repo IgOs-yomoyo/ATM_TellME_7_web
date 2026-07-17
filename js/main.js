@@ -250,6 +250,11 @@ function showTakeCardScreen() {
 
 //Функция для кнопки "Забрать карту"
 function takeCard() {
+    //====== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ======
+    if (isTrainingMode) {
+        completeTrainingStep('takeTheCard');
+    };
+
     const takeCardScreen = document.getElementById('takeCardScreen');
     if (takeCardScreen) takeCardScreen.style.display = 'none';
 
