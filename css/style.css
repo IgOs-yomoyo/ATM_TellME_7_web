@@ -1586,6 +1586,101 @@ input:checked + .slider-vertical {
     }
 }
 
+/* ===== УНИВЕРСАЛЬНАЯ АДАПТАЦИЯ ДЛЯ БОЛЬШИХ ЭКРАНОВ ===== */
+@media (max-height: 900px) {
+    .screen-title {
+        font-size: 32px !important;
+        height: 80px !important;
+        padding: 8px 15px !important;
+    }
+    
+    .atm-button {
+        font-size: 16px !important;
+        padding: 10px 16px !important;
+        height: auto !important;
+        min-width: 180px !important;
+    }
+    
+    .atm-container {
+        height: 90vh !important;
+        max-height: 800px !important;
+    }
+}
+
+@media (max-height: 800px) {
+    .screen-title {
+        font-size: 28px !important;
+        height: 70px !important;
+        padding: 6px 12px !important;
+    }
+    
+    .atm-button {
+        font-size: 14px !important;
+        padding: 8px 12px !important;
+        min-width: 150px !important;
+    }
+    
+    .atm-container {
+        height: 95vh !important;
+        max-height: 700px !important;
+    }
+    
+    /* Корректировка кнопок на экране оператора */
+    .supervisor-openclose, .supervisor-devices,
+    .supervisor-service, .supervisor-nottoservice,
+    .supervisor-shutdown {
+        height: 50px !important;
+        font-size: 12px !important;
+    }
+}
+
+@media (max-height: 700px) {
+    .screen-title {
+        font-size: 22px !important;
+        height: 55px !important;
+        padding: 4px 10px !important;
+    }
+    
+    .atm-button {
+        font-size: 12px !important;
+        padding: 6px 10px !important;
+        min-width: 120px !important;
+    }
+    
+    .atm-container {
+        height: 98vh !important;
+        max-height: 600px !important;
+        border-radius: 8px !important;
+    }
+    
+    /* Скрываем лишние элементы для экономии места */
+    .carousel-container {
+        height: 150px !important;
+    }
+    
+    .insert-card-btn {
+        width: 180px !important;
+        height: 60px !important;
+        font-size: 16px !important;
+    }
+}
+
+@media (min-width: 1920px) and (max-height: 1080px) {
+    .atm-container {
+        transform: scale(0.95);
+        transform-origin: center center;
+    }
+}
+
+@media (min-width: 1920px) and (max-height: 900px) {
+    .atm-container {
+        transform: scale(0.85);
+        transform-origin: center center;
+    }
+}
+
+
+
 /* ===== УНИВЕРСАЛЬНАЯ АДАПТАЦИЯ ПОД НИЗКИЕ ЭКРАНЫ ===== */
 /* @media (max-height: 900px) { */
     /* Здесь базовые настройки для всех экранов ниже 1000px */
