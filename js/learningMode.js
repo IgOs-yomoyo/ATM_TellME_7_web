@@ -101,6 +101,20 @@ function initTrainingSteps() {
             targetSelector: '.mode-toggle-container', 
             action: 'switchToSupervisor', 
             targetScreen: 'outOfServiceScreen'
+        },
+        {
+            id: 9,
+            instruction: 'Введите код пользователя 100 и нажмите кнопку "Ввод"',
+            targetSelector: '#loginInput', //#authScreen .info-input
+            action: 'loginInput', 
+            targetScreen: 'authScreen'
+        },
+        {
+            id: 10,
+            instruction: 'Введите пароль 111111 и нажмите кнопку "Ввод"',
+            targetSelector: '#passwordInput',
+            action: 'passwordInput',
+            targetScreen: 'authScreen'
         }
     ];
 }

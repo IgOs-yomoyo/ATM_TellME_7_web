@@ -654,18 +654,6 @@ input:checked + .slider-vertical {
     text-align: center;
 }
 
-/* если экран слишком узкий, разрешим перенос текста и уменьшим отступы */
-/* @media (max-width: 700px) {
-    .main-menu-buttons {
-        padding: 0 15px;
-        gap: 10px;
-    }
-    .main-btn {
-        font-size: 18px;
-        padding: 15px;
-        white-space: normal;
-    }
-} */
 
 .main-menu-buttons button:hover {
     transform: scale(1.02);

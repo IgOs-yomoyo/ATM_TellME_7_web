@@ -138,6 +138,12 @@ function setupAuthInput() {
 function onLoginKeyPress(event) {
     if (event.key === 'Enter') {
         event.preventDefault();
+
+        //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
+        if (isTrainingMode) {
+            completeTrainingStep('loginInput');
+        }
+
         const passwordInput = document.getElementById('passwordInput');
         if (passwordInput) {
             passwordInput.focus();
@@ -149,6 +155,11 @@ function onLoginKeyPress(event) {
 function onPasswordKeyPress(event) {
     if (event.key === 'Enter') {
         event.preventDefault();
+
+        //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
+        if (isTrainingMode) {
+            completeTrainingStep('passwordInput');
+        }
         // Вызываем проверку авторизации
         submitAuth();
     }
@@ -164,6 +175,11 @@ function onAuthSubmitClick(event) {
     const activeElement = document.activeElement;
 
     if (activeElement === loginInput) {
+        //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
+        if (isTrainingMode) {
+            completeTrainingStep('loginInput');
+        }
+
         // Если фокус на поле Код пользователя, переключаемся на поле Пароль
         if (passwordInput) {
             passwordInput.focus();
@@ -187,6 +203,10 @@ function submitAuth() {
     const login = document.getElementById('loginInput').value;
     const password = document.getElementById('passwordInput').value;
     if (login === '100' && password === '111111') {
+        //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
+        if (isTrainingMode) {
+            completeTrainingStep('authSuccess');
+        }
         onAuthSuccess();
         resetAuth();
     } else {
