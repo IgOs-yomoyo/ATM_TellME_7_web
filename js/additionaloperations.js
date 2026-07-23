@@ -8,6 +8,11 @@ let isCounterReset = false; //Флаг, был ли уже сброс в тек�
 function additionalOperations() {
     console.log('additionalOperations вызвана');
 
+    //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
+    if (isTrainingMode) {
+        completeTrainingStep('additionalOperations');
+    }
+
     // Скрываем экран opencloseday.
     const opencloseday = document.getElementById('opencloseday');
     if (opencloseday) opencloseday.style.display = 'none';
@@ -25,6 +30,11 @@ function additionalOperations() {
 
 
 function resetHeldCardCounter() {
+
+    //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
+    if (isTrainingMode) {
+        completeTrainingStep('resetHeldCardCounter');
+    }
 
     if (isCounterReset) {
         heldCardsCount = 0;

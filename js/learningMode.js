@@ -115,6 +115,27 @@ function initTrainingSteps() {
             targetSelector: '#passwordInput',
             action: 'passwordInput',
             targetScreen: 'authScreen'
+        },
+        {
+            id: 11,
+            instruction: 'На основном экране оператора нажмите "Открытие/закрытие операционного дня"',
+            targetSelector: '.supervisor-openclose', //[onclick="openCloseDay()"]
+            action: 'openCloseDay',
+            targetScreen: 'supervisorScreen'
+        },
+        {
+            id: 12,
+            instruction: 'В меню "Открытие/закрытие операционного дня" нужно выбрать кнопку "Дополнительные операции"',
+            targetSelector: '[onclick="additionalOperations()"]', //[onclick="additionalOperations()"], .opencloseday-extraoperation'
+            action: 'additionalOperations',
+            targetScreen: 'opencloseday'
+        },
+        {
+            id: 13,
+            instruction: 'Нажмите кнопку "Сброс счётчика задержанных карт"',
+            targetSelector: '[onclick="resetHeldCardCounter()"]',
+            action: 'resetHeldCardCounter',
+            targetScreen: 'additionalOperations'
         }
     ];
 }

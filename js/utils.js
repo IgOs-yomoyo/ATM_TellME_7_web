@@ -180,6 +180,12 @@ function exitApp() {
 }
 
 function showopenclosedaymenu(){
+
+    //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
+    if (isTrainingMode) {
+        completeTrainingStep('openCloseDay');
+    }
+
     const supervisorScreen = document.getElementById('supervisorScreen')
     const opencloseday = document.getElementById('opencloseday')
 

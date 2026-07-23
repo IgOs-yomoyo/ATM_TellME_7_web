@@ -325,7 +325,7 @@ input:checked + .slider-vertical {
 /* Подсветка активной кнопки */
 .training-highlight {
     box-shadow: 0 0 0 4px #ff9800, 0 0 20px rgba(255, 152, 0, 0.5) !important;
-    transform: scale(1.05);
+    transform: scale(1.05) !important;
     transition: 0.3s;
 }
 
@@ -979,10 +979,26 @@ input:checked + .slider-vertical {
     background-color: #1976D2;
 }
 
+/* === ФИКСАЦИЯ ПОЛОЖЕНИЯ КНОПОК ДЛЯ РЕЖИМА ОБУЧЕНИЯ=== */
+.supervisor-openclose.training-highlight {
+    position: absolute !important;
+    top: 350px !important;
+    left: 5px !important;
+    scale: 1 !important;
+    box-shadow: 0 0 0 4px #ff9800, 0 0 20px rgba(255, 152, 0, 0.4) !important;
+    transform: none !important;
+    /* transform: translateY(-50%); */
+    background-color: #1976D2;
+}
+
+
 .supervisor-devices {
     top: 350px;
     right: 5px;
     /* transform: translateY(-50%); */
+    left: auto !important;
+    bottom: auto !important;
+    transform: none !important;
     background-color: #1976D2;
 }
 
@@ -1018,6 +1034,16 @@ input:checked + .slider-vertical {
     background-color: #1976D2;
 }
 
+/* ===== ФИКСАЦИЯ ПОЛОЖЕНИЯ КНОПОК, КОТОРЫЕ СЪЕЗЖАЮТ ===== */
+.opencloseday-extraoperation.training-highlight {
+    position: absolute !important;
+    top: 680px !important;
+    right: 5px !important;
+    left: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+}
+
 /* ======= ПОЗИЦИОНИРОВАНИЕ ДЛЯ ЭКРАНА "ДОПОЛНИТЕЛЬНЫЕ ОПЕРАЦИИ" ======= */
 .additional-backtoopenclosedaymenu {
     top: 250px;
@@ -1039,6 +1065,20 @@ input:checked + .slider-vertical {
     height: 130px;
     white-space: normal;
 }
+
+/* === ДЛЯ РЕЖИМА ОБУЧЕНИЯ === */
+.additional-resetcardcount.training-highlight {
+    position: absolute !important;
+    top: 660px !important;
+    right: 20px !important;
+    background-color: #1976D2;
+    width: 440px !important;
+    min-width: 380px !important;
+    height: 130px !important;
+    scale: 1 !important;
+    white-space: normal;
+}
+
 
 
 /* Контейнер для чека */
