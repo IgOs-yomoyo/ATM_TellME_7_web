@@ -1056,6 +1056,19 @@ input:checked + .slider-vertical {
     white-space: normal;
 }
 
+.additional-backtoopenclosedaymenu.training-highlight {
+    position: absolute !important;
+    top: 250px !important;
+    right: 5px !important;
+    background-color: #1976D2;
+    width: 440px !important;
+    min-width: 380px !important;
+    height: 130px !important;
+    font-size: 24px;
+    white-space: normal;
+    scale: 1 !important;
+}
+
 .additional-resetcardcount {
     top: 680px;
     right: 5px;

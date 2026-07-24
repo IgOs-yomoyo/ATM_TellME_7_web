@@ -47,6 +47,11 @@ function resetHeldCardCounter() {
 
     //Формируем содержание чека
     const heldCardReceiptContent = document.getElementById('heldCardReceiptContent');
+
+    //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
+    if (isTrainingMode) {
+        completeTrainingStep('resetHeldCardCounter'); }
+
     if (heldCardReceiptContent) {
         const now = new Date();
         const currentDate = now.toLocaleDateString('ru-RU');
@@ -122,30 +127,40 @@ function resetHeldCardCounter() {
     }
 
 
-    // console.log('Кнопка должна быть видна');
-     
-    //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
-    if (isTrainingMode) {
-        completeTrainingStep('resetHeldCardCounter'); }
+    // console.log('Кнопка должна быть видна');   
     
 }
 
 // Скрываем чек, показываем кнопки (просто скрываем чек)
 function takeHeldCardReceipt() {
+
+    //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
+    if (isTrainingMode) {
+        completeTrainingStep('takeHeldCardReceipt'); }
+
     const receiptContainer = document.getElementById('receiptContainer');
     const additionalOperations = document.getElementById('additionalOperations');
     const takeReceiptBtn = document.getElementById('takeReceiptBtn');
     if (receiptContainer) receiptContainer.style.display = 'none';
     if (takeReceiptBtn) takeReceiptBtn.style.display = 'none';
     if (additionalOperations) additionalOperations.style.display = 'block';
+
 }
 
 
 function backToOpenCloseDay() {
+
+    //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
+    if (isTrainingMode) {
+        completeTrainingStep('backToOpenCloseDayMenu'); }
+
     const additionalOperations = document.getElementById('additionalOperations');
     if (additionalOperations) additionalOperations.style.display = 'none';
 
     const opencloseday = document.getElementById('opencloseday');
     if (opencloseday) opencloseday.style.display = 'block';
+    
+    
+    
 }
 

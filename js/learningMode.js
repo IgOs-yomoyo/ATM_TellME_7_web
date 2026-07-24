@@ -139,10 +139,17 @@ function initTrainingSteps() {
         },
         {
             id: 14,
-            instruction: 'Заберите чек и нажмите кнопку "Возврат", чтобы вернуться в предыдущее меню',
+            instruction: 'Заберите чек',
             targetSelector: '[onclick="takeHeldCardReceipt()"]',
-            action: 'backToOpenCloseDayMenu',
+            action: 'takeHeldCardReceipt',
             targetScreen: 'additionalOperations'
+        },
+        {
+            id: 15, 
+            instruction: 'Нажмите кнопку "Возврат" для перехода к предыдущему меню',
+            targetSelector: '[onclick="backToOpenCloseDay()"]',
+            action: 'backToOpenCloseDayMenu',
+            targetScreen: 'opencloseday'
         }
     ];
 }
