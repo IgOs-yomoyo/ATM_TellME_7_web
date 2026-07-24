@@ -30,11 +30,10 @@ function additionalOperations() {
 
 
 function resetHeldCardCounter() {
-
-    //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
-    if (isTrainingMode) {
-        completeTrainingStep('resetHeldCardCounter');
-    }
+    console.log('resetHeldCardCounter вызвана');
+    console.log('isTrainingMode:', isTrainingMode);
+    console.log('currentStepIndex:', currentStepIndex);
+    console.log('Текущий шаг:', trainingSteps[currentStepIndex]);
 
     if (isCounterReset) {
         heldCardsCount = 0;
@@ -105,7 +104,8 @@ function resetHeldCardCounter() {
         heldCardReceiptContent.innerHTML = receiptHtml;
         
     }
-     
+    
+    }
 
     // Прячем кнопки, показываем чек - просто показываем чек, ничего не прячем!
      const receiptContainer = document.getElementById('receiptContainer');
@@ -116,6 +116,11 @@ function resetHeldCardCounter() {
     // Показываем ТОЛЬКО нужную кнопку (для задержанных карт)
     const takeReceiptBtn = document.getElementById('takeReceiptBtn');
     if (takeReceiptBtn) takeReceiptBtn.style.display = 'block';
+
+     
+    //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
+    if (isTrainingMode) {
+        completeTrainingStep('resetHeldCardCounter');
     
 }
 
