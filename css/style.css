@@ -1110,6 +1110,7 @@ input:checked + .slider-vertical {
     border-radius: 12px;
     cursor: pointer;
     font-weight: bold;
+    z-index: 1000;
 }
 
 

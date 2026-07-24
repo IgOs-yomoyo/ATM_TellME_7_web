@@ -136,6 +136,13 @@ function initTrainingSteps() {
             targetSelector: '[onclick="resetHeldCardCounter()"]',
             action: 'resetHeldCardCounter',
             targetScreen: 'additionalOperations'
+        },
+        {
+            id: 14,
+            instruction: 'Заберите чек и нажмите кнопку "Возврат", чтобы вернуться в предыдущее меню',
+            targetSelector: '[onclick="takeHeldCardReceipt()"]',
+            action: 'backToOpenCloseDayMenu',
+            targetScreen: 'additionalOperations'
         }
     ];
 }

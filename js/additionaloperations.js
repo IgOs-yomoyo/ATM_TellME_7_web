@@ -104,8 +104,6 @@ function resetHeldCardCounter() {
         heldCardReceiptContent.innerHTML = receiptHtml;
         
     }
-    
-    }
 
     // Прячем кнопки, показываем чек - просто показываем чек, ничего не прячем!
      const receiptContainer = document.getElementById('receiptContainer');
@@ -115,12 +113,20 @@ function resetHeldCardCounter() {
 
     // Показываем ТОЛЬКО нужную кнопку (для задержанных карт)
     const takeReceiptBtn = document.getElementById('takeReceiptBtn');
-    if (takeReceiptBtn) takeReceiptBtn.style.display = 'block';
+    console.log('takeReceiptBtn найден:', takeReceiptBtn);
+    if (takeReceiptBtn) {
+        takeReceiptBtn.style.display = 'block';
+        console.log('display установлен в block');
+    } else {
+        console.log('takeReceiptBtn НЕ НАЙДЕН');
+    }
 
+
+    // console.log('Кнопка должна быть видна');
      
     //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
     if (isTrainingMode) {
-        completeTrainingStep('resetHeldCardCounter');
+        completeTrainingStep('resetHeldCardCounter'); }
     
 }
 
