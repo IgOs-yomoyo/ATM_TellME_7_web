@@ -153,13 +153,11 @@ function onLoginKeyPress(event) {
 
 // Обработчик для поля "Пароль"
 function onPasswordKeyPress(event) {
+    console.log('onPasswordKeyPress, key:', event.key);
     if (event.key === 'Enter') {
         event.preventDefault();
+        console.log('Вызов submitAuth из onPasswordKeyPress');
 
-        //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
-        if (isTrainingMode) {
-            completeTrainingStep('passwordInput');
-        }
         // Вызываем проверку авторизации
         submitAuth();
     }
@@ -175,6 +173,7 @@ function onAuthSubmitClick(event) {
     const activeElement = document.activeElement;
 
     if (activeElement === loginInput) {
+        
         //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
         if (isTrainingMode) {
             completeTrainingStep('loginInput');
@@ -202,11 +201,18 @@ function onAuthSubmitClick(event) {
 function submitAuth() {
     const login = document.getElementById('loginInput').value;
     const password = document.getElementById('passwordInput').value;
+
+    console.log('submitAuth вызвана');
+    console.log('login:', login);
+    console.log('password:', password);
+    console.log('isTrainingMode:', isTrainingMode);
+
     if (login === '100' && password === '111111') {
         //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
         if (isTrainingMode) {
-            completeTrainingStep('authSuccess');
+            completeTrainingStep('passwordInput');
         }
+
         onAuthSuccess();
         resetAuth();
     } else {

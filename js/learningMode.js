@@ -147,7 +147,7 @@ function initTrainingSteps() {
         {
             id: 15, 
             instruction: 'Нажмите кнопку "Возврат" для перехода к предыдущему меню',
-            targetSelector: '[onclick="backToOpenCloseDay()"]',
+            targetSelector: '.additional-backtoopenclosedaymenu', //[onclick="backToOpenCloseDay()"]
             action: 'backToOpenCloseDayMenu',
             targetScreen: 'opencloseday'
         }
@@ -278,11 +278,27 @@ function showTrainingStep(index) {
 }
 
 function completeTrainingStep(action) {
+
+    console.log('=== completeTrainingStep вызвана ===');
+    console.log('action:', action);
+    console.log('isTrainingMode:', isTrainingMode);
+    console.log('currentStepIndex:', currentStepIndex);
+    console.log('Текущий шаг:', trainingSteps[currentStepIndex]);
+
     if (!isTrainingMode) return;
 
     // Проверяем, совпадает ли действие с ожидаемым
     const step = trainingSteps[currentStepIndex];
+    if (!step) {
+        console.log('Шаг не найден по индексу', currentStepIndex);
+    }
+
+    console.log('Ожидаемое действие:', step.action);
+    console.log('Полученное действие:', action);
+
     if (step && step.action === action) {
+        console.log('✅ Действие совпадает, переходим к следующему шагу');
+
         const currentTarget = document.querySelector(step.targetSelector);
         if (currentTarget) {
             const label = currentTarget.querySelector('.step-number');
@@ -290,7 +306,16 @@ function completeTrainingStep(action) {
             currentTarget.classList.remove('training-highlight');
         }
         currentStepIndex++;
+        console.log('Новый currentStepIndex:', currentStepIndex);
+        
+        if (currentStepIndex >= trainingSteps.length) {
+            console.log('Шаги закончились, завершаем обучение');
+            finishTraining();
+            return;
+        }
         showTrainingStep(currentStepIndex);
+    } else {
+        console.log('Действие не совпадает');
     }
 }
 
