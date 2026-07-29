@@ -27,6 +27,12 @@ function backtonormal() {
 }
 
 function recyclerday() {
+
+     //====== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ======
+    if (isTrainingMode) {
+        completeTrainingStep('recycler');
+    };
+
     showRecyclerDayMenu();
 }
 

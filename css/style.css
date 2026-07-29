@@ -1034,6 +1034,19 @@ input:checked + .slider-vertical {
     background-color: #1976D2;
 }
 
+/* === Open/close day ДЛЯ РЕЖИМА ОБУЧЕНИЯ */
+.opencloseday-recycler.training-highlight {
+    position: absolute !important;
+    top: 520px !important;
+    left: 5px !important;
+    width: 440px !important;
+    min-width: 380px !important;
+    height: 130px !important;
+    scale: 0.92 !important;
+    white-space: normal;
+    background-color: #1976D2;
+}
+
 /* ===== ФИКСАЦИЯ ПОЛОЖЕНИЯ КНОПОК, КОТОРЫЕ СЪЕЗЖАЮТ ===== */
 .opencloseday-extraoperation.training-highlight {
     position: absolute !important;
@@ -1066,7 +1079,7 @@ input:checked + .slider-vertical {
     height: 130px !important;
     font-size: 24px;
     white-space: normal;
-    scale: 1 !important;
+    scale: 0.95 !important;
 }
 
 .additional-resetcardcount {
@@ -1138,6 +1151,20 @@ input:checked + .slider-vertical {
     left: 5px;
     background-color: #1976D2;
 }
+
+.recyclerday-closeday.training-highlight {
+    position: absolute !important;
+    top: 680px;
+    left: 5px;
+    width: 440px !important;
+    min-width: 380px !important;
+    height: 130px !important;
+    scale: 0.93 !important;
+    background-color: #1976D2;
+    white-space: normal;
+}
+
+
 .recyclerday-printbalance {
     top: 250px;
     left: 5px;

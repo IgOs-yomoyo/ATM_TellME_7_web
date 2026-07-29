@@ -18,6 +18,12 @@ function closerecyclerday() {
         alert('Операционный день закрыт. Сначала откройте операционный день. Вызвано из recyclerdaymenu.js');
         return;
     }
+
+    //====== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ======
+    if (isTrainingMode) {
+        completeTrainingStep('closeRecyclerDay');
+    };
+
     // showCloseDayScreen();
     // console.log('Функция showCloseDayScreen вызвана.')
     closeDayConfirmScreen();

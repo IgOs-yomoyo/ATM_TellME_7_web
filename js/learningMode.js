@@ -150,6 +150,20 @@ function initTrainingSteps() {
             targetSelector: '.additional-backtoopenclosedaymenu', //[onclick="backToOpenCloseDay()"]
             action: 'backToOpenCloseDayMenu',
             targetScreen: 'opencloseday'
+        }, 
+        {
+            id: 16,
+            instruction: 'Теперь, в меню "Открытие/закрытие операционного дня", нажмите кнопку "Ресайклер"',
+            targetSelector: '.opencloseday-recycler',
+            action: 'recycler',
+            targetScreen: 'opencloseday'
+        },
+        {
+            id: 17,
+            instruction: 'В следующем меню, "Операционный день ресайклера", нажимаем кнопку "Закрыть операционный день"',
+            targetSelector: '.recyclerday-closeday',
+            action: 'closeRecyclerDay',
+            targetScreen: 'recyclerday'
         }
     ];
 }
