@@ -1283,6 +1283,37 @@ input:checked + .slider-vertical {
     background-color: #1976D2;
 }
 
+/* === СТИЛИ ДЛЯ ЭКРАНА "ПОВТОРНОЕ ЗАКРЫТИЕ ОПЕР ДНЯ" === */
+/* Кнопка ЗАКРЫТЬ ДЕНЬ ПОВТОРНО */
+.atm-button.closeDayAgain {
+    position: absolute;
+    bottom: 30px;
+    left: 230px;
+    width: 400px;
+    height: 120px;
+    transform: translateX(-50%);
+    background-color: #1976D2;
+}
+
+.atm-button.closeDayAgain:hover {
+    background-color: #1976D2;
+}
+
+/* Кнопка ОТМЕНА */
+.atm-button.cancelCloseDayAgain {
+    position: absolute;
+    bottom: 30px;
+    left: 970px;
+    width: 400px;
+    height: 120px;
+    transform: translateX(-50%);
+    background-color: #1976D2;
+}
+
+.atm-button.cancelCloseDayAgain:hover {
+    background-color: #1976D2;
+}
+
 /* ========== СТИЛИ ДЛЯ ЭКРАНОВ ЗАГРУЗКИ КАССЕТ ========== */
 .info-row {
     /* min-width: 300px; */

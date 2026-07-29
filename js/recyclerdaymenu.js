@@ -15,9 +15,13 @@ function closerecyclerday() {
     // console.log('openingDayData:', openingDayData);
 
     if (typeof isDayOpened === 'function' && !isDayOpened()) {
-        alert('Операционный день закрыт. Сначала откройте операционный день. Вызвано из recyclerdaymenu.js');
+        console.log('День закрыт - показываем экран "Закрыть день повторно"'); 
+        showCloseRecyclerDayAgainScreen();
+        // alert('Операционный день закрыт. Сначала откройте операционный день. Вызвано из recyclerdaymenu.js');
         return;
     }
+
+    console.log('День открыт - закрываем день');
 
     //====== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ======
     if (isTrainingMode) {
@@ -28,6 +32,17 @@ function closerecyclerday() {
     // console.log('Функция showCloseDayScreen вызвана.')
     closeDayConfirmScreen();
     console.log('Функция closeDayConfirmScreen вызвана')
+}
+
+// Функция повторного закрытия опер дня
+function showCloseRecyclerDayAgainScreen() {
+    console.log('Экран повторного закрытия');
+
+    const recyclerday = document.getElementById('recyclerday');
+    const closeRecyclerDayAgain = document.getElementById('closeRecyclerDayAgain');
+
+    if (recyclerday) recyclerday.style.display = 'none';
+    if (closeRecyclerDayAgain) closeRecyclerDayAgain.style.display = 'block';
 }
 
 // Функция демонстрации экрана подтверждения закрытия опер дня. 
