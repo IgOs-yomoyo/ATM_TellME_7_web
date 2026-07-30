@@ -23,10 +23,10 @@ function closerecyclerday() {
 
     console.log('День открыт - закрываем день');
 
-    //====== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ======
-    if (isTrainingMode) {
-        completeTrainingStep('closeRecyclerDay');
-    };
+    // //====== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ======
+    // if (isTrainingMode) {
+    //     completeTrainingStep('closeRecyclerDay');
+    // };
 
     // showCloseDayScreen();
     // console.log('Функция showCloseDayScreen вызвана.')
@@ -44,6 +44,10 @@ function showCloseRecyclerDayAgainScreen() {
     if (recyclerday) recyclerday.style.display = 'none';
     if (closeRecyclerDayAgain) closeRecyclerDayAgain.style.display = 'block';
 
+    // Проверка в режиме обучения
+        if (isTrainingMode) {
+            completeTrainingStep('showCloseRecyclerDayAgainScreen');
+        }
 }
 
 // Функция Закрыть день повторно
@@ -56,7 +60,7 @@ function confirmCloseDayAgain() {
 
         // Проверка в режиме обучения
         if (isTrainingMode) {
-            completeTrainingStep('closeDay');
+            completeTrainingStep('confirmCloseDayAgain');
         }
 
         if (typeof confirmCloseDay === 'function') {
@@ -96,9 +100,9 @@ function closeDayConfirmScreen() {
     if (closeDayConfirmScreen) closeDayConfirmScreen.style.display = 'block';
 }
 
-//Универсальная функция для работы с экранами подтверждения
 
 
+//Функция подтверждения закрытия опер дня
 function confirmCloseDay() {
     console.log('Подтверждение закрытия опер дня');
 
@@ -110,6 +114,11 @@ function confirmCloseDay() {
     }else{
         console.error('showCloseDayScreen не найдена');
     }
+
+    //ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ
+    if (isTrainingMode) {
+            completeTrainingStep('confirmCloseDay');
+        }
 }
 
 function cancelCloseDay() {

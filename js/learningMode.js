@@ -159,11 +159,25 @@ function initTrainingSteps() {
             targetScreen: 'opencloseday'
         },
         {
-            id: 17,
-            instruction: 'В следующем меню, "Операционный день ресайклера", нажимаем кнопку "Закрыть операционный день"',
-            targetSelector: '.recyclerday-closeday',
-            action: 'closeRecyclerDay',
-            targetScreen: 'recyclerday'
+           id: 17, 
+           instruction: 'В следующем меню, "Операционный день ресайклера", нажимаем кнопку "Закрытие операционного дня"',
+           targetSelector: '.recyclerday-closeday',
+           action: 'closeRecyclerDay',
+           targetScreen: 'recyclerday'
+        },
+        {
+           id: 18,
+           instruction: 'Если операционный день банкомата был закрыт, то программа переведёт вас на экран повторного закрытия операционного дня. Нажмите кнопку "Закрыть день повторно"',
+           targetSelector: '.confirmCloseDayAgain',
+        //    action: 'confirmCloseDayAgain',
+           targetScreen: 'closeRecyclerDayAgain'
+        },
+        {
+            id: 19,
+            instruction: 'Заберите чек, нажмите "Продолжить"',
+            targetSelector: '.close-receipt-confirm-btn',
+            action: 'confirmCloseReceipt',
+            targetScreen: 'closeReceiptScreen'
         }
     ];
 }
