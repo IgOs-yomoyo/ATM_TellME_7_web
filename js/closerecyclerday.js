@@ -119,24 +119,24 @@ function generateDayTransactions(openingDayData) {
 function showCloseDayScreen() {
     console.log('showCloseDayScreen вызвана');
 
-    if (typeof isDayOpened === 'function' && !isDayOpened()) {
-        alert('Операционный день не был открыт!');
-        return;
-    }
+    // if (typeof isDayOpened === 'function' && !isDayOpened()) {
+    //     alert('Операционный день не был открыт!');
+    //     return;
+    // }
 
-    if (!openingDayData) {
-        alert('Нет данных об открытии опер дня.');
-        return;
-    }
+    // if (!openingDayData) {
+    //     alert('Нет данных об открытии опер дня.');
+    //     return;
+    // }
 
     //Получаем данные о транзакциях за день
     // const transactions = generateDayTransactions(openingDayData);
     const transactions = getCurrentTransactionData();
 
-    if (!transactions) {
-        alert('Нет данных о транзакциях.');
-        return;
-    }
+    // if (!transactions) {
+    //     alert('Нет данных о транзакциях.');
+    //     return;
+    // }
 
     const receiptContent = document.getElementById('closeReceiptContent');
     if (!receiptContent) return;
@@ -155,7 +155,14 @@ function showCloseDayScreen() {
     receiptHtml += 'НОМЕР БАНКОМАТА: 10869631<br>';
     receiptHtml += '--------------------------------<br>';
     receiptHtml += '<strong>ЗАКРЫТИЕ ОПЕРАЦИОННОГО ДНЯ</strong><br>';
-    receiptHtml += `ВРЕМЯ ОТКРЫТИЯ: ${openingDayData.time} ${openingDayData.date}<br>`;
+
+    if (openingDayData && openingDayData.time && openingDayData.date) {
+        receiptHtml += 'ВРЕМЯ ОТКРЫТИЯ: ${openingDayData.time} ${openingDayData.date}<br>'
+    }else{
+        receiptHtml += 'ВРЕМЯ ОТКРЫТИЯ: данные отсутствуют<br>';
+    }
+
+    // receiptHtml += `ВРЕМЯ ОТКРЫТИЯ: ${openingDayData.time} ${openingDayData.date}<br>`;
     receiptHtml += '--------------------------------<br>';
     receiptHtml += '</div>';
     
@@ -217,7 +224,8 @@ function showCloseDayScreen() {
     receiptHtml += '</table>';
 
     // Итоги
-    const totalLoadedAmount = openingDayData.totalAmount;
+    // const totalLoadedAmount = openingDayData.totalAmount;
+    const totalLoadedAmount = openingDayData && openingDayData.totalAmount ? openingDayData.totalAmount : 0;
     const totalAcceptedAmount = transactions.totalAccepted;
     const totalIssuedAmount = transactions.totalIssued;
     const totalDroppedAmount = transactions.totalDropped;

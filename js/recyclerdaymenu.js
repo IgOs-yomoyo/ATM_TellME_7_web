@@ -43,6 +43,48 @@ function showCloseRecyclerDayAgainScreen() {
 
     if (recyclerday) recyclerday.style.display = 'none';
     if (closeRecyclerDayAgain) closeRecyclerDayAgain.style.display = 'block';
+
+}
+
+// Функция Закрыть день повторно
+function confirmCloseDayAgain() {
+    console.log('Подтверждение повторного закрытия');
+    
+    const closeRecyclerDayAgain = document.getElementById('closeRecyclerDayAgain');
+    if (closeRecyclerDayAgain) closeRecyclerDayAgain.style.display = 'none';
+
+
+        // Проверка в режиме обучения
+        if (isTrainingMode) {
+            completeTrainingStep('closeDay');
+        }
+
+        if (typeof confirmCloseDay === 'function') {
+            confirmCloseDay();
+        } else {
+            console.error('confirmCloseDay не найдена');
+            alert('Ошибка: функция подтверждения не найдена');
+        }
+
+        // if (typeof showCloseDayScreen === 'function') {
+        //     showCloseDayScreen();
+        // }else {
+        //     console.error('showCloseDayScreen не найдена');
+        // }
+
+
+
+}
+
+//Функция Отмены повторного закрытия опердня
+function cancelCloseRecyclerDayAgain() {
+    console.log('Отмена повторного закрытия опер дня');
+    
+    const closeRecyclerDayAgain = document.getElementById('closeRecyclerDayAgain');
+    const recyclerday = document.getElementById('recyclerday');
+
+    if (closeRecyclerDayAgain) closeRecyclerDayAgain.style.display = 'none';
+    if (recyclerday) recyclerday.style.display = 'block';
 }
 
 // Функция демонстрации экрана подтверждения закрытия опер дня. 
@@ -53,6 +95,9 @@ function closeDayConfirmScreen() {
     if (recyclerday) recyclerday.style.display = 'none';
     if (closeDayConfirmScreen) closeDayConfirmScreen.style.display = 'block';
 }
+
+//Универсальная функция для работы с экранами подтверждения
+
 
 function confirmCloseDay() {
     console.log('Подтверждение закрытия опер дня');

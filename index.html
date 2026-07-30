@@ -269,13 +269,13 @@
          <!-- ЭКРАН "ЗАКРЫТЬ ДЕНЬ ПОВТОРНО" -->
          <div id="closeRecyclerDayAgain" class="atm-screen" style="display: none;">
             <div class="screen-title">ПОВТОРНОЕ ЗАКРЫТИЕ<br>ОПЕРАЦИОННОГО ДНЯ</div>
-            <button class="atm-button closeDayAgain" onclick="closeDayAgain()">ЗАКРЫТЬ ДЕНЬ ПОВТОРНО</button>
+            <button class="atm-button confirmCloseDayAgain" onclick="confirmCloseDayAgain()">ЗАКРЫТЬ ДЕНЬ ПОВТОРНО</button>
             <div class="receipt-container">
                 <div class="receipt-content" id="closeReceiptContent">
 
                 </div>
             </div>
-            <button class="atm-button cancelCloseDay" onclick="cancelCloseDay()">ОТМЕНА</button>
+            <button class="atm-button cancelCloseDayAgain" onclick="cancelCloseRecyclerDayAgain()">ОТМЕНА</button>
          </div>
         <!-- Экран "ЗАГРУЗКА КАССЕТЫ 1" -->
         <div id="replenishcassette_1" class="atm-screen" style="display: none;">

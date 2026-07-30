@@ -1285,7 +1285,7 @@ input:checked + .slider-vertical {
 
 /* === СТИЛИ ДЛЯ ЭКРАНА "ПОВТОРНОЕ ЗАКРЫТИЕ ОПЕР ДНЯ" === */
 /* Кнопка ЗАКРЫТЬ ДЕНЬ ПОВТОРНО */
-.atm-button.closeDayAgain {
+.atm-button.confirmCloseDayAgain {
     position: absolute;
     bottom: 30px;
     left: 230px;
