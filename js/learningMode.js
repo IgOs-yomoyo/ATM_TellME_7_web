@@ -45,6 +45,10 @@ let isTrainingMode = false;
 
 // Шаги обучения (порядок действий)
 function initTrainingSteps() {
+    const dayStatus = isDayOpened() ? 'открыт' : 'закрыт';
+    const instructionText = isDayOpened()
+        ? 'Далее необходимо подтвердить закрытие операционного дня'
+        : 'Если операционный день банкомата был закрыт ранее, то программа переведёт вас на экран повторного закрытия операционного дня. Нажмите кнопку "Закрыть день повторно"'
     trainingSteps = [
         {
             id: 1, 
@@ -162,15 +166,22 @@ function initTrainingSteps() {
            id: 17, 
            instruction: 'В следующем меню, "Операционный день ресайклера", нажимаем кнопку "Закрытие операционного дня"',
            targetSelector: '.recyclerday-closeday',
-           action: 'closeRecyclerDay',
+           action: 'closeRecyclerDay', //closeRecyclerDay  showCloseDayScreen
            targetScreen: 'recyclerday'
         },
         {
             id: 18,
-            instruction: 'Если операционный день банкомата не был открыт ранее, то программа предложит закрыть день повторно',
-            targetSelector:  '.confirmCloseDayAgain',
-            action: 'showCloseRecyclerDayAgainScreen',
-            targetScreen: 'closeRecyclerDayAgain'
+            instruction: instructionText,
+            targetSelector: isDayOpened() ? '.confirmCloseDay' : '.confirmCloseDayAgain',
+            action: isDayOpened() ? 'confirmCloseDay' : 'showCloseRecyclerDayAgainScreen',
+            targetScreen: isDayOpened() ? 'closeDayConfirmScreen' : 'closeRecyclerDayAgain'
+        },
+        {
+            id: 19,
+            insruction: 'Обучение завершено. Нажмите "В главное меню"',
+            targetSelector: '.backToMainMenu',
+            action: '.backToMainMenu',
+            targetScreen: 'welcomeScreen'
         }
     ];
 }
@@ -208,8 +219,11 @@ function startTraining() {
 
 function showTrainingStep(index) {
     console.log('showTrainingStep вызван, индекс:', index);
+    console.log('Всего шагов в массиве:', trainingSteps.length);
 
     if (index >= trainingSteps.length) {
+        console.log('Индекс ('+ index +') >= длины массива ('+ trainingSteps.length +')');
+        console.log('Все шаги выполнены! Обучение завершено!');
         finishTraining();
         return;
     }
@@ -218,6 +232,19 @@ function showTrainingStep(index) {
     console.log('Текущий шаг:', step);
     console.log('targetScreen:', step.targetScreen);
 
+    // Обновляем счётчик шагов
+    const stepSpan = document.getElementById('tooltipStep');
+    const totalSpan = document.getElementById('tooltipStep');
+
+    if (stepSpan) {
+        stepSpan.textContent = index + 1;
+    }
+    if (totalSpan) {
+        totalSpan.textContent = trainingSteps.length;
+    }
+    if (totalSpan) {
+        totalSpan.textContent = trainingSteps.length;
+    }
     // Проверяем, что мы на нужном экране
     // Если в шаге указан целевой экран, показываем его
     if (step.targetScreen) {
@@ -345,7 +372,7 @@ function skipTrainingStep() {
 
     const step = trainingSteps[currentStepIndex];
     if (step) {
-        const currentTarget = document.querySelector(stap.targetSelector);
+        const currentTarget = document.querySelector(step.targetSelector);
         if (currentTarget) {
             const label = currentTarget.querySelector('step-number');
             if (label) label.remove();

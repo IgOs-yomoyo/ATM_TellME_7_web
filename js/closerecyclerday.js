@@ -284,6 +284,11 @@ function confirmCloseReceipt() {
     if (recyclerday) {
         recyclerday.style.display = 'block';
     }
+
+    //ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ
+    if (isTrainingMode) {
+            completeTrainingStep('confirmCloseReceipt');
+        }
 }
 
 console.log('closerecyclerday.js загружен полностью');

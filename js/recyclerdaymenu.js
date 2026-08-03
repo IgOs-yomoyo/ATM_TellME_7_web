@@ -15,12 +15,13 @@ function closerecyclerday() {
     // console.log('openingDayData:', openingDayData);
 
     if (typeof isDayOpened === 'function' && !isDayOpened()) {
+        
+        console.log('День закрыт - показываем экран "Закрыть день повторно"');
+        showCloseRecyclerDayAgainScreen();
+
         if (isTrainingMode) {
             completeTrainingStep('closeRecyclerDay');
         }
-
-        console.log('День закрыт - показываем экран "Закрыть день повторно"');
-        showCloseRecyclerDayAgainScreen();
         return;
     }
 
