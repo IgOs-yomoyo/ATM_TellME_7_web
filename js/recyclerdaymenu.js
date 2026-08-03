@@ -15,21 +15,17 @@ function closerecyclerday() {
     // console.log('openingDayData:', openingDayData);
 
     if (typeof isDayOpened === 'function' && !isDayOpened()) {
-        console.log('День закрыт - показываем экран "Закрыть день повторно"'); 
+        if (isTrainingMode) {
+            completeTrainingStep('closeRecyclerDay');
+        }
+
+        console.log('День закрыт - показываем экран "Закрыть день повторно"');
         showCloseRecyclerDayAgainScreen();
-        // alert('Операционный день закрыт. Сначала откройте операционный день. Вызвано из recyclerdaymenu.js');
         return;
     }
 
     console.log('День открыт - закрываем день');
 
-    // //====== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ======
-    // if (isTrainingMode) {
-    //     completeTrainingStep('closeRecyclerDay');
-    // };
-
-    // showCloseDayScreen();
-    // console.log('Функция showCloseDayScreen вызвана.')
     closeDayConfirmScreen();
     console.log('Функция closeDayConfirmScreen вызвана')
 }
@@ -43,8 +39,7 @@ function showCloseRecyclerDayAgainScreen() {
 
     if (recyclerday) recyclerday.style.display = 'none';
     if (closeRecyclerDayAgain) closeRecyclerDayAgain.style.display = 'block';
-
-    // Проверка в режиме обучения
+     // Проверка в режиме обучения
         if (isTrainingMode) {
             completeTrainingStep('showCloseRecyclerDayAgainScreen');
         }
@@ -69,15 +64,6 @@ function confirmCloseDayAgain() {
             console.error('confirmCloseDay не найдена');
             alert('Ошибка: функция подтверждения не найдена');
         }
-
-        // if (typeof showCloseDayScreen === 'function') {
-        //     showCloseDayScreen();
-        // }else {
-        //     console.error('showCloseDayScreen не найдена');
-        // }
-
-
-
 }
 
 //Функция Отмены повторного закрытия опердня
