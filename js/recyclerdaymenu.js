@@ -29,6 +29,10 @@ function closerecyclerday() {
 
     closeDayConfirmScreen();
     console.log('Функция closeDayConfirmScreen вызвана')
+
+    if (isTrainingMode) {
+        completeTrainingStep('closeRecyclerDay');
+    }
 }
 
 // Функция повторного закрытия опер дня
@@ -93,6 +97,11 @@ function closeDayConfirmScreen() {
 function confirmCloseDay() {
     console.log('Подтверждение закрытия опер дня');
 
+    //ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ
+    if (isTrainingMode) {
+            completeTrainingStep('confirmCloseDay');
+        }
+
     const closeDayConfirmScreen = document.getElementById('closeDayConfirmScreen');
     const closeReceiptScreen = document.getElementById('closeReceiptScreen');
 
@@ -101,11 +110,6 @@ function confirmCloseDay() {
     }else{
         console.error('showCloseDayScreen не найдена');
     }
-
-    //ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ
-    if (isTrainingMode) {
-            completeTrainingStep('confirmCloseDay');
-        }
 }
 
 function cancelCloseDay() {

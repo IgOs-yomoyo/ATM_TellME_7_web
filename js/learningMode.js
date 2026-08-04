@@ -172,8 +172,8 @@ function initTrainingSteps() {
         {
             id: 18,
             instruction: instructionText,
-            targetSelector: isDayOpened() ? '.confirmCloseDay' : '.confirmCloseDayAgain',
-            action: isDayOpened() ? 'confirmCloseDay' : 'showCloseRecyclerDayAgainScreen',
+            targetSelector: isDayOpened() ? '.confirmCloseDay' : '.confirmCloseDayAgain', // [onclick="confirmCloseDay()"] .confirmCloseDay
+            action: isDayOpened() ? 'confirmCloseDay' : 'showCloseRecyclerDayAgainScreen', 
             targetScreen: isDayOpened() ? 'closeDayConfirmScreen' : 'closeRecyclerDayAgain'
         },
         {
@@ -231,6 +231,8 @@ function showTrainingStep(index) {
     const step = trainingSteps[index];
     console.log('Текущий шаг:', step);
     console.log('targetScreen:', step.targetScreen);
+    console.log('targetSelector:', step.targetSelector);
+    console.log('action:', step.action);
 
     // Обновляем счётчик шагов
     const stepSpan = document.getElementById('tooltipStep');
