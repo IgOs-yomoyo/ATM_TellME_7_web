@@ -1269,6 +1269,17 @@ input:checked + .slider-vertical {
     background-color: #1976D2;
 }
 
+/* Кнопка ПОДТВЕРДИТЬ ДЛЯ РЕЖИМА ОБУЧЕНИЯ */
+.atm-button.confirmCloseDay.training-highlight {
+    position: absolute;
+    bottom: 30px;
+    left: 230px;
+    width: 400px;
+    height: 120px;
+    transform: translateX(-50%);
+    background-color: #1976D2;
+}
+
 
 /* === ДЛЯ РЕЖИМА ОБУЧЕНИЯ === */
 .atm-button.confirmCloseDay.training-highlight {

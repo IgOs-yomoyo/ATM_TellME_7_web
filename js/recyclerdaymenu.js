@@ -96,12 +96,7 @@ function closeDayConfirmScreen() {
 //Функция подтверждения закрытия опер дня
 function confirmCloseDay() {
     console.log('Подтверждение закрытия опер дня');
-
-    //ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ
-    if (isTrainingMode) {
-            completeTrainingStep('confirmCloseDay');
-        }
-
+    
     const closeDayConfirmScreen = document.getElementById('closeDayConfirmScreen');
     const closeReceiptScreen = document.getElementById('closeReceiptScreen');
 
@@ -110,6 +105,11 @@ function confirmCloseDay() {
     }else{
         console.error('showCloseDayScreen не найдена');
     }
+
+    //ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ
+    if (isTrainingMode) {
+            completeTrainingStep('confirmCloseDay');
+        }
 }
 
 function cancelCloseDay() {

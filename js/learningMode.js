@@ -173,11 +173,18 @@ function initTrainingSteps() {
             id: 18,
             instruction: instructionText,
             targetSelector: isDayOpened() ? '.confirmCloseDay' : '.confirmCloseDayAgain', // [onclick="confirmCloseDay()"] .confirmCloseDay
-            action: isDayOpened() ? 'confirmCloseDay' : 'showCloseRecyclerDayAgainScreen', 
+            action: isDayOpened() ? 'confirmCloseDay' : 'confirmCloseDayAgain', //showCloseRecyclerDayAgainScreen
             targetScreen: isDayOpened() ? 'closeDayConfirmScreen' : 'closeRecyclerDayAgain'
         },
         {
             id: 19,
+            instruction: 'Нажмите кнопку "Продолжить", чтобы забрать чек.',
+            targetSelector: '.confirmCloseDay',
+            action: 'confirmCloseDay',
+            targetScreen: 'closeDayConfirmScreen'
+        },
+        {
+            id: 20,
             insruction: 'Обучение завершено. Нажмите "В главное меню"',
             targetSelector: '.backToMainMenu',
             action: '.backToMainMenu',
@@ -187,6 +194,7 @@ function initTrainingSteps() {
 }
 
 function startTraining() {
+    // document.body.classList.add('training-mode'); // Похоже, это лишнее. 
     isTrainingMode = true;
     currentStepIndex = 0;
     initTrainingSteps();
@@ -386,6 +394,7 @@ function skipTrainingStep() {
 }
 
 function finishTraining() {
+    // document.body.classList.add('training-mode'); // Похоже, лишнее. 
     isTrainingMode = false;
     currentStepIndex = 0;
 
