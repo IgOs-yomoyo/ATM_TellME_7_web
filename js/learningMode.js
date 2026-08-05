@@ -179,9 +179,9 @@ function initTrainingSteps() {
         {
             id: 19,
             instruction: 'Нажмите кнопку "Продолжить", чтобы забрать чек.',
-            targetSelector: '.confirmCloseDay',
+            targetSelector: '.close-receipt-confirm-btn',
             action: 'confirmCloseDay',
-            targetScreen: 'closeDayConfirmScreen'
+            targetScreen: 'closeReceiptScreen'
         },
         {
             id: 20,

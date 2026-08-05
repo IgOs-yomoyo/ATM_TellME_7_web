@@ -265,6 +265,11 @@ function showCloseDayScreen() {
 // Функция, подтверждающая закрытие опер дня при нажатии кнопки "Продолжить"
 function confirmCloseReceipt() {
     console.log('confirmCloseReceipt вызвана');
+
+     //ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ
+    if (isTrainingMode) {
+            completeTrainingStep('confirmCloseReceipt');
+        }
     
     const closeReceiptScreen = document.getElementById('closeReceiptScreen');
     if (closeReceiptScreen) {
@@ -284,11 +289,6 @@ function confirmCloseReceipt() {
     if (recyclerday) {
         recyclerday.style.display = 'block';
     }
-
-    //ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ
-    if (isTrainingMode) {
-            completeTrainingStep('confirmCloseReceipt');
-        }
 }
 
 console.log('closerecyclerday.js загружен полностью');

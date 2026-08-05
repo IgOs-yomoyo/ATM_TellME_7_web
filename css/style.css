@@ -1213,6 +1213,25 @@ input:checked + .slider-vertical {
     background-color: #1565C0;
 }
 
+.close-receipt-confirm-btn.training-highlight {
+    position: absolute !important;
+    bottom: 30px !important;
+    right: 30px !important;
+    width: 450px !important;
+    height: 130px !important;
+    font-size: 24px !important;
+    background-color: #1976D2;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    scale: 0.93 !important;
+    white-space: normal;
+    box-shadow: 0 0 0 4px #ff9800, 0 0 20px rgba(255, 152, 0, 0.5) !important;
+}
+
+
 /* Контент экрана, отступ от заголовка */
 .screen-content {
     position: absolute;
