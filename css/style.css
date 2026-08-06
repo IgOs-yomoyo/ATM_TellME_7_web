@@ -1290,13 +1290,18 @@ input:checked + .slider-vertical {
 
 /* Кнопка ПОДТВЕРДИТЬ ДЛЯ РЕЖИМА ОБУЧЕНИЯ */
 .atm-button.confirmCloseDay.training-highlight {
-    position: absolute;
-    bottom: 30px;
-    left: 230px;
-    width: 400px;
-    height: 120px;
-    transform: translateX(-50%);
+    position: absolute !important;
+    bottom: 30px !important;
+    left: 230px !important;
+    /* right: 100px !important; */
+    width: 400px !important;
+    height: 120px !important;
+    transform: translateX(-50%) !important;
     background-color: #1976D2;
+    scale: 0.93 !important;
+    white-space: normal;
+    box-shadow: 0 0 0 4px #ff9800, 0 0 20px rgba(255, 152, 0, 0.5) !important;
+    z-index: 100 !important;
 }
 
 

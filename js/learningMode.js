@@ -185,10 +185,10 @@ function initTrainingSteps() {
         },
         {
             id: 20,
-            insruction: 'Обучение завершено. Нажмите "В главное меню"',
-            targetSelector: '.backToMainMenu',
-            action: '.backToMainMenu',
-            targetScreen: 'welcomeScreen'
+            instruction: 'Возвращаемся на экран "Операционный день ресайклера". После закрытия операционного дня нам нужно открыть дверь сейфа, заменить кассеты и закрыть дверь сей',
+            targetSelector: null,
+            action: null,
+            targetScreen: 'recyclerday'
         }
     ];
 }
