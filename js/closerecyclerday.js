@@ -285,11 +285,22 @@ function confirmCloseReceipt() {
 
     resetCurrentTransactionData();
     
-    const recyclerday = document.getElementById('recyclerday');
-    if (recyclerday) {
-        recyclerday.style.display = 'block';
+
+    if (typeof showCassettesReplacmentScreen === 'function') {
+        console.log('Замена кассет');
+        showCassettesReplacmentScreen();
+    }else{
+        console.error('showCassettesReplacementScreen не найдена!');
+        if (recyclerday)  {
+            recyclerday.style.display = 'block';
+        }
     }
 }
+
+// const recyclerday = document.getElementById('recyclerday');
+    // if (recyclerday) {
+    //     recyclerday.style.display = 'block';
+
 
 console.log('closerecyclerday.js загружен полностью');
 

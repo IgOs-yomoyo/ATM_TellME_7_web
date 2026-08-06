@@ -411,6 +411,10 @@ function finishTraining() {
     
 }
 
+function startDragTouch() {
+    console.log('startDragTouch вызвана (заглушка)');
+}
+
 // ========== ПЕРЕТАСКИВАНИЕ ПАНЕЛИ ПОДСКАЗОК ==========
 let isDragging = false;
 let dragOffsetX = 0;

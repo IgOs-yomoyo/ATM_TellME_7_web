@@ -277,6 +277,14 @@
             </div>
             <button class="atm-button cancelCloseDayAgain" onclick="cancelCloseRecyclerDayAgain()">ОТМЕНА</button>
          </div>
+
+        <!-- Экран "Замена кассет" -->
+        <div id="cassettesReplacmentScreen" class="atm-screen" style="display: none;">
+            <div class="screen-title">ЗАМЕНА КАССЕТ</div>
+            <button class="atm-button openSafeDoor" onclick="openSafeDoor()">ОТКРЫТЬ ДВЕРЬ СЕЙФА</button>
+            <button class="atm-button replaceCassettes" onclick="replaceCassettes()">ЗАМЕНИТЬ КАССЕТЫ</button>
+            <button class="atm-button closeSafeDoor" onclick="closeSafeDoor()">ЗАКРЫТЬ ДВЕРЬ СЕЙФА</button>
+        </div>
         <!-- Экран "ЗАГРУЗКА КАССЕТЫ 1" -->
         <div id="replenishcassette_1" class="atm-screen" style="display: none;">
             <div class="screen-title">ВВЕДИТЕ ЗАГРУЗКУ КАССЕТЫ 1</div>
@@ -519,6 +527,7 @@
     <script src="js/additionaloperations.js"></script>
     <script src="js/recyclerdaymenu.js"></script> 
     <script src="js/openrecyclerdaycreens.js"></script>
+    <script src="js/cassettesreplacement.js"></script>
     <!-- <script src="js/closerecyclerday.js?v=2"></script> -->
 </body>
 </html>

@@ -1288,6 +1288,21 @@ input:checked + .slider-vertical {
     background-color: #1976D2;
 }
 
+/* Кнопка ОТМЕНА */
+.atm-button.cancelCloseDay {
+    position: absolute;
+    bottom: 30px;
+    left: 970px;
+    width: 400px;
+    height: 120px;
+    transform: translateX(-50%);
+    background-color: #1976D2;
+}
+
+.atm-button.cancelCloseDay:hover {
+    background-color: #1976D2;
+}
+
 /* Кнопка ПОДТВЕРДИТЬ ДЛЯ РЕЖИМА ОБУЧЕНИЯ */
 .atm-button.confirmCloseDay.training-highlight {
     position: absolute !important;
@@ -1304,37 +1319,6 @@ input:checked + .slider-vertical {
     z-index: 100 !important;
 }
 
-
-/* === ДЛЯ РЕЖИМА ОБУЧЕНИЯ === */
-.atm-button.confirmCloseDay.training-highlight {
-    position: absolute !important;
-    bottom: 30px !important;
-    left: 230px !important;
-    background-color: #1976D2;
-    width: 400px !important;
-    /* min-width: 380px !important; */
-    height: 120px !important;
-    transform: translateX(-50%);
-    scale: 0.95 !important;
-    white-space: normal;
-    box-shadow: 0 0 0 4px #ff9800, 0 0 20px rgba(255, 152, 0, 0.5) !important;
-}
-
-
-/* Кнопка ОТМЕНА */
-.atm-button.cancelCloseDay {
-    position: absolute;
-    bottom: 30px;
-    left: 970px;
-    width: 400px;
-    height: 120px;
-    transform: translateX(-50%);
-    background-color: #1976D2;
-}
-
-.atm-button.cancelCloseDay:hover {
-    background-color: #1976D2;
-}
 
 /* === СТИЛИ ДЛЯ ЭКРАНА "ПОВТОРНОЕ ЗАКРЫТИЕ ОПЕР ДНЯ" === */
 /* Кнопка ЗАКРЫТЬ ДЕНЬ ПОВТОРНО */
@@ -1374,6 +1358,29 @@ input:checked + .slider-vertical {
 }
 
 .atm-button.cancelCloseDayAgain:hover {
+    background-color: #1976D2;
+}
+
+/* === СТИЛИ ДЛЯ ЭКРАНА ЗАМЕНЫ КАССЕТ === */
+.atm-button.openSafeDoor {
+    position: absolute;
+    bottom: 30px;
+    left: 970px;
+    width: 400px;
+    height: 120px;
+    transform: translateX(-50%);
+    background-color: #1976D2;
+}
+
+.atm-button.replaceCassettes {
+    top: 250px;
+    left: 5px;
+    background-color: #1976D2;
+}
+
+.atm-button.closeSafeDoor {
+    top: 250px;
+    left: 200px;
     background-color: #1976D2;
 }
 
