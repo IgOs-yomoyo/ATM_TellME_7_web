@@ -21,17 +21,55 @@ function showCassettesReplacmentScreen() {
 
 console.log('cassettesreplacement.js загружен');
 
+function openSafeDoor() {
+    console.log('openSafeDoor вызвана');
 
+    const openBtn = document.querySelector('.openSafeDoor');
+    const replaceBtn = document.querySelector('.replaceCassettes');
 
+    if (openBtn) openBtn.style.display = 'none';
+    if (replaceBtn) replaceBtn.style.display = 'block';
 
-    // const closeDayConfirmScreen = document.getElementById('closeDayConfirmScreen');
-    // if (closeDayConfirmScreen) closeDayConfirmScreen.style.display = 'none';
+    console.log('Сейф открыт');
 
+    if (typeof isTrainingMode !== 'underfined' && isTrainingMode) {
+        completeTrainingStep('openSareDoor');
+    }
+}
 
-    // const closeRecyclerDayAgain = document.getElementById('closeRecyclerDayAgain');
-    // if (closeRecyclerDayAgain) closeRecyclerDayAgain.style.display = 'none';
+function replaceCassettes() {
+    console.log('replaceCassettes вызвана');
 
-    // const cassettesReplacmentScreen = document.getElementById('cassettesReplacmentScreen');
-    // if (cassettesReplacmentScreen) cassettesReplacmentScreen.style.display = 'block';
+    const replaceBtn = document.querySelector('replaceCassettes');
+    const closeBtn = document.querySelector('closeSafeDoor');
 
+    console.log('Кассеты заменены');
 
+    if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
+        completeTrainingStep('replaceCassettes');
+    }
+}
+
+function closeSafeDoor() {
+    console.log('closeSafeDoor вызвана');
+
+    const closeBtn = document.querySelector('closeSafeDoor');
+    if (closeBtn) closeBtn.style.display = 'none';
+
+    console.log('Сейф закрыт');
+
+    if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
+        completeTrainingStep('closeSafeDoor');
+    }
+
+    const cassettesReplacementScreen = document.getElementById('cassettesReplacementScreen');
+    if (cassettesReplacmentScreen) {
+        cassettesReplacementScreen.style.display = 'none';
+    }
+
+    const recyclerday = document.getElementById('recyclerday');
+    if (recyclerday) {
+        recyclerday.style.display = 'block';
+        console.log('Вернулись в меню Операционный день ресайклера')
+    }
+}
