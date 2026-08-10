@@ -271,11 +271,13 @@ function confirmCloseReceipt() {
             completeTrainingStep('confirmCloseReceipt');
         }
     
+    //Скрываем экран с чеком
     const closeReceiptScreen = document.getElementById('closeReceiptScreen');
     if (closeReceiptScreen) {
         closeReceiptScreen.style.display = 'none';
     }
     
+    //Сбрасываем статус операционного дня
     if (typeof setDayOpened === 'function') {
         setDayOpened(false);
         console.log('Флаг сброшен');
@@ -285,12 +287,13 @@ function confirmCloseReceipt() {
 
     resetCurrentTransactionData();
     
-
+    //Показываем экран Замена кассет
     if (typeof showCassettesReplacmentScreen === 'function') {
-        console.log('Замена кассет');
+        console.log('Переход к замене кассет');
         showCassettesReplacmentScreen();
     }else{
         console.error('showCassettesReplacementScreen не найдена!');
+        const recyclerday = document.getElementById('recyclerday');
         if (recyclerday)  {
             recyclerday.style.display = 'block';
         }

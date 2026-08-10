@@ -180,14 +180,35 @@ function initTrainingSteps() {
             id: 19,
             instruction: 'Нажмите кнопку "Продолжить", чтобы забрать чек.',
             targetSelector: '.close-receipt-confirm-btn',
-            action: 'confirmCloseDay',
+            action: 'confirmCloseReceipt',
             targetScreen: 'closeReceiptScreen'
         },
         {
             id: 20,
-            instruction: 'Возвращаемся на экран "Операционный день ресайклера". После закрытия операционного дня нам нужно открыть дверь сейфа, заменить кассеты и закрыть дверь сей',
-            targetSelector: null,
-            action: null,
+            instruction: 'Теперь нам нужно открыть сейф банкомата.',
+            targetSelector: 'openSafeDoor',
+            action: 'openSafeDoor',
+            targetScreen: 'cassettesReplacmentScreen'
+        },
+        {
+            id: 21,
+            instruction: 'Меняем кассеты',
+            targetSelector: 'replaceCassettes',
+            action: 'replaceCassettes',
+            targetScreen: 'cassettesReplacmentScreen'
+        },
+        {
+            id: 22,
+            instruction: 'Закрываем дверь сейфа',
+            targetSelector: 'closeSafeDoor',
+            action: 'closeSafeDoor',
+            targetScreen: 'cassettesReplacmentScreen'
+        },
+        {
+            id: 23,
+            instruction: 'После замены кассет открываем новый операционный цикл',
+            targetSelector: '.recyclerday-openday',
+            action: 'openDay',
             targetScreen: 'recyclerday'
         }
     ];
