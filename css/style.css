@@ -1042,8 +1042,8 @@ input:checked + .slider-vertical {
     width: 440px !important;
     min-width: 380px !important;
     height: 130px !important;
-    scale: 0.92 !important;
-    white-space: normal;
+    scale: 0.93 !important;
+    white-space: normal !important;
     background-color: #1976D2;
 }
 
@@ -1158,6 +1158,18 @@ input:checked + .slider-vertical {
     left: 5px;
     width: 440px !important;
     min-width: 380px !important;
+    height: 130px !important;
+    scale: 0.93 !important;
+    background-color: #1976D2;
+    white-space: normal;
+    box-shadow: 0 0 0 4px #ff9800, 0 0 20px rgba(255, 152, 0, 0.5) !important;
+}
+
+.recyclerday-openday.training-highlight {
+    position: absolute;
+    top: 540px;
+    left: 5px;
+    width: 440px !important;
     height: 130px !important;
     scale: 0.93 !important;
     background-color: #1976D2;
@@ -1404,39 +1416,39 @@ input:checked + .slider-vertical {
 
 /* Кнопка ОТКРЫТЬ ДВЕРЬ СЕЙФА */
 .atm-button.openSafeDoor {
-    /* position: absolute;
+    position: absolute;
     bottom: 80px;
     left: 50%;
     width: 400px;
     height: 100px;
     transform: translateX(-50%);
-    background-color: #1976D2; */
-    bottom: 80px;
     background-color: #1976D2;
+    /* bottom: 80px;
+    background-color: #1976D2; */
 }
 
 /* Кнопка ЗАМЕНИТЬ КАССЕТЫ */
 .atm-button.replaceCassettes {
     bottom: 80px;
     background-color: #1976D2;
-    /* position: absolute;
+    position: absolute;
     bottom: 220px;
     left: 50%;
     transform: translateX(-50%);
     width: 400px;
     height: 100px;
-    background-color: #1976D2; */
+    /* background-color: #1976D2; */
 }
 
 /* Кнопка ЗАКРЫТЬ ДВЕРЬ СЕЙФА */
 .atm-button.closeSafeDoor {
     bottom: 360px;
-    /* position: absolute;
+    position: absolute;
     bottom: 360px;
     left: 50%;
     transform: translateX(-50%);
     width: 400px;
-    height: 100px; */
+    height: 100px;
     background-color: #1976D2;
 }
 
