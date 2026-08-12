@@ -186,21 +186,21 @@ function initTrainingSteps() {
         {
             id: 20,
             instruction: 'Теперь нам нужно открыть сейф банкомата.',
-            targetSelector: 'openSafeDoor',
+            targetSelector: '.openSafeDoor',
             action: 'openSafeDoor',
             targetScreen: 'cassettesReplacmentScreen'
         },
         {
             id: 21,
             instruction: 'Меняем кассеты',
-            targetSelector: 'replaceCassettes',
+            targetSelector: '.replaceCassettes',
             action: 'replaceCassettes',
             targetScreen: 'cassettesReplacmentScreen'
         },
         {
             id: 22,
             instruction: 'Закрываем дверь сейфа',
-            targetSelector: 'closeSafeDoor',
+            targetSelector: '.closeSafeDoor',
             action: 'closeSafeDoor',
             targetScreen: 'cassettesReplacmentScreen'
         },

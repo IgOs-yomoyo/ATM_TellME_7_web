@@ -142,6 +142,12 @@
         cassetteLoads[cassetteNumber] = numValue;
         console.log(`Кассета ${cassetteNumber}: ${numValue} шт. номиналом ${cassetteLimits[cassetteNumber].nominal} ₽`);
         console.log('Все данные:', cassetteLoads);
+
+        //Завершаем шаг в обучении
+        if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
+            completeTrainingStep('enterCassette${cassetteNumber}');
+        }
+
         
         // Скрываем текущий экран
         const currentScreen = document.getElementById(`replenishcassette_${cassetteNumber}`);
@@ -405,6 +411,12 @@
         // Скрываем экран чека
         const receiptScreen = document.getElementById('receiptScreen');
         if (receiptScreen) receiptScreen.style.display = 'none';
+
+
+        //Завершаем шаг в обучении
+        if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
+        completeTrainingStep('confirmReceipt');
+        }
         
         // Попробуем вставить сюда флаг открытия опер дня
         if (typeof setDayOpened === 'function') {
@@ -417,6 +429,12 @@
             if (recyclerday) recyclerday.style.display = 'block';
         });
 
+
+        function newFunction() {
+            if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
+                completeTrainingStep('confirmReceipt');
+            }
+        }
         // Показываем меню оператора (или главное меню) Временно закомментируем, ради теста экрана тестирования BRM
         // const recyclerday = document.getElementById('recyclerday');
         // if (recyclerday) recyclerday.style.display = 'block';
