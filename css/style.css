@@ -1398,7 +1398,7 @@ input:checked + .slider-vertical {
 
 
 /* Все кнопки на экране замены кассет */
-#cassettesReplacementScreen.atm-button {
+#cassettesReplacementScreen .atm-button {
     position: absolute;  /* Отключаем абсолютное позиционирование  (static !important)*/
     left: 50%;
     width: 450px;
@@ -1416,72 +1416,38 @@ input:checked + .slider-vertical {
 }
 
 /* Кнопка ОТКРЫТЬ ДВЕРЬ СЕЙФА */
-#cassettesReplacmentScreen.openSafeDoor {
+#cassettesReplacmentScreen .openSafeDoor {
     bottom: 80px !important;
 }
 
 /* Кнопка ЗАМЕНИТЬ КАССЕТЫ */
-#cassettesReplacmentScreen.replaceCassettes {
+#cassettesReplacmentScreen .replaceCassettes {
     bottom: 200px !important;
 }
 
 /* Кнопка ЗАКРЫТЬ ДВЕРЬ СЕЙФА */
-#cassettesReplacmentScreen.closeSafeDoor {
+#cassettesReplacmentScreen .closeSafeDoor {
     bottom: 360px !important;
 }
 
-/* 🔥 НЕАКТИВНАЯ КНОПКА */
-/* #cassettesReplacmentScreen .atm-button.inactive {
+/* Неактивная кнопка */
+#cassettesReplacmentScreen .atm-button.inactive {
     opacity: 0.4 !important;
-    cursor: not-allowed !important; */
-    /* pointer-events: none !important;   */
-    /* Запрещаем клики */
-    /* filter: grayscale(0.5);
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    filter: grayscale(0.5) !important;
     transform: scale(0.95) !important;
-} */
+}
 
-/* 🔥 АКТИВНАЯ КНОПКА (подсвечена) */
-/* #cassettesReplacmentScreen .atm-button.active {
+/* Активная кнопка */
+#cassettesReplacmentScreen .atm-button.active {
     opacity: 1 !important;
     cursor: pointer !important;
     pointer-events: auto !important;
-    box-shadow: 0 0 0 4px #ff9800, 0 0 20px rgba(255, 152, 0, 0.5) !important;
-    transform: translateX(-50%) scale(1.05) !important;
-    filter: grayscale(0);
-} */
-/* 
-.atm-button.openSafeDoor.training-highlight {
-    position: absolute !important;
-    bottom: 80px !important;
-    left: 50% !important;
-    width: 400px !important;
-    height: 100px !important;
-    transform: translateX(-50%);
-    background-color: #1976D2;
+    filter: grayscale(0) !important;
+    transform: scale(1) !important;
+    background-color: #1976d2 !important;
 }
-
-.atm-button.replaceCassettes.training-highlight {
-    bottom: 80px !important;
-    background-color: #1976D2;
-    position: absolute !important;
-    bottom: 220px !important;
-    left: 50% !important;
-    transform: translateX(-50%);
-    width: 400px !important;
-    height: 100px !important;
-}
-
-.atm-button.closeSafeDoor.training-highlight {
-    bottom: 360px !important;
-    position: absolute !important;
-    bottom: 360px !important;
-    left: 50% !important;
-    transform: translateX(-50%);
-    width: 400px !important;
-    height: 100px !important;
-    background-color: #1976D2;
-} */
-
 
 /* ========== СТИЛИ ДЛЯ ЭКРАНОВ ЗАГРУЗКИ КАССЕТ ========== */
 .info-row {
@@ -1527,18 +1493,8 @@ input:checked + .slider-vertical {
 /* Контейнер load-input */
 .load-input {
     flex: 1;
-    /* background-color: white;
-    color: #333;
-    padding: 30px 40px;
-    border-radius: 2px;
-    font-size: 24px;
-    font-weight: bold;
-    border: 2px solid #1976D2;
-    text-align: center; */
     margin-left: 20px;
-    /* outline: none; */
     height: 100%;
-    /* width: 250px; */
 }
 
 /* Поле ввода внутри load-input */
