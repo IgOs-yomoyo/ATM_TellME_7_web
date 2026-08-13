@@ -145,7 +145,7 @@
 
         //Завершаем шаг в обучении
         if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
-            completeTrainingStep('enterCassette${cassetteNumber}');
+            completeTrainingStep('enterNoOfNotes_' + cassetteNumber);  //completeTrainingStep('enterCassette${cassetteNumber}')
         }
 
         
@@ -232,8 +232,6 @@
             screen.style.display = 'block';
             console.log(`2. Экран отображён, display: ${screen.style.display}`);
         
-            
-        
             const delay = (cassetteNumber === 1) ? 5000 : 100;
             console.log(`Задержка ${delay} мс для кассеты ${cassetteNumber}`);
         
@@ -242,7 +240,6 @@
                 const input = document.getElementById(`LoadInput_${cassetteNumber}`);
                 
                 if (input) {
-                    
                     input.removeAttribute('readonly');
                     input.tabIndex = 0;
                     input.style.display = 'inline-block';
@@ -260,6 +257,14 @@
                     }
                 
                     console.log(`Фокус на кассете ${cassetteNumber}, activeElement:`, document.activeElement);
+                }
+
+                //Обновление подсветки
+                if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
+                    console.log('Обновляем подсветку для кассеты:', cassetteNumber);
+                    setTimeout(function() {
+                        showTrainingStep(currentStepIndex);
+                    }, 100);
                 }
             }, delay);
         }
@@ -416,7 +421,7 @@
         //Завершаем шаг в обучении
         if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
         completeTrainingStep('confirmReceipt');
-        }
+    }
         
         // Попробуем вставить сюда флаг открытия опер дня
         if (typeof setDayOpened === 'function') {

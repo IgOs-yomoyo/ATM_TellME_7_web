@@ -210,6 +210,20 @@ function initTrainingSteps() {
             targetSelector: '.recyclerday-openday',
             action: 'openDay',
             targetScreen: 'recyclerday'
+        },
+        {
+            id: 24,
+            instruction: 'Введите количество банкнот, загруженных в кассету №1 (номинал 100 рублей) и нажмите кнопку ВВОД',
+            targetSelector: '#LoadInput_1, .enter-btn', //'#LoadInput_1, 
+            action: 'enterNoOfNotes_1',
+            targetScreen:'replenishcassette_1'
+        },
+        {
+            id: 25,
+            instruction: 'Введите количество банкнот, загруженных в кассету №2 (номинал 500 рублей) и нажмите кнопку ВВОД',
+            targetSelector: '#LoadInput_2, .enter-btn',
+            action: 'enterNoOfNotes_2',
+            targetScreen: 'replenishcassette_2'
         }
     ];
 }
@@ -319,40 +333,92 @@ function showTrainingStep(index) {
       
 
     // Подсвечиваем целевую кнопку
-    const target = document.querySelector(step.targetSelector);
-    if (target) {
-        target.classList.add('training-highlight');
+    // const target = document.querySelector(step.targetSelector);
+    // if (target) {
+    //     target.classList.add('training-highlight');
         
         
    // Удаляем старый номер
-    const oldLabel = target.querySelector('.step-number');
-    if (oldLabel) oldLabel.remove();
+    // const oldLabel = target.querySelector('.step-number');
+    // if (oldLabel) oldLabel.remove();
     
-    // Создаём номер и добавляем его в конец кнопки (не меняя position)
-    const label = document.createElement('span');
-    label.className = 'step-number';
-    label.textContent = step.id;
-    label.style.cssText = `
-        position: absolute;
-        top: -10px;
-        left: -10px;
-        background: #ff9800;
-        color: white;
-        border-radius: 50%;
-        width: 28px;
-        height: 28px;
-        font-size: 14px;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 100;
-        pointer-events: none;
-        `;
 
-        target.appendChild(label);
+    //Подсвечиваем целевые элементы (поддержка нескольких селекторов)
+    if (step.targetSelector) {
+        const selectors = step.targetSelector.split(',').map(s => s.trim());
+
+        selectors.forEach((selector, idx) => {
+            const target = document.querySelector(`#${step.targetScreen} ${selector}`);
+            if (target) {
+                target.classList.add('training-highlight');
+                console.log(`Элемент найден по селектору: "${selector}"`);
+
+                //Номер добавляем только на второй элемент (кнопку) или на единственный элемент, если селектор один
+                if (selectors.length === 1 || idx === 1) {
+                    //Удаляем старый номер
+                    const oldLabel = target.querySelector('.step-number');
+                    if (oldLabel) oldLabel.remove();
+
+                    //Создаём номер
+                    const label = document.createElement('span');
+                    label.className = 'step-number';
+                    label.textContent = step.id;
+                    label.style.cssText = `
+                        position: absolute;
+                        top: -10px;
+                        left: -10px;
+                        background: #ff9800;
+                        color: white;
+                        border-radius: 50%;
+                        width: 28px;
+                        height: 28px;
+                        font-size: 14px;
+                        font-weight: bold;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 100;
+                        pointer-events: none;
+                    `;
+
+                    if (window.getComputedStyle(target).position === 'static') {
+                        target.style.position = 'relative';
+                    }
+
+                    target.appendChild(label);
+                    console.log(`Номер ${step.id} добавлен на "${selector}"`);
+                }
+            } else {
+                console.warn(`Элемент не найден по селектору: "${selector}"`);
+            }
+        });
     }
 }
+    // Создаём номер и добавляем его в конец кнопки (не меняя position)
+//     const label = document.createElement('span');
+//     label.className = 'step-number';
+//     label.textContent = step.id;
+//     label.style.cssText = `
+//         position: absolute;
+//         top: -10px;
+//         left: -10px;
+//         background: #ff9800;
+//         color: white;
+//         border-radius: 50%;
+//         width: 28px;
+//         height: 28px;
+//         font-size: 14px;
+//         font-weight: bold;
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
+//         z-index: 100;
+//         pointer-events: none;
+//         `;
+
+//         target.appendChild(label);
+//     }
+// }
 
 function completeTrainingStep(action) {
 

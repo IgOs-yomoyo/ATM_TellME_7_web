@@ -1532,7 +1532,25 @@ input:checked + .slider-vertical {
 .enter-btn {
     top: 670px;
     right: 5px;
+    width: 450px;
+    height: 130px;
 }
+
+/* Обводка для кнопки ВВОД в режиме обучения */
+.atm-button.enter-btn.training-highlight {
+    position: absolute !important;
+    top: 700px !important;
+    right: 5px !important;
+    width: 200px !important;
+    height: 60px !important;
+    box-shadow: 0 0 0 4px #ff9800, 0 0 20px rgba(255, 152, 0, 0.5) !important;
+    border: 3px solid #FFD700 !important;
+    transform: scale(1.05) !important;
+    transition: all 0.3s ease !important;
+    z-index: 1000 !important;
+}
+
+
 
 /* ====================Стили для чека открытия опер дня======================= */
 /* Контейнер для чека */

@@ -136,6 +136,13 @@ function openrecyclerday() {
         return;
     }
    replenishfirstcassette(); 
+
+   //Обновляем подсветку после показа экрана
+   if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
+    setTimeout(() => {
+        showTrainingStep(currentStepIndex);
+    }, 100);
+   }
 }
 
 // Функция - печать баланса
