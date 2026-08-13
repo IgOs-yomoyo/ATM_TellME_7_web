@@ -323,6 +323,7 @@ function showTrainingStep(index) {
     if (target) {
         target.classList.add('training-highlight');
         
+        
    // Удаляем старый номер
     const oldLabel = target.querySelector('.step-number');
     if (oldLabel) oldLabel.remove();
@@ -349,9 +350,6 @@ function showTrainingStep(index) {
         pointer-events: none;
         `;
 
-        // if (window.getComputedStyle(target).position === 'static') {
-        //     target.style.position = 'relative';
-        // }
         target.appendChild(label);
     }
 }

@@ -15,6 +15,11 @@ function showCassettesReplacmentScreen() {
         cassettesReplacmentScreen.style.display = 'block';
         console.log('Показан экран Замена кассет');
         resetSafeButtons();
+
+        if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {  
+            console.log('Вызываем showTrainingStep для обновления подсветки');
+            showTrainingStep(currentStepIndex);
+        }
     } else {
         console.error('Экран cassettesReplacmentScreen не найден');
     }
