@@ -238,7 +238,15 @@ function initTrainingSteps() {
             targetSelector: '#LoadInput_4, .enter-btn',
             action: 'enterNoOfNotes_4',
             targetScreen: 'replenishcassette_4'
+        }, 
+        {
+            id: 28,
+            instruction: 'Заберите чек открытия операционного дня. Обязательно сверьте данные на чеке с данными из заявки на загрузку. Нажмите кнопку "Продолжить"',
+            targetSelector: '.receipt-confirm-btn',
+            action: 'confirmReceipt',
+            targetScreen: 'receiptScreen'
         }
+    
     ];
 }
 

@@ -1587,6 +1587,16 @@ input:checked + .slider-vertical {
     height: 130px;
 }
 
+/* Кнопка подтверждения на экране чека для режима обучения */
+.receipt-confirm-btn.training-highlight {
+    position: absolute !important;
+    top: 670px !important;
+    right: 5px !important;   
+    width: 450px !important;
+    height: 130px !important;
+    scale: 0.94 !important;
+}
+
 /* ========== СТИЛИ ДЛЯ ЭКРАНА ТЕСТИРОВАНИЯ BRM ========== */
 #testingScreen {
     display: none;
