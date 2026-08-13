@@ -224,6 +224,20 @@ function initTrainingSteps() {
             targetSelector: '#LoadInput_2, .enter-btn',
             action: 'enterNoOfNotes_2',
             targetScreen: 'replenishcassette_2'
+        },
+        {
+            id: 26,
+            instruction: 'Введите количество банкнот, загруженных в кассету №3 (номинал 1000 рублей) и нажмите кнопку ВВОД',
+            targetSelector: '#LoadInput_3, .enter-btn',
+            action: 'enterNoOfNotes_3',
+            targetScreen: 'replenishcassette_3'
+        },
+        {
+            id: 27,
+            instruction: 'Введите количество банкнот, загруженных в кассету №4 (номинал 5000 рублей) и нажмите кнопку ВВОД',
+            targetSelector: '#LoadInput_4, .enter-btn',
+            action: 'enterNoOfNotes_4',
+            targetScreen: 'replenishcassette_4'
         }
     ];
 }
@@ -348,7 +362,17 @@ function showTrainingStep(index) {
         const selectors = step.targetSelector.split(',').map(s => s.trim());
 
         selectors.forEach((selector, idx) => {
-            const target = document.querySelector(`#${step.targetScreen} ${selector}`);
+            //Сначала ищем внутри текущего блока
+            let target = null;
+            if (step.targetScreen) {
+                target = document.querySelector(`#${step.targetScreen} ${selector}`);
+            }
+            //Если элемента нет. то ищем глобально
+            if (!target) {
+                target = document.querySelector(selector);
+            }
+
+            // const target = document.querySelector(`#${step.targetScreen} ${selector}`);
             if (target) {
                 target.classList.add('training-highlight');
                 console.log(`Элемент найден по селектору: "${selector}"`);
@@ -394,31 +418,7 @@ function showTrainingStep(index) {
         });
     }
 }
-    // Создаём номер и добавляем его в конец кнопки (не меняя position)
-//     const label = document.createElement('span');
-//     label.className = 'step-number';
-//     label.textContent = step.id;
-//     label.style.cssText = `
-//         position: absolute;
-//         top: -10px;
-//         left: -10px;
-//         background: #ff9800;
-//         color: white;
-//         border-radius: 50%;
-//         width: 28px;
-//         height: 28px;
-//         font-size: 14px;
-//         font-weight: bold;
-//         display: flex;
-//         align-items: center;
-//         justify-content: center;
-//         z-index: 100;
-//         pointer-events: none;
-//         `;
 
-//         target.appendChild(label);
-//     }
-// }
 
 function completeTrainingStep(action) {
 
