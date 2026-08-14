@@ -117,6 +117,10 @@ function backToWelcomeScreen() {
         if (welcomeScreen) welcomeScreen.style.display = 'none';
     }
     
+    //Завершаем шаг в обучении
+    if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
+        completeTrainingStep('backToNormalMode');
+    }
 }
 
 // Функция для кнопки "В режим банкомат не обслуживает"

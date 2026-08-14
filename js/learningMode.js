@@ -245,6 +245,15 @@ function initTrainingSteps() {
             targetSelector: '.receipt-confirm-btn',
             action: 'confirmReceipt',
             targetScreen: 'receiptScreen'
+        },
+        {
+            id: 29, 
+            instruction: `После того, как вы получили подтверждение открытия операционного дня, 
+            нужно перевести банкомат в режим обслуживания клиентов. Для этого откройте верхний кабинет банкомата и переведите переключатель режимов в положение normal.
+            Затем, на экране, нажмите кнопку "В режим обслуживания клиентов"`,
+            targetSelector: '.recyclerday-backtonormal',
+            action: 'backToNormalMode',
+            targetScreen: 'recyclerday'
         }
     
     ];
@@ -500,7 +509,8 @@ function finishTraining() {
     const tooltip = document.getElementById('trainingTooltip');
     if (tooltip) tooltip.style.display = 'none';
     
-    openTrainingMenu();
+    // openTrainingMenu();
+    backToWelcomeScreen();
     
 }
 

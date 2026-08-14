@@ -22,6 +22,11 @@ function backtosupervisorScreen() {
 
 function backtonormal() {
     console.log('backtonormal вызвана');
+    
+    // //Завершаем шаг в обучении
+    // if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
+    //     completeTrainingStep('backToNormalMode');
+    // }
     // showMainMenu();
     backToWelcomeScreen();
 }
