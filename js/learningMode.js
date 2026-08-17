@@ -254,8 +254,22 @@ function initTrainingSteps() {
             targetSelector: '.recyclerday-backtonormal',
             action: 'backToNormalMode',
             targetScreen: 'recyclerday'
+        },
+        {
+            id: 30,
+            instruction: 'Банкомат протестирует модуль рециркуляции банкнот и перейдёт в режим обслуживания клиентов',
+            targetSelector: 'null',
+            action: null,
+            targetScreen: 'testingScreen',
+            autoAdvance: true
+        },
+        {
+            id: 31, 
+            instruction: `После того, как банкомат вышел в режим обслуживания клиентов, нам снова нужно авторизоваться на процессинге с помощью сервисной карты`,
+            targetSelector: '.insert-card-btn',
+            action: 'insertCard',
+            targetScreen: 'welcomeScreen'
         }
-    
     ];
 }
 
@@ -433,6 +447,14 @@ function showTrainingStep(index) {
                 console.warn(`Элемент не найден по селектору: "${selector}"`);
             }
         });
+
+        //Если шаг с autoAdvance - переходим на следующий шаг через 3 секунды
+        if (step.autoAdvance) {
+            console.log('Шаг ${step.is} автоматический. Переход на следущий шаг через 3 секунды.');
+            setTimeout(() => {
+                completeTrainingStep('autoAdvance');
+            }, 3000);
+        }
     }
 }
 
@@ -476,6 +498,17 @@ function completeTrainingStep(action) {
         showTrainingStep(currentStepIndex);
     } else {
         console.log('Действие не совпадает');
+    }
+
+    //Если autoAdvance - переходим на следующий шаг
+    if (action === 'autoAdvance') {
+        currentStepIndex++;
+        if (currentStepIndex >= trainingSteps.length) {
+            finishTraining();
+            return;
+        }
+        showTrainingStep(currentStepIndex);
+        return;
     }
 }
 
