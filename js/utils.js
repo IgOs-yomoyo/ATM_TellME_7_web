@@ -1,7 +1,7 @@
 // Общие функции для переключения экранов
 // let currentMode = 'normal'; 
 
-// Универсальная заявка для экрана тестирования BRM
+// Универсальная заставка для экрана тестирования BRM
 function showTestingScreen (duration = 8000, callback = null) {
     console.log('showTestingScreen вызвана, duration:', duration);
     const testingScreen = document.getElementById('testingScreen');

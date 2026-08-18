@@ -219,6 +219,13 @@ function closeCollectionReceipt() {
 }
 
 function exitCollectionScreen(){
+    //====== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ======
+    //Проверка для режима обучения
+    if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
+        console.log('Выход из режима инкассации');
+        completeTrainingStep('exitButton');
+    }
+
     const mainScreen = document.getElementById('mainScreen');
     if (mainScreen) mainScreen.style.display = 'none';
 

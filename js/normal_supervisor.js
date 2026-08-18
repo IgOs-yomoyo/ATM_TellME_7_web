@@ -387,6 +387,12 @@ function openDiagnostics() {
     diagnosticScreen.style.display = 'block';
     console.log('Экран диагностики показан на 5 секунд');
 
+    //Проверка для режима обучения
+    if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
+        console.log('Режим обучения: экран диагностики показан, завершаем шаг');
+        completeTrainingStep('diagnosticComplete');
+    }
+
     //Запускаем таймер
     if (diagnosticTimer) {
         clearTimeout(diagnosticTimer);
