@@ -269,6 +269,34 @@ function initTrainingSteps() {
             targetSelector: '.insert-card-btn',
             action: 'insertCard',
             targetScreen: 'welcomeScreen'
+        },
+        {
+            id: 32,
+            instruction: `Снова набираем ПИН-код сервисной карты - 1478`,
+            targetSelector: '.pin-input',
+            action: 'enterPin',
+            targetScreen: 'pinScreen'
+        },
+        {
+            id: 33,
+            instruction: `На экране "МЕНЮ ИНКАССАЦИИ" мы нажимаем только кнопку "ПОЛУЧИТЬ БАЛАНС"`, 
+            targetSelector: '[onclick="getBalance()"]',
+            action: 'showBalanceReceipt',
+            targetScreen: 'mainScreen'
+        },
+        {
+            id: 34,
+            instruction: 'Заберите чек',
+            targetSelector: '[onclick="closeBalanceReceipt()"]',
+            action: 'closeBalanceReceipt', 
+            targetScreen: 'balanceReceiptScreen'
+        },
+        {
+            id: 35,
+            instruction: `На этом обслуживание, практически, завершено. Нажмите на экране кнопку "ВЫЙТИ". Не нажимайте кнопку "ПРОВЕСТИ ИНКАССАЦИЮ"!!!`,
+            targetSelector: '.exit-top-right',
+            action: 'exitButton',
+            targetScreen: 'mainScreen'
         }
     ];
 }
@@ -543,9 +571,18 @@ function finishTraining() {
     if (tooltip) tooltip.style.display = 'none';
     
     // openTrainingMenu();
-    backToWelcomeScreen();
-    
+    //backToWelcomeScreen();
+    showClientScreen();
 }
+    // document.querySelectorAll('.atm-screen').forEach(screen => {
+    //     screen.style.display = 'none';
+    // });
+    // const welcomeScreen = document.getElementById('welcomeScreen');
+    // if (welcomeScreen) {
+    //     welcomeScreen.style.display = 'block';
+    //     console.log ('Показан экран welcomeScreen');
+    // } 
+// }
 
 function startDragTouch() {
     console.log('startDragTouch вызвана (заглушка)');
