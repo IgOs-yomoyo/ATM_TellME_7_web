@@ -225,13 +225,37 @@ function exitCollectionScreen(){
         console.log('Выход из режима инкассации');
         completeTrainingStep('exitButton');
     }
-
+ 
+    //Получаем нужные экраны
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const outOfServiceScreen = document.getElementById('outOfServiceScreen');
     const mainScreen = document.getElementById('mainScreen');
+
     if (mainScreen) mainScreen.style.display = 'none';
 
-    if (typeof backToWelcomeScreen === 'function') {
-        backToWelcomeScreen();
+    // if (typeof backToWelcomeScreen === 'function') {
+    //     backToWelcomeScreen();
+    // }
+
+    if (outOfServiceScreen) {
+        outOfServiceScreen.style.display = 'block';
+        console.log('Показан экран outOfServiceScreen на 3 секунды');
     }
+
+    //Через 3 секунды показываем экран welcomeScreen
+    setTimeout(function() {
+        if (outOfServiceScreen) {
+            outOfServiceScreen.style.display = 'none';
+        }
+        if (welcomeScreen) {
+            welcomeScreen.style.display = 'block';
+            console.log('welcomeScreen запущен');
+            if (typeof startCarousel === 'function') startCarousel();
+        }
+    }, 3000);
+    // if (typeof showWelcomeScreen === 'function') {
+    //     showWelcomeScreen();
+    // }
     // const outOfServiceScreen = document.getElementById('outOfServiceScreen');
     // if (outOfServiceScreen) outOfServiceScreen.style.display = 'block';
 }

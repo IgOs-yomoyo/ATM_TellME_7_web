@@ -4,6 +4,12 @@
 
 // ========== ОТКРЫТЬ МЕНЮ ТРЕНАЖЁРА
 function openTrainingMenu() {
+
+    //Проверка для режима обучения
+    if (isTrainingMode) {
+        completeTrainingStep('toAppMainMenu');
+    }
+
     //Скрываем панель закладок
     const tooltip = document.getElementById('trainingTooltip');
     if (tooltip) tooltip.style.display = 'none';
@@ -247,7 +253,15 @@ function initTrainingSteps() {
             targetScreen: 'receiptScreen'
         },
         {
-            id: 29, 
+            id: 29,
+            instruction: 'Банкомат протестирует модуль рециркуляции банкнот и вернётся в меню "Операционный день ресайклера"',
+            targetSelector: 'null',
+            action: null,
+            targetScreen: 'testingScreen',
+            autoAdvance: true
+        },
+        {
+            id: 30, 
             instruction: `После того, как вы получили подтверждение открытия операционного дня, 
             нужно перевести банкомат в режим обслуживания клиентов. Для этого откройте верхний кабинет банкомата и переведите переключатель режимов в положение normal.
             Затем, на экране, нажмите кнопку "В режим обслуживания клиентов"`,
@@ -256,7 +270,7 @@ function initTrainingSteps() {
             targetScreen: 'recyclerday'
         },
         {
-            id: 30,
+            id: 31,
             instruction: 'Банкомат протестирует модуль рециркуляции банкнот и перейдёт в режим обслуживания клиентов',
             targetSelector: 'null',
             action: null,
@@ -264,48 +278,55 @@ function initTrainingSteps() {
             autoAdvance: true
         },
         {
-            id: 31, 
+            id: 32, 
             instruction: `После того, как банкомат вышел в режим обслуживания клиентов, нам снова нужно авторизоваться на процессинге с помощью сервисной карты`,
             targetSelector: '.insert-card-btn',
             action: 'insertCard',
             targetScreen: 'welcomeScreen'
         },
         {
-            id: 32,
+            id: 33,
             instruction: `Снова набираем ПИН-код сервисной карты - 1478`,
             targetSelector: '.pin-input',
             action: 'enterPin',
             targetScreen: 'pinScreen'
         },
         {
-            id: 33,
+            id: 34,
             instruction: `На экране "МЕНЮ ИНКАССАЦИИ" мы нажимаем только кнопку "ПОЛУЧИТЬ БАЛАНС"`, 
             targetSelector: '[onclick="getBalance()"]',
             action: 'showBalanceReceipt',
             targetScreen: 'mainScreen'
         },
         {
-            id: 34,
+            id: 35,
             instruction: 'Заберите чек',
             targetSelector: '[onclick="closeBalanceReceipt()"]',
             action: 'closeBalanceReceipt', 
             targetScreen: 'balanceReceiptScreen'
         },
         {
-            id: 35,
+            id: 36,
             instruction: `На этом обслуживание, практически, завершено. Нажмите на экране кнопку "ВЫЙТИ". Не нажимайте кнопку "ПРОВЕСТИ ИНКАССАЦИЮ"!!!`,
             targetSelector: '.exit-top-right',
             action: 'exitButton',
             targetScreen: 'mainScreen'
         },
         {
-            id: 36,
+            id: 37,
             instruction: `После того, как банкомат перешёл в режим обслуживания клиентов, нужно проверить состояние его устройств. 
             Для этого нажмите последовательно клавиши 4 - 5 - 6. Пиктограммы на экране показывают состояние отдельных модулей банкомата.
              Убедитесь, что все иконки на экране с зелёными галочками. В первую очередь нас интересует состояние диспенсера, модуля приёма, картридера и системы NDC.`,
             targetSelector: null,
             action: 'diagnosticComplete',
             targetScreen: null
+        },
+        {
+            id: 38,
+            instruction: `На этом обслуживание банкомата банка Озон завершено. Для продолжения нажмите кнопку "В ГЛАВНОЕ МЕНЮ".`,
+            targetSelector: '.training-main-menu-btn',
+            action: 'toAppMainMenu',
+            targetScreen: 'welcomeScreen'
         }
     ];
 }

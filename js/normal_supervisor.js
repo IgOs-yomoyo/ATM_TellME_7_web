@@ -369,8 +369,6 @@ function openDiagnostics() {
         return;
     }
 
-
-
     // Сохраняем текущий экран
     let previousScreen = null;
     if (welcomeVisible) {
@@ -386,6 +384,27 @@ function openDiagnostics() {
     // Показываем экран диагностики
     diagnosticScreen.style.display = 'block';
     console.log('Экран диагностики показан на 5 секунд');
+
+    //Добавляем подсветку некоторых иконок в режиме обучения
+    if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
+        console.log('Режим обучения: подсвечиваем иконки');
+
+        //Список нужных иконок
+        const itemsToHighlight = ['РИДЕР', 'ДИСПЕНСЕР', 'МОДУЛЬ ПРИЁМА', 'СИСТЕМА NDC'];
+
+        //Находим все элементы
+        const diagnosticItems = document.querySelectorAll('.diagnostic-item');
+        diagnosticItems.forEach(item => {
+            const nameElement = item.querySelector('.diagnostic-name');
+            if (nameElement) {
+                const name = nameElement.textContent.trim();
+                if (itemsToHighlight.includes(name)) {
+                    item.classList.add('training-highlight');
+                    console.log('Подсвечен: ${name}');
+                }
+            }
+        });
+    }
 
     //Проверка для режима обучения
     if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
