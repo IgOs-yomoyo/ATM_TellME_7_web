@@ -320,6 +320,7 @@ function checkDiagnosticSequence(key) {
     if (diagnosticKeySequence.length === 3) {
         if (diagnosticKeySequence.join('') === DIAGNOSTIC_CODE.join('')) {
             diagnosticKeySequence = [];
+
             openDiagnostics();
             return true;
         }
@@ -406,12 +407,6 @@ function openDiagnostics() {
         });
     }
 
-    //Проверка для режима обучения
-    if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
-        console.log('Режим обучения: экран диагностики показан, завершаем шаг');
-        completeTrainingStep('diagnosticComplete');
-    }
-
     //Запускаем таймер
     if (diagnosticTimer) {
         clearTimeout(diagnosticTimer);
@@ -420,6 +415,10 @@ function openDiagnostics() {
     diagnosticTimer = setTimeout(() => {
         if (diagnosticScreen) {
             diagnosticScreen.style.display = 'none';
+        }
+        if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
+            console.log('Режим обучения: диагностика завершена, шаг завершён');
+            completeTrainingStep('diagnosticComplete');
         }
         if (previousScreen === 'welcome' && welcomeScreen) {
             welcomeScreen.style.display = 'block';

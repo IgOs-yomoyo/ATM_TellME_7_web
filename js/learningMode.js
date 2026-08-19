@@ -319,7 +319,7 @@ function initTrainingSteps() {
              Убедитесь, что все иконки на экране с зелёными галочками. В первую очередь нас интересует состояние диспенсера, модуля приёма, картридера и системы NDC.`,
             targetSelector: null,
             action: 'diagnosticComplete',
-            targetScreen: null
+            targetScreen: null     //'diagnosticScreen'
         },
         {
             id: 38,
