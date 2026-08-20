@@ -1371,6 +1371,11 @@ input:checked + .slider-vertical {
 
 
 /* === СТИЛИ ДЛЯ ЭКРАНА "ПОВТОРНОЕ ЗАКРЫТИЕ ОПЕР ДНЯ" === */
+#closeRecyclerDayAgain .receipt-container {
+    display: none !important;
+}
+
+
 /* Кнопка ЗАКРЫТЬ ДЕНЬ ПОВТОРНО */
 .atm-button.confirmCloseDayAgain {
     position: absolute;

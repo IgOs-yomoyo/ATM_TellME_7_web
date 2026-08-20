@@ -107,7 +107,8 @@ function initTrainingSteps() {
         },
         {
             id: 8, 
-            instruction: 'Далее нужно перевести переключатель режимов работы банкомата normal/supervisor в положение supervisor, то есть, перевести банкомат в режим оператора.',
+            instruction: `Далее нужно открыть верхний кабинет банкомата, проверить наличие задержанных карт клиентов, 
+             перевести переключатель режимов работы банкомата normal/supervisor в положение supervisor, то есть, в режим оператора.`,
             targetSelector: '.mode-toggle-container', 
             action: 'switchToSupervisor', 
             targetScreen: 'outOfServiceScreen'
