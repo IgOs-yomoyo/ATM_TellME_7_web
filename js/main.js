@@ -210,13 +210,49 @@ function closeCollectionReceipt() {
     const collectionScreen = document.getElementById('collectionReceiptScreen');
     if (collectionScreen) collectionScreen.style.display = 'none';
 
-    if (isCollectionMode) {
-        showTakeCardScreen();
+    const collectionCompleteScreen = document.getElementById('collectionCompleteScreen');
+    if (collectionCompleteScreen) {
+        collectionCompleteScreen.style.display = 'block';
+        console.log('Показан экран "Можно проводить инкассацию"');
     }else{
-        const mainScreen = document.getElementById('mainScreen');
-        if (mainScreen) mainScreen.style.display = 'block';    
+        console.log('Экран collectionCompleteScreen не найден');
     }
 }
+
+//Функция завершения инкассации на процессинге. Посли демонстрации чека "Получить баланс" мы забираем чек и переходим на экран завершения инкассации с кнопкой "Продолжить". 
+//Эта функция для кнопки "Продолжить" - переходим с экрана collectionCompleteScreen на экран outOfService. 
+function continueCollection() {
+    console.log('continueCollection вызвана');
+
+    //Скрываем экран
+    const collectionCompleteScreen = document.getElementById('collectionCompleteScreen');
+    if (collectionCompleteScreen) {
+        collectionCompleteScreen.style.display = 'none';
+        console.log('collectionCompleteScreen скрыт');
+    }
+
+    //Показываем экран outOfService
+    const outOfServiceScreen = document.getElementById('outOfServiceScreen');
+    if (outOfServiceScreen) {
+        outOfServiceScreen.style.display = 'block';
+        console.log('outOfServiceScreen показан');
+    }else{
+        console.warn('outOfServiceScreen не найден');
+    }
+
+    //Проверка для режима обучения
+    if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
+        completeTrainingStep('continueCollections');
+    }
+}
+
+    // if (isCollectionMode) {
+    //     showTakeCardScreen();
+    // }else{
+    //     const mainScreen = document.getElementById('mainScreen');
+    //     if (mainScreen) mainScreen.style.display = 'block';    
+    // }
+// }
 
 function exitCollectionScreen(){
     //====== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ======

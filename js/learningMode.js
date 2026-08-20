@@ -99,11 +99,16 @@ function initTrainingSteps() {
             targetScreen: 'collectionReceiptScreen'
         }, 
         {
-            id: 7, 
-            instruction: 'Заберите карту',
-            targetSelector: '[onclick="takeCard()"]',
-            action: 'takeTheCard',
-            targetScreen: 'takeCardScreen'
+            // id: 7, 
+            // instruction: 'Заберите карту',
+            // targetSelector: '[onclick="takeCard()"]',
+            // action: 'takeTheCard',
+            // targetScreen: 'takeCardScreen'
+            id: 7,
+            instruction: `Нажмите кнопку ПРОДОЛЖИТЬ`,
+            targetSelector: '.collection-continue-btn',
+            action: 'continueCollections',
+            targetScreen:'collectionCompleteScreen'
         },
         {
             id: 8, 
