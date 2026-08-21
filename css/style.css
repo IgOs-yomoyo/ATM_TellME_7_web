@@ -723,6 +723,7 @@ input:checked + .slider-vertical {
     align-items: center;
     justify-content: center;
     min-height: 500px;
+    position: relative;
 }
 
 #collectionCompleteScreen .screen-title {
@@ -733,34 +734,58 @@ input:checked + .slider-vertical {
 }
 
 #collectionCompleteScreen .finish-collection-message {
-    font-size: 24px;
-    color: #ffffff;
-    margin-bottom: 40px;
+    font-size: 28px;
+    color: #080000;
+    margin-top: 300px !important;
+    margin-bottom: 40px !important;
     text-align: center;
     padding: 0 20px;
+    /* line-height: 1.6;
+    display: block !important; */
 }
 
 
- #collectionCompleteScreen .atm-button {
-    top: 600px;
-    right: 450px;
- }
+ /* #collectionCompleteScreen .atm-button {
+    /* position: absolute; */
+    /* top: 600px; */
+    /* right: 450px; */
+ /* } */
 
- /* === ДЛЯ РЕЖИМА ОБУЧЕНИЯ === */
- .atm-button.collection-continue-btn.training-highlight {
-    box-shadow: 0 0 0 4px #ff9800, 0 0 20px rgba(255, 152, 0, 0.5) !important;
-    border: 3px solid #FFD700 !important;
-    transform: scale(1.05) !important;
-    transition: all 0.3s ease !important;
-    z-index: 100 !important;
-    position: relative !important;
+ /* Кнопка ПРОДОЛЖИТЬ */
+#collectionCompleteScreen .collection-continue-btn {
+    position: absolute !important;
+    bottom: 200px !important; 
+    right: 400px !important;
+    width: 350px !important;
+    height: 100px !important;
+    font-size: 24px !important;
+    background-color: #1976D2;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block !important;  /* 👈 Важно! */
 }
- 
 
 #collectionCompleteScreen .collection-continue-btn:hover {
     background-color: #1565C0;
     transform: scale(1.05);
 }
+
+/* Подсветка в режиме обучения не нужна. Есть общие стили кнопок в режиме обучения и этого достаточно.*/
+/* #collectionCompleteScreen .collection-continue-btn.training-highlight { */
+    /* box-shadow: 0 0 0 4px #ff9800, 0 0 20px rgba(255, 152, 0, 0.5) !important; */
+    /* border: 3px solid #FFD700 !important;
+    transform: scale(1.05) !important;
+    z-index: 100 !important;
+    position: absolute !important;
+    box-shadow: 0 0 0 4px #ff9800, 0 0 20px rgba(255, 152, 0, 0.4) !important; */
+/* } */
+
+ 
+
+
 
 /* ======= Стили для экрана Заберите карту ======= */
 /* Экран "Заберите карту" */
