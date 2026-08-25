@@ -469,18 +469,57 @@ input:checked + .slider-vertical {
 
 /* === ЛОГОТИП OZON НА ГЛАВНОМ ЭКРАНЕ ДЛЯ ВЫЗОВА МЕНЮ ИНКАССАЦИИ === */
 /* === ЛОГОТИП OZON (кликабельный) === */
-.otp-logo {
+.otp-logo-wrapper {
+    position: absolute;
+    top: 200px;
+    left: 20px;
+    z-index: 10;
     cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    border: none;
+    outline: none;
+}
+
+.otp-logo-wrapper:hover {
+    transform: scale(1.05);
+}
+
+.otp-logo {
+    display: block;
+    width: 170px;
+    height: auto;
+    border: none;
+    border-radius: 5px; /* 12px */
+    pointer-events: none;  /* 👈 клики через wrapper */
+    /* box-shadow: 0 0 0 4px #f90; - этот вариант не сработал */
+}
+    /* cursor: pointer;
     transition: all 0.2s ease;
     user-select: none;
     position: absolute;
     top: 200px;
     left: 20px;
     z-index: 10;
-    width: 120px;
+    width: 140px;
+    height: auto;
     opacity: 0.8;
-}
+    border-radius: 12px; /* Сглаженные углы */
+    /* padding: 8px 12px; Отступы внутри обводки */
+    /* background: rgba(255, 255, 255, 0.05);
+    box-sizing: border-box; */ 
+/* } */
 
+
+/* ✅ ПОДСВЕТКА (через общий класс) */
+.otp-logo-wrapper.training-highlight {
+    box-shadow: 0 0 0 4px #ff9800, 0 0 20px rgba(255, 152, 0, 0.5) !important;
+    border: 3px solid #FFD700 !important;
+    border-radius: 16px !important;
+    transform: scale(1.05) !important;
+    background: rgba(255, 215, 0, 0.05) !important;
+}
+/* 
 .otp-logo:hover {
     opacity: 1;
     transform: scale(1.05);
@@ -488,13 +527,42 @@ input:checked + .slider-vertical {
 
 .otp-logo:active {
     transform: scale(0.95);
-}
+} */
 /* ОБВОДКА ЛОГОТИПА В РЕЖИМЕ ОБУЧЕНИЯ */
-.otp-logo .training-highlight {
-    box-shadow: 0 0 0 4px #ff9800, 0 0 20px rgba(255, 152, 0, 0.5) !important;
-    transform: scale(1.05) !important;
-    transition: all 0.3s ease !important;
-}
+/* .otp-logo .training-highlight {
+    box-shadow: 
+        0 0 0 4px,
+        0 0 0 8px rgba(255, 152, 0, 0.3),
+        0 0 30px rgba(255, 152, 0, 0.4) !important;
+    border: 3px solid #FFD700 !important;
+    border-radius: 16px !important; /* Сглаженные углы */
+    /* box-shadow: 0 0 0 4px #ff9800, 0 0 20px rgba(255, 152, 0, 0.5) !important; */
+    /* transform: scale(1.05) !important; */
+    /* transition: all 0.3s ease !important; */
+    /* background: rgba(255, 215, 0, 0.1) !important; */
+    /* padding: 8px 12px !important; */
+/* } */
+
+/* ✅ НОМЕР ШАГА НА ЛОГОТИПЕ */
+/* .otp-logo .step-number .training-highlight{
+    position: absolute !important;
+    top: -15px !important;
+    right: -15px !important;
+    background: #ff9800 !important;
+    color: white !important;
+    border-radius: 50% !important;
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 9999 !important;
+    pointer-events: none !important;
+    border: 2px solid white !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4) !important;
+} */
 
 
 /* ========== КАРУСЕЛЬ НА ЭКРАНЕ ПРИВЕТСТВИЯ ========== */
