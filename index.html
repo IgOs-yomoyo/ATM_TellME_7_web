@@ -38,9 +38,13 @@
                 <img src="images/ozon-bank-logo_4.png" alt="Озон Банк" class="carousel-img">
                 <img src="images/ozon-bank-logo_5.png" alt="Озон Банк" class="carousel-img">
             </div>
-            <button class="atm-button insert-card-btn" onclick="insertCard()">Вставьте карту</button>
-            <button class="atm-button exit-button" onclick="exitApp()">Выход</button>
+            <img src="\images/ozon-logo.png" 
+                alt="OZON BANK"
+                class="otp-logo"
+                onclick="handleLogoClick()">
          </div>
+         <!-- <button class="atm-button insert-card-btn" onclick="insertCard()">Вставьте карту</button>
+         <button class="atm-button exit-button" onclick="exitApp()">Выход</button> -->
         <!-- Заглавный экран тренажёра. Выбор режимов. -->
         <div id="trainerMenuScreen" class="atm-screen" style="display: block;">
             <div class="screen-title">ОБУЧАЮЩИЙ ТРЕНАЖЁР</div>
@@ -104,6 +108,29 @@
             </div>
 
          </div>
+         <!-- Экран ввода OTP пароля -->
+        <div id="inputOTPCodeScreen" class="atm-screen" style="display: none;">
+            <div class="screen-title">ВВЕДИТЕ КОД ИНКАССАТОРА</div>
+            <div class="otp-container">
+                <div class="otp-code-display"> <!--id="otpCodeDisplay" -->
+                    Код инкассатора: <span id="otpCodeValue">------</span>
+                </div>
+                <!-- ПОЛЕ ВВОДА -->
+                <div class="otp-input-container">
+                    <input type="password"
+                        id="otpInput"
+                        class="otp-input"
+                        maxlength="6"
+                        inputmode="numeric"
+                        autocomplete="off"
+                        placeholder="- - - - - -">
+                </div>
+                <!-- КНОПКА ВВОД -->
+                <button class="atm-button otp-submit-btn" onclick="submitOTP()">
+                    ВВОД
+                </button>
+            </div>
+        </div>
          <!-- ЭКРАН ВВОДА ПИН-КОДА -->
         <div id="pinScreen" class="atm-screen" style="display: none;">
             <div class="screen-title">БАНК ОЗОН</div>
@@ -533,6 +560,7 @@
     <script src="js/learningMode.js"></script>
     <script src="js/normal_supervisor.js"></script>
     <script src="js/clientMode.js"></script>
+    <script src="js/otpManager.js"></script>
     <script src="js/closerecyclerday.js"></script>
     <script src="js/main.js"></script>
     <script src="js/supervisor.js"></script> 

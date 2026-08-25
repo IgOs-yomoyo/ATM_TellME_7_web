@@ -58,17 +58,17 @@ function initTrainingSteps() {
     trainingSteps = [
         {
             id: 1, 
-            instruction: 'Обслуживание банкоматов банка OZON всегда начинается с сервисной карты. Вставьте сервисную карту в картридер.',
-            targetSelector: '.insert-card-btn',
-            action: 'insertCard',
+            instruction: 'Для доступа к меню инкссации нажмите 5 раз на логотип OZON в левом верхнем углу',
+            targetSelector: '.otp-logo',
+            action: 'logoClick',
             targetScreen: 'welcomeScreen'
         },
         {
             id: 2, 
-            instruction: 'Введите PIN-код 1478',
-            targetSelector: '.pin-input',
-            action: 'enterPin',
-            targetScreen: 'pinScreen'
+            instruction: 'Введите шестизначный код инкассатора',
+            targetSelector: '.otp-input, .otp-submit-btn', //[onclick="submitOTP()]
+            action: 'enterOTP',
+            targetScreen: 'inputOTPCodeScreen'
         }, 
         {
             id: 3,
