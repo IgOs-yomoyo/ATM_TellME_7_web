@@ -145,18 +145,23 @@ function submitOTP() {
         }
         // Переходим в меню инкассации
         showMainScreen();
-    } else {
-        console.log('❌ Неверный OTP код. Введено:', enteredCode, 'Ожидалось:', otpCode);
-        alert('Неверный OTP код. Попробуйте снова.');
-        input.value = '';
-        input.focus();
-    }
 
-    //Завершение шага в режиме обучения
+        //Завершение шага в режиме обучения
     if (typeof isTrainingMode !== 'undefined' && isTrainingMode){
             console.log('Шаг 2 завершён');
             completeTrainingStep('enterOTP');
         }
+
+    } else {
+        console.log('❌ Неверный OTP код. Введено:', enteredCode, 'Ожидалось:', otpCode);
+        alert('Неверный OTP код. Попробуйте снова.');
+
+        //Сбрасываем поле и фокус
+        input.value = '';
+        input.focus();
+    }
+
+    
 }
 
 // Обработчик кнопки Enter
