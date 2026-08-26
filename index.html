@@ -23,8 +23,8 @@
         <div id="trainingTooltip" class="training-tooltip" style="display: none;">
             <div class="training-tooltip-content">
                 <div class="training-tooltip-step">Шаг<span id="tooltipStep">1</span>из<span id="tooltipTotal">1</span></div>
-                <div class="training-tooltip-text" id="tooltipText">Обслуживание банкомата банка OZON всегда начинается с сервисной карты. Вставьте сервисную
-                    карту в картридер.</div>
+                <div class="training-tooltip-text" id="tooltipText">Для начала обсулживания банкомата банка Озон необходимо зайти в "Меню инкассации".
+                     Для этого нажмите 5 раз на логотип OZON в левом верхнем углу</div>
                     <div class="training-tooltip-progress">
                         <div class="training-tooltip-progress-bar" id="tooltipProgressBar" style="width: 10%;"></div>
                     </div>
@@ -170,7 +170,7 @@
         <div id="mainScreen" class="atm-screen" style="display: none;">
             <div class="screen-title">МЕНЮ ИНКАССАЦИИ</div>
             <div class="main-menu-buttons">
-                <button onclick="getBalance()">ПОЛУЧИТЬ БАЛАНС</button>
+                <button id="balanceBtn" onclick="getBalance()">ПОЛУЧИТЬ БАЛАНС</button>
                 <button onclick="performCollection()">ПРОВЕСТИ ИНКАССАЦИЮ</button>
             </div>
             <button class="atm-button exit-top-right" onclick="exitCollectionScreen()">Выход</button>

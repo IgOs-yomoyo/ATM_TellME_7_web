@@ -11,7 +11,8 @@
 // function goToSupervisor() {
 //     showSupervisorMenu();
 // }
-
+// Флаг для определения состояния кнопки БАЛАНС (глобальная переменная)
+let isBalanceButtonUsed = false; //false - не нажата, true - нажата
 // Флаг для правильной работы функций
 let isCollectionMode = false; //false - баланс, true - инкассация
 
@@ -246,14 +247,7 @@ function continueCollection() {
     }
 }
 
-    // if (isCollectionMode) {
-    //     showTakeCardScreen();
-    // }else{
-    //     const mainScreen = document.getElementById('mainScreen');
-    //     if (mainScreen) mainScreen.style.display = 'block';    
-    // }
-// }
-
+    
 function exitCollectionScreen(){
     //====== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ======
     //Проверка для режима обучения
@@ -299,6 +293,13 @@ function exitCollectionScreen(){
 // Обновляем кнопки в mainScreen
 function getBalance() {
     isCollectionMode = false; //Чек Баланс, поэтому false
+    isBalanceButtonUsed = true; //Кнопка нажата
+
+    const balanceBtn = document.getElementById('balanceBtn');
+    if (balanceBtn) {
+        balanceBtn.classList.add('btn-disabled');
+        balanceBtn.disabled = true;
+    }
     showBalanceReceipt();
 }
 

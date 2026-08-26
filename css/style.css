@@ -801,6 +801,14 @@ input:checked + .slider-vertical {
     gap: 20px;
 }
 
+.main-menu-buttons-disabled {
+    background-color: #d3d3d3 !important; /* Бледно-серый цвет */
+    color: #888 !important;
+    border-color: #d3d3d3 !important;
+    cursor: not-allowed !important;
+    pointer-events: none; /* Отключает любые клики */
+    opacity: 0.7;
+}
 
 .main-menu-buttons button {
     flex: 1;
@@ -815,15 +823,22 @@ input:checked + .slider-vertical {
     text-align: center;
 }
 
-
 .main-menu-buttons button:hover {
     transform: scale(1.02);
     filter: brightness(1.05);
 }
 
-
 .main-menu-buttons button:hover {
     background-color: #1976D2;
+}
+
+.main-menu-buttons button.btn-disabled {
+    background-color: #d3d3d3 !important; /* Бледно-серый цвет */
+    color: #888 !important;
+    border-color: #d3d3d3 !important;
+    cursor: not-allowed !important;
+    pointer-events: none; /* Отключает любые клики */
+    opacity: 0.7;
 }
 
 /* Кнопка выхода – справа сверху */
