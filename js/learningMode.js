@@ -58,8 +58,9 @@ function initTrainingSteps() {
     trainingSteps = [
         {
             id: 1, 
-            instruction: 'Для доступа к меню инкссации нажмите 5 раз на логотип OZON в левом верхнем углу',
-            targetSelector: '.otp-logo',
+            instruction: `Для начала обсулживания банкомата банка Озон необходимо зайти в "Меню инкассации".
+                     Для этого нажмите 5 раз на логотип OZON в левом верхнем углу`,
+            targetSelector: '.otp-logo-wrapper',
             action: 'logoClick',
             targetScreen: 'welcomeScreen'
         },
