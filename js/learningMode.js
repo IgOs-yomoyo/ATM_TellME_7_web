@@ -660,6 +660,18 @@ function startDrag(e) {
     const rect = tooltipElement.getBoundingClientRect();
     dragOffsetX = e.clientX - rect.left;
     dragOffsetY = e.clientY - rect.top;
+
+    console.log('startDrag:', {
+        clientX: e.clientX, 
+        clientY: e.clientY, 
+        rectLeft: rect.left, 
+        rectTop: rect.top,
+        offsetX: dragOffsetX, 
+        offsetY: dragOffsetY 
+    });
+
+
+
     tooltipElement.classList.add('dragging');
     tooltipElement.style.transition = 'none';
     e.preventDefault();
@@ -670,6 +682,13 @@ function onDrag(e) {
     //Новые координаты панели: курсор минус смещение
     let x = e.clientX - dragOffsetX;
     let y = e.clientY - dragOffsetY;
+
+    console.log('onDrag:', {
+        clientX: e.clientX, 
+        clientY: e.clientY, 
+        x: x, 
+        y: y 
+    });
 
     const rect = tooltipElement.getBoundingClientRect();
     const panelWidth = rect.width;
@@ -708,34 +727,34 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Touch-версия
-// function startDragTouch(e) {
-//     if (e.target.closest('.training-tooltip-skip')) return;
-//     const touch = e.touches[0];
-//     isDragging = true;
-//     const rect = tooltipElement.getBoundingClientRect();
-//     dragOffsetX = touch.clientX - rect.left;
-//     dragOffsetY = touch.clientY - rect.top;
-//     tooltipElement.classList.add('dragging');
-//     e.preventDefault();
-// }
+function startDragTouch(e) {
+    if (e.target.closest('.training-tooltip-skip')) return;
+    const touch = e.touches[0];
+    isDragging = true;
+    const rect = tooltipElement.getBoundingClientRect();
+    dragOffsetX = touch.clientX - rect.left;
+    dragOffsetY = touch.clientY - rect.top;
+    tooltipElement.classList.add('dragging');
+    e.preventDefault();
+}
 
-// function onDragTouch(e) {
-//     if (!isDragging) return;
-//     const touch = e.touches[0];
-//     const x = touch.clientX - dragOffsetX;
-//     const y = touch.clientY - dragOffsetY;
-//     tooltipElement.style.left = x + 'px';
-//     tooltipElement.style.top = y + 'px';
-//     tooltipElement.style.bottom = 'auto';
-//     tooltipElement.style.right = 'auto';
-//     tooltipElement.style.transform = 'none';
-//     e.preventDefault();
-// }
+function onDragTouch(e) {
+    if (!isDragging) return;
+    const touch = e.touches[0];
+    const x = touch.clientX - dragOffsetX;
+    const y = touch.clientY - dragOffsetY;
+    tooltipElement.style.left = x + 'px';
+    tooltipElement.style.top = y + 'px';
+    tooltipElement.style.bottom = 'auto';
+    tooltipElement.style.right = 'auto';
+    tooltipElement.style.transform = 'none';
+    e.preventDefault();
+}
 
-// function stopDragTouch() {
-//     if (isDragging) {
-//         isDragging = false;
-//         tooltipElement.classList.remove('dragging');
-//     }
-// }
+function stopDragTouch() {
+    if (isDragging) {
+        isDragging = false;
+        tooltipElement.classList.remove('dragging');
+    }
+}
 

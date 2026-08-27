@@ -13,6 +13,8 @@
 // }
 // Флаг для определения состояния кнопки БАЛАНС (глобальная переменная)
 let isBalanceButtonUsed = false; //false - не нажата, true - нажата
+// Флаг для определения состояния кнопки ПРОВЕСТИ ИНКАССАЦИЮ (глобальная переменная)
+let isCollectionButtonUsed = false; // false - не нажата, true - нажата - это не пригодилось, потому что после того, как получили чек, мы сразу переходим на экран с кнопкой Продолжить. 
 // Флаг для правильной работы функций
 let isCollectionMode = false; //false - баланс, true - инкассация
 
@@ -308,11 +310,25 @@ function getBalance() {
         balanceBtn.classList.add('btn-disabled');
         balanceBtn.disabled = true;
     }
+
+    // Активируем кнопку Провести инкассацию
+    const collectBtn = document.getElementById('collectBtn');
+    if (collectBtn) {
+        collectBtn.classList.remove('btn-disabled');
+        collectBtn.disabled = false;
+    }
     showBalanceReceipt();
 }
 
 function performCollection() {
     isCollectionMode = true; //Чек Инкассация, поэтому true
+    isCollectionButtonUsed = true; // Кнопка нажата
+
+    const collectBtn = document.getElementById('collectBtn');
+    if (collectBtn) {
+        collectBtn.classList.add('btn-disabled');
+        collectBtn.disabled = true;
+    }
     showCollectionReceipt();
 }
 

@@ -181,6 +181,31 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+function initMainMenu() {
+    console.log('initMainMenu вызвана');
+
+    //Сбрасываем состояние кнопок
+    isBalanceButtonUsed = false;
+    isCollectionButtonUsed = false;
+    isCollectionMode = false;
+
+    //Кнопка ПОЛУЧИТЬ БАЛАНС активна
+    const balanceBtn = document.getElementById('balanceBtn');
+    if (balanceBtn) {
+        balanceBtn.classList.remove('btn-disabled');
+        balanceBtn.disabled = false;
+        console.log('Кнопка Получить баланс активна');
+    }
+
+    //Кнопка ПРОВЕСТИ ИНКАССАЦИЮ неактивна
+    const collectBtn = document.getElementById('collectBtn');
+    if (collectBtn)  {
+        collectBtn.classList.add('btn-disabled');
+        collectBtn.disabled = true;
+        console.log('Кнопка Провести инкассацию активна');
+    }
+}
+
 // Показ главного экрана (меню инкассации)
 function showMainScreen() {
     console.log('📋 Показ главного экрана');
@@ -195,6 +220,7 @@ function showMainScreen() {
         // Инициализируем кнопки
         if (typeof initMainMenu === 'function') {
             initMainMenu();
+            console.log('Функция initMainMenu вызвана');
         }
     }
 }
