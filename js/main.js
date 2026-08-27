@@ -245,6 +245,14 @@ function continueCollection() {
     if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
         completeTrainingStep('continueCollections');
     }
+
+    isBalanceButtonUsed = false;
+
+    const balanceBtn = document.getElementById('balanceBtn');
+    if (balanceBtn) {
+        balanceBtn.classList.remove('btn-disabled');
+        balanceBtn.disabled = false;
+    }
 }
 
     
@@ -290,7 +298,7 @@ function exitCollectionScreen(){
     // if (outOfServiceScreen) outOfServiceScreen.style.display = 'block';
 }
 
-// Обновляем кнопки в mainScreen
+// Кнопка "Получить баланс"
 function getBalance() {
     isCollectionMode = false; //Чек Баланс, поэтому false
     isBalanceButtonUsed = true; //Кнопка нажата
