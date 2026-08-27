@@ -286,17 +286,18 @@ function initTrainingSteps() {
         },
         {
             id: 32, 
-            instruction: `После того, как банкомат вышел в режим обслуживания клиентов, нам снова нужно авторизоваться на процессинге с помощью сервисной карты`,
-            targetSelector: '.insert-card-btn',
-            action: 'insertCard',
+            instruction: `После того, как банкомат вышел в режим обслуживания клиентов, нам снова нужно авторизоваться на процессинге. Для этого снова 5 раз нажмите на 
+            логотип OZON в левом верхнем углу.`,
+            targetSelector: '.otp-logo-wrapper',
+            action: 'logoClick',
             targetScreen: 'welcomeScreen'
         },
         {
             id: 33,
             instruction: `Снова набираем ПИН-код сервисной карты - 1478`,
-            targetSelector: '.pin-input',
-            action: 'enterPin',
-            targetScreen: 'pinScreen'
+            targetSelector: '.otp-input, .otp-submit-btn',
+            action: 'enterOTP',
+            targetScreen: 'inputOTPCodeScreen'
         },
         {
             id: 34,
