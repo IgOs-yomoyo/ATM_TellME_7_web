@@ -873,7 +873,7 @@ input:checked + .slider-vertical {
     position: absolute !important;
     bottom: 30px;
     right: 30px;
-    width: 250px;
+    width: 400px;
     height: 70px;
     font-size: 24px;
     background-color: #1976D2;

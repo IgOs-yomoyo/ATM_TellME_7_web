@@ -80,7 +80,7 @@ function initTrainingSteps() {
         },
         {
             id: 4,
-            instruction: 'Заберите чек',
+            instruction: 'Нажмите кнопку "Меню инкассации"',
             targetSelector: '[onclick="closeBalanceReceipt()"]',
             action: 'closeBalanceReceipt', 
             targetScreen: 'balanceReceiptScreen'
@@ -89,23 +89,23 @@ function initTrainingSteps() {
             id: 5,
             instruction: 'На экране "Меню инкассации" нажмите кнопку "Провести инкассацию".',
             targetSelector: '[onclick="performCollection()"]', 
-            action: 'showCollectionReceipt',
-            targetScreen: 'balanceReceiptScreen'
+            action: 'continueCollections',
+            targetScreen: 'mainScreen'
         }, 
-        {
-            id: 6,
-            instruction: 'Заберите чек', 
-            targetSelector: '[onclick="closeCollectionReceipt()"]',
-            action: 'closeCollectionReceipt', 
-            targetScreen: 'collectionReceiptScreen'
-        }, 
+        // {
+            // id: 6,
+            // instruction: 'Заберите чек', 
+            // targetSelector: '[onclick="closeCollectionReceipt()"]',
+            // action: 'closeCollectionReceipt', 
+            // targetScreen: 'collectionReceiptScreen'
+        // }, 
         {
             // id: 7, 
             // instruction: 'Заберите карту',
             // targetSelector: '[onclick="takeCard()"]',
             // action: 'takeTheCard',
             // targetScreen: 'takeCardScreen'
-            id: 7,
+            id: 6,
             instruction: `Нажмите кнопку ПРОДОЛЖИТЬ`,
             targetSelector: '.collection-continue-btn',
             action: 'continueCollections',

@@ -172,6 +172,7 @@ function showBalanceReceipt() {
     if (balanceScreen) balanceScreen.style.display = 'block';
 }
 
+// ===== Функция кнопки "МЕНЮ ИНКАССАЦИИ". Работает только с чеком "БАЛАНС"
 function closeBalanceReceipt() {
     //====== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ======
     if (isTrainingMode) {
@@ -191,27 +192,32 @@ function closeBalanceReceipt() {
     }
 }
 
+// ===== Эта функция не нужна в обновлённом меню инкассации банкоматов банка Озон
+// function showCollectionReceipt() {
+//     //====== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ======
+//     if (isTrainingMode) {
+//         completeTrainingStep('showCollectionReceipt');
+//     };
 
-function showCollectionReceipt() {
-    //====== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ======
-    if (isTrainingMode) {
-        completeTrainingStep('showCollectionReceipt');
-    };
+//     const mainScreen = document.getElementById('mainScreen');
+//     if (mainScreen) mainScreen.style.display = 'none';
+//     generateReceiptContentForScreen('collectionReceiptContent', true);
+//     const collectionScreen = document.getElementById('collectionReceiptScreen');
+//     if (collectionScreen) collectionScreen.style.display = 'block';
+// }
 
-    const mainScreen = document.getElementById('mainScreen');
-    if (mainScreen) mainScreen.style.display = 'none';
-    generateReceiptContentForScreen('collectionReceiptContent', true);
-    const collectionScreen = document.getElementById('collectionReceiptScreen');
-    if (collectionScreen) collectionScreen.style.display = 'block';
-}
 
+// ===== Убираем просмотр чека "ПРОВЕСТИ ИНКАССАЦИЮ" и кнопку "ЗАБРАТЬ ЧЕК". Функция должна сразу переводить нас на экран с кнопкой "ПРОДОЛЖИТЬ" на collectionCompleteScreen
 function closeCollectionReceipt() {
     //====== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ======
     if (isTrainingMode) {
         completeTrainingStep('closeCollectionReceipt');
     };
-    const collectionScreen = document.getElementById('collectionReceiptScreen');
-    if (collectionScreen) collectionScreen.style.display = 'none';
+
+    const mainScreen = document.getElementById('mainScreen');
+    if (mainScreen) mainScreen.style.display = 'none';
+    // const collectionScreen = document.getElementById('collectionReceiptScreen');
+    // if (collectionScreen) collectionScreen.style.display = 'none';
 
     const collectionCompleteScreen = document.getElementById('collectionCompleteScreen');
     if (collectionCompleteScreen) {
@@ -329,7 +335,8 @@ function performCollection() {
         collectBtn.classList.add('btn-disabled');
         collectBtn.disabled = true;
     }
-    showCollectionReceipt();
+    // showCollectionReceipt();
+    continueCollection();
 }
 
 //Функция демонстрации экрана "Заберите карту"
