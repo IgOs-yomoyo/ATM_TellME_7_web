@@ -233,7 +233,7 @@ function closeCollectionReceipt() {
 function continueCollection() {
     console.log('continueCollection вызвана');
 
-    //Скрываем экран
+    //Скрываем экран collectionCompleteScreen
     const collectionCompleteScreen = document.getElementById('collectionCompleteScreen');
     if (collectionCompleteScreen) {
         collectionCompleteScreen.style.display = 'none';
@@ -249,9 +249,9 @@ function continueCollection() {
         console.warn('outOfServiceScreen не найден');
     }
 
-    //Проверка для режима обучения
+    //Проверка для режима обучения. Завершаем шаг 6. 
     if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
-        completeTrainingStep('continueCollections');
+        completeTrainingStep('continueCollection');
     }
 
     isBalanceButtonUsed = false;
@@ -326,7 +326,10 @@ function getBalance() {
     showBalanceReceipt();
 }
 
+//Функция "Провести инкассацию"
 function performCollection() {
+    console.log('Функция performCollection вызвана');
+
     isCollectionMode = true; //Чек Инкассация, поэтому true
     isCollectionButtonUsed = true; // Кнопка нажата
 
@@ -336,7 +339,26 @@ function performCollection() {
         collectBtn.disabled = true;
     }
     // showCollectionReceipt();
-    continueCollection();
+    //continueCollection(); - если что, это вернуть, всё что дальше, убрать. 
+
+    //Скрываем меню инкассации
+    const mainScreen = document.getElementById('mainScreen');
+    if (mainScreen) {
+        mainScreen.style.display = 'none';
+    }
+
+    //Показываем экран collectionCompleteScreen
+    const collectionCompleteScreen = document.getElementById('collectionCompleteScreen');
+    if (collectionCompleteScreen) {
+        collectionCompleteScreen.style.display = 'block';
+        console.log('Показан экран "Можно проводить инкассацию"');
+    }
+
+    //Если режим обучения - завершаем шаг
+    if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
+        console.log('Режим обучения: завершаем шаг performCollection');
+        completeTrainingStep('performCollection');  //  continueCollection
+    }
 }
 
 //Функция демонстрации экрана "Заберите карту"

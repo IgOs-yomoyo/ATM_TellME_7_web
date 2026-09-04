@@ -674,6 +674,12 @@ input:checked + .slider-vertical {
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
+    /* Добавляем позиционирование */
+    position: absolute !important;
+    bottom: auto !important;
+    right: 100px !important;
+    top: 420px !important;
+    left: auto !important;
 }
 
 .otp-submit-btn:hover {

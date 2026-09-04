@@ -89,7 +89,7 @@ function initTrainingSteps() {
             id: 5,
             instruction: 'На экране "Меню инкассации" нажмите кнопку "Провести инкассацию".',
             targetSelector: '[onclick="performCollection()"]', 
-            action: 'continueCollections',
+            action: 'performCollection',
             targetScreen: 'mainScreen'
         }, 
         // {
@@ -108,11 +108,11 @@ function initTrainingSteps() {
             id: 6,
             instruction: `Нажмите кнопку ПРОДОЛЖИТЬ`,
             targetSelector: '.collection-continue-btn',
-            action: 'continueCollections',
+            action: 'continueCollection',
             targetScreen:'collectionCompleteScreen'
         },
         {
-            id: 8, 
+            id: 7, 
             instruction: `Далее нужно открыть верхний кабинет банкомата, проверить наличие задержанных карт клиентов, 
              перевести переключатель режимов работы банкомата normal/supervisor в положение supervisor, то есть, в режим оператора.`,
             targetSelector: '.mode-toggle-container', 
@@ -120,21 +120,21 @@ function initTrainingSteps() {
             targetScreen: 'outOfServiceScreen'
         },
         {
-            id: 9,
+            id: 8,
             instruction: 'Введите код пользователя 100 и нажмите кнопку "Ввод"',
             targetSelector: '#loginInput', //#authScreen .info-input
             action: 'loginInput', 
             targetScreen: 'authScreen'
         },
         {
-            id: 10,
+            id: 9,
             instruction: 'Введите пароль 111111 и нажмите кнопку "Ввод"',
             targetSelector: '#passwordInput',
             action: 'passwordInput',
             targetScreen: 'authScreen'
         },
         {
-            id: 11,
+            id: 10,
             instruction: 'На основном экране оператора нажмите "Открытие/закрытие операционного дня"',
             targetSelector: '.supervisor-openclose', //[onclick="openCloseDay()"]
             action: 'openCloseDay',
