@@ -221,8 +221,26 @@
         }
 
         // Показываем чек
-        showReceiptScreen(openingData);
+        // showReceiptScreen(openingData); - не показываем чек открытия опер дня. 
+        // Сначала показываем экран тестирования, затем переходим на recyclerday
+        // Тестирование BRM
+        showTestingScreen(8000, function() {
+            const recyclerday = document.getElementById('recyclerday');
+            if (recyclerday) {
+                recyclerday.style.display = 'block';
+                console.log('Опер день открыт, чек не показывается, сразу переходим на экран recyclerday');
+            }
+        });
+        // const recyclerday = document.getElementById('recyclerday');
+        // if (recyclerday) {
+        //     recyclerday.style.display = 'block';
+        //     console.log('Опер день открыт, чек не показывается, сразу переходим на экран recyclerday');
+        // }
 
+        //Завершаем шаг в режиме обучения
+        if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
+            completeTrainingStep('completeOpeningDay');
+        }
     }
 
     // При показе экрана кассеты - инициализируем поле ввода

@@ -135,13 +135,18 @@ function openrecyclerday() {
         alert('Операционный день открыт. Сначала закройте операционный день. Вызвано из recyclerdaymenu.js');
         return;
     }
-   replenishfirstcassette(); 
+
+    // Сначала запускаем тестирование модуля рециркуляции
+    showTestingScreen(8000, function() {
+        replenishfirstcassette();
+    })
+//    replenishfirstcassette(); 
 
    //Обновляем подсветку после показа экрана
    if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
     setTimeout(() => {
         showTrainingStep(currentStepIndex);
-    }, 100);
+    }, 8000); //Здесь изменил длительность демонстрации. Было 100. 
    }
 }
 

@@ -73,7 +73,8 @@ function initTrainingSteps() {
         }, 
         {
             id: 3,
-            instruction: 'На экране "Меню инкассации" нажмите кнопку "Полчить баланс".',
+            instruction: `На экране "Меню инкассации" нажмите кнопку "Полчить баланс". После этого, на экране, вы должны увидеть чек "Чек баланса" и кнопка "Получить баланс"
+            должна стать неактивной. Если этого не произошло - команда не выполнена! Нажмите кнопку ещё раз.`,
             targetSelector: '[onclick="getBalance()"]',
             action: 'showBalanceReceipt',
             targetScreen: 'mainScreen'
@@ -87,7 +88,7 @@ function initTrainingSteps() {
         },
         {
             id: 5,
-            instruction: 'На экране "Меню инкассации" нажмите кнопку "Провести инкассацию".',
+            instruction: `На экране "Меню инкассации" нажмите кнопку "Провести инкассацию". После этого на экране должна появиться кнопка ПРОДОЛЖИТЬ.`,
             targetSelector: '[onclick="performCollection()"]', 
             action: 'performCollection',
             targetScreen: 'mainScreen'
@@ -106,7 +107,8 @@ function initTrainingSteps() {
             // action: 'takeTheCard',
             // targetScreen: 'takeCardScreen'
             id: 6,
-            instruction: `Нажмите кнопку ПРОДОЛЖИТЬ`,
+            instruction: `Если вы видите экран "Можно проводить инкассацию", это означает, что операция "Провести инкассацию" выполнена успешно.
+             Нажмите кнопку ПРОДОЛЖИТЬ`,
             targetSelector: '.collection-continue-btn',
             action: 'continueCollection',
             targetScreen:'collectionCompleteScreen'
