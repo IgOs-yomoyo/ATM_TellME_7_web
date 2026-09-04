@@ -95,28 +95,27 @@ function backToWelcomeScreen() {
     if (recyclerday) recyclerday.style.display = 'none';
 
     if (isDayOpen) {
+        //Если день открыт - тестирование и welcomeScreen
         showTestingScreen(8000, function() {
             if (welcomeScreen) {
                 welcomeScreen.style.display = 'block';
                 console.log('welcomeScreen показан (день открыт)');
-            }else{
-                console.log('welcomeScreen не найден');
             }
             if (outOfServiceScreen) outOfServiceScreen.style.display = 'none';
-            // Запускаем карусель, если она есть
             if (typeof startCarousel === 'function') startCarousel();
         });
-    }else{
-        // День закрыт - показываем экран outofServece
-        if (outOfServiceScreen) {
-            outOfServiceScreen.style.display = 'block';
-            console.log('outofService показан, день закрыт');
-        }else{
-            console.log('outofService не найден');
+    } else {
+            //День закрыт - outOfService
+            if (outOfServiceScreen) {
+                outOfServiceScreen.style.display = 'block';
+                console.log('outOfServiceScreen показан, день закрыт');
+            }
+            if (welcomeScreen) {
+                 welcomeScreen.style.display = 'none';
+                // console.log('welcomeScreen не найден');
+            }
         }
-        if (welcomeScreen) welcomeScreen.style.display = 'none';
-    }
-    
+
     //Завершаем шаг в обучении
     if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
         completeTrainingStep('backToNormalMode');

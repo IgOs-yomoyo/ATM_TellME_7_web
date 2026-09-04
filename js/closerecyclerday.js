@@ -277,7 +277,7 @@ function confirmCloseReceipt() {
         closeReceiptScreen.style.display = 'none';
     }
     
-    //Сбрасываем статус операционного дня
+    // //Сбрасываем статус операционного дня. 
     if (typeof setDayOpened === 'function') {
         setDayOpened(false);
         console.log('Флаг сброшен');
