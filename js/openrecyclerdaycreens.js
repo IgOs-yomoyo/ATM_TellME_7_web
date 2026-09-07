@@ -181,8 +181,6 @@
 
     // Завершение открытия операционного дня. Функция completeOpeningDay. Она используется в функции Enter. 
     function completeOpeningDay() {
-        // Подсчёт итогов (можно убрать)
-        // let totalLoaded = 0; // Это лишняя переменная. Общее количество загруженных банкнот нам не нужно. 
         let totalAmount = 0;
         let dropped = {1: 0, 2: 0, 3: 0, 4: 0};
         let totalDroppedAmount = 0; //Не факт, что эта переменная нужна. Нужно посмотреть.
@@ -219,6 +217,12 @@
         if (typeof setOpeningDayData === 'function') {
             setOpeningDayData(openingData);
         }
+        
+        //Флаг открытия опер дня
+        if (typeof setDayOpened === 'function') {
+            setDayOpened(true);
+            console.log('Опер день открыт - флаг установлен в true');
+        }
 
         // Показываем чек
         // showReceiptScreen(openingData); - не показываем чек открытия опер дня. 
@@ -231,16 +235,14 @@
                 console.log('Опер день открыт, чек не показывается, сразу переходим на экран recyclerday');
             }
         });
-        // const recyclerday = document.getElementById('recyclerday');
-        // if (recyclerday) {
-        //     recyclerday.style.display = 'block';
-        //     console.log('Опер день открыт, чек не показывается, сразу переходим на экран recyclerday');
-        // }
 
         //Завершаем шаг в режиме обучения
         if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
             completeTrainingStep('completeOpeningDay');
         }
+
+        //Очищаем поля ввода после завершения 
+        resetAllInputFields();
     }
 
     // При показе экрана кассеты - инициализируем поле ввода
@@ -452,12 +454,6 @@
             if (recyclerday) recyclerday.style.display = 'block';
         });
 
-
-        function newFunction() {
-            if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
-                completeTrainingStep('confirmReceipt');
-            }
-        }
         // Показываем меню оператора (или главное меню) Временно закомментируем, ради теста экрана тестирования BRM
         // const recyclerday = document.getElementById('recyclerday');
         // if (recyclerday) recyclerday.style.display = 'block';

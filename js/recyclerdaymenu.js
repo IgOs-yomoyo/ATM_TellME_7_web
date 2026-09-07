@@ -98,12 +98,31 @@ function confirmCloseDay() {
     console.log('Подтверждение закрытия опер дня');
     
     const closeDayConfirmScreen = document.getElementById('closeDayConfirmScreen');
-    const closeReceiptScreen = document.getElementById('closeReceiptScreen');
+    // const closeReceiptScreen = document.getElementById('closeReceiptScreen');
+    const recyclerday = document.getElementById('recyclerday');
 
-    if (typeof showCloseDayScreen === 'function') {
-        showCloseDayScreen();
-    }else{
-        console.error('showCloseDayScreen не найдена');
+    // if (typeof showCloseDayScreen === 'function') {
+    //     showCloseDayScreen();
+    // }else{
+    //     console.error('showCloseDayScreen не найдена');
+    // }
+
+    if (closeDayConfirmScreen) {
+        closeDayConfirmScreen.style.display = 'none';
+        console.log('Экран подтверждения закрытия операционного дня закрыт');
+    }
+    //Сбрасываем статус опер дня
+    if (typeof setDayOpened === 'function') {
+        setDayOpened(false);
+        console.log('Флаг сброшен. Операционный день закрыт');
+    }
+
+    //Показываем экран recyclerday
+    if (recyclerday) {
+        recyclerday.style.display = 'block';
+        console.log('Показан экран recyclerday');
+    } else {
+        console.warn('recyclerday не найден');
     }
 
     //ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ
