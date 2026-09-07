@@ -1346,7 +1346,7 @@ input:checked + .slider-vertical {
     scale: 0.95 !important;
 }
 
-.additional-resetcardcount {
+.reset-select-btn {
     top: 680px;
     right: 5px;
     background-color: #1976D2;
@@ -1355,6 +1355,8 @@ input:checked + .slider-vertical {
     height: 130px;
     white-space: normal;
 }
+
+/* additional-resetcardcount */
 
 /* === ДЛЯ РЕЖИМА ОБУЧЕНИЯ === */
 .additional-resetcardcount.training-highlight {
@@ -1369,10 +1371,42 @@ input:checked + .slider-vertical {
     white-space: normal;
 }
 
+/* Контейнер для строк (слева сверху) */
+/* .reset-options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 100%;
+    max-width: 200px; */
+    /* margin-top: 30px;  ← ОТСТУП СВЕРХУ */
+/* } */
+
+/* Строки-опции */
+.reset-option {
+    width: 500px;
+    min-width: 50px;
+    padding: 6px 10px;
+    font-size: 24px;
+    font-weight: normal;
+    color: #000000;
+    /* background: #ffffff; */
+    border-radius: 4px;
+    text-align: left;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    margin-top: 200px;
+}
+
+/* Выделенная строка (негатив) */
+.reset-option.selected {
+    background: #000000;
+    color: #ffffff;
+    border-color: #1976D2;
+}
 
 
 /* Контейнер для чека */
-#additionalOperations .receipt-container {
+/* #additionalOperations .receipt-container {
     position: absolute;
     top: 50%;
     left: 30%;
@@ -1384,10 +1418,10 @@ input:checked + .slider-vertical {
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
+} */
 
 /* Кнопка "ЗАБРАТЬ ЧЕК" */
-#takeReceiptBtn {
+/* #takeReceiptBtn {
     position: absolute;
     bottom: 120px;
     right: 700px;
@@ -1401,7 +1435,8 @@ input:checked + .slider-vertical {
     cursor: pointer;
     font-weight: bold;
     z-index: 1000;
-}
+}  */
+
 
 
 /* ========== ПОЗИЦИОНИРОВАНИЕ ДЛЯ ЭКРАНА "ОПЕРАЦИОННЫЙ ДЕНЬ РЕСАЙКЛКЛЕРА" ========== */

@@ -247,16 +247,29 @@
         <!-- Экран Дополнительные операции -->
         <div id="additionalOperations" class="atm-screen" style="display: none;">
             <div class="screen-title">ДОПОЛНИТЕЛЬНЫЕ ОПЕРАЦИИ</div>
-            <button class="atm-button additional-resetcardcount" onclick="resetHeldCardCounter()">СБРОС СЧЁТЧИКА<br>ЗАДЕРЖАННЫХ КАРТ</button>
+
+            <div class="reset-option selected" id="resetIssuedOption">
+                Сброс счётчика задержанных карт
+            </div>
+            <div class="reset-option" id="resetHeldOption">
+                Сброс счётчика выданных карт
+            </div>
+            <!-- Кнопка ВЫБРАТЬ -->
+             <button class="atm-button reset-select-btn" onclick="confirmRecet()">
+                ВЫБРАТЬ
+             </button>
+
+            <!-- <button class="atm-button additional-resetcardcount" onclick="resetHeldCardCounter()">СБРОС СЧЁТЧИКА<br>ЗАДЕРЖАННЫХ КАРТ</button> -->
             <button class="atm-button additional-backtoopenclosedaymenu" onclick="backToOpenCloseDay()">ВОЗВРАТ</button>
+        </div>
         
             <!-- Контейнер для чека. По умолчанию скрыт -->
-            <div id="receiptContainer" class="receipt-container" style="display: none;">
+            <!-- <div id="receiptContainer" class="receipt-container" style="display: none;">
                 <div class="receipt-content" id="heldCardReceiptContent"></div>
             </div>
 
             <button id="takeReceiptBtn" class="atm-button" style="display: none;" onclick="takeHeldCardReceipt()">ЗАБРАТЬ ЧЕК</button>
-        </div>
+        </div> -->
         <!-- Экран "ОПЕРАЦИОННЫЙ ДЕНЬ РЕСАЙКЛЕРА" -->
          <div id="recyclerday" class="atm-screen" style="display: none;">
             <div class="screen-title">ОПЕРАЦИОННЫЙ ДЕНЬ РЕСАЙКЛЕРА</div>
