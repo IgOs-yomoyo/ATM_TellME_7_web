@@ -164,3 +164,15 @@ function backToOpenCloseDay() {
     
 }
 
+function selectBtn() {
+    //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
+    // if (isTrainingMode) {
+    //     completeTrainingStep('backToOpenCloseDayMenu'); }
+
+    const additionalOperations = document.getElementById('additionalOperations');
+    if (additionalOperations) additionalOperations.style.display = 'none';
+
+    const opencloseday = document.getElementById('opencloseday');
+    if (opencloseday) opencloseday.style.display = 'block';
+}
+
