@@ -42,3 +42,12 @@ function recyclerday() {
 }
 
 // Здесь нужно будет добавить функцию "Дополнительные операции"
+function additionalOperations() {
+    console.log('Вызвана функция additionalOperation');
+
+    const opencloseday = document.getElementById('opencloseday');
+    const additionalOperations = document.getElementById('additionalOperations');
+
+    if (opencloseday) opencloseday.style.display = 'none';
+    if (additionalOperations) additionalOperations.style.display = 'block';
+}

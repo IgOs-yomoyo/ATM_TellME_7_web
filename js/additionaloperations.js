@@ -3,6 +3,8 @@ let heldCardsCount = 0;
 //Проверка состояния счётчик - сбрасывался/не сбрасывался. 
 let isCounterReset = false; //Флаг, был ли уже сброс в текущем опер дне. 
 
+
+
 //<button id="takeReceiptBtn" class="atm-button" style="display: none;" onclick="takeHeldCardReceipt()">ЗАБРАТЬ ЧЕК</button>
 
 function additionalOperations() {
@@ -22,9 +24,9 @@ function additionalOperations() {
     if (additionalOperations) additionalOperations.style.display = 'block';
 
     //Прячем кнопку Забрать чек
-    const takeReceiptBtn = document.getElementById('takeReceiptBtn');
-    console.log('takeReceiptBtn найдена:', takeReceiptBtn);
-    if(takeReceiptBtn) takeReceiptBtn.style.display = 'none';
+    // const takeReceiptBtn = document.getElementById('takeReceiptBtn');
+    // console.log('takeReceiptBtn найдена:', takeReceiptBtn);
+    // if(takeReceiptBtn) takeReceiptBtn.style.display = 'none';
     
 }
 
@@ -164,6 +166,31 @@ function backToOpenCloseDay() {
     
 }
 
+//Текущий выбор строки (по умолчанию 'held')
+let selectedResetOption = 'held';
+
+//Функция выбора по клику
+function selectResetOption(option) {
+    const heldOption = document.getElementById('resetHeldOption');
+    const issuedOption = document.getElementById('resetIssuedOption');
+
+    //Убираем выделение обеих строк
+    heldOption.classList.remove('selected');
+    issuedOption.classList.remove('selected');
+
+    //Выделяем выбранную строку
+    if (option === 'held') {
+        heldOption.classList.add('selected');
+        selectedResetOption = 'held';
+        console.log('Выбран сброс счётчика задержанных карт');
+    }else{
+        issuedOption.classList.add('selected');
+        selectedResetOption = 'issued';
+        console.log('Выбран сброс счётчика выданных карт');
+    }
+}
+
+//Функция подтверждения выбора
 function selectBtn() {
     //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
     // if (isTrainingMode) {

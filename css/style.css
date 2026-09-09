@@ -1385,16 +1385,24 @@ input:checked + .slider-vertical {
     border: 2px solid transparent;
     /* margin-top: 200px; */
     /* margin-bottom: 10px; */
+    cursor: pointer;
+    user-select: none;
 }
 
+.reset-option:hover:not(.selected) {
+    background: rgba(0, 0, 0, 0.1);
+    border-color: #999999;
+} 
+
+
 #resetIssuedOption {
-    margin-top: 200px;
-    margin-bottom: 10px;
+    margin-top: 60px;
+    margin-bottom: 0px;
 }
 
 #resetHeldOption {
-    margin-top: 60px;
-    margin-bottom: 0px;
+    margin-top: 200px;
+    margin-bottom: 10px;
 }
 
 /* Выделенная строка (негатив) */
