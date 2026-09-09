@@ -167,7 +167,7 @@ function backToOpenCloseDay() {
 }
 
 //Текущий выбор строки (по умолчанию 'held')
-let selectedResetOption = 'held';
+let selectedResetOption = 'issued';
 
 //Функция выбора по клику
 function selectResetOption(option) {
@@ -188,18 +188,25 @@ function selectResetOption(option) {
         selectedResetOption = 'issued';
         console.log('Выбран сброс счётчика выданных карт');
     }
+
+    //=== Проверка в режиме обучения === 
+    if (isTrainingMode) {
+        completeTrainingStep('resetHeldOption');
+    }
 }
 
 //Функция подтверждения выбора
 function selectBtn() {
-    //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
-    // if (isTrainingMode) {
-    //     completeTrainingStep('backToOpenCloseDayMenu'); }
-
+    
     const additionalOperations = document.getElementById('additionalOperations');
     if (additionalOperations) additionalOperations.style.display = 'none';
 
     const opencloseday = document.getElementById('opencloseday');
     if (opencloseday) opencloseday.style.display = 'block';
+
+    //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
+    if (isTrainingMode) {
+        completeTrainingStep('backToOpenCloseDayMenu'); }
+
 }
 

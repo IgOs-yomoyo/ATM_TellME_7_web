@@ -73,15 +73,15 @@ function initTrainingSteps() {
         }, 
         {
             id: 3,
-            instruction: `На экране "Меню инкассации" нажмите кнопку "Полчить баланс". После этого, на экране, вы должны увидеть чек "Чек баланса" и кнопка "Получить баланс"
-            должна стать неактивной. Если этого не произошло - команда не выполнена! Нажмите кнопку ещё раз.`,
+            instruction: `На экране "Меню инкассации" нажмите кнопку "Полчить баланс". После этого, на экране, вы должны увидеть чек "Баланс банкомата", и кнопка "Получить баланс"
+            должна стать неактивной. Если этого не произошло - команда не выполнена! Нажмите кнопку "Получить баланс" ещё раз.`,
             targetSelector: '[onclick="getBalance()"]',
             action: 'showBalanceReceipt',
             targetScreen: 'mainScreen'
         },
         {
             id: 4,
-            instruction: 'Нажмите кнопку "Меню инкассации"',
+            instruction: 'Кнопка "Меню инкассации" вернёт вас в предыдущее меню.',
             targetSelector: '[onclick="closeBalanceReceipt()"]',
             action: 'closeBalanceReceipt', 
             targetScreen: 'balanceReceiptScreen'
@@ -131,7 +131,7 @@ function initTrainingSteps() {
         {
             id: 9,
             instruction: 'Введите пароль 111111 и нажмите кнопку "Ввод"',
-            targetSelector: '#passwordInput',
+            targetSelector: '#passwordInput, .enter-btn',
             action: 'passwordInput',
             targetScreen: 'authScreen'
         },
@@ -143,24 +143,24 @@ function initTrainingSteps() {
             targetScreen: 'supervisorScreen'
         },
         {
-            id: 12,
+            id: 11,
             instruction: 'В меню "Открытие/закрытие операционного дня" нужно выбрать кнопку "Дополнительные операции"',
             targetSelector: '[onclick="additionalOperations()"]', //[onclick="additionalOperations()"], .opencloseday-extraoperation'
             action: 'additionalOperations',
             targetScreen: 'opencloseday'
         },
         {
-            id: 13,
-            instruction: 'Нажмите кнопку "Сброс счётчика задержанных карт"',
-            targetSelector: '[onclick="resetHeldCardCounter()"]',
-            action: 'resetHeldCardCounter',
+            id: 12,
+            instruction: `В меню "Дополнительные операции" нужно выбрать опцию "Сброс счётчика задержанных карт".`,
+            targetSelector: '#resetHeldOption', 
+            action: 'resetHeldOption',
             targetScreen: 'additionalOperations'
         },
         {
-            id: 14,
-            instruction: 'Заберите чек',
-            targetSelector: '[onclick="takeHeldCardReceipt()"]',
-            action: 'takeHeldCardReceipt',
+            id: 13,
+            instruction: 'Нажмите кнопку "ВЫБРАТЬ", чтобы подтвердить выбор.',
+            targetSelector: '[onclick="selectBtn()"]', //[onclick="takeHeldCardReceipt()"] [onclick="selectBtn()"] #reset-select-btn
+            action: 'backToOpenCloseDayMenu',
             targetScreen: 'additionalOperations'
         },
         {

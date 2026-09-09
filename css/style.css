@@ -1356,6 +1356,19 @@ input:checked + .slider-vertical {
     white-space: normal;
 }
 
+/*  === ДЛЯ РЕЖИМА ОБУЧЕНИЯ === */
+.reset-select-btn.training-highlight {
+    top: 320px !important;
+    /* right: 0px !important; */
+    left: 750px !important;
+    background-color: #1976D2 !important;
+    width: 440px !important;
+    min-width: 380px !important;
+    height: 130px !important;
+    white-space: normal !important;
+    scale: 0.95 !important;
+}
+
 /* additional-resetcardcount */
 
 /* === ДЛЯ РЕЖИМА ОБУЧЕНИЯ === */
@@ -1403,6 +1416,20 @@ input:checked + .slider-vertical {
 #resetHeldOption {
     margin-top: 200px;
     margin-bottom: 10px;
+}
+
+/* Для режима обучения (held) */
+#resetHeldOption.training-highlight {
+    margin-top: 200px !important;
+    margin-bottom: 10px !important;
+    scale: 0.92 !important;
+}
+
+/* Для режима обучения (issued) */
+#resetIssuedOption.training-highlight {
+    margin-top: 60px !important;
+    margin-bottom: 0px !important;
+    scale: 0.92 !important;
 }
 
 /* Выделенная строка (негатив) */
