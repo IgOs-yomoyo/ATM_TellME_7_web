@@ -117,6 +117,18 @@ function confirmCloseDay() {
         console.log('Флаг сброшен. Операционный день закрыт');
     }
 
+    //Сбрасываем данные открытия дня
+    if (typeof setOpeningDayData === 'function') {
+        setOpeningDayData(null);
+        console.log ('openingDayData сброшен');
+    }
+
+    //Сбрасываем cassetteloads
+    if (typeof cassetteLoads !== 'undefined') {
+        cassetteLoads = { 1: null, 2: null, 3: null, 4: null };
+        console.log('cassetteLoads сброшены');
+    }
+
     //Показываем экран recyclerday
     if (recyclerday) {
         recyclerday.style.display = 'block';
