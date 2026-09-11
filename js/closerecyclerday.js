@@ -4,7 +4,7 @@ let openingDayData = null;
 
 
 function setOpeningDayData(data) {
-    console.log('setOpeningDayData вызвана', data);
+    console.log('setOpeningDayData вызвана, новые данные:', data);
     openingDayData = data;
 }
 

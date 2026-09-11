@@ -69,7 +69,7 @@ function generateReceiptContentForScreen(receiptContentId, isCollectionMode) {
     if (isCollectionMode) {
         receiptHtml += '<strong>ЧЕК ИНКАССАЦИИ</strong><br>';
     } else {
-        receiptHtml += '<strong>ЧЕК БАЛАНСА</strong><br>';
+        receiptHtml += '<strong>БАЛАНС БАНКОМАТА</strong><br>';
     }
     receiptHtml += `ВРЕМЯ ОТКРЫТИЯ: ${dayData.time} ${dayData.date}<br>`;
     receiptHtml += '--------------------------------<br>';

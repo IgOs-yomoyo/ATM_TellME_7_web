@@ -166,7 +166,7 @@
     }
 
     // Флаг, что день открыт
-    let isOperationalDayOpen = false;
+    let isOperationalDayOpen = true; // Было false, заменил на true, чтобы день по умолчанию был всегда открыт. 
 
     // Функция для проверки статуса опер дня
     function isDayOpened() {
@@ -206,6 +206,17 @@
     };
 
     console.log(`openingData:`, openingData);
+
+    //Перезаписываем глобальную переменную
+    if (typeof setOpeningDayData === 'function') {
+        setOpeningDayData(openingData);
+        console.log('openingDayData обновлён:', openingData);
+    }
+    
+    //Устанавливаем флаг, что день открыт
+    // if (typeof setDayOpened === 'function') {
+    //     setDayOpened(true);
+    // }
 
     console.log(`=== openingData ===`);
     console.log(`dropped:`, openingData.dropped);
@@ -473,3 +484,39 @@
                 }
             }
     }
+
+    //Функция автоматического заполнения данных о загрузке (день открыт по умолчанию)
+    function initDefaultDayData() {
+        console.log('Инициализация данных о загрузке по умолчанию');
+
+        //Заполняем кассеты, если они пустые
+        if (!cassetteLoads || Object.values(cassetteLoads).every(v => v === null)) {
+            cassetteLoads = {1: 100, 2: 100, 3: 100, 4: 100};
+        }
+         
+        //Создаём openingDayData, если её нет
+        if (!openingDayData && typeof setOpeningDayData === 'function') {
+            const totalAmount = 
+            cassetteLoads[1] * 100 +
+            cassetteLoads[2] * 500 +
+            cassetteLoads[3] * 1000 +
+            cassetteLoads[4] * 5000;
+
+            const openingData = {
+                date: new Date().toLocaleDateString('ru-RU'),
+                time: new Date().toLocaleTimeString('ru-RU'),
+                cassetteLoads: { ...cassetteLoads },
+                dropped: { 1: 0, 2: 0, 3: 0, 4: 0 },
+                totalAmount: totalAmount,
+                totalDroppedAmount: 0
+            };
+
+            setOpeningDayData(openingData);
+            console.log('openingDayData создан через setOpeningDayData:', openingData);
+        }
+    }
+
+    //Вызываем при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        initDefaultDayData();
+    });
