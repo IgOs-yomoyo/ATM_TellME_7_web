@@ -228,7 +228,7 @@ function closeCollectionReceipt() {
     }
 }
 
-//Функция завершения инкассации на процессинге. Посли демонстрации чека "Получить баланс" мы забираем чек и переходим на экран завершения инкассации с кнопкой "Продолжить". 
+ 
 //Эта функция для кнопки "Продолжить" - переходим с экрана collectionCompleteScreen на экран outOfService. 
 function continueCollection() {
     console.log('continueCollection вызвана');
@@ -276,8 +276,10 @@ function exitCollectionScreen(){
     const welcomeScreen = document.getElementById('welcomeScreen');
     const outOfServiceScreen = document.getElementById('outOfServiceScreen');
     const mainScreen = document.getElementById('mainScreen');
+    const balanceReceiptScreen = document.getElementById('balanceReceiptScreen');
 
     if (mainScreen) mainScreen.style.display = 'none';
+    if (balanceReceiptScreen) balanceReceiptScreen.style.display = 'none';
 
     // if (typeof backToWelcomeScreen === 'function') {
     //     backToWelcomeScreen();
