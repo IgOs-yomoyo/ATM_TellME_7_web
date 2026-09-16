@@ -101,12 +101,6 @@ function confirmCloseDay() {
     // const closeReceiptScreen = document.getElementById('closeReceiptScreen');
     const recyclerday = document.getElementById('recyclerday');
 
-    // if (typeof showCloseDayScreen === 'function') {
-    //     showCloseDayScreen();
-    // }else{
-    //     console.error('showCloseDayScreen не найдена');
-    // }
-
     if (closeDayConfirmScreen) {
         closeDayConfirmScreen.style.display = 'none';
         console.log('Экран подтверждения закрытия операционного дня закрыт');
@@ -121,6 +115,12 @@ function confirmCloseDay() {
     if (typeof setOpeningDayData === 'function') {
         setOpeningDayData(null);
         console.log ('openingDayData сброшен');
+    }
+   
+    //Сбрасываем транзакции текущего периода
+    if (typeof resetCurrentTransactionData === 'function') {
+        resetCurrentTransactionData();
+        console.log('Транзакции сброшены');
     }
 
     //Сбрасываем cassetteloads
