@@ -1,3 +1,6 @@
+    //Флаг - день открыт только что или банкомат работал. False - банкомат работал; True - день только что открыт после завершения. 
+    // let isFreshOpen = false;
+    
     // Массив для хранения загрузки кассет
     let cassetteLoads = {
         1: null,
@@ -206,6 +209,9 @@
     };
 
     console.log(`openingData:`, openingData);
+
+    isFreshOpen = true;
+    console.log ('Опер день только что открыт, isFrashOpen = true');
 
     //Перезаписываем глобальную переменную
     if (typeof setOpeningDayData === 'function') {

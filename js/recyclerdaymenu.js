@@ -129,6 +129,10 @@ function confirmCloseDay() {
         console.log('cassetteLoads сброшены');
     }
 
+    //Сбрасываем флаг - день только что открыт
+    isFreshOpen = false;
+    console.log('День закрыт, isFrashOpen = false');
+
     //Показываем экран recyclerday
     if (recyclerday) {
         recyclerday.style.display = 'block';

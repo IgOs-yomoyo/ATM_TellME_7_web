@@ -40,15 +40,64 @@ function generateReceiptContentForScreen(receiptContentId, isCollectionMode) {
     }
 
     //Используем единые данные о транзакциях текущего периода
+    // let transactions;
+    // if (typeof getCurrentTransactionData === 'function') {
+    //     transactions = getCurrentTransactionData();
+    // }
     let transactions;
-    if (typeof getCurrentTransactionData === 'function') {
-        transactions = getCurrentTransactionData();
+    if (isFreshOpen) {
+        //День только что открыт - нет транзакций
+        console.log('День только что открыт - транзакций нет');
+        
+        //Формируем cassettes из openingDayData
+        const cassettes = [
+            {number: 1000, nominal: 100, loaded: dayData.cassetteLoads[1] || 0, index: 1},
+            {number: 2000, nominal: 500, loaded: dayData.cassetteLoads[2] || 0, index: 2},
+            {number: 3000, nominal: 1000, loaded: dayData.cassetteLoads[3] || 0, index: 3},
+            {number: 4000, nominal: 5000, loaded: dayData.cassetteLoads[4] || 0, index: 4}
+        ];
+
+        transactions = {
+            cassettes: cassettes.map(c => ({
+                number: c.number,
+                nominal: c.nominal,
+                loadedCount: 0, 
+                issuedCount: 0,
+                droppedCount: dayData.dropped[c.index] || 0,
+                balanceCount: c.loaded - (dayData.dropped[c.index] || 0),
+                status: 0
+            })),
+            totalAccepted: 0,
+            totalIssued: 0, 
+            totalDropped: 0,
+            totalRetracted: 0,
+            depositAccepted: 0
+        };
+
+        //Сбрасываем флаг (показываем 0 транзакций только один раз)
+        isFreshOpen = false;
+        console.log('isFreshOpen = false');
+    } else {
+        //День работал - генерируем транзакции
+        console.log('Банкомат работал - генерируем транзакции');
+        transactions = getCurrentTransactionData(); //getCurrentDayData
+        if(!transactions) {
+            transactions = generateDayTransactions(dayData); //generateDayTransactions
+            if (typeof setCurrentTransactionData === 'function') {
+                setCurrentTransactionData(transactions);
+            }
+        }
     }
 
+    // ✅ ПРОВЕРКА: если cassettes нет — создаём пустой массив
+if (!transactions.cassettes) {
+    console.warn('⚠️ transactions.cassettes отсутствует, создаём пустой массив');
+    transactions.cassettes = [];
+}
 
-    if (!transactions) {
-        transactions = generateDayTransactions(dayData);
-    }
+    // if (!transactions) {
+    //     transactions = generateDayTransactions(dayData);
+    // }
 
     // // Генерируем транзакции (принято/выдано/сброшено) на основе загрузки
     // const transactions = generateDayTransactions(dayData);
