@@ -287,17 +287,6 @@ function confirmCloseReceipt() {
 
     resetCurrentTransactionData();
     
-    //Показываем экран Замена кассет
-    if (typeof showCassettesReplacmentScreen === 'function') {
-        console.log('Переход к замене кассет');
-        showCassettesReplacmentScreen();
-    }else{
-        console.error('showCassettesReplacementScreen не найдена!');
-        const recyclerday = document.getElementById('recyclerday');
-        if (recyclerday)  {
-            recyclerday.style.display = 'block';
-        }
-    }
 }
 
 // const recyclerday = document.getElementById('recyclerday');

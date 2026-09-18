@@ -411,19 +411,37 @@ function showTrainingStep(index) {
     }
     // Проверяем, что мы на нужном экране
     // Если в шаге указан целевой экран, показываем его
+    //Переписываем эту функцию, чтобы, если экран уже показан, то он не обновлялся. 
     if (step.targetScreen) {
-        console.log('Показываем экран:', step.targetScreen);
-        document.querySelectorAll('.atm-screen').forEach(screen => {
-            screen.style.display = 'none';
-        });
         const targetScreen = document.getElementById(step.targetScreen);
-        if (targetScreen) {
+        if (targetScreen && targetScreen.style.display !== 'block') {
+            console.log('Показываем экран:', step.targetScreen);
+            document.querySelectorAll('.atm-screen').forEach(screen => {
+                screen.style.display = 'none';
+            });
             targetScreen.style.display = 'block';
-            console.log('Показан экран, display:', targetScreen.style.display);
+            console.log('Показан экран:', targetScreen.style.display);
+        } else if(targetScreen) {
+            console.log('Экран уже показан, пропускаем переключение:', step.targetScreen);
         } else {
             console.warn('Нет targetScreen в шаге!');
         }
     }
+
+// Прошлая версия. Сохраняем на всякий....
+// if (step.targetScreen) {
+    //     console.log('Показываем экран:', step.targetScreen);
+    //     document.querySelectorAll('.atm-screen').forEach(screen => {
+    //         screen.style.display = 'none';
+    //     });
+    //     const targetScreen = document.getElementById(step.targetScreen);
+    //     if (targetScreen) {
+    //         targetScreen.style.display = 'block';
+    //         console.log('Показан экран, display:', targetScreen.style.display);
+    //     } else {
+    //         console.warn('Нет targetScreen в шаге!');
+    //     }
+    // }
 
     // Обновляем панель подсказок
     const tooltip = document.getElementById('trainingTooltip');

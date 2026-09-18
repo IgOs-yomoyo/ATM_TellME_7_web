@@ -1347,8 +1347,9 @@ input:checked + .slider-vertical {
 }
 
 .reset-select-btn {
+    position: absolute;
     top: 680px;
-    right: 5px;
+    left: 750px;
     background-color: #1976D2;
     width: 440px;
     min-width: 380px;
@@ -1358,9 +1359,10 @@ input:checked + .slider-vertical {
 
 /*  === ДЛЯ РЕЖИМА ОБУЧЕНИЯ === */
 .reset-select-btn.training-highlight {
-    top: 320px !important;
-    /* right: 0px !important; */
+    position: absolute !important;
+    top: 680px !important;
     left: 750px !important;
+    transform-origin: top left !important;
     background-color: #1976D2 !important;
     width: 440px !important;
     min-width: 380px !important;

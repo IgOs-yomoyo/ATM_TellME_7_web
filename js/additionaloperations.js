@@ -220,7 +220,7 @@ function selectBtn() {
     setTimeout(() => {
         message.remove();
         console.log('Сообщение "Операция выполнена" скрыто');
-    }, 3000);
+    }, 1000);
     
     // const additionalOperations = document.getElementById('additionalOperations');
     // if (additionalOperations) additionalOperations.style.display = 'none';
