@@ -25,27 +25,6 @@ function showCassettesReplacmentScreen() {
     }
 }
 
-//         const openBtn = document.querySelector('.openSafeDoor');
-//         const replaceBtn = document.querySelector('.replaceCassettes');
-//         const closeBtn = document.querySelector('.closeSafeDoor');
-
-//         if (openBtn) openBtn.style.display = 'block';
-//         if (replaceBtn) replaceBtn.style.display = 'none';
-//         if (closeBtn) closeBtn.style.display = 'none';
-
-//         console.log ('Кнопки: открыть - активна, заменить - не активна, закрыть - не активна');
-//     } else {
-//         console.error('Экран cassettesReplacmentScreen не найден!');
-//     }
-// }
-
-//         //Сбрасываем состояние кнопок
-//         resetSafeButtons();
-
-//     } else {
-//         console.error('Экран cassettesReplacmentScreen не найден');
-//     }
-// }
 
 console.log('cassettesreplacement.js загружен');
 
@@ -75,44 +54,6 @@ function resetSafeButtons() {
         console.log('Кнопка "ОТКРЫТЬ" активна');
     }
 }
-
-//     //Обновляем состояние в глобальной переменной
-//     if (window.safeState) {
-//         window.safeState.isOpen = false;
-//         window.safeState.areCassettesReplaced = false;
-//         window.safeState.isClosed = false;
-//         window.safeState.currentStep = 'open';
-//     }
-// }
-
-//Функция активации следующей кнопки
-// function activateNextButton(currentAction) {
-
-//     const openBtn = document.querySelector('.openSafeDoor');
-//     const replaceBtn = document.querySelector('.replaceCassettes');
-//     const closeBtn = document.querySelector('.closeSafeDoor');
-
-//     // //Деактивируем все
-//     [openBtn, replaceBtn, closeBtn].forEach(btn => {
-//         if (btn) {
-//             btn.classList.remove('active');
-//             btn.classList.add('inactive');
-//         }
-//     });
-
-//     //Активируем нужную
-//     if (currentAction === 'open' && replaceBtn) {
-//         if (replaceBtn) {
-//             replaceBtn.classList.remove('inactive');
-//             replaceBtn.classList.add('active');
-//             console.log('Кнопка "Заменить кассеты" активна');
-//         }
-//     }else if (currentAction === 'replace' &&  closeBtn) {
-//             closeBtn.classList.remove('inactive');
-//             closeBtn.classList.add('active');
-//             console.log('Кнопка "ЗАКРЫТЬ" активна');
-//         }
-// }
 
 //Функция открытия сейфа
 function openSafeDoor() {

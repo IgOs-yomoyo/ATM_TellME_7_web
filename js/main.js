@@ -48,23 +48,29 @@ function generateReceiptContentForScreen(receiptContentId, isCollectionMode) {
     if (isFreshOpen) {
         //День только что открыт - нет транзакций
         console.log('День только что открыт - транзакций нет');
+
+
+        //Проверяем, что dayData.cassetteLoads существует
+        const cassetteLoads = dayData.cassetteLoads || {1: 0, 2: 0, 3: 0, 4: 0};
+        const dropped = dayData.dropped || {1: 0, 2: 0, 3: 0, 4: 0}; 
         
         //Формируем cassettes из openingDayData
         const cassettes = [
-            {number: 1000, nominal: 100, loaded: dayData.cassetteLoads[1] || 0, index: 1},
-            {number: 2000, nominal: 500, loaded: dayData.cassetteLoads[2] || 0, index: 2},
-            {number: 3000, nominal: 1000, loaded: dayData.cassetteLoads[3] || 0, index: 3},
-            {number: 4000, nominal: 5000, loaded: dayData.cassetteLoads[4] || 0, index: 4}
+            {number: 1000, nominal: 100, loaded: cassetteLoads[1] || 0, index: 1},
+            {number: 2000, nominal: 500, loaded: cassetteLoads[2] || 0, index: 2},
+            {number: 3000, nominal: 1000, loaded: cassetteLoads[3] || 0, index: 3},
+            {number: 4000, nominal: 5000, loaded: cassetteLoads[4] || 0, index: 4}
         ];
 
         transactions = {
             cassettes: cassettes.map(c => ({
                 number: c.number,
                 nominal: c.nominal,
-                loadedCount: 0, 
+                loadedCount: c.loaded,
+                acceptedCount: 0, 
                 issuedCount: 0,
-                droppedCount: dayData.dropped[c.index] || 0,
-                balanceCount: c.loaded - (dayData.dropped[c.index] || 0),
+                droppedCount: dropped[c.index] || 0,
+                balanceCount: c.loaded - (dropped[c.index] || 0),
                 status: 0
             })),
             totalAccepted: 0,

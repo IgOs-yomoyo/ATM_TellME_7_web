@@ -141,6 +141,18 @@ function confirmCloseDay() {
         console.warn('recyclerday не найден');
     }
 
+    //Показываем экран showCassettesReplacementScreen()
+    if (typeof showCassettesReplacmentScreen === 'function') {
+        console.log('Переходим к замене кассет');
+        showCassettesReplacmentScreen();
+    }else{
+        console.error('showCassettesReplacementScreen не найдена!');
+        //Fallback - показываем recyclerday
+        if (recyclerday) {
+            recyclerday.style.display = 'block';
+        }
+    }
+
     //ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ
     if (isTrainingMode) {
             completeTrainingStep('confirmCloseDay');
