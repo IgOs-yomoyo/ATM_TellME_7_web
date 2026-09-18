@@ -161,9 +161,6 @@ function backToOpenCloseDay() {
 
     const opencloseday = document.getElementById('opencloseday');
     if (opencloseday) opencloseday.style.display = 'block';
-    
-    
-    
 }
 
 //Текущий выбор строки (по умолчанию 'held')
@@ -197,16 +194,45 @@ function selectResetOption(option) {
 
 //Функция подтверждения выбора
 function selectBtn() {
-    
-    const additionalOperations = document.getElementById('additionalOperations');
-    if (additionalOperations) additionalOperations.style.display = 'none';
+    console.log('selectBtn вызвана');
 
-    const opencloseday = document.getElementById('opencloseday');
-    if (opencloseday) opencloseday.style.display = 'block';
+    //Показываем сообщение на 3 секунды
+     const message = document.createElement('div');
+    message.className = 'operation-message';
+    message.textContent = 'Операция выполнена';
+    message.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 128, 0, 0.9);
+        color: white;
+        padding: 20px 40px;
+        border-radius: 12px;
+        font-size: 24px;
+        font-weight: bold;
+        z-index: 99999;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    `;
+    document.body.appendChild(message);
+
+    //Убираем сообщение через 3 секунды
+    setTimeout(() => {
+        message.remove();
+        console.log('Сообщение "Операция выполнена" скрыто');
+    }, 3000);
+    
+    // const additionalOperations = document.getElementById('additionalOperations');
+    // if (additionalOperations) additionalOperations.style.display = 'none';
+
+    // const opencloseday = document.getElementById('opencloseday');
+    // if (opencloseday) opencloseday.style.display = 'block';
 
     //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
-    if (isTrainingMode) {
-        completeTrainingStep('backToOpenCloseDayMenu'); }
-
+    // if (isTrainingMode) {
+    //     completeTrainingStep('backToOpenCloseDayMenu'); }
+    if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
+        completeTrainingStep('resetHeldCardCounter');
+    }
 }
 

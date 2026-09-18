@@ -160,7 +160,7 @@ function initTrainingSteps() {
             id: 13,
             instruction: 'Нажмите кнопку "ВЫБРАТЬ", чтобы подтвердить выбор.',
             targetSelector: '[onclick="selectBtn()"]', //[onclick="takeHeldCardReceipt()"] [onclick="selectBtn()"] #reset-select-btn
-            action: 'backToOpenCloseDayMenu',
+            action: 'resetHeldCardCounter', //backToOpenCloseDayMenu
             targetScreen: 'additionalOperations'
         },
         { 
