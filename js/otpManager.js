@@ -88,16 +88,23 @@ function handleLogoClick() {
 // Показ экрана ввода OTP
 function showOTPScreen() {
     console.log('🔐 Показ экрана ввода OTP');
+
+    if (otpTimer) {
+        clearInterval(otpTimer);
+        otpTimer = null;
+    }
     
     // Скрываем все экраны
     document.querySelectorAll('.atm-screen').forEach(screen => {
         screen.style.display = 'none';
     });
+    console.log('Все экраны скрыты');
     
     // Показываем экран OTP
     const otpScreen = document.getElementById('inputOTPCodeScreen');
     if (otpScreen) {
-        otpScreen.style.display = 'block';
+        otpScreen.style.display = 'flex';
+        console.log('OTP экран показан');
     }
     
     // Генерируем и показываем OTP код
