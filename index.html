@@ -2,8 +2,13 @@
 <html lang="ru">
 <head>
     <meta charset='UTF-8'>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="screen-orientation" content="landscape">
+    <meta name="x5-orientation" content="landscape">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>TellME7 ATM Simulator</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -594,5 +599,85 @@
     <script src="js/openrecyclerdaycreens.js"></script>
     <script src="js/cassettesreplacement.js"></script>
     <!-- <script src="js/closerecyclerday.js?v=2"></script> -->
+
+    <script>
+    // ===== МАСШТАБИРОВАНИЕ ВСЕГО КОНТЕЙНЕРА =====
+    function scaleContainer() {
+        const container = document.querySelector('.atm-container');
+        if (!container) return;
+
+        // Исходные размеры контейнера (из CSS)
+        const containerWidth = 1200;
+        const containerHeight = 800;
+
+        // ✅ Используем visualViewport (учитывает панели браузера)
+        const vv = window.visualViewport;
+        const windowWidth = vv ? vv.width : window.innerWidth;
+        const windowHeight = vv ? vv.height : window.innerHeight;
+
+        // Размеры окна
+        // const windowWidth = window.innerWidth;
+        // const windowHeight = window.innerHeight;
+
+        // Вычисляем масштаб с отступами
+        const paddingX = 20;
+        const paddingY = 20;
+        const maxWidth = windowWidth - paddingX * 2;
+        const maxHeight = windowHeight - paddingY * 2;
+
+        const scaleX = maxWidth / containerWidth;
+        const scaleY = maxHeight / containerHeight;
+        let scale = Math.min(scaleX, scaleY, 1); // не больше 1
+        // Минимальный масштаб (чтобы не было слишком мелко)
+        scale = Math.max(scale, 0.3);
+
+        //Добавляем запас 5%, чтобы не было скролла. Посмотрим, как будет работать. 
+        scale = scale * 0.95;
+
+        // ✅ Сбрасываем все inline-стили
+        container.style.cssText = `
+            width: ${containerWidth}px;
+            height: ${containerHeight}px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            // transform: translate(-50%, -50%) scale(${scale});
+            transform-origin: center center;
+            background: #2c3e50;
+            border-radius: 20px;
+            overflow: hidden;
+        `;
+
+
+        // // // Применяем масштаб
+        // container.style.transform = `scale(${scale})`;
+        // container.style.transformOrigin = 'top left'; /* center center */
+
+        // // // Центрируем контейнер
+        // container.style.position = 'absolute';
+        // container.style.top = '50%';
+        // container.style.left = '50%';
+        // container.style.marginLeft = `-${containerWidth / 2}px`;
+        // container.style.marginTop = `-${containerHeight / 2}px`;
+
+        console.log(`📐 Масштаб: ${scale.toFixed(2)}`);
+    }
+
+    // Запускаем при загрузке
+    window.addEventListener('load', scaleContainer);
+
+    // Запускаем при изменении размера окна
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(scaleContainer, 100);
+    });
+    // Пытаемся заблокировать ориентацию (работает только в полноэкранном режиме)
+    if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.lock('landscape').catch(err => {
+            console.log('Не удалось заблокировать ориентацию:', err);
+        });
+    }
+</script>
 </body>
 </html>

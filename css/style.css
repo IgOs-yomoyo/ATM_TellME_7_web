@@ -6,26 +6,40 @@
 }
 
 /* Стиль для всей страницы */
-body {
-    font-family: 'Arial', sans-serif;
+/* body { */
+    /* position: relative; Добавил для адаптации */
+    /* font-family: 'Arial', sans-serif;
     background: #1a1a2e;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
+} */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    /* overflow: hidden;   */
+    background: #1a1a2e;
 }
 
 /* Контейнер банкомата */
 .atm-container {
-    position: relative;
-    width: 90vw;
-    height: 85vh;
+    position: absolute;
+    /* position: relative; пока закомментировал, поменял на absolute */
+    /* width: 90vw; */
+    /* height: 85vh; */
+    width: 1200px;
+    height: 800px;
     max-width: 1200px;
     background: #2c3e50;
     border-radius: 20px;
     overflow: visible !important;
     margin: 0 auto;
+    transform-origin: center center;
 }
 
 /* Экран банкомата */
@@ -2005,4 +2019,28 @@ input:checked + .slider-vertical {
     transform: scale(1.02);
 }
 
-
+/* Если телефон в портретной ориентации — показываем подсказку */
+@media screen and (orientation: portrait) {
+    body::before {
+        content: '📱 Поверните телефон горизонтально для работы с тренажёром';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #1a1a2e;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        z-index: 99999;
+        text-align: center;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    
+    .atm-container {
+        display: none !important;
+    }
+}
