@@ -2026,6 +2026,47 @@ input:checked + .slider-vertical {
     transform: scale(1.02);
 }
 
+@media screen and (max-width: 1024px) {
+    /* Кнопка "В главное меню" на мобильном */
+    .training-main-menu-btn,
+    /* [onclick*="backToATMService"], */
+    [onclick*="toAppMainMenu"] {
+        font-size: 12px !important;
+        padding: 6px 12px !important;
+        min-width: 80px !important;
+        height: 32px !important;
+        width: auto !important;
+        max-width: 140px !important;
+        position: fixed !important;
+        bottom: 8px !important;
+        left: 8px !important;
+        top: auto !important;
+        right: auto !important;
+        z-index: 9999 !important;
+        border-radius: 6px !important;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    /* Скрываем только панель с текстом */
+    #trainingTooltip {
+        display: none !important;
+    }
+    
+    /* Подсветка кнопок остаётся */
+    .training-highlight {
+        box-shadow: 0 0 0 4px #ff9800, 0 0 15px rgba(255, 152, 0, 0.6) !important;
+        border: 3px solid #FFD700 !important;
+    }
+    
+    /* Номера шагов остаются */
+    .step-number {
+        width: 24px !important;
+        height: 24px !important;
+        font-size: 12px !important;
+    }
+}
+
 /* Если телефон в портретной ориентации — показываем подсказку */
 @media screen and (orientation: portrait) {
     body::before {

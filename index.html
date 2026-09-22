@@ -124,11 +124,12 @@
                 </div>
                 <!-- ПОЛЕ ВВОДА -->
                 <div class="otp-input-container">
-                    <input type="password"
+                    <input type="text"
                         id="otpInput"
                         class="otp-input"
                         maxlength="6"
                         inputmode="numeric"
+                        pattern="[0-9]*"
                         autocomplete="off"
                         placeholder="- - - - - -">
                 </div>
@@ -159,11 +160,11 @@
                 <div class="load-cassette-container">
                     <div class="info-row">
                         <div class="info-label">КОД ПОЛЬЗОВАТЕЛЯ</div>
-                        <input type="text" id="loginInput" class="info-input" autocomplete="off">  <!-- placeholder="Код пользователя" -->
+                        <input type="text" id="loginInput" class="info-input" inputmode="numeric" pattern="[0-9]*" autocomplete="off">  <!-- placeholder="Код пользователя" -->
                     </div>
                     <div class="info-row">
                         <div class="info-label">ПАРОЛЬ</div>
-                        <input type="password" id="passwordInput" class="info-input"> <!-- placeholder="Пароль" -->
+                        <input type="password" id="passwordInput" class="info-input" inputmode="numeric" pattern="[0-9]*" autocomplete="off"> <!-- placeholder="Пароль" -->
                     </div>
                 </div>
             </div>    
@@ -639,7 +640,7 @@
         const scaleY = maxHeight / containerHeight;
         let scale = Math.min(scaleX, scaleY, 1); // не больше 1
         // Минимальный масштаб (чтобы не было слишком мелко)
-        scale = Math.max(scale, 0.25);
+        scale = Math.max(scale, 0.2);
 
         //Добавляем запас 5%, чтобы не было скролла. Посмотрим, как будет работать. 
         scale = scale * 0.95;
@@ -655,6 +656,12 @@
 
     // Запускаем при загрузке
     window.addEventListener('load', scaleContainer);
+
+    //Следим за изменениями visualViewport (для клавиатуры)
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', scaleContainer);
+        window.visualViewport.addEventListener('scroll', scaleContainer);
+    }
 
     // Запускаем при изменении размера окна
     let resizeTimer;
