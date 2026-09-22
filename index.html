@@ -646,8 +646,9 @@
 
         
         //Только transform
-        container.style.transform = `translate(-50%, -50%) scale(${scale})`;
-        container.style.transformOrigin = 'center center';
+        // container.style.transform = `translate(-50%, -50%) scale(${scale})`;
+        // container.style.transformOrigin = 'center center';
+        container.style.setProperty('--scale', scale);
 
         console.log(`📐 Масштаб: ${scale.toFixed(2)} | Окно: ${windowWidth}*${windowHeight}`);
     }
