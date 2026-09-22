@@ -615,11 +615,21 @@
         const windowWidth = vv ? vv.width : window.innerWidth;
         const windowHeight = vv ? vv.height : window.innerHeight;
 
+        //Проверяем размеры экрана устройства - мобильный или нет
+        const isMobile = windowWidth <= 1024;
+
         // Размеры окна
         // const windowWidth = window.innerWidth;
         // const windowHeight = window.innerHeight;
 
-        // Вычисляем масштаб с отступами
+        if (!isMobile) {
+            //Десктоп - сбрасываем стили
+            container.style.cssText = '';
+            console.log('Десктоп - масштабирование отключено');
+            return;
+        }
+
+        // Если мобильный телефон - масштабируем
         const paddingX = 20;
         const paddingY = 20;
         const maxWidth = windowWidth - paddingX * 2;
@@ -629,38 +639,17 @@
         const scaleY = maxHeight / containerHeight;
         let scale = Math.min(scaleX, scaleY, 1); // не больше 1
         // Минимальный масштаб (чтобы не было слишком мелко)
-        scale = Math.max(scale, 0.3);
+        scale = Math.max(scale, 0.25);
 
         //Добавляем запас 5%, чтобы не было скролла. Посмотрим, как будет работать. 
         scale = scale * 0.95;
 
-        // ✅ Сбрасываем все inline-стили
-        container.style.cssText = `
-            width: ${containerWidth}px;
-            height: ${containerHeight}px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            // transform: translate(-50%, -50%) scale(${scale});
-            transform-origin: center center;
-            background: #2c3e50;
-            border-radius: 20px;
-            overflow: hidden;
-        `;
+        
+        //Только transform
+        container.style.transform = `translate(-50%, -50%) scale(${scale})`;
+        container.style.transformOrigin = 'center center';
 
-
-        // // // Применяем масштаб
-        // container.style.transform = `scale(${scale})`;
-        // container.style.transformOrigin = 'top left'; /* center center */
-
-        // // // Центрируем контейнер
-        // container.style.position = 'absolute';
-        // container.style.top = '50%';
-        // container.style.left = '50%';
-        // container.style.marginLeft = `-${containerWidth / 2}px`;
-        // container.style.marginTop = `-${containerHeight / 2}px`;
-
-        console.log(`📐 Масштаб: ${scale.toFixed(2)}`);
+        console.log(`📐 Масштаб: ${scale.toFixed(2)} | Окно: ${windowWidth}*${windowHeight}`);
     }
 
     // Запускаем при загрузке
