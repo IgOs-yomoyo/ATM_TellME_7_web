@@ -2067,6 +2067,24 @@ input:checked + .slider-vertical {
     }
 }
 
+@media screen and (max-width: 1024px) {
+    /* Крупный код OTP */
+    .otp-code-display {
+        display: block !important;
+        margin-top: 230px !important;
+        margin-bottom: 10px !important;
+        /* font-size: 16px !important; */
+        padding: 10px 15px !important;
+    }
+    
+    .otp-code-display #otpCodeValue {
+        font-size: 64px !important;   /* 👈 БЫЛО 32px */
+        letter-spacing: 10px !important;
+        padding: 8px 20px !important;
+        font-weight: bold !important;
+    }
+}
+
 /* Если телефон в портретной ориентации — показываем подсказку */
 @media screen and (orientation: portrait) {
     body::before {
@@ -2090,5 +2108,173 @@ input:checked + .slider-vertical {
     
     .atm-container {
         display: none !important;
+    }
+}
+
+/* ===== ВИРТУАЛЬНАЯ КЛАВИАТУРА ===== */
+.virtual-keypad {
+    display: none;   /* 👈 показываем только на мобильном */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    max-width: 320px;
+    margin: 20px auto;
+    padding: 0 10px;
+}
+
+.virtual-keypad button {
+    padding: 15px 10px;
+    font-size: 24px;
+    font-weight: bold;
+    background: #1976D2;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+    min-height: 55px;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.virtual-keypad button:active {
+    background: #1565C0;
+    transform: scale(0.95);
+}
+
+/* Показываем клавиатуру ТОЛЬКО на мобильном */
+@media screen and (max-width: 1024px) {
+    .virtual-keypad {
+        display: grid !important;
+        grid-template-columns: repeat(3, 80px) !important;
+        gap: 10px;
+        /* max-width: 800px; */
+        margin: 160px auto 20px auto !important;
+        padding: 0 10px;
+        transform: translateX(-430px);
+        justify-content: start !important;
+    }
+
+    .virtual-keypad button {
+        width: 70px !important;      /* 👈 ШИРИНА КНОПКИ */
+        height: 70px !important;     /* 👈 ВЫСОТА КНОПКИ */
+        font-size: 28px !important;   /* 👈 РАЗМЕР ШРИФТА */
+        padding: 0 !important;
+        border-radius: 12px !important;
+        font-weight: bold !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    /* Скрываем системную клавиатуру */
+    .otp-input {
+        pointer-events: none !important;
+        caret-color: transparent !important;
+        font-size: 32px !important;
+    }
+}
+
+/* ===== ЭКРАН OTP ===== */
+#inputOTPCodeScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100%;
+    padding: 20px;
+    gap: 15px;
+}
+
+/* Код OTP */
+.otp-code-display {
+    display: block;
+    margin: 0;
+    padding: 10px 20px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    text-align: center;
+    order: 1;
+}
+
+.otp-code-display #otpCodeValue {
+    font-size: 42px;
+    letter-spacing: 8px;
+    font-weight: bold;
+    color: #000;
+}
+
+/* Поле ввода */
+.otp-input-container {
+    order: 2;
+    width: 100%;
+    max-width: 300px;
+}
+
+.otp-input {
+    width: 100%;
+    font-size: 28px;
+    text-align: center;
+    padding: 12px;
+    border: 2px solid #1976D2;
+    border-radius: 10px;
+}
+
+/* Клавиатура */
+.virtual-keypad {
+    order: 3;
+    display: none;
+}
+
+/* Кнопка ВВОД */
+.otp-submit-btn {
+    order: 4;
+    position: static !important;
+    width: 200px;
+    height: 50px;
+    margin: 0;
+    background: #1976D2;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ===== МОБИЛЬНАЯ ВЕРСИЯ ===== */
+@media screen and (max-width: 1024px) {
+    #inputOTPCodeScreen {
+        padding: 10px;
+        gap: 10px;
+    }
+    
+    .otp-code-display {
+        margin: 0 !important;
+    }
+    
+    .otp-code-display #otpCodeValue {
+        font-size: 48px !important;
+        letter-spacing: 10px !important;
+    }
+    
+    .virtual-keypad {
+        display: grid !important;
+        grid-template-columns: repeat(3, 70px) !important;
+        gap: 8px;
+        margin: 0 !important;
+        padding: 0;
+        transform: none !important;
+        justify-content: center !important;
+    }
+    
+    .virtual-keypad button {
+        width: 70px !important;
+        height: 70px !important;
+        font-size: 28px !important;
+        border-radius: 10px !important;
+    }
+    
+    .otp-submit-btn {
+        display: none !important;  /* 👈 скрываем на мобильном, есть ✓ на клавиатуре */
     }
 }

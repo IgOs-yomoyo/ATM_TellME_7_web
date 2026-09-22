@@ -114,11 +114,26 @@ function showOTPScreen() {
         codeDisplay.textContent = otpCode;
     }
     
-    //Очищаем поле ввода
+    //Очищаем поле ввода и настраиваем под устройство
     const input = document.getElementById('otpInput');
     if (input) {
         input.value = '';
-        input.focus();
+
+        const isMobile = window.innerWidth <= 1024;
+
+        if(isMobile) {
+            //Виртуальная клавиатура на мобильном
+            input.readOnly = true;
+            input.setAttribute('inputmode', 'none');
+            console.log('Мобильный режим: системная клавиатура отключена');
+        } else {
+            //На десктопе обычная клавиатура
+            input.readOnly = false;
+            input.removeAttribute('inputmode');
+            input.focus();
+            console.log('Десктоп: фокус на поле ввода');
+        }
+        // input.focus();
     }
 
     // Запускаем таймер
@@ -230,4 +245,29 @@ function showMainScreen() {
             console.log('Функция initMainMenu вызвана');
         }
     }
+}
+
+// === Виртуальная клавиатура === 
+
+function vkbInput(digit) {
+    const input = document.getElementById('otpInput');
+    if (!input) return;
+
+    if (input.value.length < 6) {
+        input.value += digit;
+        console.log('Введено:', input.value);
+    }
+}
+
+function vkbClear() {
+    const input = document.getElementById('otpInput');
+    if (!input) return;
+
+    input.value = input.value.slice(0, -1);
+    console.log('Удалено, осталось:', input.value);
+}
+
+function vkbSubmit() {
+    console.log('Подтверждение ввода OTP');
+    submitOTP();
 }

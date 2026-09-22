@@ -133,6 +133,21 @@
                         autocomplete="off"
                         placeholder="- - - - - -">
                 </div>
+                <!-- Виртуальная клавиатура -->
+                 <div class="virtual-keypad" id="otpKeypad">
+                    <button type="button" onclick="vkbInput('1')">1</button>
+                    <button type="button" onclick="vkbInput('2')">2</button>
+                    <button type="button" onclick="vkbInput('3')">3</button>
+                    <button type="button" onclick="vkbInput('4')">4</button>
+                    <button type="button" onclick="vkbInput('5')">5</button>
+                    <button type="button" onclick="vkbInput('6')">6</button>
+                    <button type="button" onclick="vkbInput('7')">7</button>
+                    <button type="button" onclick="vkbInput('8')">8</button>
+                    <button type="button" onclick="vkbInput('9')">9</button>
+                    <button type="button" onclick="vkbClear()">⌫</button>
+                    <button type="button" onclick="vkbInput('0')">0</button>
+                    <button type="button" onclick="vkbSubmit()">✓</button>
+                </div>
                 <!-- КНОПКА ВВОД -->
                 <button class="atm-button otp-submit-btn" onclick="submitOTP()">
                     ВВОД
