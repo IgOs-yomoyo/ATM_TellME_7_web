@@ -2113,7 +2113,7 @@ input:checked + .slider-vertical {
     }
 }
 
-/* ===== ВИРТУАЛЬНАЯ КЛАВИАТУРА ===== */
+/* ===== ГЛОБАЛЬНАЯ ВИРТУАЛЬНАЯ КЛАВИАТУРА ===== */
 .virtual-keypad {
     display: none;   /* 👈 показываем только на мобильном */
     grid-template-columns: repeat(3, 1fr);
