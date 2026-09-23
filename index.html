@@ -4,7 +4,7 @@
     <meta charset='UTF-8'>
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
     <meta name="screen-orientation" content="landscape">
     <meta name="x5-orientation" content="landscape">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -622,6 +622,12 @@
         const container = document.querySelector('.atm-container');
         if (!container) return;
 
+        //Если пользователь зумит - не трогаем контейнер
+        if (typeof isUserZooming !== 'undefined' && isUserZooming) {
+            console.log('Пользователь зумит - scaleContainer пропущена');
+            return;
+        }
+
         // Исходные размеры контейнера (из CSS)
         const containerWidth = 1200;
         const containerHeight = 800;
@@ -640,7 +646,11 @@
 
         if (!isMobile) {
             //Десктоп - сбрасываем стили
-            container.style.cssText = '';
+            // container.style.cssText = '';
+            // console.log('Десктоп - масштабирование отключено');
+            // return;
+            container.style.transform = '';
+            container.style.transformOrigin = '';
             console.log('Десктоп - масштабирование отключено');
             return;
         }
@@ -662,9 +672,9 @@
 
         
         //Только transform
-        // container.style.transform = `translate(-50%, -50%) scale(${scale})`;
-        // container.style.transformOrigin = 'center center';
-        container.style.setProperty('--scale', scale);
+        container.style.transform = `translate(-50%, -50%) scale(${scale})`;
+        container.style.transformOrigin = 'center center';
+        // container.style.setProperty('--scale', scale);
 
         console.log(`📐 Масштаб: ${scale.toFixed(2)} | Окно: ${windowWidth}*${windowHeight}`);
     }
