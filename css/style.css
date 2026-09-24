@@ -2114,16 +2114,25 @@ input:checked + .slider-vertical {
 }
 
 /* ===== ГЛОБАЛЬНАЯ ВИРТУАЛЬНАЯ КЛАВИАТУРА ===== */
-.virtual-keypad {
+.virtual-keypad-global {
     display: none;   /* 👈 показываем только на мобильном */
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 999999;
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
-    max-width: 320px;
-    margin: 20px auto;
+    background: rgba(0, 0, 0, 0.85);
+    /* max-width: 320px;
+    margin: 20px auto; */
+    border-radius: 12px;
     padding: 0 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
-.virtual-keypad button {
+.virtual-keypad-global button {
+    width: 60px;
+    height: 60px;
     padding: 15px 10px;
     font-size: 24px;
     font-weight: bold;
@@ -2138,22 +2147,22 @@ input:checked + .slider-vertical {
     -webkit-tap-highlight-color: transparent;
 }
 
-.virtual-keypad button:active {
+.virtual-keypad-global button:active {
     background: #1565C0;
     transform: scale(0.95);
 }
 
 /* Показываем клавиатуру ТОЛЬКО на мобильном */
 @media screen and (max-width: 1024px) {
-    .virtual-keypad {
+    .virtual-keypad-global {
         display: grid !important;
-        grid-template-columns: repeat(3, 80px) !important;
-        gap: 10px;
+        /* grid-template-columns: repeat(3, 80px) !important;
+        gap: 10px; */
         /* max-width: 800px; */
-        margin: 160px auto 20px auto !important;
+        /* margin: 160px auto 20px auto !important;
         padding: 0 10px;
         transform: translateX(-430px);
-        justify-content: start !important;
+        justify-content: start !important; */
     }
 
     .virtual-keypad button {
@@ -2278,5 +2287,15 @@ input:checked + .slider-vertical {
     
     .otp-submit-btn {
         display: none !important;  /* 👈 скрываем на мобильном, есть ✓ на клавиатуре */
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    /* Отключаем системную клавиатуру у всех полей */
+    .info-input,
+    .otp-input,
+    .pin-input {
+        pointer-events: none !important;
+        caret-color: transparent !important;
     }
 }

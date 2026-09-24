@@ -228,6 +228,115 @@ function replenishfirstcassette() {
     if (replenishcassette_1) replenishcassette_1.style.display = 'block';
 }
 
+// === Отслеживание PINCH-ZOOM ===
+let userZoomScale = 1;
+let isUserZooming = false;
+
+if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', () => {
+        const newScale = window.visualViewport.scale;
+
+        if (newScale !== userZoomScale) {
+            userZoomScale = newScale;
+            console.log('Масштаб пользователя:', userZoomScale);
+        } else {
+            isUserZooming = false;
+            console.log('Пользователь вернул масштаб 1');
+
+            if (typeof scaleContainer === 'function') {
+                scaleContainer();
+            }
+        }
+    });
+}
+
+// === ГЛОБАЛЬНАЯ ВИРТУАЛЬНАЯ КЛАВИАТУРА === 
+//Определяем, в какое поле вводить цифры
+function getActiveInput() {
+    //1.экран ввода OTP
+    const otpScreen = document.getElementById('inputOTPCodeScreen');
+    if (otpScreen && otpScreen.style.display === 'flex') {
+        return document.getElementById('otpInput');
+    } 
+    //2. Экран авторизации (100/111111)
+    const authScreen = document.getElementById('authScreen');
+    if (authScreen && authScreen.style.display === 'block') {
+        //Если фокус на поле, вводим пароль
+        if (document.activeElement && document.activeElement.id === 'passwordInput') {
+            return document.getElementById('passwordInput');
+            }
+            //Иначе - логин
+            return document.getElementById('loginInput');
+        }
+        //3.Экран загрузки кассет
+        for (let i = 1; i <= 4; i++) {
+            const cassetteScreen = document.getElementById(`replenishcassette_${i}`);
+            if (cassetteScreen && cassetteScreen.style.display === 'block') {
+                return document.getElementById(`LoadInput_${i}`);
+            }
+    }
+
+    //4.По умолчанию - активный элемент
+    return document.activeElement;
+}   
+
+// Обработчик нажатий на кнопки клавиатуры
+function globalVkbInput(digit) {
+    const input = getActiveInput();
+    if (!input) return;
+    
+    const maxLength = input.maxLength > 0 ? input.maxLength : 6;
+    
+    if (input.value.length < maxLength) {
+        input.value += digit;
+    }
+}
+
+// Удаление последней цифры
+function globalVkbClear() {
+    const input = getActiveInput();
+    if (!input) return;
+
+    input.value = input.value.slice(0, -1);
+    console.log(`Удалено из ${input.id}: ${input.value}`);
+}
+
+// Подтверждение ввода
+function globalVkbSubmit() {
+    const input = getActiveInput();
+    if (!input) return;
+
+    console.log(`Подтверждение ввода: ${input.id} = ${input.value}`);
+
+    // В зависимости от поля - вызываем новую функцию
+    if (input.id === 'otpInput') {
+        submitOTP();
+    } else if (input.id === 'loginInput') {
+        // Переходим к паролю
+        const passwordInput = document.getElementById('passwordInput');
+        if (passwordInput) {
+            passwordInput.focus();
+            console.log('Фокус на поле ввода пароля');
+        }
+    } else if (input.id === 'passwordInput') {
+        // Отправляем авторизацию
+        submitAuth();
+    } else if (input.id.startsWith('LoadInput_')) {
+        const cassetteNumber = parseInt(input.id.replace('LoadInput_', ''));
+        Enter(cassetteNumber);
+    }
+}
+
+// ===== ОТСЛЕЖИВАНИЕ ФОКУСА НА ПОЛЯХ =====
+// Чтобы знать, куда вводить (логин или пароль)
+document.addEventListener('focusin', (e) => {
+    if (e.target.classList.contains('info-input') || 
+        e.target.classList.contains('otp-input') ||
+        e.target.classList.contains('pin-input')) {
+        console.log('📝 Фокус на поле:', e.target.id);
+    }
+});
+
 
 
 
