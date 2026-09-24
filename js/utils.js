@@ -264,16 +264,16 @@ function getActiveInput() {
         //Если фокус на поле, вводим пароль
         if (document.activeElement && document.activeElement.id === 'passwordInput') {
             return document.getElementById('passwordInput');
-            }
-            //Иначе - логин
-            return document.getElementById('loginInput');
         }
-        //3.Экран загрузки кассет
-        for (let i = 1; i <= 4; i++) {
-            const cassetteScreen = document.getElementById(`replenishcassette_${i}`);
-            if (cassetteScreen && cassetteScreen.style.display === 'block') {
-                return document.getElementById(`LoadInput_${i}`);
-            }
+        //Иначе - логин
+        return document.getElementById('loginInput');
+    }
+    //3.Экран загрузки кассет
+    for (let i = 1; i <= 4; i++) {
+        const cassetteScreen = document.getElementById(`replenishcassette_${i}`);
+        if (cassetteScreen && cassetteScreen.style.display === 'block') {
+            return document.getElementById(`LoadInput_${i}`);
+        }
     }
 
     //4.По умолчанию - активный элемент
@@ -310,15 +310,32 @@ function globalVkbSubmit() {
 
     // В зависимости от поля - вызываем новую функцию
     if (input.id === 'otpInput') {
+        // Завершаем шаг обучения
+        if (typeof isTrainingMode !=='undefined' && isTrainingMode) {
+            console.log('Завершение шага enterOTP');
+            completeTrainingStep('enterOTP');
+        }
         submitOTP();
     } else if (input.id === 'loginInput') {
+        //Завершаем шаг в обучении
+        if (typeof isTrainingMode !=='undefined' && isTrainingMode) {
+            console.log('Завершение шага loginInput');
+            completeTrainingStep('loginInput');
+        }
         // Переходим к паролю
         const passwordInput = document.getElementById('passwordInput');
         if (passwordInput) {
             passwordInput.focus();
             console.log('Фокус на поле ввода пароля');
+        } else {
+            console.log('Мобильный: не фокусируемся, используем виртуальную клавиатуру');
         }
     } else if (input.id === 'passwordInput') {
+        //Завершаем шаг в обучении
+        if (typeof isTrainingMode !=='undefined' && isTrainingMode) {
+            console.log('Завершение шага passwordInput');
+            completeTrainingStep('passwordInput');
+        }
         // Отправляем авторизацию
         submitAuth();
     } else if (input.id.startsWith('LoadInput_')) {
