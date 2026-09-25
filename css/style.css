@@ -2117,11 +2117,12 @@ input:checked + .slider-vertical {
 .virtual-keypad-global {
     display: none;   /* 👈 показываем только на мобильном */
     position: fixed;
-    bottom: 10px;
-    left: 10px;
-    z-index: 999999;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
+    top: 10px !important;
+    /* bottom: 50px !important; */
+    left: 10px !important;
+    z-index: 999999 !important;
+    grid-template-columns: repeat(3, 30px) !important;
+    gap: 3px;
     background: rgba(0, 0, 0, 0.85);
     /* max-width: 320px;
     margin: 20px auto; */
@@ -2131,10 +2132,10 @@ input:checked + .slider-vertical {
 }
 
 .virtual-keypad-global button {
-    width: 60px;
-    height: 60px;
-    padding: 15px 10px;
-    font-size: 24px;
+    width: 20px !important;
+    height: 20px !important;
+    padding: 0 !important;
+    font-size: 12px !important;
     font-weight: bold;
     background: #1976D2;
     color: white;
@@ -2142,7 +2143,7 @@ input:checked + .slider-vertical {
     border-radius: 10px;
     cursor: pointer;
     transition: 0.2s;
-    min-height: 55px;
+    min-height: 0 !important;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
 }

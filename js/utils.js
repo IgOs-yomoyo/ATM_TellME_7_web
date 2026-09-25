@@ -251,8 +251,17 @@ if (window.visualViewport) {
 }
 
 // === ГЛОБАЛЬНАЯ ВИРТУАЛЬНАЯ КЛАВИАТУРА === 
+// Глобальная переменная
+let activeInputField = null;
+
 //Определяем, в какое поле вводить цифры
 function getActiveInput() {
+    if (activeInputField) {
+        const parentScreen = activeInputField.closest('.atm-screen');
+        if (parentScreen && parentScreen.style.display !== 'none') {
+            return activeInputField;
+        }
+    }
     //1.экран ввода OTP
     const otpScreen = document.getElementById('inputOTPCodeScreen');
     if (otpScreen && otpScreen.style.display === 'flex') {
@@ -325,11 +334,17 @@ function globalVkbSubmit() {
         // Переходим к паролю
         const passwordInput = document.getElementById('passwordInput');
         if (passwordInput) {
+            //Убираем readOnly на время фокуса
+            passwordInput.readOnly = false;
             passwordInput.focus();
+
+            //Сразу ставим обратно. Системная клавиатура не должна появиться. 
+            setTimeout(() => {
+                passwordInput.readOnly = true;
+            }, 50);
             console.log('Фокус на поле ввода пароля');
-        } else {
-            console.log('Мобильный: не фокусируемся, используем виртуальную клавиатуру');
-        }
+        } 
+
     } else if (input.id === 'passwordInput') {
         //Завершаем шаг в обучении
         if (typeof isTrainingMode !=='undefined' && isTrainingMode) {
@@ -350,6 +365,7 @@ document.addEventListener('focusin', (e) => {
     if (e.target.classList.contains('info-input') || 
         e.target.classList.contains('otp-input') ||
         e.target.classList.contains('pin-input')) {
+        activeInputField = e.target; // Сохраняем активное поле
         console.log('📝 Фокус на поле:', e.target.id);
     }
 });
