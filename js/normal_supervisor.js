@@ -252,6 +252,28 @@ function requestSupervisorMode() {
     if (outOfServiceScreen) outOfServiceScreen.style.display = 'none';
     if (authScreen) authScreen.style.display = 'block';
     setupAuthInput();
+
+    //Настройка ввода для мобильного/десктопа
+    const isMobile = window.innerWidth <= 1024;
+    const loginInput = document.getElementById('loginInput');
+    const passwordInput = document.getElementById('passwordInput');
+
+    if(isMobile) {
+        //Мобильный - виртуальная клавиатура, системная клавиатура
+        loginInput?.setAttribute('inputmode', 'none');
+        passwordInput?.setAttribute('inputmode', 'true');
+        loginInput?.setAttribute('readonly', 'true');
+        passwordInput?.setAttribute('readonly', 'true');
+        console.log('Мобильный режим: системная клавиатура отключена');
+    }else{
+        //Десктоп - физическая клава
+        loginInput?.setAttribute('inputmode', 'numeric');
+        passwordInput?.setAttribute('inputmode', 'numeric');
+        loginInput?.removeAttribute('readonly');
+        passwordInput?.removeAttribute('readonly');
+        console.log('Десктоп: физическая клавиатура');
+    }
+
     // Ставим фокус на поле "Код пользователя"
     setTimeout(() => {
         const loginInput = document.getElementById('loginInput');

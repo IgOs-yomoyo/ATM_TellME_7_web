@@ -182,8 +182,6 @@ function submitOTP() {
         input.value = '';
         input.focus();
     }
-
-    
 }
 
 // Обработчик кнопки Enter

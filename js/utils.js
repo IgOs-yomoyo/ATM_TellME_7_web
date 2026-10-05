@@ -319,11 +319,11 @@ function globalVkbSubmit() {
 
     // В зависимости от поля - вызываем новую функцию
     if (input.id === 'otpInput') {
-        // Завершаем шаг обучения
-        if (typeof isTrainingMode !=='undefined' && isTrainingMode) {
-            console.log('Завершение шага enterOTP');
-            completeTrainingStep('enterOTP');
-        }
+        // Завершаем шаг обучения. Убрал пока, похоже, это мешает. 
+        // if (typeof isTrainingMode !=='undefined' && isTrainingMode) {
+        //     console.log('Завершение шага enterOTP');
+        //     completeTrainingStep('enterOTP');
+        // }
         submitOTP();
     } else if (input.id === 'loginInput') {
         //Завершаем шаг в обучении
