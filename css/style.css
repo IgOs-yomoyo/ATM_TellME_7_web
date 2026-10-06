@@ -241,8 +241,8 @@ input:checked + .slider-vertical {
 /* ========== КНОПКА ПЕРЕХОДА В ГЛАВНОЕ МЕНЮ ТРЕНАЖЁРА ========== */
 .training-main-menu-btn {
     position: fixed;
-    bottom: 70px;
-    left: 10px;
+    bottom: 70px !important;
+    left: 10px !important;
     padding: 35px 70px;
     font-size: 18px;
     font-weight: bold;
@@ -271,7 +271,6 @@ input:checked + .slider-vertical {
     scale: 1 !important;
     box-shadow: 0 0 0 4px #ff9800, 0 0 20px rgba(255, 152, 0, 0.4) !important;
     transform: none !important;
-    /* transform: translateY(-50%); */
     background-color: #1976D2;
 }
 
@@ -2260,7 +2259,7 @@ input:checked + .slider-vertical {
     cursor: pointer;
 }
 
-/* ===== МОБИЛЬНАЯ ВЕРСИЯ ===== */
+/* ===== МОБИЛЬНАЯ ВЕРСИЯ ===== Убрал за ненадобностью. ==== */
 /* @media screen and (max-width: 1024px) {
     #inputOTPCodeScreen {
         padding: 10px;
@@ -2311,4 +2310,13 @@ input:checked + .slider-vertical {
         caret-color: transparent !important;
         font-size: 32px !important;
     }
+}
+
+@media screen and (max-width: 1024px) {
+    .training-highlight {
+        box-shadow: 0 0 0 3px #ff9800, 0 0 15px rgba(255, 152, 0, 0.5) !important;
+        border: none !important; /*2px solid #ffd700 */
+        border-radius: 8px !important;
+    }
+    
 }

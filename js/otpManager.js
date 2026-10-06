@@ -76,6 +76,18 @@ function handleLogoClick() {
         logoClickCount = 0;
         clearTimeout(logoClickTimer);
 
+        //Явно скрываем welcomeScreen
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        if (welcomeScreen) {
+            welcomeScreen.style.display = 'none';
+            console.log('welcomeScreen скрыт');
+        }
+
+        //Скрываем все экраны
+        document.querySelectorAll('.atm-screen').forEach(screen => {
+            screen.style.display = 'none';
+        });
+
         //Завершаем шаг в режиме обучения
         if (typeof isTrainingMode !== 'undefined' && isTrainingMode){
             console.log('Шаг 1 завершён');
@@ -99,6 +111,10 @@ function showOTPScreen() {
         screen.style.display = 'none';
     });
     console.log('Все экраны скрыты');
+
+    //Проверяем welcomeScreen
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    console.log('welcomeScreen display:', welcomeScreen?.style.display);
     
     // Показываем экран OTP
     const otpScreen = document.getElementById('inputOTPCodeScreen');
