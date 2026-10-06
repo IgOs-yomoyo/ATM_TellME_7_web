@@ -291,6 +291,22 @@ function getActiveInput() {
 
 // Обработчик нажатий на кнопки клавиатуры
 function globalVkbInput(digit) {
+    //Проверка: если мы на главном экране (welcome/outOfService) - это диагностика
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const outOfServiceScreen = document.getElementById('outOfServiceScreen');
+
+    const isMainScreen = 
+        (welcomeScreen && welcomeScreen.style.display === 'block') ||
+        (outOfServiceScreen && outOfServiceScreen.style.display === 'block');
+    
+    if (isMainScreen) {
+        console.log ('Диагностика: нажата цифра', digit);
+        if (typeof checkDiagnosticSequence === 'function') {
+            checkDiagnosticSequence(digit);
+        }
+        return;
+    }
+
     const input = getActiveInput();
     if (!input) return;
     

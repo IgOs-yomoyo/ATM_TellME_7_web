@@ -71,8 +71,10 @@
             input.addEventListener('keydown', restrictInputToNumbers);
             input.addEventListener('blur', handleBlur);
 
-            // Устанавливаем фокус на поле
-            input.focus();
+            // Устанавливаем фокус на поле если десктоп
+            if (window.innerWidth > 1024) {
+                input.focus();
+            }
         }
     }
             
