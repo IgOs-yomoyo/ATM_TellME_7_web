@@ -2117,25 +2117,25 @@ input:checked + .slider-vertical {
 .virtual-keypad-global {
     display: none;   /* 👈 показываем только на мобильном */
     position: fixed;
-    top: 10px !important;
+    /* top: 10px !important; */
     /* bottom: 50px !important; */
-    left: 10px !important;
-    z-index: 999999 !important;
-    grid-template-columns: repeat(3, 30px) !important;
-    gap: 3px;
+    /* left: 10px !important; */
+    z-index: 999999;
+    grid-template-columns: repeat(3, 30px);
+    gap: 6px;
     background: rgba(0, 0, 0, 0.85);
     /* max-width: 320px;
     margin: 20px auto; */
     border-radius: 12px;
-    padding: 0 10px;
+    padding: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 .virtual-keypad-global button {
-    width: 20px !important;
-    height: 20px !important;
-    padding: 0 !important;
-    font-size: 12px !important;
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    font-size: 24px;
     font-weight: bold;
     background: #1976D2;
     color: white;
@@ -2143,7 +2143,9 @@ input:checked + .slider-vertical {
     border-radius: 10px;
     cursor: pointer;
     transition: 0.2s;
-    min-height: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
 }
@@ -2157,21 +2159,29 @@ input:checked + .slider-vertical {
 @media screen and (max-width: 1024px) {
     .virtual-keypad-global {
         display: grid !important;
+        position: fixed !important;
         grid-template-columns: repeat(3, 40px) !important;
-        gap: 8px;
+        gap: 4px;
         /* max-width: 800px; */
         /* margin: 160px auto 20px auto !important; */
-        padding: 0 6px;
+        padding: 5px !important;
+        bottom: 10px !important;
+        right: 10px !important;
+        left: auto !important;
+        top: auto !important;
+        border-radius: 10px !important;
+        z-index: 999999 !important;
         /* transform: translateX(-430px);
         justify-content: start !important;  */
     }
 
     .virtual-keypad-global button {
-        width: 60px !important;      /* 👈 ШИРИНА КНОПКИ */
-        height: 60px !important;     /* 👈 ВЫСОТА КНОПКИ */
-        font-size: 18px !important;   /* 👈 РАЗМЕР ШРИФТА */
+        width: 35px !important;      /* 👈 ШИРИНА КНОПКИ */
+        height: 35px !important;     /* 👈 ВЫСОТА КНОПКИ */
+        font-size: 16px !important;   /* 👈 РАЗМЕР ШРИФТА */
         padding: 0 !important;
-        border-radius: 8px !important;
+        min-height: 0 !important;
+        border-radius: 6px !important;
         font-weight: bold !important;
         display: flex !important;
         align-items: center !important;
@@ -2233,11 +2243,6 @@ input:checked + .slider-vertical {
     border-radius: 10px;
 }
 
-/* Клавиатура (убираем пока) */
-/* .virtual-keypad {
-    order: 3;
-    display: none;
-} */
 
 /* Кнопка ВВОД */
 .otp-submit-btn {
@@ -2256,46 +2261,46 @@ input:checked + .slider-vertical {
 }
 
 /* ===== МОБИЛЬНАЯ ВЕРСИЯ ===== */
-@media screen and (max-width: 1024px) {
+/* @media screen and (max-width: 1024px) {
     #inputOTPCodeScreen {
         padding: 10px;
         gap: 10px;
-    }
+    } */
     
-    .otp-code-display {
+    /* .otp-code-display {
         margin: 0 !important;
-    }
+    } */
     
-    .otp-code-display #otpCodeValue {
+    /* .otp-code-display #otpCodeValue {
         font-size: 48px !important;
         letter-spacing: 10px !important;
-    }
+    } */
     
-    .virtual-keypad-global {
-        display: grid !important;
+    /* .virtual-keypad-global {
+        display: grid !important; */
         /* grid-template-columns: repeat(3, 70px) !important;
         gap: 8px;
         margin: 0 !important;
         padding: 0;
         transform: none !important;
         justify-content: center !important; */
-    }
+    /* } */
     
-    .virtual-keypad-global button {
-        width: 70px !important;
-        height: 70px !important;
-        font-size: 28px !important;
+    /* .virtual-keypad-global button {
+        width: 35px !important;
+        height: 35px !important;
+        font-size: 16px !important;
         padding: 0 !important;
         border-radius: 10px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-    }
+    } */
     
-    .otp-submit-btn {
+    /* .otp-submit-btn {
         display: none !important;  /* 👈 скрываем на мобильном, есть ✓ на клавиатуре */
-    }
-}
+    /* } */
+/* } */
 
 @media screen and (max-width: 1024px) {
     /* Отключаем системную клавиатуру у всех полей */
