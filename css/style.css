@@ -265,13 +265,14 @@ input:checked + .slider-vertical {
 
 /* === СТИЛИ ДЛЯ КНОПКИ "В ГЛАВНОЕ МЕНЮ" ДЛЯ РЕЖИМА ОБУЧЕНИЯ === */
 .training-main-menu-btn.training-highlight {
-    position: absolute !important;
+    /* position: absolute !important;
     bottom: 70px !important;
     left: 10px !important;
-    scale: 1 !important;
+    scale: 1 !important; */
     box-shadow: 0 0 0 4px #ff9800, 0 0 20px rgba(255, 152, 0, 0.4) !important;
-    transform: none !important;
-    background-color: #1976D2;
+    border: none !important;
+    /* transform: none !important;
+    background-color: #1976D2; */
 }
 
 /* ===== ПАНЕЛЬ ИНСТРУКЦИЙ ДЛЯ ОБУЧЕНИЯ ===== */
@@ -2259,48 +2260,6 @@ input:checked + .slider-vertical {
     cursor: pointer;
 }
 
-/* ===== МОБИЛЬНАЯ ВЕРСИЯ ===== Убрал за ненадобностью. ==== */
-/* @media screen and (max-width: 1024px) {
-    #inputOTPCodeScreen {
-        padding: 10px;
-        gap: 10px;
-    } */
-    
-    /* .otp-code-display {
-        margin: 0 !important;
-    } */
-    
-    /* .otp-code-display #otpCodeValue {
-        font-size: 48px !important;
-        letter-spacing: 10px !important;
-    } */
-    
-    /* .virtual-keypad-global {
-        display: grid !important; */
-        /* grid-template-columns: repeat(3, 70px) !important;
-        gap: 8px;
-        margin: 0 !important;
-        padding: 0;
-        transform: none !important;
-        justify-content: center !important; */
-    /* } */
-    
-    /* .virtual-keypad-global button {
-        width: 35px !important;
-        height: 35px !important;
-        font-size: 16px !important;
-        padding: 0 !important;
-        border-radius: 10px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-    } */
-    
-    /* .otp-submit-btn {
-        display: none !important;  /* 👈 скрываем на мобильном, есть ✓ на клавиатуре */
-    /* } */
-/* } */
-
 @media screen and (max-width: 1024px) {
     /* Отключаем системную клавиатуру у всех полей */
     .info-input,
@@ -2318,5 +2277,51 @@ input:checked + .slider-vertical {
         border: none !important; /*2px solid #ffd700 */
         border-radius: 8px !important;
     }
+}
+
+/* === Короткие подсказки для мобильной версии === */
+@media screen and (max-width: 1024px) {
+    #trainingTooltip {
+        /* display: block !important; */
+        position: fixed !important;
+        top: 5px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 90% !important;
+        max-width: 500px !important;
+        background: rgba(0, 0, 0, 0.9) !important;
+        color: white !important;
+        padding: 8px 12px !important;
+        border-radius: 8px !important;
+        font-size: 13px !important;
+        z-index: 999997 !important;
+        pointer-events: none !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+        text-align: center !important;
+    }
+
+    /* Скрываем длинную инструкцию */
+    #trainingTooltip .training-tooltip-text {
+        display: none !important;
+    }
     
+    /* Показываем короткую */
+    #trainingTooltip .training-tooltip-short {
+        display: block !important;
+        font-size: 13px !important;
+        font-weight: 500 !important;
+    }
+
+    /* Номер шага */
+    #trainingTooltip .training-tooltip-step {
+        display: block !important;
+        font-size: 11px !important;
+        color: #88aacc !important;
+        margin-bottom: 4px !important;
+    }
+
+    /* Прогресс-бар - скрываем */
+    #trainingTooltip .training-tooltip-progress {
+        display: none !important;
+    }
 }

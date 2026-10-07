@@ -152,6 +152,25 @@ function showOTPScreen() {
         // input.focus();
     }
 
+    //Добавил - показываем глобальную клавиатуру на мобильном, хотя она и так показана. 
+    // const keypad = document.getElementById('globalKeypad');
+    // if (keypad) {
+    //     if (window.innerWidth <= 1024) {
+    //         keypad.style.display = 'grid';
+    //         console.log('Глобальная клавиатура вызвана');
+    //     }else{
+    //         keypad.style.display = 'none';
+    //     }
+    // }
+
+    // //Сбрасываем readOnly у других полей
+    // document.querySelectorAll('input').forEach(inp => {
+    //     if(inp.id !== 'otpInput') {
+    //         inp.readOnly = false;
+    //         inp.removeAttribute('inputmode');
+    //     }
+    // });
+
     // Запускаем таймер
     startOTPTimer();
 }

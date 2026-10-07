@@ -159,6 +159,12 @@
         if (currentScreen) currentScreen.style.display = 'none';
         
         if (cassetteNumber < 4) {
+            //Скрываем все остальные экраны
+            for (let i = 1; i <= 4; i++) {
+                const s = document.getElementById(`replenishcassette_${i}`);
+                if (s) s.style.display = 'none';
+            }
+
             // Показываем следующий экран
             const nextScreen = document.getElementById(`replenishcassette_${cassetteNumber + 1}`);
             if (nextScreen) nextScreen.style.display = 'block';

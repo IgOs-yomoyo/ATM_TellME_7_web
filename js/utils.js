@@ -291,6 +291,48 @@ function getActiveInput() {
 
 // Обработчик нажатий на кнопки клавиатуры
 function globalVkbInput(digit) {
+    //Сначала проверяем OTP
+    const otpScreen = document.getElementById('inputOTPCodeScreen');
+    if (otpScreen && otpScreen.style.display === 'flex') {
+        const input = document.getElementById('otpInput');
+        if (input) {
+            const maxLength = input.maxLength > 0 ? input.maxLength : 6;
+            if (input.value.length < maxLength) {
+                input.value += digit;
+            }
+        }
+        return; //Выходим - не проверяем диагностику
+    }
+
+    // Экран авторизации в TellME_7, authScreen
+    const authScreen = document.getElementById('authScreen');
+    if (authScreen && authScreen.style.display === 'block') {
+        const input = getActiveInput();
+        if (input) {
+            const maxLength = input.maxLength > 0 ? input.maxLength : 6;
+            if (input.value.length < maxLength) {
+                input.value += digit;
+            }
+        }
+        return;
+    }
+
+    //Ввод количества банкнот, загруженных в кассеты
+    for (let i = 1; i <= 4; i++) {
+        const cassetteScreen = document.getElementById( `replenishcassette_${i}`);
+        if (cassetteScreen && cassetteScreen.style.display === 'block') {
+            const input = document.getElementById(`LoadInput_${i}`);
+            if (input) {
+                const maxLength = input.maxLength > 0 ? input.maxLength : 4;
+                if (input.value.length < maxLength) {
+                    input.value += digit;
+                }
+            }
+            return;
+        }
+    }
+
+
     //Проверка: если мы на главном экране (welcome/outOfService) - это диагностика
     const welcomeScreen = document.getElementById('welcomeScreen');
     const outOfServiceScreen = document.getElementById('outOfServiceScreen');

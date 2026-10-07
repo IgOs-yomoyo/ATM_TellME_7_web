@@ -60,6 +60,7 @@ function initTrainingSteps() {
             id: 1, 
             instruction: `Для начала обсулживания банкомата банка Озон необходимо зайти в "Меню инкассации".
                      Для этого нажмите 5 раз на логотип OZON в левом верхнем углу`,
+            shortInstruction: 'Пять раз нажмите на логотип OZON',
             targetSelector: '.otp-logo-wrapper',
             action: 'logoClick',
             targetScreen: 'welcomeScreen'
@@ -67,6 +68,7 @@ function initTrainingSteps() {
         {
             id: 2, 
             instruction: 'Введите шестизначный код инкассатора',
+            shortInstruction: 'Введите код инкассатора',
             targetSelector: '.otp-input, .otp-submit-btn', //[onclick="submitOTP()]
             action: 'enterOTP',
             targetScreen: 'inputOTPCodeScreen'
@@ -428,21 +430,6 @@ function showTrainingStep(index) {
         }
     }
 
-// Прошлая версия. Сохраняем на всякий....
-// if (step.targetScreen) {
-    //     console.log('Показываем экран:', step.targetScreen);
-    //     document.querySelectorAll('.atm-screen').forEach(screen => {
-    //         screen.style.display = 'none';
-    //     });
-    //     const targetScreen = document.getElementById(step.targetScreen);
-    //     if (targetScreen) {
-    //         targetScreen.style.display = 'block';
-    //         console.log('Показан экран, display:', targetScreen.style.display);
-    //     } else {
-    //         console.warn('Нет targetScreen в шаге!');
-    //     }
-    // }
-
     // Обновляем панель подсказок
     const tooltip = document.getElementById('trainingTooltip');
     if (!tooltip) {
@@ -453,7 +440,29 @@ function showTrainingStep(index) {
     // Обновляем панель
     document.getElementById('tooltipStep').textContent = step.id;
     document.getElementById('tooltipTotal').textContent = trainingSteps.length;
-    document.getElementById('tooltipText').textContent = step.instruction;
+    // document.getElementById('tooltipText').textContent = step.instruction;
+        //Определяем, какой показывать текст в зависимости от размеров монитора устройства
+    const isMobile = window.innerWidth <= 1024;
+    const tooltipInstruction = document.getElementById('tooltipText');
+    const tooltipShort = document.getElementById('tooltipShort');
+
+    if (isMobile) {
+        //Короткие инструкции, если мобильный
+        if (tooltipInstruction) tooltipInstruction.style.display = 'none';
+        if (tooltipShort) {
+            tooltipShort.style.display = 'block';
+            tooltipShort.textContent = step.shortInstruction || step.instruction;
+        }
+        console.log('Короткая подсказка:', step.shortInstruction || step.instruction);
+    }else{
+        //Полный текст, если десктоп
+        if (tooltipInstruction) {
+            tooltipInstruction.style.display = 'block';
+            tooltipInstruction.textContent = step.instruction;
+        }
+        if (tooltipShort) tooltipShort.style.display = 'none';
+        console.log('Полная инструкция:', step.instruction);
+    }
 
     // Обновляем прогресс
     const progress = ((index + 1) / trainingSteps.length) * 100;
@@ -468,17 +477,6 @@ function showTrainingStep(index) {
         el.classList.remove('training-highlight');
     });
       
-
-    // Подсвечиваем целевую кнопку
-    // const target = document.querySelector(step.targetSelector);
-    // if (target) {
-    //     target.classList.add('training-highlight');
-        
-        
-   // Удаляем старый номер
-    // const oldLabel = target.querySelector('.step-number');
-    // if (oldLabel) oldLabel.remove();
-    
 
     //Подсвечиваем целевые элементы (поддержка нескольких селекторов)
     if (step.targetSelector) {
@@ -542,7 +540,7 @@ function showTrainingStep(index) {
 
         //Если шаг с autoAdvance - переходим на следующий шаг через 3 секунды
         if (step.autoAdvance) {
-            console.log('Шаг ${step.is} автоматический. Переход на следущий шаг через 3 секунды.');
+            console.log(`Шаг ${step.id} автоматический. Переход на следущий шаг через 3 секунды.`);
             setTimeout(() => {
                 completeTrainingStep('autoAdvance');
             }, 3000);
