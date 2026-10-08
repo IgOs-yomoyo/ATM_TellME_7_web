@@ -2063,9 +2063,9 @@ input:checked + .slider-vertical {
     
     /* Номера шагов остаются */
     .step-number {
-        width: 24px !important;
-        height: 24px !important;
-        font-size: 12px !important;
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 28px !important;
     }
 }
 
@@ -2279,25 +2279,45 @@ input:checked + .slider-vertical {
     }
 }
 
+
+@media screen and (max-width: 1024px) {
+    /* Скрываем длинный текст */
+    #trainingTooltip .training-tooltip-text, 
+    #trainingTooltip #tooltipText {
+        display: none !important;
+    }
+}
+
 /* === Короткие подсказки для мобильной версии === */
 @media screen and (max-width: 1024px) {
     #trainingTooltip {
         /* display: block !important; */
         position: fixed !important;
+
         top: 5px !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-        width: 90% !important;
-        max-width: 500px !important;
-        background: rgba(0, 0, 0, 0.9) !important;
+        /* right: 5px !important; */
+        right: auto !important;
+        /* left: auto !important; */
+        left: 1000px !important;
+        /* transform: translateX(-50%) !important; */
+        transform: none !important;
+
+        width: auto !important;
+        max-width: 350px !important;
+        min-width: 200px !important;
+        max-height: 200px !important;
+
+        background: rgba(0, 0, 0, 0.6) !important;
         color: white !important;
         padding: 8px 12px !important;
         border-radius: 8px !important;
-        font-size: 13px !important;
+        font-size: 32px !important;
         z-index: 999997 !important;
         pointer-events: none !important;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
         text-align: center !important;
+
+        opacity: 0.9 !important;
     }
 
     /* Скрываем длинную инструкцию */
@@ -2308,14 +2328,15 @@ input:checked + .slider-vertical {
     /* Показываем короткую */
     #trainingTooltip .training-tooltip-short {
         display: block !important;
-        font-size: 13px !important;
-        font-weight: 500 !important;
+        font-size: 32px !important;
+        font-weight: bold !important;
     }
 
     /* Номер шага */
     #trainingTooltip .training-tooltip-step {
         display: block !important;
-        font-size: 11px !important;
+        font-size: 32px !important;
+        font-weight: bold !important;
         color: #88aacc !important;
         margin-bottom: 4px !important;
     }
@@ -2324,4 +2345,13 @@ input:checked + .slider-vertical {
     #trainingTooltip .training-tooltip-progress {
         display: none !important;
     }
+}
+
+/* ✅ ЕДИНЫЙ размер номера шага — перебивает всё */
+.step-number {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 14px !important;
+    line-height: 1 !important;
+    box-sizing: border-box !important;
 }

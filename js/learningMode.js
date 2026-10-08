@@ -55,7 +55,12 @@ function initTrainingSteps() {
     const instructionText = isDayOpened()
         ? 'Далее необходимо подтвердить закрытие операционного дня'
         : 'Если операционный день банкомата был закрыт ранее, то программа переведёт вас на экран повторного закрытия операционного дня. Нажмите кнопку "Закрыть день повторно"'
-    trainingSteps = [
+
+        const shortInstructionText = isDayOpened()
+            ? 'ПОДТВЕРДИТЬ'
+            : 'ЗАКРЫТЬ ДЕНЬ ПОВТОРНО';
+
+        trainingSteps = [
         {
             id: 1, 
             instruction: `Для начала обсулживания банкомата банка Озон необходимо зайти в "Меню инкассации".
@@ -77,6 +82,7 @@ function initTrainingSteps() {
             id: 3,
             instruction: `На экране "Меню инкассации" нажмите кнопку "Полчить баланс". После этого, на экране, вы должны увидеть чек "Баланс банкомата", и кнопка "Получить баланс"
             должна стать неактивной. Если этого не произошло - команда не выполнена! Нажмите кнопку "Получить баланс" ещё раз.`,
+            shortInstruction: 'Нажмите ПОЛУЧИТЬ БАЛАНС',
             targetSelector: '[onclick="getBalance()"]',
             action: 'showBalanceReceipt',
             targetScreen: 'mainScreen'
@@ -84,6 +90,7 @@ function initTrainingSteps() {
         {
             id: 4,
             instruction: 'Кнопка "Меню инкассации" вернёт вас в предыдущее меню.',
+            shortInstruction: 'Нажмите МЕНЮ ИНКАССАЦИИ',
             targetSelector: '[onclick="closeBalanceReceipt()"]',
             action: 'closeBalanceReceipt', 
             targetScreen: 'balanceReceiptScreen'
@@ -91,6 +98,7 @@ function initTrainingSteps() {
         {
             id: 5,
             instruction: `На экране "Меню инкассации" нажмите кнопку "Провести инкассацию". После этого на экране должна появиться кнопка ПРОДОЛЖИТЬ.`,
+            shortInstruction: 'Нажмите ПРОВЕСТИ ИНКАССАЦИЮ',
             targetSelector: '[onclick="performCollection()"]', 
             action: 'performCollection',
             targetScreen: 'mainScreen'
@@ -111,6 +119,7 @@ function initTrainingSteps() {
             id: 6,
             instruction: `Если вы видите экран "Можно проводить инкассацию", это означает, что операция "Провести инкассацию" выполнена успешно.
              Нажмите кнопку ПРОДОЛЖИТЬ`,
+            shortInstruction: 'Нажмите ПРОДОЛЖИТЬ',
             targetSelector: '.collection-continue-btn',
             action: 'continueCollection',
             targetScreen:'collectionCompleteScreen'
@@ -119,6 +128,7 @@ function initTrainingSteps() {
             id: 7, 
             instruction: `Далее нужно открыть верхний кабинет банкомата, проверить наличие задержанных карт клиентов, 
              перевести переключатель режимов работы банкомата normal/supervisor в положение supervisor, то есть, в режим оператора.`,
+            shortInstruction: 'Переведите переключатель в NORMAL',
             targetSelector: '.mode-toggle-container', 
             action: 'switchToSupervisor', 
             targetScreen: 'outOfServiceScreen'
@@ -126,6 +136,7 @@ function initTrainingSteps() {
         {
             id: 8,
             instruction: 'Введите код пользователя 100 и нажмите кнопку "Ввод"',
+            shortInstruction: 'Код пользователя 100 и ВВОД',
             targetSelector: '#loginInput, .enter-btn', //#authScreen .info-input
             action: 'loginInput', 
             targetScreen: 'authScreen'
@@ -133,6 +144,7 @@ function initTrainingSteps() {
         {
             id: 9,
             instruction: 'Введите пароль 111111 и нажмите кнопку "Ввод"',
+            shortInstruction: 'Пароль 111111 и ВВОД',
             targetSelector: '#passwordInput, .enter-btn',
             action: 'passwordInput',
             targetScreen: 'authScreen'
@@ -140,6 +152,7 @@ function initTrainingSteps() {
         {
             id: 10,
             instruction: 'На основном экране оператора нажмите "Открытие/закрытие операционного дня"',
+            shortInstruction: 'ОТКРЫТИЕ/ЗАКРЫТИЕ ОПЕРАЦИОННОГО ДНЯ',
             targetSelector: '.supervisor-openclose', //[onclick="openCloseDay()"]
             action: 'openCloseDay',
             targetScreen: 'supervisorScreen'
@@ -147,6 +160,7 @@ function initTrainingSteps() {
         {
             id: 11,
             instruction: 'В меню "Открытие/закрытие операционного дня" нужно выбрать кнопку "Дополнительные операции"',
+            shortInstruction: 'ДОПОЛНИТЕЛЬНЫЕ ОПЕРАЦИИ',
             targetSelector: '[onclick="additionalOperations()"]', //[onclick="additionalOperations()"], .opencloseday-extraoperation'
             action: 'additionalOperations',
             targetScreen: 'opencloseday'
@@ -154,6 +168,7 @@ function initTrainingSteps() {
         {
             id: 12,
             instruction: `В меню "Дополнительные операции" нужно выбрать опцию "Сброс счётчика задержанных карт".`,
+            shortInstruction: 'СБРОС СЧЁТЧИКА ЗАДЕРЖАННЫХ КАРТ',
             targetSelector: '#resetHeldOption', 
             action: 'resetHeldOption',
             targetScreen: 'additionalOperations'
@@ -161,6 +176,7 @@ function initTrainingSteps() {
         {
             id: 13,
             instruction: 'Нажмите кнопку "ВЫБРАТЬ", чтобы подтвердить выбор.',
+            shortInstruction: 'ВЫБРАТЬ',
             targetSelector: '[onclick="selectBtn()"]', //[onclick="takeHeldCardReceipt()"] [onclick="selectBtn()"] #reset-select-btn
             action: 'resetHeldCardCounter', //backToOpenCloseDayMenu
             targetScreen: 'additionalOperations'
@@ -168,6 +184,7 @@ function initTrainingSteps() {
         { 
             id: 14,
             instruction: `Нажмите кнопку "ВОЗВРАТ" для возврата в предыдущее меню.`,
+            shortInstruction: 'ВОЗВРАТ',
             targetSelector: '.additional-backtoopenclosedaymenu',
             action: 'backToOpenCloseDayMenu',
             targetScreen: 'additionalOperations'
@@ -176,6 +193,7 @@ function initTrainingSteps() {
         {
             id: 15, 
             instruction: 'В меню "Открытие/закрытие операционного дня" нажмите кнопку "Ресайклер".',
+            shortInstruction: 'РЕСАЙКЛЕР',
             targetSelector: '.opencloseday-recycler', //[onclick="backToOpenCloseDay()"]
             action: 'recycler',
             targetScreen: 'opencloseday'
@@ -183,6 +201,7 @@ function initTrainingSteps() {
         {
            id: 16, 
            instruction: 'В следующем меню, "Операционный день ресайклера", нажимаем кнопку "Закрытие операционного дня"',
+           shortInstruction: 'ЗАКРЫТИЕ ОПЕРАЦИОННОГО ДНЯ',
            targetSelector: '.recyclerday-closeday',
            action: 'closeRecyclerDay', //closeRecyclerDay  showCloseDayScreen
            targetScreen: 'recyclerday'
@@ -190,135 +209,153 @@ function initTrainingSteps() {
         {
             id: 17,
             instruction: instructionText,
+            shortInstruction: shortInstructionText,
             targetSelector: isDayOpened() ? '.confirmCloseDay' : '.confirmCloseDayAgain', // [onclick="confirmCloseDay()"] .confirmCloseDay
             action: isDayOpened() ? 'confirmCloseDay' : 'confirmCloseDayAgain', //showCloseRecyclerDayAgainScreen
             targetScreen: isDayOpened() ? 'closeDayConfirmScreen' : 'closeRecyclerDayAgain'
         },
         {
-            id: 17,
+            id: 18,
             instruction: 'Теперь нам нужно открыть сейф банкомата.',
+            shortInstruction: 'Откройте сейф',
             targetSelector: '.openSafeDoor',
             action: 'openSafeDoor',
             targetScreen: 'cassettesReplacmentScreen'
         },
         {
-            id: 18,
+            id: 19,
             instruction: 'Меняем кассеты',
+            shortInstruction: 'Замените кассеты',
             targetSelector: '.replaceCassettes',
             action: 'replaceCassettes',
             targetScreen: 'cassettesReplacmentScreen'
         },
         {
-            id: 19,
+            id: 20,
             instruction: 'Закрываем дверь сейфа',
+            shortInstruction: 'Закройте сейф',
             targetSelector: '.closeSafeDoor',
             action: 'closeSafeDoor',
             targetScreen: 'cassettesReplacmentScreen'
         },
         {
-            id: 20,
+            id: 21,
             instruction: 'После замены кассет открываем новый операционный цикл',
+            shortInstruction: 'ОТКРЫТИЕ ОПЕРАЦИОННОГО ДНЯ',
             targetSelector: '.recyclerday-openday',
             action: 'openDay',
             targetScreen: 'recyclerday'
         },
         {
-            id: 21,
+            id: 22,
             instruction: 'Сначала запустится тестирование модуля рециркуляции.',
+            shortInstruction: 'Модуль тестируется',
             targetSelector: 'null',
             action: null,
             targetScreen: 'testingScreen',
             autoAdvance: true
         },  
         {
-            id: 22,
+            id: 23,
             instruction: 'Введите количество банкнот, загруженных в кассету №1 (номинал 100 рублей) и нажмите кнопку ВВОД',
-            targetSelector: '#LoadInput_1, .enter-btn', //'#LoadInput_1, 
+            shortInstruction: 'Введите количество банкнот в кассете 1',
+            targetSelector: '#LoadInput_1, .enter-btn', 
             action: 'enterNoOfNotes_1',
             targetScreen:'replenishcassette_1'
         },
         {
-            id: 23,
+            id: 24,
             instruction: 'Введите количество банкнот, загруженных в кассету №2 (номинал 500 рублей) и нажмите кнопку ВВОД',
+            shortInstruction: 'Введите количество банкнот в кассете 2',
             targetSelector: '#LoadInput_2, .enter-btn',
             action: 'enterNoOfNotes_2',
             targetScreen: 'replenishcassette_2'
         },
         {
-            id: 24,
+            id: 25,
             instruction: 'Введите количество банкнот, загруженных в кассету №3 (номинал 1000 рублей) и нажмите кнопку ВВОД',
+            shortInstruction: 'Введите количество банкнот в кассете 3',
             targetSelector: '#LoadInput_3, .enter-btn',
             action: 'enterNoOfNotes_3',
             targetScreen: 'replenishcassette_3'
         },
         {
-            id: 25,
+            id: 26,
             instruction: 'Введите количество банкнот, загруженных в кассету №4 (номинал 5000 рублей) и нажмите кнопку ВВОД',
+            shortInstruction: 'Введите количество банкнот в кассете 4',
             targetSelector: '#LoadInput_4, .enter-btn',
             action: 'enterNoOfNotes_4',
             targetScreen: 'replenishcassette_4'
         }, 
         {
             
-            id: 26,
-            instruction: 'После ввода количества банкнот в кассетах снова запустится тест модуля рециркуляции.',
-            targetSelector: 'null',
-            action: null,
-            targetScreen: 'testingScreen',
-            autoAdvance: true
-        },
-        {
             id: 27,
-            instruction: 'Банкомат протестирует модуль рециркуляции банкнот и вернётся в меню "Операционный день ресайклера"',
+            instruction: 'После ввода количества банкнот в кассетах снова запустится тест модуля рециркуляции.',
+            shortInstruction: 'Модуль тестируется',
             targetSelector: 'null',
             action: null,
             targetScreen: 'testingScreen',
             autoAdvance: true
         },
         {
-            id: 28, 
+            id: 28,
+            instruction: 'Банкомат протестирует модуль рециркуляции банкнот и вернётся в меню "Операционный день ресайклера"',
+            shortInstruction: 'Возврат в меню',
+            targetSelector: 'null',
+            action: null,
+            targetScreen: 'testingScreen',
+            autoAdvance: true
+        },
+        {
+            id: 29, 
             instruction: `Теперь нужно перевести банкомат в режим обслуживания клиентов. 
             Для этого откройте верхний кабинет банкомата и переведите переключатель режимов в положение normal.
             Затем, на экране, нажмите кнопку "В режим обслуживания клиентов".`,
+            shortInstruction: 'Переключатель в NORMAL и В РЕЖИМ ОБСЛУЖИВАНИЯ КЛИЕНТОВ',
             targetSelector: '.recyclerday-backtonormal',
             action: 'backToNormalMode',
             targetScreen: 'recyclerday'
         },
         {
-            id: 29,
+            id: 30,
             instruction: 'Банкомат ещё раз протестирует модуль рециркуляции и перейдёт в режим обслуживания клиентов',
+            shortInstruction: 'Модуль тестируется',
             targetSelector: 'null',
             action: null,
             targetScreen: 'testingScreen',
             autoAdvance: true
         },
         {
-            id: 30, 
+            id: 31, 
             instruction: `После того, как банкомат вышел в режим обслуживания клиентов, нам ещё раз нужно авторизоваться на процессинге. Для этого 5 раз нажмите на 
             логотип OZON в левом верхнем углу.`,
+            shortInstruction: '5 раз на логотип OZON',
             targetSelector: '.otp-logo-wrapper',
             action: 'logoClick',
             targetScreen: 'welcomeScreen'
         },
         {
-            id: 31,
+            id: 32,
             instruction: `Наберите шестизначный код инкассатора из заявки в МАИС.`,
+            shortInstruction: 'Код инкассатора',
             targetSelector: '.otp-input, .otp-submit-btn',
             action: 'enterOTP',
             targetScreen: 'inputOTPCodeScreen'
         },
         {
-            id: 32,
+            id: 33,
             instruction: `На экране "МЕНЮ ИНКАССАЦИИ" нажмите кнопку "ПОЛУЧИТЬ БАЛАНС"`, 
+            shortInstruction: 'ПОЛУЧИТЬ БАЛАНС',
             targetSelector: '[onclick="getBalance()"]',
             action: 'showBalanceReceipt',
             targetScreen: 'mainScreen'
         },
         {
-            id: 33,
+            id: 34,
             instruction: `На экране вы увидите виртуальный чек "Баланс банкомата". Необходимо внимательно проверить номиналы банкнот в кассетах, количество банкнот,
             загруженное в каждую из кассет и общую сумму, загруженную в устройство с данными из заявки в МАИС. 
             Если данные о загрузке в чеке сходятся с данными, содержащимися в заявке в МАИС, нажимаем на экране кнопку "ВЫЙТИ".`,
+            shortInstruction: 'Проверяем информацию и ВЫЙТИ',
             targetSelector: '.exit-top-right', //[onclick="closeBalanceReceipt()"]
             action: 'exitButton',  //closeBalanceReceipt
             targetScreen: 'balanceReceiptScreen'
@@ -331,17 +368,19 @@ function initTrainingSteps() {
         //     targetScreen: 'balanceReceiptScreen'
         // },
         {
-            id: 34,
+            id: 35,
             instruction: `После того, как банкомат перешёл в режим обслуживания клиентов, нужно проверить состояние его устройств. 
             Для этого нажмите последовательно клавиши 4 - 5 - 6. Пиктограммы на экране показывают состояние отдельных модулей банкомата.
              Убедитесь, что все иконки на экране с зелёными галочками. В первую очередь нас интересует состояние диспенсера, модуля приёма, картридера и системы NDC.`,
+            shortInstruction: 'Нажимаем 4-5-6',
             targetSelector: null,
             action: 'diagnosticComplete',
             targetScreen: null     //'diagnosticScreen'
         },
         {
-            id: 35,
+            id: 36,
             instruction: `На этом обслуживание банкомата банка Озон завершено. Для продолжения нажмите кнопку "В ГЛАВНОЕ МЕНЮ".`,
+            shortInstruction: 'Обслуживание завершено. В ГЛАВНОЕ МЕНЮ',
             targetSelector: '.training-main-menu-btn',
             action: 'toAppMainMenu',
             targetScreen: 'welcomeScreen'
@@ -468,7 +507,8 @@ function showTrainingStep(index) {
     const progress = ((index + 1) / trainingSteps.length) * 100;
     document.getElementById('tooltipProgressBar').style.width = progress + '%';
 
-    tooltip.style.display = 'block';
+    // tooltip.style.display = 'block';
+    tooltip.style.setProperty('display', 'block', 'important');
     console.log('Показана панель подсказок');
 
     //==== УБИРАЕМ ПОДСТВЕТКУ И НОМЕР КНОПКИ ======

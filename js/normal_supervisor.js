@@ -165,7 +165,14 @@ function onPasswordKeyPress(event) {
 
 // Обработчик для кнопки Ввод
 function onAuthSubmitClick(event) {
-    event.preventDefault();
+    // event.preventDefault();
+    if (event) event.preventDefault();
+
+    //Если режим обучения - используем виртуальную клавиатуру
+    if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
+        globalVkbSubmit();
+        return;
+    }
 
     // Определяем, какое поле сейчас в фокусе
     const loginInput = document.getElementById('loginInput');
