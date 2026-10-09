@@ -65,7 +65,7 @@ function initTrainingSteps() {
             id: 1, 
             instruction: `Для начала обсулживания банкомата банка Озон необходимо зайти в "Меню инкассации".
                      Для этого нажмите 5 раз на логотип OZON в левом верхнем углу`,
-            shortInstruction: 'Пять раз нажмите на логотип OZON',
+            shortInstruction: 'Пять раз на логотип OZON',
             targetSelector: '.otp-logo-wrapper',
             action: 'logoClick',
             targetScreen: 'welcomeScreen'
@@ -80,25 +80,25 @@ function initTrainingSteps() {
         }, 
         {
             id: 3,
-            instruction: `На экране "Меню инкассации" нажмите кнопку "Полчить баланс". После этого, на экране, вы должны увидеть чек "Баланс банкомата", и кнопка "Получить баланс"
-            должна стать неактивной. Если этого не произошло - команда не выполнена! Нажмите кнопку "Получить баланс" ещё раз.`,
-            shortInstruction: 'Нажмите ПОЛУЧИТЬ БАЛАНС',
+            instruction: `На экране "Меню инкассации" нажмите кнопку "Получить баланс". После этого, на экране, вы должны увидеть чек "Баланс банкомата", 
+            и кнопка "Получить баланс" должна стать неактивной. Если этого не произошло - команда не выполнена! Нажмите кнопку "Получить баланс" ещё раз.`,
+            shortInstruction: 'ПОЛУЧИТЬ БАЛАНС',
             targetSelector: '[onclick="getBalance()"]',
             action: 'showBalanceReceipt',
             targetScreen: 'mainScreen'
         },
         {
             id: 4,
-            instruction: 'Кнопка "Меню инкассации" вернёт вас в предыдущее меню.',
-            shortInstruction: 'Нажмите МЕНЮ ИНКАССАЦИИ',
+            instruction: 'Кнопка "Меню инкассации" вернёт вас в предыдущее меню',
+            shortInstruction: 'МЕНЮ ИНКАССАЦИИ',
             targetSelector: '[onclick="closeBalanceReceipt()"]',
             action: 'closeBalanceReceipt', 
             targetScreen: 'balanceReceiptScreen'
         },
         {
             id: 5,
-            instruction: `На экране "Меню инкассации" нажмите кнопку "Провести инкассацию". После этого на экране должна появиться кнопка ПРОДОЛЖИТЬ.`,
-            shortInstruction: 'Нажмите ПРОВЕСТИ ИНКАССАЦИЮ',
+            instruction: `На экране "Меню инкассации" нажмите кнопку "Провести инкассацию". После этого на экране должна появиться кнопка ПРОДОЛЖИТЬ`,
+            shortInstruction: 'ПРОВЕСТИ ИНКАССАЦИЮ',
             targetSelector: '[onclick="performCollection()"]', 
             action: 'performCollection',
             targetScreen: 'mainScreen'
@@ -119,7 +119,7 @@ function initTrainingSteps() {
             id: 6,
             instruction: `Если вы видите экран "Можно проводить инкассацию", это означает, что операция "Провести инкассацию" выполнена успешно.
              Нажмите кнопку ПРОДОЛЖИТЬ`,
-            shortInstruction: 'Нажмите ПРОДОЛЖИТЬ',
+            shortInstruction: 'ПРОДОЛЖИТЬ',
             targetSelector: '.collection-continue-btn',
             action: 'continueCollection',
             targetScreen:'collectionCompleteScreen'
@@ -128,7 +128,7 @@ function initTrainingSteps() {
             id: 7, 
             instruction: `Далее нужно открыть верхний кабинет банкомата, проверить наличие задержанных карт клиентов, 
              перевести переключатель режимов работы банкомата normal/supervisor в положение supervisor, то есть, в режим оператора.`,
-            shortInstruction: 'Переведите переключатель в NORMAL',
+            shortInstruction: 'Переключатель в положение SUPERVISOR',
             targetSelector: '.mode-toggle-container', 
             action: 'switchToSupervisor', 
             targetScreen: 'outOfServiceScreen'
@@ -136,7 +136,7 @@ function initTrainingSteps() {
         {
             id: 8,
             instruction: 'Введите код пользователя 100 и нажмите кнопку "Ввод"',
-            shortInstruction: 'Код пользователя 100 и ВВОД',
+            shortInstruction: 'Код пользователя 100 + ВВОД',
             targetSelector: '#loginInput, .enter-btn', //#authScreen .info-input
             action: 'loginInput', 
             targetScreen: 'authScreen'
@@ -144,7 +144,7 @@ function initTrainingSteps() {
         {
             id: 9,
             instruction: 'Введите пароль 111111 и нажмите кнопку "Ввод"',
-            shortInstruction: 'Пароль 111111 и ВВОД',
+            shortInstruction: 'Пароль 111111 + ВВОД',
             targetSelector: '#passwordInput, .enter-btn',
             action: 'passwordInput',
             targetScreen: 'authScreen'
@@ -175,7 +175,7 @@ function initTrainingSteps() {
         },
         {
             id: 13,
-            instruction: 'Нажмите кнопку "ВЫБРАТЬ", чтобы подтвердить выбор.',
+            instruction: 'Нажмите кнопку "ВЫБРАТЬ", чтобы подтвердить',
             shortInstruction: 'ВЫБРАТЬ',
             targetSelector: '[onclick="selectBtn()"]', //[onclick="takeHeldCardReceipt()"] [onclick="selectBtn()"] #reset-select-btn
             action: 'resetHeldCardCounter', //backToOpenCloseDayMenu
@@ -183,7 +183,7 @@ function initTrainingSteps() {
         },
         { 
             id: 14,
-            instruction: `Нажмите кнопку "ВОЗВРАТ" для возврата в предыдущее меню.`,
+            instruction: `Нажмите кнопку "ВОЗВРАТ" для возврата в предыдущее меню`,
             shortInstruction: 'ВОЗВРАТ',
             targetSelector: '.additional-backtoopenclosedaymenu',
             action: 'backToOpenCloseDayMenu',
@@ -192,7 +192,7 @@ function initTrainingSteps() {
         },
         {
             id: 15, 
-            instruction: 'В меню "Открытие/закрытие операционного дня" нажмите кнопку "Ресайклер".',
+            instruction: 'В меню "Открытие/закрытие операционного дня" нажмите кнопку "Ресайклер"',
             shortInstruction: 'РЕСАЙКЛЕР',
             targetSelector: '.opencloseday-recycler', //[onclick="backToOpenCloseDay()"]
             action: 'recycler',
@@ -224,7 +224,7 @@ function initTrainingSteps() {
         },
         {
             id: 19,
-            instruction: 'Меняем кассеты',
+            instruction: 'Замените кассеты',
             shortInstruction: 'Замените кассеты',
             targetSelector: '.replaceCassettes',
             action: 'replaceCassettes',
@@ -232,7 +232,7 @@ function initTrainingSteps() {
         },
         {
             id: 20,
-            instruction: 'Закрываем дверь сейфа',
+            instruction: 'Закройте дверь сейфа',
             shortInstruction: 'Закройте сейф',
             targetSelector: '.closeSafeDoor',
             action: 'closeSafeDoor',
@@ -248,7 +248,7 @@ function initTrainingSteps() {
         },
         {
             id: 22,
-            instruction: 'Сначала запустится тестирование модуля рециркуляции.',
+            instruction: 'Сначала запустится тестирование модуля рециркуляции',
             shortInstruction: 'Модуль тестируется',
             targetSelector: 'null',
             action: null,
@@ -290,7 +290,7 @@ function initTrainingSteps() {
         {
             
             id: 27,
-            instruction: 'После ввода количества банкнот в кассетах снова запустится тест модуля рециркуляции.',
+            instruction: 'После ввода количества банкнот в кассетах снова запустится тест модуля рециркуляции',
             shortInstruction: 'Модуль тестируется',
             targetSelector: 'null',
             action: null,
@@ -336,7 +336,7 @@ function initTrainingSteps() {
         },
         {
             id: 32,
-            instruction: `Наберите шестизначный код инкассатора из заявки в МАИС.`,
+            instruction: `Введите шестизначный код инкассатора из заявки в МАИС`,
             shortInstruction: 'Код инкассатора',
             targetSelector: '.otp-input, .otp-submit-btn',
             action: 'enterOTP',
@@ -353,9 +353,9 @@ function initTrainingSteps() {
         {
             id: 34,
             instruction: `На экране вы увидите виртуальный чек "Баланс банкомата". Необходимо внимательно проверить номиналы банкнот в кассетах, количество банкнот,
-            загруженное в каждую из кассет и общую сумму, загруженную в устройство с данными из заявки в МАИС. 
-            Если данные о загрузке в чеке сходятся с данными, содержащимися в заявке в МАИС, нажимаем на экране кнопку "ВЫЙТИ".`,
-            shortInstruction: 'Проверяем информацию и ВЫЙТИ',
+            загруженное в каждую из кассет и общую сумму, загруженную в устройство и сравнить с данными в заявке в МАИС. 
+            Если данные данные на экране и в заявке сходятся, нажимаем на экране кнопку "ВЫЙТИ".`,
+            shortInstruction: 'Проверить чек, затем нажать ВЫХОД',
             targetSelector: '.exit-top-right', //[onclick="closeBalanceReceipt()"]
             action: 'exitButton',  //closeBalanceReceipt
             targetScreen: 'balanceReceiptScreen'
