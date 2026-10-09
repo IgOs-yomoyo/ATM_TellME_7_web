@@ -384,11 +384,7 @@ function globalVkbSubmit() {
         // }
         submitOTP();
     } else if (input.id === 'loginInput') {
-        //Завершаем шаг в обучении
-        if (typeof isTrainingMode !=='undefined' && isTrainingMode) {
-            console.log('Завершение шага loginInput');
-            completeTrainingStep('loginInput');
-        }
+        
         // Переходим к паролю
         const passwordInput = document.getElementById('passwordInput');
         if (passwordInput) {
@@ -404,13 +400,8 @@ function globalVkbSubmit() {
         } 
 
     } else if (input.id === 'passwordInput') {
-        //Завершаем шаг в обучении
-        if (typeof isTrainingMode !=='undefined' && isTrainingMode) {
-            console.log('Завершение шага passwordInput');
-            completeTrainingStep('passwordInput');
-        }
-        // Отправляем авторизацию
         submitAuth();
+        
     } else if (input.id.startsWith('LoadInput_')) {
         const cassetteNumber = parseInt(input.id.replace('LoadInput_', ''));
         Enter(cassetteNumber);

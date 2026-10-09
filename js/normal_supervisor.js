@@ -140,9 +140,9 @@ function onLoginKeyPress(event) {
         event.preventDefault();
 
         //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
-        if (isTrainingMode) {
-            completeTrainingStep('loginInput');
-        }
+        // if (isTrainingMode) {
+        //     completeTrainingStep('loginInput');
+        // }
 
         const passwordInput = document.getElementById('passwordInput');
         if (passwordInput) {
@@ -217,6 +217,7 @@ function submitAuth() {
     if (login === '100' && password === '111111') {
         //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
         if (isTrainingMode) {
+            completeTrainingStep('loginInput');
             completeTrainingStep('passwordInput');
         }
 
