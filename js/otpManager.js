@@ -4,18 +4,17 @@ let otpCode = null;
 let otpTimer = null;
 let otpTimeLeft = 30;
 let logoClickCount = 0;
-let logoClickTimer = null;
 
 // Генерация OTP кода (6 цифр)
 function generateOTP() {
     const code = Math.floor(100000 + Math.random() * 900000).toString();
-    console.log('Сгенерирован OTP коде:', code);
+    console.log('Сгенерирован OTP код:', code);
     return code;
 }
 
 // Запуск OTP таймера
 function startOTPTimer() {
-    otpTimerLeft = 30;
+    otpTimeLeft = 30;
     // updateTimerDisplay();
 
     if (otpTimer) clearInterval(otpTimer);
@@ -25,8 +24,8 @@ function startOTPTimer() {
         console.log('⏱ Осталось секунд:', otpTimeLeft);
         // updateTimerDisplay();
 
-        if (otpTimerLeft <= 0) {
-            clearInterval(otpTimeLeft);
+        if (otpTimeLeft <= 0) {
+            clearInterval(otpTimer);
             otpTimer = null;
             //Генерируем новый код
             otpCode = generateOTP();
@@ -65,16 +64,8 @@ function handleLogoClick() {
     
     logoClickCount++;
     
-    // Сбрасываем таймер, если прошло больше 3 секунд
-    clearTimeout(logoClickTimer);
-    logoClickTimer = setTimeout(() => {
-        logoClickCount = 0;
-        console.log('🔄 Счетчик кликов сброшен');
-    }, 3000);
-    
     if (logoClickCount >= 5) {
         logoClickCount = 0;
-        clearTimeout(logoClickTimer);
 
         //Явно скрываем welcomeScreen
         const welcomeScreen = document.getElementById('welcomeScreen');
@@ -96,6 +87,23 @@ function handleLogoClick() {
         showOTPScreen();
     }
 }
+
+function updateOTPInputMode() {
+    const screen = document.getElementById('inputOTPCodeScreen');
+    const input = document.getElementById('otpInput');
+    if (!screen || !input || getComputedStyle(screen).display === 'none') return;
+
+    const isMobile = window.innerWidth <= 1024;
+    input.readOnly = isMobile;
+    if (isMobile) {
+        input.setAttribute('inputmode', 'none');
+    } else {
+        input.removeAttribute('inputmode');
+        input.focus();
+    }
+}
+
+window.addEventListener('resize', updateOTPInputMode);
 
 // Показ экрана ввода OTP
 function showOTPScreen() {
@@ -135,20 +143,7 @@ function showOTPScreen() {
     if (input) {
         input.value = '';
 
-        const isMobile = window.innerWidth <= 1024;
-
-        if(isMobile) {
-            //Виртуальная клавиатура на мобильном
-            input.readOnly = true;
-            input.setAttribute('inputmode', 'none');
-            console.log('Мобильный режим: системная клавиатура отключена');
-        } else {
-            //На десктопе обычная клавиатура
-            input.readOnly = false;
-            input.removeAttribute('inputmode');
-            input.focus();
-            console.log('Десктоп: фокус на поле ввода');
-        }
+        updateOTPInputMode();
         // input.focus();
     }
 

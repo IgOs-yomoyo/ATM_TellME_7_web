@@ -139,10 +139,9 @@ function onLoginKeyPress(event) {
     if (event.key === 'Enter') {
         event.preventDefault();
 
-        //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
-        // if (isTrainingMode) {
-        //     completeTrainingStep('loginInput');
-        // }
+        if (isTrainingMode && event.currentTarget.value === '100') {
+            completeTrainingStep('loginInput');
+        }
 
         const passwordInput = document.getElementById('passwordInput');
         if (passwordInput) {

@@ -39,7 +39,7 @@ function showTestingScreen (duration = 8000, callback = null) {
 // Имитация звука
 function playTestingSound() {
     try {
-        const audio = new Audio('audio/testing_sound.mp4');
+        const audio = new Audio('audio/testing_sound.mp3');
         audio.loop = true;
         audio.volume = 0.5;
 
@@ -264,7 +264,7 @@ function getActiveInput() {
     }
     //1.экран ввода OTP
     const otpScreen = document.getElementById('inputOTPCodeScreen');
-    if (otpScreen && otpScreen.style.display === 'flex') {
+    if (otpScreen && getComputedStyle(otpScreen).display !== 'none') {
         return document.getElementById('otpInput');
     } 
     //2. Экран авторизации (100/111111)
@@ -293,7 +293,7 @@ function getActiveInput() {
 function globalVkbInput(digit) {
     //Сначала проверяем OTP
     const otpScreen = document.getElementById('inputOTPCodeScreen');
-    if (otpScreen && otpScreen.style.display === 'flex') {
+    if (otpScreen && getComputedStyle(otpScreen).display !== 'none') {
         const input = document.getElementById('otpInput');
         if (input) {
             const maxLength = input.maxLength > 0 ? input.maxLength : 6;
@@ -384,18 +384,21 @@ function globalVkbSubmit() {
         // }
         submitOTP();
     } else if (input.id === 'loginInput') {
-        
+        if (isTrainingMode && input.value === '100') {
+            completeTrainingStep('loginInput');
+        }
         // Переходим к паролю
         const passwordInput = document.getElementById('passwordInput');
         if (passwordInput) {
-            //Убираем readOnly на время фокуса
-            passwordInput.readOnly = false;
+            const isMobile = window.innerWidth <= 1024;
+            if (isMobile) passwordInput.readOnly = false;
             passwordInput.focus();
 
-            //Сразу ставим обратно. Системная клавиатура не должна появиться. 
-            setTimeout(() => {
-                passwordInput.readOnly = true;
-            }, 50);
+            if (isMobile) {
+                setTimeout(() => {
+                    passwordInput.readOnly = true;
+                }, 50);
+            }
             console.log('Фокус на поле ввода пароля');
         } 
 

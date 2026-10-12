@@ -16,11 +16,13 @@ function openTrainingMenu() {
 
     //Сбрасываем режим обучения
     isTrainingMode = false;
+    isTestingMode = false;
     currentStepIndex = 0;
 
     //Убираем подсветку кнопок
-    document.querySelectorAll('.training-hightlight').forEach(el => {
-        el.classList.remove('training-hightlight');
+    document.querySelectorAll('.step-number').forEach(el => el.remove());
+    document.querySelectorAll('.training-highlight').forEach(el => {
+        el.classList.remove('training-highlight');
     });
     
     //Скрываем все экраны
@@ -31,11 +33,13 @@ function openTrainingMenu() {
     // Показываем меню тренажёра
     const trainerMenu = document.getElementById('trainerMenuScreen');
     if (trainerMenu) trainerMenu.style.display = 'block';
+    document.querySelector('.training-main-menu-btn').style.display = 'none';
 }
 
 function backToATMService() {
     const trainerMenu = document.getElementById('trainerMenuScreen');
     if (trainerMenu) trainerMenu.style.display = 'none';
+    document.querySelector('.training-main-menu-btn').style.display = 'block';
 
     if (typeof showClientScreen === 'function') {
         showClientScreen();
@@ -48,6 +52,7 @@ function backToATMService() {
 let trainingSteps = [];
 let currentStepIndex = 0;
 let isTrainingMode = false;
+let isTestingMode = false;
 
 // Шаги обучения (порядок действий)
 function initTrainingSteps() {
@@ -63,9 +68,8 @@ function initTrainingSteps() {
         trainingSteps = [
         {
             id: 1, 
-            instruction: `Для начала обсулживания банкомата банка Озон необходимо зайти в "Меню инкассации".
-                     Для этого нажмите 5 раз на логотип OZON в левом верхнем углу`,
-            shortInstruction: 'Пять раз на логотип OZON',
+            instruction: 'Нажмите пять раз на логотип OZON',
+            shortInstruction: 'Нажмите пять раз на логотип OZON',
             targetSelector: '.otp-logo-wrapper',
             action: 'logoClick',
             targetScreen: 'welcomeScreen'
@@ -312,7 +316,7 @@ function initTrainingSteps() {
             Для этого откройте верхний кабинет банкомата и переведите переключатель режимов в положение normal.
             Затем, на экране, нажмите кнопку "В режим обслуживания клиентов".`,
             shortInstruction: 'Переключатель в NORMAL и В РЕЖИМ ОБСЛУЖИВАНИЯ КЛИЕНТОВ',
-            targetSelector: '.recyclerday-backtonormal',
+            targetSelector: '.recyclerday-backtonormal, .mode-toggle-container',
             action: 'backToNormalMode',
             targetScreen: 'recyclerday'
         },
@@ -354,7 +358,7 @@ function initTrainingSteps() {
             id: 34,
             instruction: `На экране вы увидите виртуальный чек "Баланс банкомата". Необходимо внимательно проверить номиналы банкнот в кассетах, количество банкнот,
             загруженное в каждую из кассет и общую сумму, загруженную в устройство и сравнить с данными в заявке в МАИС. 
-            Если данные данные на экране и в заявке сходятся, нажимаем на экране кнопку "ВЫЙТИ".`,
+            Если данные на экране и в заявке сходятся, нажмите кнопку "ВЫХОД".`,
             shortInstruction: 'Проверить чек, затем нажать ВЫХОД',
             targetSelector: '.exit-top-right', //[onclick="closeBalanceReceipt()"]
             action: 'exitButton',  //closeBalanceReceipt
@@ -388,15 +392,17 @@ function initTrainingSteps() {
     ];
 }
 
-function startTraining() {
+function startTraining(mode = 'learning') {
     // document.body.classList.add('training-mode'); // Похоже, это лишнее. 
     isTrainingMode = true;
+    isTestingMode = mode === 'testing';
     currentStepIndex = 0;
     initTrainingSteps();
 
     // Скрываем меню тренажёра
     const trainerMenu = document.getElementById('trainerMenuScreen');
     if (trainerMenu) trainerMenu.style.display = 'none';
+    document.querySelector('.training-main-menu-btn').style.display = 'block';
 
     // Принудительно показываем welcomeScreen
     // Скрываем все экраны
@@ -418,6 +424,25 @@ function startTraining() {
     setTimeout(() => {
         showTrainingStep(currentStepIndex);
     }, 300);
+}
+
+function updateTooltipInstruction(step) {
+    if (!step) return;
+    const switchWidth = document.querySelector('.mode-toggle-container')?.offsetWidth || 0;
+    const viewportWidth = window.visualViewport?.width || window.innerWidth;
+    const viewportHeight = window.visualViewport?.height || window.innerHeight;
+    const isCompact = viewportWidth < 1200 + switchWidth + 56 || viewportHeight < 840;
+    const tooltipInstruction = document.getElementById('tooltipText');
+    const tooltipShort = document.getElementById('tooltipShort');
+
+    if (tooltipInstruction) {
+        tooltipInstruction.style.display = isCompact ? 'none' : 'block';
+        tooltipInstruction.textContent = step.instruction;
+    }
+    if (tooltipShort) {
+        tooltipShort.style.display = isCompact ? 'block' : 'none';
+        tooltipShort.textContent = step.shortInstruction || step.instruction;
+    }
 }
 
 function showTrainingStep(index) {
@@ -455,7 +480,7 @@ function showTrainingStep(index) {
     //Переписываем эту функцию, чтобы, если экран уже показан, то он не обновлялся. 
     if (step.targetScreen) {
         const targetScreen = document.getElementById(step.targetScreen);
-        if (targetScreen && targetScreen.style.display !== 'block') {
+        if (targetScreen && getComputedStyle(targetScreen).display === 'none') {
             console.log('Показываем экран:', step.targetScreen);
             document.querySelectorAll('.atm-screen').forEach(screen => {
                 screen.style.display = 'none';
@@ -476,32 +501,20 @@ function showTrainingStep(index) {
         return;
     }
 
+    if (isTestingMode) {
+        tooltip.style.display = 'none';
+        document.querySelectorAll('.step-number').forEach(el => el.remove());
+        document.querySelectorAll('.training-highlight').forEach(el => el.classList.remove('training-highlight'));
+        if (step.autoAdvance) {
+            setTimeout(() => completeTrainingStep('autoAdvance'), 3000);
+        }
+        return;
+    }
+
     // Обновляем панель
     document.getElementById('tooltipStep').textContent = step.id;
     document.getElementById('tooltipTotal').textContent = trainingSteps.length;
-    // document.getElementById('tooltipText').textContent = step.instruction;
-        //Определяем, какой показывать текст в зависимости от размеров монитора устройства
-    const isMobile = window.innerWidth <= 1024;
-    const tooltipInstruction = document.getElementById('tooltipText');
-    const tooltipShort = document.getElementById('tooltipShort');
-
-    if (isMobile) {
-        //Короткие инструкции, если мобильный
-        if (tooltipInstruction) tooltipInstruction.style.display = 'none';
-        if (tooltipShort) {
-            tooltipShort.style.display = 'block';
-            tooltipShort.textContent = step.shortInstruction || step.instruction;
-        }
-        console.log('Короткая подсказка:', step.shortInstruction || step.instruction);
-    }else{
-        //Полный текст, если десктоп
-        if (tooltipInstruction) {
-            tooltipInstruction.style.display = 'block';
-            tooltipInstruction.textContent = step.instruction;
-        }
-        if (tooltipShort) tooltipShort.style.display = 'none';
-        console.log('Полная инструкция:', step.instruction);
-    }
+    updateTooltipInstruction(step);
 
     // Обновляем прогресс
     const progress = ((index + 1) / trainingSteps.length) * 100;
@@ -509,6 +522,7 @@ function showTrainingStep(index) {
 
     // tooltip.style.display = 'block';
     tooltip.style.setProperty('display', 'block', 'important');
+    requestAnimationFrame(keepTooltipInViewport);
     console.log('Показана панель подсказок');
 
     //==== УБИРАЕМ ПОДСТВЕТКУ И НОМЕР КНОПКИ ======
@@ -611,11 +625,12 @@ function completeTrainingStep(action) {
     if (step && step.action === action) {
         console.log('✅ Действие совпадает, переходим к следующему шагу');
 
-        const currentTarget = document.querySelector(step.targetSelector);
-        if (currentTarget) {
-            const label = currentTarget.querySelector('.step-number');
-            if (label) label.remove();
-            currentTarget.classList.remove('training-highlight');
+        if (step.targetSelector) {
+            document.querySelectorAll(step.targetSelector).forEach(currentTarget => {
+                const label = currentTarget.querySelector('.step-number');
+                if (label) label.remove();
+                currentTarget.classList.remove('training-highlight');
+            });
         }
         currentStepIndex++;
         console.log('Новый currentStepIndex:', currentStepIndex);
@@ -646,13 +661,12 @@ function skipTrainingStep() {
     if (!isTrainingMode) return;
 
     const step = trainingSteps[currentStepIndex];
-    if (step) {
-        const currentTarget = document.querySelector(step.targetSelector);
-        if (currentTarget) {
-            const label = currentTarget.querySelector('step-number');
+    if (step && step.targetSelector) {
+        document.querySelectorAll(step.targetSelector).forEach(currentTarget => {
+            const label = currentTarget.querySelector('.step-number');
             if (label) label.remove();
             currentTarget.classList.remove('training-highlight');
-        }
+        });
     }
     currentStepIndex++;
     showTrainingStep(currentStepIndex);
@@ -661,6 +675,7 @@ function skipTrainingStep() {
 function finishTraining() {
     // document.body.classList.add('training-mode'); // Похоже, лишнее. 
     isTrainingMode = false;
+    isTestingMode = false;
     currentStepIndex = 0;
 
     // === УБИРАЕМ ВСЕ НОМЕРА ===
@@ -700,10 +715,27 @@ function initTooltipDrag() {
     tooltipElement = document.getElementById('trainingTooltip');
     if (!tooltipElement) return;
 
+    function syncTooltipParent() {
+        const parent = window.innerWidth > 1024 ? document.body : document.querySelector('.atm-container');
+        if (tooltipElement.parentElement === parent) return;
+        parent.appendChild(tooltipElement);
+        tooltipElement.style.left = '30px';
+        tooltipElement.style.bottom = '180px';
+        tooltipElement.style.top = 'auto';
+        tooltipElement.style.right = 'auto';
+    }
+
+    syncTooltipParent();
+    window.addEventListener('resize', () => {
+        syncTooltipParent();
+        if (isTrainingMode && !isTestingMode) updateTooltipInstruction(trainingSteps[currentStepIndex]);
+        requestAnimationFrame(keepTooltipInViewport);
+    });
+
     //=== Привязвываем курсор к окну ===
     tooltipElement.style.position = 'fixed';
     tooltipElement.style.left = '30px';
-    tooltipElement.style.bottom = '150px';
+    tooltipElement.style.bottom = '180px';
     tooltipElement.style.top = 'auto';
     tooltipElement.style.right = 'auto';
     tooltipElement.style.transform = 'none';
@@ -744,7 +776,6 @@ function startDrag(e) {
 
 function onDrag(e) {
     if (!isDragging) return;
-    //Новые координаты панели: курсор минус смещение
     let x = e.clientX - dragOffsetX;
     let y = e.clientY - dragOffsetY;
 
@@ -760,10 +791,10 @@ function onDrag(e) {
     const panelHeight = rect.height;
 
 
-    const maxX = window.innerWidth - 20; //const maxX = window.innerWidth - rect.width;
-    const minX = 20; //-panelWidth + 10;
-    const maxY = window.innerHeight - 20; //const maxY = window.innerHeight - rect.height;
-    const minY = 20; //-panelHeight + 10;
+    const minX = 20;
+    const minY = 20;
+    const maxX = Math.max(minX, window.innerWidth - panelWidth - 20);
+    const maxY = Math.max(minY, window.innerHeight - panelHeight - 20);
 
     x = Math.max(minX, Math.min(x, maxX));
     y = Math.max(minY, Math.min(y, maxY));
@@ -774,6 +805,17 @@ function onDrag(e) {
     tooltipElement.style.bottom = 'auto';
     tooltipElement.style.right = 'auto';
     tooltipElement.style.transform = 'none';
+}
+
+function keepTooltipInViewport() {
+    if (window.innerWidth <= 1024 || !tooltipElement || getComputedStyle(tooltipElement).display === 'none') return;
+    const rect = tooltipElement.getBoundingClientRect();
+    const left = Math.max(20, Math.min(rect.left, Math.max(20, window.innerWidth - rect.width - 20)));
+    const top = Math.max(20, Math.min(rect.top, Math.max(20, window.innerHeight - rect.height - 20)));
+    if (Math.abs(left - rect.left) < 1 && Math.abs(top - rect.top) < 1) return;
+    tooltipElement.style.left = left + 'px';
+    tooltipElement.style.top = top + 'px';
+    tooltipElement.style.bottom = 'auto';
 }
 
 function stopDrag() {

@@ -148,7 +148,7 @@ function showCloseDayScreen() {
     let receiptHtml = '';
     receiptHtml += '<div style="font-family: monospace; font-size: 12px;">';
     receiptHtml += '<div style="text-align: center;">';
-    receiptHtml += '<strong>СБЕРБАНК РОССИИ ПАО</strong><br>';
+    receiptHtml += '<strong>ОЗОН БАНК</strong><br>';
     receiptHtml += 'ОТДЕЛ СЕРВИСНОГО ОБСЛУЖИВАНИЯ<br>';
     receiptHtml += 'Волгоградский пр-т д. 32 к. 45<br>';
     receiptHtml += `ДАТА: ${currentDate} ВРЕМЯ: ${currentTime}<br>`;
@@ -157,7 +157,7 @@ function showCloseDayScreen() {
     receiptHtml += '<strong>ЗАКРЫТИЕ ОПЕРАЦИОННОГО ДНЯ</strong><br>';
 
     if (openingDayData && openingDayData.time && openingDayData.date) {
-        receiptHtml += 'ВРЕМЯ ОТКРЫТИЯ: ${openingDayData.time} ${openingDayData.date}<br>'
+        receiptHtml += `ВРЕМЯ ОТКРЫТИЯ: ${openingDayData.time} ${openingDayData.date}<br>`
     }else{
         receiptHtml += 'ВРЕМЯ ОТКРЫТИЯ: данные отсутствуют<br>';
     }

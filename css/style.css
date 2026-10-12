@@ -5,6 +5,19 @@
     box-sizing: border-box;
 }
 
+button,
+a[href],
+[onclick],
+.switch-vertical,
+input[type="checkbox"],
+input[type="radio"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+select {
+    cursor: pointer;
+}
+
 /* Стиль для всей страницы */
 /* body { */
     /* position: relative; Добавил для адаптации */
@@ -148,9 +161,9 @@ html, body {
 
 /* Кнопка normal/supervisor. Всегда видна на всех экранах */
 .mode-toggle-container {
-    position: absolute !important;  /* ← было fixed, стало absolute */
+    position: fixed !important;
     top: 50%;
-    right: -80px;
+    right: 12px;
     transform: translateY(-50%);
     display: flex;
     flex-direction: row;
@@ -172,6 +185,11 @@ html, body {
     border-radius: 40px;
     backdrop-filter: blur(4px);
     z-index: 1000; */
+}
+
+.mode-toggle-container.training-highlight {
+    transform: translateY(-50%) scale(1.05) !important;
+    z-index: 1000;
 }
 
 /* Блок с подписями (вертикальный столбец) */
@@ -241,8 +259,8 @@ input:checked + .slider-vertical {
 /* ========== КНОПКА ПЕРЕХОДА В ГЛАВНОЕ МЕНЮ ТРЕНАЖЁРА ========== */
 .training-main-menu-btn {
     position: fixed;
-    bottom: 70px !important;
-    left: 10px !important;
+    top: 0;
+    left: 0;
     padding: 35px 70px;
     font-size: 18px;
     font-weight: bold;
@@ -356,7 +374,9 @@ input:checked + .slider-vertical {
     border-radius: 16px;
     z-index: 99999;
     max-width: 600px;
-    max-width: 450px;
+    max-width: min(450px, calc(100vw - 40px));
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
     width: auto;
     backdrop-filter: blur(8px);
     border: 2px solid #1976D2;
@@ -392,6 +412,12 @@ input:checked + .slider-vertical {
     line-height: 1.5;
     margin-bottom: 15px;
     color: white;
+}
+
+.training-tooltip-short {
+    font-size: 20px;
+    line-height: 1.5;
+    margin-bottom: 15px;
 }
 
 .training-tooltip-progress {
@@ -511,6 +537,7 @@ input:checked + .slider-vertical {
 /* ========== КАРУСЕЛЬ НА ЭКРАНЕ ПРИВЕТСТВИЯ ========== */
 .carousel-container {
     position: relative;
+    pointer-events: none;
     width: 100%;
     max-width: 800px;
     height: 500px;        /* высота контейнера, подберите под свои изображения */
@@ -2030,20 +2057,15 @@ input:checked + .slider-vertical {
 
 @media screen and (max-width: 1024px) {
     /* Кнопка "В главное меню" на мобильном */
-    .training-main-menu-btn,
-    /* [onclick*="backToATMService"], */
-    [onclick*="toAppMainMenu"] {
-        font-size: 12px !important;
-        padding: 6px 12px !important;
+    .training-main-menu-btn {
+        font-size: clamp(12px, 1.6vw, 18px) !important;
+        padding: 10px 14px !important;
         min-width: 80px !important;
-        height: 32px !important;
+        min-height: 44px !important;
+        height: auto !important;
         width: auto !important;
-        max-width: 140px !important;
-        position: fixed !important;
-        bottom: 8px !important;
-        left: 8px !important;
-        top: auto !important;
-        right: auto !important;
+        max-width: none !important;
+        position: fixed;
         z-index: 9999 !important;
         border-radius: 6px !important;
     }
@@ -2088,7 +2110,7 @@ input:checked + .slider-vertical {
 }
 
 /* Если телефон в портретной ориентации — показываем подсказку */
-@media screen and (orientation: portrait) {
+@media screen and (orientation: portrait) and (max-width: 1024px) {
     body::before {
         content: '📱 Поверните телефон горизонтально для работы с тренажёром';
         position: fixed;
@@ -2110,6 +2132,15 @@ input:checked + .slider-vertical {
     
     .atm-container {
         display: none !important;
+    }
+
+    .mode-toggle-container,
+    .training-main-menu-btn,
+    .training-tooltip,
+    .virtual-keypad-global {
+        display: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
     }
 }
 
@@ -2157,8 +2188,14 @@ input:checked + .slider-vertical {
 
 /* Показываем клавиатуру ТОЛЬКО на мобильном */
 @media screen and (max-width: 1024px) {
+    .mode-toggle-container {
+        right: 8px;
+        gap: 6px;
+        padding: 8px 10px;
+    }
+
     .virtual-keypad-global {
-        display: grid !important;
+        display: none !important;
         position: fixed !important;
         grid-template-columns: repeat(3, 40px) !important;
         gap: 4px;
@@ -2173,6 +2210,12 @@ input:checked + .slider-vertical {
         z-index: 999999 !important;
         /* transform: translateX(-430px);
         justify-content: start !important;  */
+    }
+
+    body:has(#inputOTPCodeScreen:not([style*="display: none"]),
+              #authScreen:not([style*="display: none"]),
+              [id^="replenishcassette_"]:not([style*="display: none"])) .virtual-keypad-global {
+        display: grid !important;
     }
 
     .virtual-keypad-global button {
@@ -2215,6 +2258,7 @@ input:checked + .slider-vertical {
     margin: 0;
     padding: 10px 20px;
     background: #f0f0f0;
+    color: #1f2937;
     border-radius: 10px;
     text-align: center;
     order: 1;
@@ -2294,11 +2338,9 @@ input:checked + .slider-vertical {
         /* display: block !important; */
         position: fixed !important;
 
-        top: 5px !important;
-        /* right: 5px !important; */
-        right: auto !important;
-        /* left: auto !important; */
-        left: 1000px !important;
+        top: 160px !important;
+        right: 12px !important;
+        left: auto !important;
         /* transform: translateX(-50%) !important; */
         transform: none !important;
 
@@ -2364,12 +2406,6 @@ input:checked + .slider-vertical {
         min-width: 200px !important;
         height: 70px !important;
         border-radius: 12px !important;
-    }
-
-    /* Заголовки экранов */
-    .screen-title {
-        font-size: 72px !important;
-        height: 60px !important;
     }
 
     /* Поля ввода */

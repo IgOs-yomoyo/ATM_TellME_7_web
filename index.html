@@ -14,21 +14,11 @@
 </head>
 <body>
     <div class="atm-container">
-        <div class="mode-toggle-container">
-            <div class="mode-labels">
-                <span class="mode-label mode-supervisor">SUPERVISOR</span>
-                <span class="mode-label mode-normal">NORMAL</span>
-            </div>
-            <label class="switch-vertical">
-                <input type="checkbox" id="modeCheckbox">
-                <span class="slider-vertical"></span>
-            </label>
-        </div>
         <!-- ПАНЕЛЬ ПОДСКАЗОК ДЛЯ РЕЖИМА ОБУЧЕНИЯ -->
         <div id="trainingTooltip" class="training-tooltip" style="display: none;">
             <div class="training-tooltip-content">
-                <div class="training-tooltip-step">Шаг<span id="tooltipStep">1</span>из<span id="tooltipTotal">1</span></div>
-                <div class="training-tooltip-text" id="tooltipText">Для начала обсулживания банкомата банка Озон необходимо зайти в "Меню инкассации".
+                <div class="training-tooltip-step">Шаг <span id="tooltipStep">1</span> из <span id="tooltipTotal">1</span></div>
+                <div class="training-tooltip-text" id="tooltipText">Для начала обслуживания банкомата банка Озон необходимо зайти в "Меню инкассации".
                      Для этого нажмите 5 раз на логотип OZON в левом верхнем углу</div>
                 <div class="training-tooltip-short" id="tooltipShort" style="display: none;">
                     Пять раз нажмите на логотип OZON
@@ -162,11 +152,11 @@
             <div class="screen-content">
                 <div class="load-cassette-container">
                     <div class="info-row">
-                        <div class="info-label">КОД ПОЛЬЗОВАТЕЛЯ</div>
+                        <label class="info-label" for="loginInput">КОД ПОЛЬЗОВАТЕЛЯ</label>
                         <input type="text" id="loginInput" class="info-input" inputmode="none" pattern="[0-9]*" autocomplete="off">  <!-- placeholder="Код пользователя" -->
                     </div>
                     <div class="info-row">
-                        <div class="info-label">ПАРОЛЬ</div>
+                        <label class="info-label" for="passwordInput">ПАРОЛЬ</label>
                         <input type="password" id="passwordInput" class="info-input" inputmode="none" pattern="[0-9]*" autocomplete="off"> <!-- placeholder="Пароль" -->
                     </div>
                 </div>
@@ -186,7 +176,7 @@
         </div>
         <!-- Экран с чеком "Получить баланс" -->
         <div id="balanceReceiptScreen" class="atm-screen" style="display: none;">
-            <div class="screen-title">ЧЕК БАЛАНС</div>
+            <div class="screen-title">ЧЕК БАЛАНСА</div>
             <div class="receipt-container">
                 <div class="receipt-content" id="balanceReceiptContent">
                     <!-- Здесь будет чек -->
@@ -245,7 +235,7 @@
         </div>
         <!-- Экран "ОТКРЫТИЕ\ЗАКРЫТИЕ ОПЕРАЦИОННОГО ДНЯ" -->
         <div id="opencloseday" class="atm-screen" style="display: none;">
-            <div class="screen-title">ОТКРЫТИЕ\ЗАКРЫТИЕ ОПЕРАЦИОННОГО ДНЯ</div>
+            <div class="screen-title">ОТКРЫТИЕ/ЗАКРЫТИЕ ОПЕРАЦИОННОГО ДНЯ</div>
             <button class="atm-button opencloseday-recycler" onclick="recyclerday()">РЕСАЙКЛЕР</button>
             <button class="atm-button opencloseday-backtosupervisor" onclick="backtosupervisorScreen()">ВОЗВРАТ</button>
             <button class="atm-button opencloseday-backtonormal" onclick="backtonormal()">В РЕЖИМ ОБСЛУЖИВАНИЯ 
@@ -259,7 +249,7 @@
             <div class="screen-title">ДОПОЛНИТЕЛЬНЫЕ ОПЕРАЦИИ</div>
 
             <div class="reset-option" id="resetHeldOption" onclick="selectResetOption('held')">
-                1.Сброс счётчика задержанных карт
+                1. Сброс счётчика задержанных карт
             </div>
             
             <div class="reset-option selected" id="resetIssuedOption" onclick="selectResetOption('issued')">
@@ -375,6 +365,7 @@
                         <div class="load-input">
                             <input type="text"
                                 id="LoadInput_1"
+                                aria-label="Загрузка кассеты 1"
                                 class="info-input"
                                 maxlength="4"
                                 inputmode="none"
@@ -425,6 +416,7 @@
                         <div class="load-input">
                             <input type="text"
                                 id="LoadInput_2"
+                                aria-label="Загрузка кассеты 2"
                                 class="info-input"
                                 maxlength="4"
                                 inputmode="none"
@@ -475,6 +467,7 @@
                         <div class="load-input">
                             <input type="text"
                                 id="LoadInput_3"
+                                aria-label="Загрузка кассеты 3"
                                 class="info-input"
                                 maxlength="4"
                                 inputmode="none"
@@ -523,6 +516,7 @@
                         <div class="load-input">
                             <input type="text"
                                 id="LoadInput_4"
+                                aria-label="Загрузка кассеты 4"
                                 class="info-input"
                                 maxlength="4"
                                 inputmode="none"
@@ -585,8 +579,18 @@
             <!-- </div> -->
         </div>
     </div>
+    <div class="mode-toggle-container">
+        <div class="mode-labels">
+            <span class="mode-label mode-supervisor">SUPERVISOR</span>
+            <span class="mode-label mode-normal">NORMAL</span>
+        </div>
+        <label class="switch-vertical">
+            <input type="checkbox" id="modeCheckbox" aria-label="Переключить режим NORMAL или SUPERVISOR">
+            <span class="slider-vertical"></span>
+        </label>
+    </div>
     <!-- Кнопка перехода к главному меню тренажёра -->
-    <button class="training-main-menu-btn" onclick="openTrainingMenu()">В ГЛАВНОЕ МЕНЮ</button>
+    <button class="training-main-menu-btn" style="display: none;" onclick="openTrainingMenu()">В ГЛАВНОЕ МЕНЮ</button>
         
     <script>let isFreshOpen = false;</script>
     <script src="js/utils.js"></script>
@@ -605,6 +609,57 @@
     <!-- <script src="js/closerecyclerday.js?v=2"></script> -->
 
     <script>
+    function positionMenuButton() {
+        const button = document.querySelector('.training-main-menu-btn');
+        const atm = document.querySelector('.atm-container');
+        if (!button || !atm || getComputedStyle(button).display === 'none') return;
+
+        const panel = atm.getBoundingClientRect();
+        const width = button.offsetWidth;
+        const height = button.offsetHeight;
+        const controls = [...document.querySelectorAll('.atm-screen button, .atm-screen input, .atm-screen select, .atm-screen [onclick], #globalKeypad button')]
+            .filter(el => {
+                const style = getComputedStyle(el);
+                const rect = el.getBoundingClientRect();
+                return style.visibility !== 'hidden' && style.pointerEvents !== 'none' && rect.width && rect.height;
+            })
+            .map(el => el.getBoundingClientRect());
+        const xs = [panel.left + 10, panel.right - width - 10, panel.left + (panel.width - width) / 2];
+        const ys = [
+            panel.bottom - height - 10,
+            panel.bottom - height - 70,
+            panel.top + panel.height * 0.5,
+            panel.top + panel.height * 0.1875,
+            panel.top + 10
+        ];
+        for (let y = panel.top + 10; y <= panel.bottom - height - 10; y += 24) ys.push(y);
+
+        for (const y of ys) {
+            for (const x of xs) {
+                const candidate = { left: x, top: y, right: x + width, bottom: y + height };
+                if (candidate.left < panel.left + 4 || candidate.right > panel.right - 4 ||
+                    candidate.top < panel.top + 4 || candidate.bottom > panel.bottom - 4) continue;
+                const blocked = controls.some(rect =>
+                    candidate.left < rect.right + 8 && candidate.right > rect.left - 8 &&
+                    candidate.top < rect.bottom + 8 && candidate.bottom > rect.top - 8
+                );
+                if (blocked) continue;
+                button.style.left = `${x}px`;
+                button.style.top = `${y}px`;
+                return;
+            }
+        }
+    }
+
+    let menuPositionFrame = 0;
+    function scheduleMenuPosition() {
+        if (menuPositionFrame) return;
+        menuPositionFrame = requestAnimationFrame(() => {
+            menuPositionFrame = 0;
+            positionMenuButton();
+        });
+    }
+
     // ===== МАСШТАБИРОВАНИЕ ВСЕГО КОНТЕЙНЕРА =====
     function scaleContainer() {
         const container = document.querySelector('.atm-container');
@@ -625,50 +680,79 @@
         const windowWidth = vv ? vv.width : window.innerWidth;
         const windowHeight = vv ? vv.height : window.innerHeight;
 
-        //Проверяем размеры экрана устройства - мобильный или нет
-        const isMobile = windowWidth <= 1024;
+        const padding = 8;
+        const gap = 12;
+        const modeToggle = document.querySelector('.mode-toggle-container');
+        const switchWidth = modeToggle?.offsetWidth || 0;
+        const switchHeight = modeToggle?.offsetHeight || 0;
+        const bottomDock = padding;
+        const usableHeight = windowHeight - padding - bottomDock;
 
-        // Размеры окна
-        // const windowWidth = window.innerWidth;
-        // const windowHeight = window.innerHeight;
+        const sideScale = Math.min(
+            (windowWidth - switchWidth - gap - padding * 2) / containerWidth,
+            usableHeight / containerHeight
+        );
+        const belowScale = Math.min(
+            (windowWidth - padding * 2) / containerWidth,
+            (usableHeight - switchHeight - gap) / containerHeight
+        );
+        const dockBelow = belowScale > sideScale * 1.06;
+        const scale = Math.max(0, dockBelow ? belowScale : sideScale);
+        const atmWidth = containerWidth * scale;
+        const atmHeight = containerHeight * scale;
+        let atmCenterX;
+        let atmCenterY;
+        let switchLeft;
+        let switchCenterY;
 
-        if (!isMobile) {
-            //Десктоп - сбрасываем стили
-            // container.style.cssText = '';
-            // console.log('Десктоп - масштабирование отключено');
-            // return;
-            container.style.transform = '';
-            container.style.transformOrigin = '';
-            console.log('Десктоп - масштабирование отключено');
-            return;
+        if (dockBelow) {
+            const groupTop = padding + (usableHeight - atmHeight - switchHeight - gap) / 2;
+            atmCenterX = windowWidth / 2;
+            atmCenterY = groupTop + atmHeight / 2;
+            switchLeft = (windowWidth - switchWidth) / 2;
+            switchCenterY = groupTop + atmHeight + gap + switchHeight / 2;
+        } else {
+            const groupLeft = (windowWidth - atmWidth - switchWidth - gap) / 2;
+            atmCenterX = groupLeft + atmWidth / 2;
+            atmCenterY = padding + usableHeight / 2;
+            switchLeft = groupLeft + atmWidth + gap;
+            switchCenterY = atmCenterY;
         }
 
-        // Если мобильный телефон - масштабируем
-        const paddingX = 20;
-        const paddingY = 20;
-        const maxWidth = windowWidth - paddingX * 2;
-        const maxHeight = windowHeight - paddingY * 2;
-
-        const scaleX = maxWidth / containerWidth;
-        const scaleY = maxHeight / containerHeight;
-        let scale = Math.min(scaleX, scaleY, 1); // не больше 1
-        // Минимальный масштаб (чтобы не было слишком мелко)
-        scale = Math.max(scale, 0.2);
-
-        //Добавляем запас 5%, чтобы не было скролла. Посмотрим, как будет работать. 
-        scale = scale * 0.95;
-
-        
-        //Только transform
+        container.style.left = `${atmCenterX}px`;
+        container.style.top = `${atmCenterY}px`;
         container.style.transform = `translate(-50%, -50%) scale(${scale})`;
         container.style.transformOrigin = 'center center';
-        // container.style.setProperty('--scale', scale);
 
-        console.log(`📐 Масштаб: ${scale.toFixed(2)} | Окно: ${windowWidth}*${windowHeight}`);
+        if (modeToggle) {
+            modeToggle.style.left = `${switchLeft}px`;
+            modeToggle.style.top = `${switchCenterY}px`;
+            modeToggle.style.right = 'auto';
+        }
+        scheduleMenuPosition();
     }
 
     // Запускаем при загрузке
     window.addEventListener('load', scaleContainer);
+    const menuButton = document.querySelector('.training-main-menu-btn');
+    if (menuButton) {
+        let wasVisible = getComputedStyle(menuButton).display !== 'none';
+        new MutationObserver(() => {
+            const visible = getComputedStyle(menuButton).display !== 'none';
+            if (visible !== wasVisible) {
+                wasVisible = visible;
+                scheduleMenuPosition();
+            }
+        }).observe(menuButton, { attributes: true, attributeFilter: ['style'] });
+    }
+    const atmForMenu = document.querySelector('.atm-container');
+    if (atmForMenu) {
+        new MutationObserver(scheduleMenuPosition).observe(atmForMenu, {
+            attributes: true,
+            attributeFilter: ['style', 'class'],
+            subtree: true
+        });
+    }
 
     //Следим за изменениями visualViewport (для клавиатуры)
     if (window.visualViewport) {

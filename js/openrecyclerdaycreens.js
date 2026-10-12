@@ -38,19 +38,6 @@
         }
     }
 
-    // Функция для проверки лимита (не больше 2000)
-    function validateLimit(input, cassetteNumber) {
-        let value = parseInt(input.value);
-        const maxLimit = cassetteLimits[cassetteNumber].maxBanknotes;
-        
-        if (!isNaN(value) && value > maxLimit) {
-            input.value = ''; // Очищаем поле
-            alert(`Количество банкнот не может превышать ${maxLimit} шт.`);
-            return false;
-        }
-        return true;
-    }
-
     // Инициализация полей ввода при загрузке экрана
     function initInputField(cassetteNumber) {
         const input = document.getElementById(`LoadInput_${cassetteNumber}`);
@@ -58,18 +45,9 @@
             // Очищаем поле
             input.value = '';
  
-         // Создаём функцию для blur
-            function handleBlur() {
-                validateLimit(input, cassetteNumber);
-            }
-
-            // Удаляем старые обработчики, чтобы не накапливать
+            // При отправке значение проверяет Enter; blur не должен его очищать.
             input.removeEventListener('keydown', restrictInputToNumbers);
-            input.removeEventListener('blur', handleBlur);
-            
-            // Добавляем обработчик на ввод (только цифры)
             input.addEventListener('keydown', restrictInputToNumbers);
-            input.addEventListener('blur', handleBlur);
 
             // Устанавливаем фокус на поле если десктоп
             if (window.innerWidth > 1024) {
@@ -125,16 +103,16 @@
             value = '0';
         }
 
-        let numValue = parseInt(value);
-        
-        // Проверка на число
-        if (isNaN(numValue)) {
-            // alert('Пожалуйста, введите число');
+        // Вставленный текст тоже должен быть целым неотрицательным числом.
+        if (!/^\d+$/.test(value)) {
+            alert('Пожалуйста, введите целое неотрицательное число');
             input.value = '';
             input.focus();
             return;
         }
         
+        const numValue = parseInt(value, 10);
+
         // Проверка лимита
         if (numValue > cassetteLimits[cassetteNumber].maxBanknotes) {
             alert(`Количество банкнот не может превышать ${cassetteLimits[cassetteNumber].maxBanknotes} шт.`);

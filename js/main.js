@@ -115,7 +115,7 @@ if (!transactions.cassettes) {
     let receiptHtml = '';
     receiptHtml += '<div style="font-family: monospace; font-size: 12px;">';
     receiptHtml += '<div style="text-align: center;">';
-    receiptHtml += '<strong>СБЕРБАНК РОССИИ ПАО</strong><br>';
+    receiptHtml += '<strong>ОЗОН БАНК</strong><br>';
     receiptHtml += 'ОТДЕЛ СЕРВИСНОГО ОБСЛУЖИВАНИЯ<br>';
     receiptHtml += 'Волгоградский пр-т д. 32 к. 45<br>';
     receiptHtml += `ДАТА: ${currentDate} ВРЕМЯ: ${currentTime}<br>`;
