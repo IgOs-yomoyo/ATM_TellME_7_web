@@ -2355,3 +2355,58 @@ input:checked + .slider-vertical {
     line-height: 1 !important;
     box-sizing: border-box !important;
 }
+
+@media screen and (max-width: 1024px) {
+    /* Делаем кнопки крупнее */
+    .atm-button {
+        font-size: 28px !important;
+        padding: 12px 24px !important;
+        min-width: 200px !important;
+        height: 70px !important;
+        border-radius: 12px !important;
+    }
+
+    /* Заголовки экранов */
+    .screen-title {
+        font-size: 72px !important;
+        height: 60px !important;
+    }
+
+    /* Поля ввода */
+    .info-input,
+    .otp-input,
+    .pin-input {
+        font-size: 32px !important;
+        padding: 14px !important;
+        height: 70px !important;
+    }
+
+    /* Метки полей */
+    .info-label {
+        font-size: 16px !important;
+    }
+
+    /* Кнопки на экране оператора */
+    .supervisor-nottoservice,
+    .supervisor-shutdown,
+    .supervisor-service,
+    .supervisor-openclose,
+    .supervisor-devices {
+        font-size: 24px !important;
+        height: 80px !important;
+        min-width: 250px !important;
+    }
+
+    /* Кассеты */
+    .load-cassette-container {
+        font-size: 18px !important;
+    }
+
+    /* Чек */
+    .receipt-content {
+        font-size: 14px !important;
+    }
+}
+
+
+
