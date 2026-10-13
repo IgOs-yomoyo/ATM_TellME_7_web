@@ -100,12 +100,12 @@ function updateOTPInputMode() {
     const input = document.getElementById('otpInput');
     if (!screen || !input || getComputedStyle(screen).display === 'none') return;
 
-    const isMobile = window.innerWidth <= 1024;
+    const isMobile = window.innerWidth <= 1024 && !document.documentElement.classList.contains('android-app');
     input.readOnly = isMobile;
     if (isMobile) {
         input.setAttribute('inputmode', 'none');
     } else {
-        input.removeAttribute('inputmode');
+        input.setAttribute('inputmode', 'numeric');
         input.focus();
     }
 }

@@ -1040,6 +1040,7 @@ input:checked + .slider-vertical {
 .service-message {
     font-size: 28px;
     font-weight: bold;
+    color: #17324b;
     margin-bottom: 10px;
 }
 
@@ -2072,11 +2073,6 @@ input:checked + .slider-vertical {
 }
 
 @media screen and (max-width: 1024px) {
-    /* Скрываем только панель с текстом */
-    #trainingTooltip {
-        display: none !important;
-    }
-    
     /* Подсветка кнопок остаётся */
     .training-highlight {
         box-shadow: 0 0 0 4px #ff9800, 0 0 15px rgba(255, 152, 0, 0.6) !important;
@@ -2444,5 +2440,291 @@ input:checked + .slider-vertical {
     }
 }
 
+body::before {
+    display: none !important;
+}
 
+html, body {
+    background: #081120;
+    color: #f5f8ff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    display: block;
+    background: radial-gradient(circle at 75% 15%, #183b5d 0, transparent 36%),
+                radial-gradient(circle at 15% 90%, #123749 0, transparent 34%),
+                #081120;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: .14;
+    background-image: linear-gradient(#81b5d5 1px, transparent 1px), linear-gradient(90deg, #81b5d5 1px, transparent 1px);
+    background-size: 36px 36px;
+}
+
+.app-header {
+    position: fixed;
+    inset: 0 0 auto;
+    height: 54px;
+    padding: 0 max(18px, env(safe-area-inset-right)) 0 max(18px, env(safe-area-inset-left));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(8, 20, 35, .86);
+    border-bottom: 1px solid rgba(164, 215, 243, .13);
+    z-index: 1100;
+}
+
+.app-brand { display: flex; align-items: center; gap: 10px; letter-spacing: .12em; }
+.app-brand > span:last-child { display: flex; flex-direction: column; gap: 1px; }
+.app-brand strong { font-size: 15px; line-height: 1; }
+.app-brand small { font-size: 8px; color: #81a9bd; letter-spacing: .23em; }
+.app-brand-mark {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    white-space: nowrap;
+    border-radius: 9px;
+    background: linear-gradient(145deg, #3ce4e4, #2e8cff);
+    color: #051521;
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: -.08em;
+    box-shadow: 0 5px 22px rgba(36, 196, 233, .3);
+}
+.app-header-note, .app-menu-kicker { font-size: 10px; letter-spacing: .18em; color: #8dafc5; font-weight: 700; }
+.status-dot { display: inline-block; width: 7px; height: 7px; margin-right: 8px; border-radius: 50%; background: #35e0bb; box-shadow: 0 0 13px #35e0bb; vertical-align: 1px; }
+
+.atm-stage {
+    position: fixed;
+    inset: 54px 0 68px;
+    z-index: 1;
+}
+.atm-container {
+    border: 12px solid #182a3d;
+    border-radius: 26px;
+    box-shadow: 0 0 0 1px #63809a, 0 24px 72px #0009, 0 0 70px #3fc9eb15;
+}
+
+.app-controls {
+    position: fixed;
+    inset: auto 0 0;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px max(18px, env(safe-area-inset-right)) 8px max(18px, env(safe-area-inset-left));
+    background: rgba(9, 22, 38, .95);
+    border-top: 1px solid rgba(164, 215, 243, .2);
+    z-index: 1200;
+}
+.app-controls-label { margin-left: auto; color: #6f92a9; font-size: 10px; font-weight: 700; letter-spacing: .16em; }
+.training-main-menu-btn,
+.training-main-menu-btn:hover {
+    position: static !important;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    padding: 11px 16px !important;
+    width: auto !important;
+    min-height: 42px !important;
+    font-size: 12px !important;
+    letter-spacing: .07em;
+    color: #e5f5ff;
+    background: #1b344c;
+    border: 1px solid #42617a;
+    border-radius: 11px !important;
+    box-shadow: none;
+}
+.training-main-menu-btn:not([style*="display: none"]) { display: inline-flex !important; }
+.training-main-menu-btn svg { width: 16px; height: 16px; flex: none; }
+.training-main-menu-btn.training-highlight { opacity: 1; border-color: #ffbf5c; }
+
+.mode-toggle-container,
+.mode-toggle-container.training-highlight {
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+    flex-direction: row;
+    gap: 10px;
+    padding: 8px 13px;
+    background: #132b42;
+    border: 1px solid #31516b;
+    border-radius: 12px;
+    z-index: 1;
+}
+.mode-labels { height: auto; flex-direction: row; align-items: center; gap: 10px; font-size: 10px; }
+.mode-label { color: #819bb0; }
+.mode-labels .mode-normal { color: #42e2be; }
+.mode-toggle-container:has(input:checked) .mode-normal { color: #819bb0; }
+.mode-toggle-container:has(input:checked) .mode-supervisor { color: #ffc36b; }
+.switch-vertical { width: 43px; height: 24px; flex: 0 0 43px; }
+.slider-vertical { border-radius: 20px; background: #29516a; }
+.slider-vertical::before { width: 18px; height: 18px; left: 3px; bottom: 3px; }
+input:checked + .slider-vertical { background: #ae713c; }
+input:checked + .slider-vertical::before { transform: translateX(19px); }
+
+#trainerMenuScreen.app-menu {
+    position: fixed !important;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding: max(36px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right)) 24px max(24px, env(safe-area-inset-left));
+    color: #f5f8ff;
+    background: radial-gradient(circle at 85% 4%, #244968 0, transparent 42%),
+                radial-gradient(circle at 8% 100%, #113e4d 0, transparent 40%), #081322;
+    z-index: 20000;
+    text-align: center;
+}
+.app-menu::before {
+    content: '';
+    position: absolute;
+    top: 12%;
+    right: -7%;
+    width: min(36vw, 440px);
+    aspect-ratio: 1;
+    border: 1px solid #66bfdd33;
+    border-radius: 26%;
+    transform: rotate(18deg);
+    pointer-events: none;
+}
+.app-menu-kicker { color: #4de4d1; margin-bottom: 12px; }
+.app-menu-heading { font-size: clamp(28px, 5vw, 54px); line-height: 1.04; letter-spacing: -.045em; font-weight: 800; }
+.app-menu-heading em { font-style: normal; color: #5ee0e1; }
+.app-menu-description { max-width: 580px; margin: 14px auto 22px; color: #a6bbcc; font-size: clamp(12px, 1.8vw, 15px); line-height: 1.4; }
+.app-menu .trainer-menu-buttons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; width: min(690px, 100%); margin: 0 auto 14px; }
+.app-menu .trainer-menu-btn,
+.app-menu .trainer-mode-btn {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    min-height: 148px;
+    padding: 19px;
+    color: #f4f9ff;
+    background: linear-gradient(150deg, #1a3f58, #10283f);
+    border: 1px solid #40718b;
+    border-radius: 20px;
+    text-align: left;
+    box-shadow: 0 12px 28px #0003;
+}
+.app-menu .trainer-mode-btn { background: linear-gradient(150deg, #1c334f, #15233c); }
+.app-menu .trainer-menu-btn:active,
+.app-menu .trainer-mode-btn:active { transform: scale(.985); }
+.app-menu .trainer-mode-icon { color: #61e1e3; font-size: 15px; letter-spacing: .1em; font-weight: 800; }
+.app-menu .trainer-mode-name { width: 100%; display: flex; justify-content: space-between; color: #f4f9ff; font-size: clamp(18px, 2.6vw, 25px); line-height: 1.1; font-weight: 750; }
+.app-menu .card-arrow { color: #5be3d8; }
+.app-menu .trainer-mode-desc { max-width: 240px; color: #a6bbca; font-size: 12px; line-height: 1.35; text-align: left; }
+.app-menu .atm-service-btn { width: min(340px, 100%); min-height: 56px; margin: 0 auto; padding: 11px 20px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; background: #e7f6fa; color: #102b41; border-radius: 13px; font-size: 14px; box-shadow: none; }
+.app-menu .atm-service-btn > span:first-child { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; }
+.app-menu .atm-service-btn small { color: #4c6b7f; font-size: 11px; font-weight: 500; }
+.app-menu .atm-service-btn:hover { background: white; transform: none; }
+.app-menu-footer { margin-top: 16px; color: #5e7e95; font-size: 9px; letter-spacing: .2em; }
+.app-menu-footer span { color: #42d9cf; padding: 0 7px; }
+
+.app-notice {
+    position: fixed;
+    left: 50%;
+    bottom: 84px;
+    z-index: 30000;
+    width: min(440px, calc(100% - 32px));
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transform: translateX(-50%);
+    border: 1px solid #f5b78f;
+    border-radius: 14px;
+    background: #fff5ef;
+    color: #4c2c20;
+    box-shadow: 0 16px 44px #0008;
+    font-size: 14px;
+    line-height: 1.35;
+}
+.app-notice[hidden] { display: none; }
+.app-notice-icon { display: grid; place-items: center; flex: 0 0 26px; height: 26px; border-radius: 50%; background: #ce6e44; color: white; font-weight: 800; }
+.app-notice-text { flex: 1; }
+.app-notice button { border: 0; background: transparent; color: #805040; font-size: 24px; line-height: 1; }
+
+html.android-app .info-input,
+html.android-app .otp-input,
+html.android-app .pin-input { pointer-events: auto !important; caret-color: auto !important; }
+
+html.android-app #trainingTooltip {
+    position: fixed !important;
+    left: var(--app-tooltip-left, 16px) !important;
+    top: var(--app-tooltip-top, 68px) !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    width: var(--app-tooltip-width, 220px) !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    max-height: calc(100vh - 148px) !important;
+    padding: 14px !important;
+    border: 1px solid #5a93b0 !important;
+    border-radius: 14px !important;
+    background: rgba(17, 39, 59, .96) !important;
+    box-shadow: 0 14px 36px #0007 !important;
+    opacity: 1 !important;
+    text-align: left !important;
+    pointer-events: none !important;
+    cursor: default;
+}
+html.android-app #trainingTooltip .training-tooltip-step {
+    font-size: 12px !important;
+    margin-bottom: 10px !important;
+    color: #77d7e0 !important;
+}
+html.android-app #trainingTooltip .training-tooltip-short {
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+    margin-bottom: 12px !important;
+}
+html.android-app #trainingTooltip.app-side-tooltip #tooltipText {
+    display: block !important;
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+    margin-bottom: 12px !important;
+}
+html.android-app #trainingTooltip.app-side-tooltip .training-tooltip-short { display: none !important; }
+html.android-app #trainingTooltip .training-tooltip-progress { display: block !important; }
+
+@media (max-width: 1024px) {
+    .virtual-keypad-global {
+        bottom: 78px !important;
+    }
+}
+
+@media (max-height: 530px) {
+    #trainerMenuScreen.app-menu { padding-top: 22px; }
+    .app-menu-kicker { margin-bottom: 7px; }
+    .app-menu-description { margin: 9px auto 13px; }
+    .app-menu .trainer-menu-btn, .app-menu .trainer-mode-btn { min-height: 112px; padding: 13px; gap: 5px; }
+    .app-menu-footer { margin-top: 10px; }
+    .app-header { height: 42px; }
+    .atm-stage { top: 42px; bottom: 58px; }
+    .app-controls { height: 58px; }
+}
+
+@media (max-width: 640px) and (orientation: portrait) {
+    .app-menu .trainer-menu-buttons { grid-template-columns: 1fr; }
+    .app-header-note, .app-controls-label { display: none; }
+    .atm-container { display: block !important; }
+    .mode-toggle-container, .training-main-menu-btn { visibility: visible !important; pointer-events: auto !important; }
+    .app-controls { padding-inline: 9px; }
+    .mode-labels { gap: 4px; font-size: 8px; }
+}
 

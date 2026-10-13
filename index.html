@@ -13,6 +13,11 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <header class="app-header">
+        <div class="app-brand"><span class="app-brand-mark">T7</span><span><strong>TELLME7</strong><small>ATM TRAINER</small></span></div>
+        <div class="app-header-note"><span class="status-dot"></span> СИМУЛЯТОР БАНКОМАТА</div>
+    </header>
+    <main class="atm-stage" id="atmStage">
     <div class="atm-container">
         <!-- ПАНЕЛЬ ПОДСКАЗОК ДЛЯ РЕЖИМА ОБУЧЕНИЯ -->
         <div id="trainingTooltip" class="training-tooltip" style="display: none;">
@@ -45,26 +50,6 @@
          </div>
          <!-- <button class="atm-button insert-card-btn" onclick="insertCard()">Вставьте карту</button>
          <button class="atm-button exit-button" onclick="exitApp()">Выход</button> -->
-        <!-- Заглавный экран тренажёра. Выбор режимов. -->
-        <div id="trainerMenuScreen" class="atm-screen" style="display: block;">
-            <div class="screen-title">ОБУЧАЮЩИЙ ТРЕНАЖЁР</div>
-            <div class="trainer-menu-content">
-                <div class="trainer-menu-title">ВЫБЕРИТЕ РЕЖИМ</div>
-                <div class="trainer-menu-buttons">
-                    <button class="trainer-menu-btn" onclick="startTraining('learning')">
-                        <span class="trainer-mode-icon">📖</span>
-                        <span class="trainer-mode-name">ОБУЧЕНИЕ</span>
-                        <span class="trainer-mode-desc">Пошаговые инструкции по обслуживанию банкомата</span>
-                    </button>
-                    <button class="trainer-mode-btn" onclick="startTraining('testing')">
-                        <span class="trainer-mode-icon">📝</span>
-                        <span class="trainer-mode-name">ТЕСТИРОВАНИЕ</span>
-                        <span class="trainer-mode-desc">Проверка знаний</span>
-                    </button>
-                </div>
-                <button class="atm-service-btn" onclick="backToATMService()">К ОБСЛУЖИВАНИЮ БАНКОМАТА</button>
-            </div>
-        </div>
         <!-- ЭКРАН "БАНКОМАТ НЕ ОБСЛУЖИВАЕТ" -->
         <div id="outOfServiceScreen" class="atm-screen" style = 'display: none;'>
             <div class="screen-title">OZON БАНК</div>
@@ -153,11 +138,11 @@
                 <div class="load-cassette-container">
                     <div class="info-row">
                         <label class="info-label" for="loginInput">КОД ПОЛЬЗОВАТЕЛЯ</label>
-                        <input type="text" id="loginInput" class="info-input" inputmode="none" pattern="[0-9]*" autocomplete="off">  <!-- placeholder="Код пользователя" -->
+                        <input type="text" id="loginInput" class="info-input" inputmode="numeric" pattern="[0-9]*" autocomplete="off">  <!-- placeholder="Код пользователя" -->
                     </div>
                     <div class="info-row">
                         <label class="info-label" for="passwordInput">ПАРОЛЬ</label>
-                        <input type="password" id="passwordInput" class="info-input" inputmode="none" pattern="[0-9]*" autocomplete="off"> <!-- placeholder="Пароль" -->
+                        <input type="password" id="passwordInput" class="info-input" inputmode="numeric" pattern="[0-9]*" autocomplete="off"> <!-- placeholder="Пароль" -->
                     </div>
                 </div>
             </div>    
@@ -368,7 +353,7 @@
                                 aria-label="Загрузка кассеты 1"
                                 class="info-input"
                                 maxlength="4"
-                                inputmode="none"
+                                inputmode="numeric"
                                 pattern="\d*"
                                 autocomplete="off"
                                 autocorrect="off"
@@ -419,7 +404,7 @@
                                 aria-label="Загрузка кассеты 2"
                                 class="info-input"
                                 maxlength="4"
-                                inputmode="none"
+                                inputmode="numeric"
                                 pattern="\d*"
                                 autocomplete="off"
                                 autocorrect="off"
@@ -470,7 +455,7 @@
                                 aria-label="Загрузка кассеты 3"
                                 class="info-input"
                                 maxlength="4"
-                                inputmode="none"
+                                inputmode="numeric"
                                 pattern="\d*"
                                 autocomplete="off"
                                 autocorrect="off"
@@ -519,7 +504,7 @@
                                 aria-label="Загрузка кассеты 4"
                                 class="info-input"
                                 maxlength="4"
-                                inputmode="none"
+                                inputmode="numeric"
                                 pattern="\d*"
                                 autocomplete="off"
                                 autocorrect="off"
@@ -579,20 +564,65 @@
             <!-- </div> -->
         </div>
     </div>
+    </main>
+    <footer class="app-controls">
+    <button class="training-main-menu-btn" style="display: none;" onclick="openTrainingMenu()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12H4m0 0 6-6m-6 6 6 6"/></svg><span>ГЛАВНОЕ МЕНЮ</span></button>
+    <div class="app-controls-label">УПРАВЛЕНИЕ ПРИЛОЖЕНИЕМ</div>
     <div class="mode-toggle-container">
         <div class="mode-labels">
-            <span class="mode-label mode-supervisor">SUPERVISOR</span>
             <span class="mode-label mode-normal">NORMAL</span>
+            <label class="switch-vertical">
+                <input type="checkbox" id="modeCheckbox" aria-label="Переключить режим NORMAL или SUPERVISOR">
+                <span class="slider-vertical"></span>
+            </label>
+            <span class="mode-label mode-supervisor">SUPERVISOR</span>
         </div>
-        <label class="switch-vertical">
-            <input type="checkbox" id="modeCheckbox" aria-label="Переключить режим NORMAL или SUPERVISOR">
-            <span class="slider-vertical"></span>
-        </label>
     </div>
-    <!-- Кнопка перехода к главному меню тренажёра -->
-    <button class="training-main-menu-btn" style="display: none;" onclick="openTrainingMenu()">В ГЛАВНОЕ МЕНЮ</button>
+    </footer>
+    <div id="trainerMenuScreen" class="atm-screen app-menu" style="display: block;">
+        <div class="app-menu-kicker"><span class="status-dot"></span> ИНТЕРАКТИВНЫЙ ТРЕНАЖЁР</div>
+        <div class="app-menu-heading">Освойте обслуживание<br><em>банкомата</em></div>
+        <p class="app-menu-description">Выберите формат работы. Все действия выполняются на экране настоящего симулятора.</p>
+        <div class="trainer-menu-buttons">
+            <button class="trainer-menu-btn" onclick="startTraining('learning')">
+                <span class="trainer-mode-icon">01</span>
+                <span class="trainer-mode-name">Обучение <span class="card-arrow">↗</span></span>
+                <span class="trainer-mode-desc">Пошаговые подсказки и практика обслуживания</span>
+            </button>
+            <button class="trainer-mode-btn" onclick="startTraining('testing')">
+                <span class="trainer-mode-icon">02</span>
+                <span class="trainer-mode-name">Тестирование <span class="card-arrow">↗</span></span>
+                <span class="trainer-mode-desc">Самостоятельная проверка знаний</span>
+            </button>
+        </div>
+        <button class="atm-service-btn" onclick="backToATMService()"><span><strong>Свободная практика</strong><small>Без подсказок и оценки</small></span><span>→</span></button>
+        <div class="app-menu-footer">TELLME7 <span>•</span> ATM TRAINER</div>
+    </div>
+    <div id="appNotice" class="app-notice" role="alert" hidden>
+        <span class="app-notice-icon" aria-hidden="true">!</span>
+        <span id="appNoticeText" class="app-notice-text"></span>
+        <button type="button" onclick="dismissAppNotice()" aria-label="Закрыть сообщение">×</button>
+    </div>
         
     <script>let isFreshOpen = false;</script>
+    <script>
+    const isAndroidApp = location.pathname.startsWith('/android_asset/');
+    if (isAndroidApp) document.documentElement.classList.add('android-app');
+    let appNoticeTimer;
+    function dismissAppNotice() {
+        document.getElementById('appNotice').hidden = true;
+        clearTimeout(appNoticeTimer);
+    }
+    window.alert = function(message) {
+        document.getElementById('appNoticeText').textContent = String(message);
+        document.getElementById('appNotice').hidden = false;
+        clearTimeout(appNoticeTimer);
+        appNoticeTimer = setTimeout(dismissAppNotice, 5000);
+    };
+    document.addEventListener('DOMContentLoaded', () => {
+        if (isAndroidApp) document.getElementById('globalKeypad')?.remove();
+    });
+    </script>
     <script src="js/utils.js"></script>
     <script src="js/learningMode.js"></script>
     <script src="js/normal_supervisor.js"></script>
@@ -609,170 +639,23 @@
     <!-- <script src="js/closerecyclerday.js?v=2"></script> -->
 
     <script>
-    function positionMenuButton() {
-        const button = document.querySelector('.training-main-menu-btn');
-        const atm = document.querySelector('.atm-container');
-        if (!button || !atm || getComputedStyle(button).display === 'none') return;
-
-        const panel = atm.getBoundingClientRect();
-        const width = button.offsetWidth;
-        const height = button.offsetHeight;
-        const controls = [...document.querySelectorAll('.atm-screen button, .atm-screen input, .atm-screen select, .atm-screen [onclick], #globalKeypad button')]
-            .filter(el => {
-                const style = getComputedStyle(el);
-                const rect = el.getBoundingClientRect();
-                return style.visibility !== 'hidden' && style.pointerEvents !== 'none' && rect.width && rect.height;
-            })
-            .map(el => el.getBoundingClientRect());
-        const xs = [panel.left + 10, panel.right - width - 10, panel.left + (panel.width - width) / 2];
-        const ys = [
-            panel.bottom - height - 10,
-            panel.bottom - height - 70,
-            panel.top + panel.height * 0.5,
-            panel.top + panel.height * 0.1875,
-            panel.top + 10
-        ];
-        for (let y = panel.top + 10; y <= panel.bottom - height - 10; y += 24) ys.push(y);
-
-        for (const y of ys) {
-            for (const x of xs) {
-                const candidate = { left: x, top: y, right: x + width, bottom: y + height };
-                if (candidate.left < panel.left + 4 || candidate.right > panel.right - 4 ||
-                    candidate.top < panel.top + 4 || candidate.bottom > panel.bottom - 4) continue;
-                const blocked = controls.some(rect =>
-                    candidate.left < rect.right + 8 && candidate.right > rect.left - 8 &&
-                    candidate.top < rect.bottom + 8 && candidate.bottom > rect.top - 8
-                );
-                if (blocked) continue;
-                button.style.left = `${x}px`;
-                button.style.top = `${y}px`;
-                return;
-            }
-        }
-    }
-
-    let menuPositionFrame = 0;
-    function scheduleMenuPosition() {
-        if (menuPositionFrame) return;
-        menuPositionFrame = requestAnimationFrame(() => {
-            menuPositionFrame = 0;
-            positionMenuButton();
-        });
-    }
-
-    // ===== МАСШТАБИРОВАНИЕ ВСЕГО КОНТЕЙНЕРА =====
     function scaleContainer() {
         const container = document.querySelector('.atm-container');
-        if (!container) return;
-
-        //Если пользователь зумит - не трогаем контейнер
-        if (typeof isUserZooming !== 'undefined' && isUserZooming) {
-            console.log('Пользователь зумит - scaleContainer пропущена');
-            return;
-        }
-
-        // Исходные размеры контейнера (из CSS)
-        const containerWidth = 1200;
-        const containerHeight = 800;
-
-        // ✅ Используем visualViewport (учитывает панели браузера)
-        const vv = window.visualViewport;
-        const windowWidth = vv ? vv.width : window.innerWidth;
-        const windowHeight = vv ? vv.height : window.innerHeight;
-
-        const padding = 8;
-        const gap = 12;
-        const modeToggle = document.querySelector('.mode-toggle-container');
-        const switchWidth = modeToggle?.offsetWidth || 0;
-        const switchHeight = modeToggle?.offsetHeight || 0;
-        const bottomDock = padding;
-        const usableHeight = windowHeight - padding - bottomDock;
-
-        const sideScale = Math.min(
-            (windowWidth - switchWidth - gap - padding * 2) / containerWidth,
-            usableHeight / containerHeight
-        );
-        const belowScale = Math.min(
-            (windowWidth - padding * 2) / containerWidth,
-            (usableHeight - switchHeight - gap) / containerHeight
-        );
-        const dockBelow = belowScale > sideScale * 1.06;
-        const scale = Math.max(0, dockBelow ? belowScale : sideScale);
-        const atmWidth = containerWidth * scale;
-        const atmHeight = containerHeight * scale;
-        let atmCenterX;
-        let atmCenterY;
-        let switchLeft;
-        let switchCenterY;
-
-        if (dockBelow) {
-            const groupTop = padding + (usableHeight - atmHeight - switchHeight - gap) / 2;
-            atmCenterX = windowWidth / 2;
-            atmCenterY = groupTop + atmHeight / 2;
-            switchLeft = (windowWidth - switchWidth) / 2;
-            switchCenterY = groupTop + atmHeight + gap + switchHeight / 2;
-        } else {
-            const groupLeft = (windowWidth - atmWidth - switchWidth - gap) / 2;
-            atmCenterX = groupLeft + atmWidth / 2;
-            atmCenterY = padding + usableHeight / 2;
-            switchLeft = groupLeft + atmWidth + gap;
-            switchCenterY = atmCenterY;
-        }
-
-        container.style.left = `${atmCenterX}px`;
-        container.style.top = `${atmCenterY}px`;
+        const stage = document.getElementById('atmStage');
+        if (!container || !stage) return;
+        if (typeof isUserZooming !== 'undefined' && isUserZooming) return;
+        const width = stage.clientWidth - 24;
+        const height = stage.clientHeight - 24;
+        const scale = Math.max(0, Math.min(width / 1200, height / 800));
+        container.style.left = '50%';
+        container.style.top = '50%';
         container.style.transform = `translate(-50%, -50%) scale(${scale})`;
-        container.style.transformOrigin = 'center center';
-
-        if (modeToggle) {
-            modeToggle.style.left = `${switchLeft}px`;
-            modeToggle.style.top = `${switchCenterY}px`;
-            modeToggle.style.right = 'auto';
-        }
-        scheduleMenuPosition();
     }
-
-    // Запускаем при загрузке
     window.addEventListener('load', scaleContainer);
-    const menuButton = document.querySelector('.training-main-menu-btn');
-    if (menuButton) {
-        let wasVisible = getComputedStyle(menuButton).display !== 'none';
-        new MutationObserver(() => {
-            const visible = getComputedStyle(menuButton).display !== 'none';
-            if (visible !== wasVisible) {
-                wasVisible = visible;
-                scheduleMenuPosition();
-            }
-        }).observe(menuButton, { attributes: true, attributeFilter: ['style'] });
-    }
-    const atmForMenu = document.querySelector('.atm-container');
-    if (atmForMenu) {
-        new MutationObserver(scheduleMenuPosition).observe(atmForMenu, {
-            attributes: true,
-            attributeFilter: ['style', 'class'],
-            subtree: true
-        });
-    }
-
-    //Следим за изменениями visualViewport (для клавиатуры)
-    if (window.visualViewport) {
-        window.visualViewport.addEventListener('resize', scaleContainer);
-        window.visualViewport.addEventListener('scroll', scaleContainer);
-    }
-
-    // Запускаем при изменении размера окна
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(scaleContainer, 100);
-    });
-    // Пытаемся заблокировать ориентацию (работает только в полноэкранном режиме)
-    if (screen.orientation && screen.orientation.lock) {
-        screen.orientation.lock('landscape').catch(err => {
-            console.log('Не удалось заблокировать ориентацию:', err);
-        });
-    }
-</script>
+    window.addEventListener('resize', scaleContainer);
+    if (window.visualViewport) window.visualViewport.addEventListener('resize', scaleContainer);
+    if (screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => {});
+    </script>
 <div class="virtual-keypad-global" id="globalKeypad">
     <button type="button" onclick="globalVkbInput('7')">7</button>
     <button type="button" onclick="globalVkbInput('8')">8</button>

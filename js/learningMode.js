@@ -18,6 +18,9 @@ function openTrainingMenu() {
     isTrainingMode = false;
     isTestingMode = false;
     currentStepIndex = 0;
+    const modeCheckbox = document.getElementById('modeCheckbox');
+    if (modeCheckbox) modeCheckbox.checked = false;
+    window.pendingModeSwitch = null;
 
     //Убираем подсветку кнопок
     document.querySelectorAll('.step-number').forEach(el => el.remove());
@@ -716,7 +719,8 @@ function initTooltipDrag() {
     if (!tooltipElement) return;
 
     function syncTooltipParent() {
-        const parent = window.innerWidth > 1024 ? document.body : document.querySelector('.atm-container');
+        const parent = document.documentElement.classList.contains('android-app') || window.innerWidth > 1024
+            ? document.body : document.querySelector('.atm-container');
         if (tooltipElement.parentElement === parent) return;
         parent.appendChild(tooltipElement);
         tooltipElement.style.left = '30px';
@@ -731,6 +735,7 @@ function initTooltipDrag() {
         if (isTrainingMode && !isTestingMode) updateTooltipInstruction(trainingSteps[currentStepIndex]);
         requestAnimationFrame(keepTooltipInViewport);
     });
+    window.visualViewport?.addEventListener('resize', keepTooltipInViewport);
 
     //=== Привязвываем курсор к окну ===
     tooltipElement.style.position = 'fixed';
@@ -808,6 +813,10 @@ function onDrag(e) {
 }
 
 function keepTooltipInViewport() {
+    if (document.documentElement.classList.contains('android-app')) {
+        positionAppTooltip();
+        return;
+    }
     if (window.innerWidth <= 1024 || !tooltipElement || getComputedStyle(tooltipElement).display === 'none') return;
     const rect = tooltipElement.getBoundingClientRect();
     const left = Math.max(20, Math.min(rect.left, Math.max(20, window.innerWidth - rect.width - 20)));
@@ -816,6 +825,27 @@ function keepTooltipInViewport() {
     tooltipElement.style.left = left + 'px';
     tooltipElement.style.top = top + 'px';
     tooltipElement.style.bottom = 'auto';
+}
+
+function positionAppTooltip() {
+    if (!tooltipElement || getComputedStyle(tooltipElement).display === 'none') return;
+    const atm = document.querySelector('.atm-container');
+    if (!atm) return;
+
+    const atmRect = atm.getBoundingClientRect();
+    const gap = 14;
+    const margin = 16;
+    const rightSpace = window.innerWidth - atmRect.right - gap - margin;
+    const leftSpace = atmRect.left - gap - margin;
+    const side = rightSpace >= 180 ? 'right' : leftSpace >= 180 ? 'left' : null;
+    const width = side ? Math.min(280, side === 'right' ? rightSpace : leftSpace) : Math.min(240, window.innerWidth - margin * 2);
+    const left = side === 'right' ? atmRect.right + gap : side === 'left' ? atmRect.left - gap - width : window.innerWidth - width - margin;
+    const top = side ? Math.max(68, atmRect.top + 12) : 68;
+
+    tooltipElement.classList.toggle('app-side-tooltip', Boolean(side));
+    tooltipElement.style.setProperty('--app-tooltip-left', `${Math.round(left)}px`);
+    tooltipElement.style.setProperty('--app-tooltip-top', `${Math.round(top)}px`);
+    tooltipElement.style.setProperty('--app-tooltip-width', `${Math.round(width)}px`);
 }
 
 function stopDrag() {

@@ -390,7 +390,7 @@ function globalVkbSubmit() {
         // Переходим к паролю
         const passwordInput = document.getElementById('passwordInput');
         if (passwordInput) {
-            const isMobile = window.innerWidth <= 1024;
+            const isMobile = window.innerWidth <= 1024 && !document.documentElement.classList.contains('android-app');
             if (isMobile) passwordInput.readOnly = false;
             passwordInput.focus();
 

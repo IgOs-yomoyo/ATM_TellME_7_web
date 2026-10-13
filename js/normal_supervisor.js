@@ -253,15 +253,14 @@ function requestSupervisorMode() {
     }
 
     const authScreen = document.getElementById('authScreen');
-    const welcomeScreen = document.getElementById('welcomeScreen');
-    const outOfServiceScreen = document.getElementById('outOfServiceScreen');
-    if (welcomeScreen) welcomeScreen.style.display = 'none';
-    if (outOfServiceScreen) outOfServiceScreen.style.display = 'none';
+    document.querySelectorAll('.atm-container .atm-screen').forEach(screen => {
+        screen.style.display = 'none';
+    });
     if (authScreen) authScreen.style.display = 'block';
     setupAuthInput();
 
     //Настройка ввода для мобильного/десктопа
-    const isMobile = window.innerWidth <= 1024;
+    const isMobile = window.innerWidth <= 1024 && !document.documentElement.classList.contains('android-app');
     const loginInput = document.getElementById('loginInput');
     const passwordInput = document.getElementById('passwordInput');
 

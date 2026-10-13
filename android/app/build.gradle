@@ -1,0 +1,29 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'ru.tellme7.atm'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId 'ru.tellme7.atm'
+        minSdk 24
+        targetSdk 35
+        versionCode 1
+        versionName '1.0'
+    }
+
+    sourceSets.main.assets.srcDirs layout.buildDirectory.dir('generated/webAssets').get().asFile
+}
+
+tasks.register('syncWebAssets', Sync) {
+    from('../../index.html')
+    from('../../css') { into 'css' }
+    from('../../js') { into 'js' }
+    from('../../images') { into 'images' }
+    from('../../audio') { into 'audio' }
+    into layout.buildDirectory.dir('generated/webAssets')
+}
+
+tasks.named('preBuild').configure { dependsOn tasks.named('syncWebAssets') }
