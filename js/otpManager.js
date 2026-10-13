@@ -4,6 +4,7 @@ let otpCode = null;
 let otpTimer = null;
 let otpTimeLeft = 30;
 let logoClickCount = 0;
+let logoClickTimer = null;
 
 // Генерация OTP кода (6 цифр)
 function generateOTP() {
@@ -63,9 +64,15 @@ function handleLogoClick() {
     console.log('Логотип нажат, счетчик:', logoClickCount + 1);
     
     logoClickCount++;
+    clearTimeout(logoClickTimer);
+    logoClickTimer = setTimeout(() => {
+        logoClickCount = 0;
+    }, 3000);
     
     if (logoClickCount >= 5) {
         logoClickCount = 0;
+        clearTimeout(logoClickTimer);
+        logoClickTimer = null;
 
         //Явно скрываем welcomeScreen
         const welcomeScreen = document.getElementById('welcomeScreen');
