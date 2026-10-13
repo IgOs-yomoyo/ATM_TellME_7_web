@@ -2304,10 +2304,11 @@ input:checked + .slider-vertical {
     /* Отключаем системную клавиатуру у всех полей */
     .info-input,
     .otp-input,
-    .pin-input {
+    .pin-input,
+    #LoadInput_1, #LoadInput_2, #LoadInput_3, #LoadInput_4 {
         pointer-events: none !important;
         caret-color: transparent !important;
-        font-size: 32px !important;
+        /* font-size: 32px !important; */
     }
 }
 

@@ -87,8 +87,14 @@
         const input = document.getElementById(`LoadInput_${cassetteNumber}`);
         if (input) {
             input.value = '';
-            input.focus();
-            console.log(`Кассета ${cassetteNumber}: ${input.value} шт.`);
+
+            //Фокус только на десктопе
+            if (window.innerWidth > 1024) {
+                input.focus();
+                console.log(`Кассета ${cassetteNumber}: ${input.value} шт.`);
+            } else {
+                console.log('На мобильном фокус не нужен');
+            }   
         }
     }
 

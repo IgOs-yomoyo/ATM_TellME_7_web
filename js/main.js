@@ -440,3 +440,10 @@ function takeCard() {
     if (outOfServiceScreen) outOfServiceScreen.style.display = 'block'; 
 }
 
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', () => {
+    const keyboardHeight = window.innerHeight - window.visualViewport.height;
+    console.log('Высота видимой области:', window.visualViewport.height);
+    console.log('Высота клавиатуры (если открыта):', keyboardHeight);
+  });
+}
