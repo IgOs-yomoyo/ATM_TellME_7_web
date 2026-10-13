@@ -837,10 +837,10 @@ function positionAppTooltip() {
     const margin = 16;
     const rightSpace = window.innerWidth - atmRect.right - gap - margin;
     const leftSpace = atmRect.left - gap - margin;
-    const side = rightSpace >= 180 ? 'right' : leftSpace >= 180 ? 'left' : null;
+    const side = rightSpace >= 135 ? 'right' : leftSpace >= 135 ? 'left' : null;
     const width = side ? Math.min(280, side === 'right' ? rightSpace : leftSpace) : Math.min(240, window.innerWidth - margin * 2);
     const left = side === 'right' ? atmRect.right + gap : side === 'left' ? atmRect.left - gap - width : window.innerWidth - width - margin;
-    const top = side ? Math.max(68, atmRect.top + 12) : 68;
+    const top = side ? Math.max(16, atmRect.top + 12) : 68;
 
     tooltipElement.classList.toggle('app-side-tooltip', Boolean(side));
     tooltipElement.style.setProperty('--app-tooltip-left', `${Math.round(left)}px`);
