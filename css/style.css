@@ -2199,7 +2199,7 @@ input:checked + .slider-vertical {
         /* margin: 160px auto 20px auto !important; */
         padding: 5px !important;
         bottom: 10px !important;
-        right: 10px !important;
+        right: 90px !important;
         left: auto !important;
         top: auto !important;
         border-radius: 10px !important;
@@ -2208,10 +2208,14 @@ input:checked + .slider-vertical {
         justify-content: start !important;  */
     }
 
+
+    /* Клавиатура на всех экранах (вместо того, что сверху) */
     body:has(#inputOTPCodeScreen:not([style*="display: none"]),
-              #authScreen:not([style*="display: none"]),
-              [id^="replenishcassette_"]:not([style*="display: none"])) .virtual-keypad-global {
-        display: grid !important;
+                #authScreen:not([style*="display: none"]),
+                [id^="replenishcassette"]:not([style*="display: none"]),
+                #outOfServiceScreen:not([style*="display: none"]),
+                #welcomeScreen:not([style*="display: none"])) .virtual-keypad-global {
+            display: grid !important;
     }
 
     .virtual-keypad-global button {
