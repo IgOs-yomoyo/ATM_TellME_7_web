@@ -2195,8 +2195,6 @@ input:checked + .slider-vertical {
         position: fixed !important;
         grid-template-columns: repeat(3, 40px) !important;
         gap: 4px;
-        /* max-width: 800px; */
-        /* margin: 160px auto 20px auto !important; */
         padding: 5px !important;
         bottom: 10px !important;
         right: 90px !important;
@@ -2204,19 +2202,18 @@ input:checked + .slider-vertical {
         top: auto !important;
         border-radius: 10px !important;
         z-index: 999999 !important;
-        /* transform: translateX(-430px);
-        justify-content: start !important;  */
     }
 
 
-    /* Клавиатура на всех экранах (вместо того, что сверху) */
+
+    /* Клавиатура на всех экранах (вместо того, что сверху)
     body:has(#inputOTPCodeScreen:not([style*="display: none"]),
                 #authScreen:not([style*="display: none"]),
                 [id^="replenishcassette"]:not([style*="display: none"]),
                 #outOfServiceScreen:not([style*="display: none"]),
                 #welcomeScreen:not([style*="display: none"])) .virtual-keypad-global {
             display: grid !important;
-    }
+    } */
 
     .virtual-keypad-global button {
         width: 35px !important;      /* 👈 ШИРИНА КНОПКИ */

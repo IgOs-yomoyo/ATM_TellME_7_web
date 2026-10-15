@@ -33,6 +33,13 @@ function openTrainingMenu() {
         screen.style.display = 'none';
     });
 
+    //Скрываем виртуальную клавиатуру
+    const keypad = document.getElementById('globalKeypad');
+    if (keypad) {
+        keypad.style.setProperty('display', 'none', 'important');
+        console.log('openTrainingMenu: клавиатура скрыта');
+    }
+
     // Показываем меню тренажёра
     const trainerMenu = document.getElementById('trainerMenuScreen');
     if (trainerMenu) trainerMenu.style.display = 'block';
@@ -46,6 +53,18 @@ function backToATMService() {
 
     if (typeof showClientScreen === 'function') {
         showClientScreen();
+    }
+
+    //Показываем виртуальную клавиатуру
+    const keypad = document.getElementById('globalKeypad');
+    if (keypad && !document.documentElement.classList.contains('android-app')) {
+        const isMobile = window.innerWidth <= 1024;
+        if (isMobile) {
+            keypad.style.setProperty('display', 'grid', 'important');
+        }else{
+            keypad.style.setProperty('display', 'none', 'important');
+            console.log('Обычный режим, десктоп. клавиатура скрыта');
+        }
     }
 
 }
@@ -83,7 +102,8 @@ function initTrainingSteps() {
             shortInstruction: 'Введите код инкассатора',
             targetSelector: '.otp-input, .otp-submit-btn', //[onclick="submitOTP()]
             action: 'enterOTP',
-            targetScreen: 'inputOTPCodeScreen'
+            targetScreen: 'inputOTPCodeScreen',
+            needsKeyboard: true
         }, 
         {
             id: 3,
@@ -110,19 +130,7 @@ function initTrainingSteps() {
             action: 'performCollection',
             targetScreen: 'mainScreen'
         }, 
-        // {
-            // id: 6,
-            // instruction: 'Заберите чек', 
-            // targetSelector: '[onclick="closeCollectionReceipt()"]',
-            // action: 'closeCollectionReceipt', 
-            // targetScreen: 'collectionReceiptScreen'
-        // }, 
         {
-            // id: 7, 
-            // instruction: 'Заберите карту',
-            // targetSelector: '[onclick="takeCard()"]',
-            // action: 'takeTheCard',
-            // targetScreen: 'takeCardScreen'
             id: 6,
             instruction: `Если вы видите экран "Можно проводить инкассацию", это означает, что операция "Провести инкассацию" выполнена успешно.
              Нажмите кнопку ПРОДОЛЖИТЬ`,
@@ -146,7 +154,8 @@ function initTrainingSteps() {
             shortInstruction: 'Код пользователя 100 + ВВОД',
             targetSelector: '#loginInput, .enter-btn', //#authScreen .info-input
             action: 'loginInput', 
-            targetScreen: 'authScreen'
+            targetScreen: 'authScreen', 
+            needsKeyboard: true
         },
         {
             id: 9,
@@ -154,7 +163,8 @@ function initTrainingSteps() {
             shortInstruction: 'Пароль 111111 + ВВОД',
             targetSelector: '#passwordInput, .enter-btn',
             action: 'passwordInput',
-            targetScreen: 'authScreen'
+            targetScreen: 'authScreen',
+            needsKeyboard: true
         },
         {
             id: 10,
@@ -268,7 +278,8 @@ function initTrainingSteps() {
             shortInstruction: 'Введите количество банкнот в кассете 1',
             targetSelector: '#LoadInput_1, .enter-btn', 
             action: 'enterNoOfNotes_1',
-            targetScreen:'replenishcassette_1'
+            targetScreen:'replenishcassette_1',
+            needsKeyboard: true
         },
         {
             id: 24,
@@ -276,7 +287,8 @@ function initTrainingSteps() {
             shortInstruction: 'Введите количество банкнот в кассете 2',
             targetSelector: '#LoadInput_2, .enter-btn',
             action: 'enterNoOfNotes_2',
-            targetScreen: 'replenishcassette_2'
+            targetScreen: 'replenishcassette_2',
+            needsKeyboard: true
         },
         {
             id: 25,
@@ -284,7 +296,8 @@ function initTrainingSteps() {
             shortInstruction: 'Введите количество банкнот в кассете 3',
             targetSelector: '#LoadInput_3, .enter-btn',
             action: 'enterNoOfNotes_3',
-            targetScreen: 'replenishcassette_3'
+            targetScreen: 'replenishcassette_3',
+            needsKeyboard: true
         },
         {
             id: 26,
@@ -292,7 +305,8 @@ function initTrainingSteps() {
             shortInstruction: 'Введите количество банкнот в кассете 4',
             targetSelector: '#LoadInput_4, .enter-btn',
             action: 'enterNoOfNotes_4',
-            targetScreen: 'replenishcassette_4'
+            targetScreen: 'replenishcassette_4',
+            needsKeyboard: true
         }, 
         {
             
@@ -347,7 +361,8 @@ function initTrainingSteps() {
             shortInstruction: 'Код инкассатора',
             targetSelector: '.otp-input, .otp-submit-btn',
             action: 'enterOTP',
-            targetScreen: 'inputOTPCodeScreen'
+            targetScreen: 'inputOTPCodeScreen',
+            needsKeyboard: true
         },
         {
             id: 33,
@@ -367,13 +382,6 @@ function initTrainingSteps() {
             action: 'exitButton',  //closeBalanceReceipt
             targetScreen: 'balanceReceiptScreen'
         },
-        // {
-        //     id: 34,
-        //     instruction: `Если данные о загрузке в чеке сходятся с данными, содержащимися в заявке в МАИС, нажимаем на экране кнопку "ВЫЙТИ".`,
-        //     targetSelector: '.exit-top-right',
-        //     action: 'exitButton',
-        //     targetScreen: 'balanceReceiptScreen'
-        // },
         {
             id: 35,
             instruction: `После того, как банкомат перешёл в режим обслуживания клиентов, нужно проверить состояние его устройств. 
@@ -382,7 +390,8 @@ function initTrainingSteps() {
             shortInstruction: 'Нажимаем 4-5-6',
             targetSelector: null,
             action: 'diagnosticComplete',
-            targetScreen: null     //'diagnosticScreen'
+            targetScreen: null,
+            needsKeyboard: true
         },
         {
             id: 36,
@@ -464,6 +473,24 @@ function showTrainingStep(index) {
     console.log('targetScreen:', step.targetScreen);
     console.log('targetSelector:', step.targetSelector);
     console.log('action:', step.action);
+
+
+    //Управление клавиатурой
+    const keypad = document.getElementById('globalKeypad');
+    if (keypad) {
+        // В обычном режиме клавиатура всегда
+        // В обучении - только на определённых шагах
+        const isTraining = typeof isTrainingMode !== 'undefined' && isTrainingMode;
+        const needsKeypad = isTraining ? step.needsKeyboard === true : true;
+
+        if (needsKeypad) {
+            keypad.style.setProperty('display', 'grid', 'important');
+            console.log('Клавиатура показана');
+        } else {
+            keypad.style.setProperty('display', 'none', 'important');
+            console.log('На этом шаге клавиатура не нужна');
+        }
+    }
 
     // Обновляем счётчик шагов
     const stepSpan = document.getElementById('tooltipStep');
