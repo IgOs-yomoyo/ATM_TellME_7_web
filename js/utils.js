@@ -422,15 +422,84 @@ document.addEventListener('focusin', (e) => {
     }
 });
 
+// ==== Переключение клавиатуры при переключении экрана
+function handleOrientationChange() {
+    const keypad = document.getElementById('globalKeypad');
+    if (!keypad) return;
 
+    if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
+        //В обучении - управляем клавиатурой
+        const step = trainingSteps[currentStepIndex];
+        if (!step) return;
 
+        const needsKeypad = step.needsKeyboard === true;
+        const isPortrait = window.innerHeight > window.innerHeight > window.innerWidth;
+        const isMobile = window.innerWidth <= 1024;
+        const hideForPortrait = isMobile && isPortrait;
 
+        if (needsKeypad && !hideForPortrait) {
+            keypad.style.setProperty('display', 'grid', 'important');
+        } else {
+            keypad.style.setProperty('display', 'none', 'important');
+        }
+    } else {
+        if (typeof updateGlobalKeypadForNormalMode === 'function') {
+            updateGlobalKeypadForNormalMode();
+        }
+    }
+}
 
+window.addEventListener('resize', () => {
+    setTimeout(handleOrientationChange, 100);
+});
+window.addEventListener('orientationchange', () => {
+    setTimeout(handleOrientationChange, 200);
+});
+// window.addEventListener('resize', () => {
+//     //resize срабатывает при повороте, но с меньшей задержкой
+//     if (typeof handleOrientationChange === 'function') {
+//         setTimeout(handleOrientationChange, 50);
+//     }
+// });
 
+function updateGlobalKeypadForNormalMode() {
+    const keypad = document.getElementById('globalKeypad');
+    if (keypad && !document.documentElement.classList.contains('android-app')) {
+        const isLandscape = window.innerWidth > window.innerHeight;
+        const isMobile = window.innerWidth <= 1024;
 
+        if (isMobile && isLandscape) {
+            keypad.style.setProperty('display', 'grid', 'important');
+            console.log('Обычный режим: виртуальная клавиатура включена');
+        }else{
+            keypad.style.setProperty('display', 'none', 'important');
+            console.log('Обычный режим, десктоп или портрет на мобильном: клавиатура скрыта');
+        }
+    }
+}
 
+window.addEventListener('orientationchange', () => {
+    setTimeout(() => {
+        if (typeof initTooltipDrag === 'function') {
+            initTooltipDrag();
+        }
+    }, 200);
+});
 
-
+// Дублируем через resize — на десктопе orientationchange не срабатывает
+let lastOrientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+window.addEventListener('resize', () => {
+    const current = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+    if (current !== lastOrientation) {
+        lastOrientation = current;
+        setTimeout(() => {
+            if (typeof initTooltipDrag === 'function') {
+                console.log('resize: смена ориентации, пересчёт tooltip');
+                initTooltipDrag();
+            }
+        }, 250);
+    }
+});
 
 
 

@@ -58,15 +58,17 @@ function backToATMService() {
     //Показываем виртуальную клавиатуру
     const keypad = document.getElementById('globalKeypad');
     if (keypad && !document.documentElement.classList.contains('android-app')) {
+        const isLandscape = window.innerWidth > window.innerHeight;
         const isMobile = window.innerWidth <= 1024;
-        if (isMobile) {
+
+        if (isMobile && isLandscape) {
             keypad.style.setProperty('display', 'grid', 'important');
-        }else{
+            console.log('Обычный режим: виртуальная клавиатура включена');
+        } else {
             keypad.style.setProperty('display', 'none', 'important');
-            console.log('Обычный режим, десктоп. клавиатура скрыта');
+            console.log('Обычный режим, десктоп или портрет на мобильном: клавиатура скрыта');
         }
     }
-
 }
 
 // ========== РЕЖИМ ОБУЧЕНИЯ
@@ -483,12 +485,17 @@ function showTrainingStep(index) {
         const isTraining = typeof isTrainingMode !== 'undefined' && isTrainingMode;
         const needsKeypad = isTraining ? step.needsKeyboard === true : true;
 
-        if (needsKeypad) {
+        // В портретной ориентации клавиатура не нужна, используем системную клавиатуру
+        const isPortrait = window.innerHeight > window.innerWidth;
+        const isMobile = window.innerWidth <= 1024;
+        const hideForPortrait = isMobile && isPortrait;
+
+        if (needsKeypad && !hideForPortrait) {
             keypad.style.setProperty('display', 'grid', 'important');
             console.log('Клавиатура показана');
         } else {
             keypad.style.setProperty('display', 'none', 'important');
-            console.log('На этом шаге клавиатура не нужна');
+            console.log(hideForPortrait ? 'На этом шаге клавиатура скрыта, используем системную.' : 'Клавиатура скрыта.');
         }
     }
 
@@ -741,22 +748,47 @@ let dragOffsetX = 0;
 let dragOffsetY = 0;
 let tooltipElement = null;
 
+let tooltipDragInitialized = false;
+
 function initTooltipDrag() {
     tooltipElement = document.getElementById('trainingTooltip');
     if (!tooltipElement) return;
 
-    function syncTooltipParent() {
-        const parent = document.documentElement.classList.contains('android-app') || window.innerWidth > 1024
-            ? document.body : document.querySelector('.atm-container');
-        if (tooltipElement.parentElement === parent) return;
-        parent.appendChild(tooltipElement);
-        tooltipElement.style.left = '30px';
-        tooltipElement.style.bottom = '180px';
-        tooltipElement.style.top = 'auto';
-        tooltipElement.style.right = 'auto';
+    //Всегда перемещаем tooltip в body - чтобы position: fixed работала от окна
+    if (tooltipElement.parentElement !== document.body) {
+        document.body.appendChild(tooltipElement);
+        console.log('initTooltipDrag: tooltip перемещён в body');
     }
 
-    syncTooltipParent();
+    const isPortrait = window.innerHeight >window.innerWidth;
+    const isMobile = window.innerWidth <= 1024;
+
+    if (isMobile && isPortrait) {
+        console.log('Портрет: drag отключён, tooltip в body');
+        
+        tooltipElement.removeAttribute('style');
+        tooltipElement.style.display = 'block';
+        tooltipDragInitialized = false;
+
+        return;
+    }
+
+    //Защита от повторного навешивания обработчиков
+    if (tooltipDragInitialized) return;
+    tooltipDragInitialized = true;
+
+    // function syncTooltipParent() {
+    //     const parent = document.documentElement.classList.contains('android-app') || window.innerWidth > 1024
+    //         ? document.body : document.querySelector('.atm-container');
+    //     if (tooltipElement.parentElement === parent) return;
+    //     parent.appendChild(tooltipElement);
+    //     tooltipElement.style.left = '30px';
+    //     tooltipElement.style.bottom = '180px';
+    //     tooltipElement.style.top = 'auto';
+    //     tooltipElement.style.right = 'auto';
+    // }
+
+    // syncTooltipParent();
     window.addEventListener('resize', () => {
         syncTooltipParent();
         if (isTrainingMode && !isTestingMode) updateTooltipInstruction(trainingSteps[currentStepIndex]);

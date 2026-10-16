@@ -265,12 +265,21 @@ function requestSupervisorMode() {
     const passwordInput = document.getElementById('passwordInput');
 
     if(isMobile) {
+        if (isPortrait) {
+            //В портрете системная клавиатура
+            loginInput?.removeAttribute('readonly');
+            passwordInput?.removeAttribute('readonly');
+            loginInput?.setAttribute('inputmode', 'numeric');
+            passwordInput?.setAttribute('inputmode', 'numeric');
+        } else {
+
+        }
         //Мобильный - виртуальная клавиатура, системная клавиатура
-        loginInput?.setAttribute('inputmode', 'none');
-        passwordInput?.setAttribute('inputmode', 'true');
         loginInput?.setAttribute('readonly', 'true');
         passwordInput?.setAttribute('readonly', 'true');
-        console.log('Мобильный режим: системная клавиатура отключена');
+        loginInput?.setAttribute('inputmode', 'none');
+        passwordInput?.setAttribute('inputmode', 'none');
+        // console.log('Мобильный режим: системная клавиатура отключена');
     }else{
         //Десктоп - физическая клава
         loginInput?.setAttribute('inputmode', 'numeric');

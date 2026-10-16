@@ -100,15 +100,28 @@ function updateOTPInputMode() {
     const input = document.getElementById('otpInput');
     if (!screen || !input || getComputedStyle(screen).display === 'none') return;
 
+
     const isMobile = window.innerWidth <= 1024 && !document.documentElement.classList.contains('android-app');
-    input.readOnly = isMobile;
-    if (isMobile) {
+    const isPortrait = window.innerHeight > window.innerWidth;
+
+    if (isMobile && isPortrait) {
+        //Портрет - системная клавиатура
+        input.readOnly = false;
+        input.setAttribute('inputmode', 'numeric');
+        input.focus();
+    } else if (isMobile) {
+        //Ландшафт - виртуальная
+        input.readOnly = true;
         input.setAttribute('inputmode', 'none');
     } else {
+        //Декстоп - физическая
+        input.readOnly = false;
         input.setAttribute('inputmode', 'numeric');
         input.focus();
     }
 }
+    
+
 
 window.addEventListener('resize', updateOTPInputMode);
 
@@ -151,28 +164,15 @@ function showOTPScreen() {
         input.value = '';
 
         updateOTPInputMode();
+
+        setTimeout(() => {
+            if (input && getComputedStyle(otpScreen).display !== 'none') {
+                input.focus();
+                console.log('OTP: фокус установлен на поле ввода');
+            }
+        }, 100);
         // input.focus();
     }
-
-    //Добавил - показываем глобальную клавиатуру на мобильном, хотя она и так показана. 
-    // const keypad = document.getElementById('globalKeypad');
-    // if (keypad) {
-    //     if (window.innerWidth <= 1024) {
-    //         keypad.style.display = 'grid';
-    //         console.log('Глобальная клавиатура вызвана');
-    //     }else{
-    //         keypad.style.display = 'none';
-    //     }
-    // }
-
-    // //Сбрасываем readOnly у других полей
-    // document.querySelectorAll('input').forEach(inp => {
-    //     if(inp.id !== 'otpInput') {
-    //         inp.readOnly = false;
-    //         inp.removeAttribute('inputmode');
-    //     }
-    // });
-
     // Запускаем таймер
     startOTPTimer();
 }

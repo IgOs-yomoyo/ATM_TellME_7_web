@@ -2106,7 +2106,7 @@ input:checked + .slider-vertical {
 }
 
 /* Если телефон в портретной ориентации — показываем подсказку */
-@media screen and (orientation: portrait) and (max-width: 1024px) {
+/* @media screen and (orientation: portrait) and (max-width: 1024px) {
     body::before {
         content: '📱 Поверните телефон горизонтально для работы с тренажёром';
         position: fixed;
@@ -2138,7 +2138,7 @@ input:checked + .slider-vertical {
         visibility: hidden !important;
         pointer-events: none !important;
     }
-}
+} */
 
 /* ===== ГЛОБАЛЬНАЯ ВИРТУАЛЬНАЯ КЛАВИАТУРА ===== */
 .virtual-keypad-global {
@@ -2330,7 +2330,7 @@ input:checked + .slider-vertical {
     }
 }
 
-/* === Короткие подсказки для мобильной версии === */
+/* === Короткие подсказки для мобильной версии. Горизонтальное расположение. === */
 @media screen and (max-width: 1024px) {
     #trainingTooltip {
         /* display: block !important; */
@@ -2338,8 +2338,8 @@ input:checked + .slider-vertical {
 
         top: 5px !important;
         bottom: auto !important;
-        right: auto !important;
-        left: 1220px !important;
+        right: 10px !important;
+        left: auto !important;
         /* transform: translateX(-50%) !important; */
         transform: none !important;
 
@@ -2354,7 +2354,7 @@ input:checked + .slider-vertical {
         color: white !important;
         padding: 8px 12px !important;
         border-radius: 8px !important;
-        font-size: 32px !important;
+        font-size: 16px !important;
         z-index: 999997 !important;
         pointer-events: none !important;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
@@ -2371,14 +2371,14 @@ input:checked + .slider-vertical {
     /* Показываем короткую */
     #trainingTooltip .training-tooltip-short {
         display: block !important;
-        font-size: 32px !important;
+        font-size: 16px !important;
         font-weight: bold !important;
     }
 
     /* Номер шага */
     #trainingTooltip .training-tooltip-step {
         display: block !important;
-        font-size: 32px !important;
+        font-size: 12px !important;
         font-weight: bold !important;
         color: #88aacc !important;
         margin-bottom: 4px !important;
@@ -2787,3 +2787,53 @@ html.android-app #trainingTooltip .training-tooltip-progress { display: block !i
     html.android-app #trainingTooltip.app-side-tooltip #tooltipText { font-size: 13px !important; }
 }
 
+/* === СТИЛИ ДЛЯ ПОРТРЕТНОЙ ОРИЕНТАЦИИ ЭКРАНА МОБИЛЬНОГО ТЕЛЕФОНА === */
+
+@media screen and (orientation: portrait) and (max-width: 1024px) {
+
+    /* Разрешаем системную клавиатуру в портретной ориентации */
+    .info-input,
+    .otp-input,
+    .pin-input,
+    #LoadInput_1, #LoadInput_2, #LoadInput_3, #LoadInput_4 {
+        pointer-events: auto !important;
+        caret-color: auto !important;
+        font-size: 24px !important;
+    }
+    /* Виртуальная клавиатура не нужна в портретной ориентации */
+    .virtual-keypad-global {
+        display: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+    }
+    /* Подсказки для режима обучения вверху экрана */
+    #trainingTooltip {
+        position: fixed !important;
+        top: 160px !important;
+        left: 10px !important;
+        right: 10px !important;
+        bottom: auto !important;
+        width: auto !important;
+        max-width: none !important;
+        padding: 10px 14px !important;
+        font-size: 16px !important;
+        border-radius: 10px !important;
+        z-index: 999999 !important;
+        pointer-events: none !important;
+    }
+
+    #trainingTooltip .training-tooltip-short {
+        font-size: 18px !important;
+        font-weight: bold !important;
+        display: block !important;
+    }
+
+    #trainingTooltip .training-tooltip-text {
+        display: none !important;
+    }
+
+    #trainingTooltip .training-tooltip-step {
+        font-size: 12px !important;
+        margin-bottom: 4px !important;
+    }
+}
