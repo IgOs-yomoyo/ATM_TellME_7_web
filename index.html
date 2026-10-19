@@ -637,7 +637,6 @@
     <script src="js/openrecyclerdaycreens.js"></script>
     <script src="js/cassettesreplacement.js"></script>
     <!-- <script src="js/closerecyclerday.js?v=2"></script> -->
-
     <script>
     function scaleContainer() {
         const container = document.querySelector('.atm-container');
@@ -649,11 +648,12 @@
         const scale = Math.max(0, Math.min(width / 1200, height / 800));
         container.style.left = '50%';
         container.style.top = '50%';
+        currentScale = scale;
         container.style.transform = `translate(-50%, -50%) scale(${scale})`;
     }
     window.addEventListener('load', scaleContainer);
     window.addEventListener('resize', scaleContainer);
-    if (window.visualViewport) window.visualViewport.addEventListener('resize', scaleContainer);
+    // if (window.visualViewport) window.visualViewport.addEventListener('resize', scaleContainer);
     if (screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => {});
     </script>
 <div class="virtual-keypad-global" id="globalKeypad">
@@ -669,6 +669,12 @@
     <button type="button" onclick="globalVkbClear()">⌫</button>
     <button type="button" onclick="globalVkbInput('0')">0</button>
     <button type="button" onclick="globalVkbSubmit()">✓</button>
+</div>
+<!-- Кнопки диагностики 4-5-6 для портрета -->
+<div id="diagnosticButtons" class="diagnostic-buttons" style="display: none;">
+    <button type="button" onclick="triggerDiagnosticSequence('4')">4</button>
+    <button type="button" onclick="triggerDiagnosticSequence('5')">5</button>
+    <button type="button" onclick="triggerDiagnosticSequence('6')">6</button>
 </div>
 </body>
 </html>

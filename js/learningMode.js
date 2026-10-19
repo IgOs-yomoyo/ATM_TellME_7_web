@@ -438,6 +438,10 @@ function startTraining(mode = 'learning') {
     setTimeout(() => {
         showTrainingStep(currentStepIndex);
     }, 300);
+
+    if (typeof updateDiagnosticButtonsVisibility === 'function') {
+        setTimeout(updateDiagnosticButtonsVisibility, 300);
+    }
 }
 
 function updateTooltipInstruction(step) {
@@ -497,6 +501,10 @@ function showTrainingStep(index) {
             keypad.style.setProperty('display', 'none', 'important');
             console.log(hideForPortrait ? 'На этом шаге клавиатура скрыта, используем системную.' : 'Клавиатура скрыта.');
         }
+
+        if (typeof updateDiagnosticButtonsVisibility === 'function') {
+        setTimeout(updateDiagnosticButtonsVisibility, 50);
+    }
     }
 
     // Обновляем счётчик шагов
@@ -727,6 +735,10 @@ function finishTraining() {
     // openTrainingMenu();
     //backToWelcomeScreen();
     showClientScreen();
+
+    if (typeof updateDiagnosticButtonsVisibility === 'function') {
+        setTimeout(updateDiagnosticButtonsVisibility, 200);
+    }
 }
     // document.querySelectorAll('.atm-screen').forEach(screen => {
     //     screen.style.display = 'none';
@@ -767,7 +779,7 @@ function initTooltipDrag() {
         console.log('Портрет: drag отключён, tooltip в body');
         
         tooltipElement.removeAttribute('style');
-        tooltipElement.style.display = 'block';
+        tooltipElement.style.display = 'none';
         tooltipDragInitialized = false;
 
         return;
@@ -954,3 +966,40 @@ function stopDragTouch() {
     }
 }
 
+
+// ===== АВТО-СКРЫТИЕ ПОДСКАЗКИ ПРИ ФОКУСЕ (С ЗАДЕРЖКОЙ 2 СЕК) =====
+document.addEventListener('focusin', (e) => {
+    if (!e.target.matches('input, textarea')) return;
+    if (typeof isTrainingMode === 'undefined' || !isTrainingMode) return;
+
+    const isPortrait = window.innerHeight > window.innerWidth;
+    const isMobile = window.innerWidth <= 1024;
+    if (!isMobile || !isPortrait) return;
+
+    const tooltip = document.getElementById('trainingTooltip');
+    if (!tooltip) return;
+
+    // Если подсказка уже скрыта — ничего не делаем
+    if (getComputedStyle(tooltip).display === 'none') return;
+
+    console.log('Фокус на поле: подсказка скроется через 2 секунды');
+
+    // Отменяем предыдущий таймер, если он был (чтобы не было гонки)
+    if (window.tooltipHideTimer) {
+        clearTimeout(window.tooltipHideTimer);
+    }
+
+    // Запускаем новый таймер на 2 секунды
+    window.tooltipHideTimer = setTimeout(() => {
+        // Проверяем, что пользователь всё ещё в режиме обучения
+        if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
+            // Скрываем подсказку, только если фокус всё ещё на поле
+            // (если фокус ушёл, сработал focusout, который мог уже вернуть подсказку)
+            if (document.activeElement && document.activeElement.matches('input, textarea')) {
+                tooltip.style.setProperty('display', 'none', 'important');
+                console.log('Подсказка скрыта по таймеру (прошло 2 сек)');
+            }
+        }
+        window.tooltipHideTimer = null;
+    }, 4000);
+});

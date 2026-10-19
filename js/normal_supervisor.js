@@ -33,6 +33,10 @@ function showClientScreen() {
         if (welcomeScreen) welcomeScreen.style.display = 'none';
         if (outOfServiceScreen) outOfServiceScreen.style.display = 'block';
     }
+
+    if (typeof updateDiagnosticButtonsVisibility === 'function') {
+        setTimeout(updateDiagnosticButtonsVisibility, 100);
+    }
 }
 
 // Функция для экрана авторизации – очистка полей
@@ -261,31 +265,48 @@ function requestSupervisorMode() {
 
     //Настройка ввода для мобильного/десктопа
     const isMobile = window.innerWidth <= 1024 && !document.documentElement.classList.contains('android-app');
+    const isPortrait = window.innerHeight > window.innerWidth;
     const loginInput = document.getElementById('loginInput');
     const passwordInput = document.getElementById('passwordInput');
 
     if(isMobile) {
         if (isPortrait) {
-            //В портрете системная клавиатура
-            loginInput?.removeAttribute('readonly');
-            passwordInput?.removeAttribute('readonly');
-            loginInput?.setAttribute('inputmode', 'numeric');
-            passwordInput?.setAttribute('inputmode', 'numeric');
+            if (loginInput) {
+                loginInput.removeAttribute('readonly');
+                loginInput.readOnly = false;
+                loginInput.setAttribute('inputmode', 'numeric');
+            }
+            if (passwordInput) {
+                passwordInput.removeAttribute('readonly');
+                passwordInput.readOnly = false;
+                passwordInput.setAttribute('inputmode', 'numeric');
+            }
         } else {
-
+            // Если ландшафт - виртуальная клавиатура
+            if (loginInput) {
+                // loginInput.removeAttribute('readonly');
+                loginInput.readOnly = true;
+                loginInput.setAttribute('inputmode', 'none');
+            }
+            if (passwordInput) {
+                // passwordInput.removeAttribute('readonly');
+                passwordInput.readOnly = true;
+                passwordInput.setAttribute('inputmode', 'none');
+            }
         }
-        //Мобильный - виртуальная клавиатура, системная клавиатура
-        loginInput?.setAttribute('readonly', 'true');
-        passwordInput?.setAttribute('readonly', 'true');
-        loginInput?.setAttribute('inputmode', 'none');
-        passwordInput?.setAttribute('inputmode', 'none');
-        // console.log('Мобильный режим: системная клавиатура отключена');
-    }else{
-        //Десктоп - физическая клава
-        loginInput?.setAttribute('inputmode', 'numeric');
-        passwordInput?.setAttribute('inputmode', 'numeric');
-        loginInput?.removeAttribute('readonly');
-        passwordInput?.removeAttribute('readonly');
+        
+    } else {
+        // Если десктоп - системная клавиатура
+        if (loginInput) {
+            loginInput.removeAttribute('readonly');
+            loginInput.readOnly = false;
+            loginInput.setAttribute('inputmode', 'numeric');
+        }
+        if (passwordInput) {
+            passwordInput.removeAttribute('readonly');
+            passwordInput.readOnly = false;
+            passwordInput.setAttribute('inputmode', 'numeric');
+        }
         console.log('Десктоп: физическая клавиатура');
     }
 

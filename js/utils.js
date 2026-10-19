@@ -1,6 +1,9 @@
 // Общие функции для переключения экранов
 // let currentMode = 'normal'; 
 
+let currentScale = 0.3225; //глобальная переменная для сохранения масштаба контейнера
+
+
 // Универсальная заставка для экрана тестирования BRM
 function showTestingScreen (duration = 8000, callback = null) {
     console.log('showTestingScreen вызвана, duration:', duration);
@@ -31,6 +34,10 @@ function showTestingScreen (duration = 8000, callback = null) {
         // Выполняем действие, если передано
         if (callback && typeof callback == 'function') {
             callback();
+        }
+
+        if (typeof updateDiagnosticButtonsVisibility === 'function') {
+            setTimeout(updateDiagnosticButtonsVisibility, 50);
         }
     }, duration);
 
@@ -103,6 +110,10 @@ function backToWelcomeScreen() {
             }
             if (outOfServiceScreen) outOfServiceScreen.style.display = 'none';
             if (typeof startCarousel === 'function') startCarousel();
+
+            if (typeof updateDiagnosticButtonsVisibility === 'function') {
+                updateDiagnosticButtonsVisibility();
+            }
         });
     } else {
             //День закрыт - outOfService
@@ -119,6 +130,10 @@ function backToWelcomeScreen() {
     //Завершаем шаг в обучении
     if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
         completeTrainingStep('backToNormalMode');
+    }
+
+    if (typeof updateDiagnosticButtonsVisibility === 'function') {
+        setTimeout(updateDiagnosticButtonsVisibility, 200);
     }
 }
 
@@ -391,15 +406,30 @@ function globalVkbSubmit() {
         const passwordInput = document.getElementById('passwordInput');
         if (passwordInput) {
             const isMobile = window.innerWidth <= 1024 && !document.documentElement.classList.contains('android-app');
-            if (isMobile) passwordInput.readOnly = false;
-            passwordInput.focus();
+            const isPortrait = window.innerHeight > window.innerWidth;
 
-            if (isMobile) {
+ 
+            if (isMobile && isPortrait) {
+                passwordInput.removeAttribute('readonly');
+                passwordInput.readOnly = false;
+                passwordInput.setAttribute('inputmode', 'numeric');
+                passwordInput.focus();
+                console.log('Портрет: фокус на passwordInput, системная клавиатура');
+            } else if (isMobile) {
+                //Ландшафт - виртуальная клава
+                passwordInput.readOnly = false;
+                passwordInput.focus();
                 setTimeout(() => {
                     passwordInput.readOnly = true;
                 }, 50);
-            }
-            console.log('Фокус на поле ввода пароля');
+                console.log('Ландшафт: фокус на passwordInput, виртуальная клавиатура');
+            } else {
+                //Десктоп
+                passwordInput.removeAttribute('readonly');
+                passwordInput.readOnly = false;
+                passwordInput.focus();
+                console.log('Десктоп: фокус на passwordInput');
+            }     
         } 
 
     } else if (input.id === 'passwordInput') {
@@ -502,8 +532,97 @@ window.addEventListener('resize', () => {
 });
 
 
+function updateDiagnosticButtonsVisibility() {
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const outOfServiceScreen = document.getElementById('outOfServiceScreen');
+    const buttons = document.getElementById('diagnosticButtons');
+    if (!buttons) return;
+
+    const isPortrait = window.innerHeight > window.innerWidth;
+    const isMobile = window.innerWidth <= 1024;
+
+    // Скрываем на десктопе и в ландшафте
+    if (!isMobile || !isPortrait) {
+        buttons.style.setProperty('display', 'none', 'important');
+        return;
+    }
+
+    // В обучении — показываем только на шаге 35
+    if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
+        const currentStep = (typeof trainingSteps !== 'undefined' && trainingSteps[currentStepIndex]) || null;
+        const isDiagnosticStep = currentStep && currentStep.id === 35;
+        buttons.style.setProperty('display', isDiagnosticStep ? 'flex' : 'none', 'important');
+        return;
+    }
+
+    // Обычный режим — показываем на welcome / outOfService
+    const welcomeVisible = welcomeScreen && getComputedStyle(welcomeScreen).display !== 'none';
+    const outOfServiceVisible = outOfServiceScreen && getComputedStyle(outOfServiceScreen).display !== 'none';
+
+    if (welcomeVisible || outOfServiceVisible) {
+        buttons.style.setProperty('display', 'flex', 'important');
+    } else {
+        buttons.style.setProperty('display', 'none', 'important');
+    }
+}
+`
+// ===== КНОПКИ ДИАГНОСТИКИ 4-5-6 =====`
+
+function triggerDiagnosticSequence(digit) {
+    console.log('Кнопка диагностики нажата:', digit);
+    if (typeof checkDiagnosticSequence === 'function') {
+        checkDiagnosticSequence(digit);
+    } else {
+        console.warn('checkDiagnosticSequence не найдена!');
+    }
+}
 
 
+// ===== ОТСЛЕЖИВАНИЕ КЛАВИАТУРЫ ЧЕРЕЗ visualViewport =====
+if (window.visualViewport) {
+    console.log('visualViewport resize:', window.visualViewport.height);
+    let lastVVHeight = window.visualViewport.height;
 
+    window.visualViewport.addEventListener('resize', () => {
+        console.log('visualViewport resize! height:', window.visualViewport.height);
+        const currentHeight = window.visualViewport.height;
+        const heightDiff = lastVVHeight - currentHeight;
+        lastVVHeight = currentHeight;
 
+        if (typeof isTrainingMode === 'undefined' || !isTrainingMode) return;
+        const isPortrait = window.innerHeight > window.innerWidth;
+        const isMobile = window.innerWidth <= 1024;
+        if (!isMobile || !isPortrait) return;
 
+        const tooltip = document.getElementById('trainingTooltip');
+        const container = document.querySelector('.atm-container');
+        if (!tooltip || !container) return;
+
+        //Клавиатура открылась - высота уменьшилась
+        if (heightDiff > 50) {
+            //Сдвигаем контейнер вверх на половину высоты клавиатуры
+            // container.style.transform = 'translate(-50%, -50%) translateY(-${heightDiff / 2}px) scale (var(--scale, 0.3225))';
+            container.style.transform = `translate(-50%, -50%) translateY(-${heightDiff / 2}px) scale(${currentScale})`;
+            console.log('Клавиатура открыта: контейнер сдвинут вверх');
+        }
+
+        // Клавиатура закрылась — высота увеличилась, возвращаем подсказку
+        if (heightDiff < -50) {
+            //возвращаем контейнер на место
+            // container.style.transform = 'transate(-50%, -50%) scale(var(--scale, 0.3225))';
+            container.style.transform = `translate(-50%, -50%) scale(${currentScale})`;
+            console.log('Клавиатура закрыта: контейнер возвращён на место');
+            
+            //Возвращаем подсказку
+            tooltip.style.setProperty('display', 'block', 'important');
+            console.log('Подсказка возвращена: клавиатура закрылась');
+
+            // const isPortrait = window.innerHeight > window.innerWidth;
+            // const isMobile = window.innerWidth <= 1024;
+            // if (isMobile && isPortrait) {
+            //     tooltip.style.setProperty('display', 'block', 'important');
+            //     console.log('Подсказка возвращена: клавиатура закрылась');
+            // }
+        }
+    });
+}

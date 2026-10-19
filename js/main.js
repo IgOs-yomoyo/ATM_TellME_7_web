@@ -355,6 +355,10 @@ function exitCollectionScreen(){
             console.log('welcomeScreen запущен');
             if (typeof startCarousel === 'function') startCarousel();
         }
+
+        if (typeof updateDiagnosticButtonsVisibility === 'function') {
+            setTimeout(updateDiagnosticButtonsVisibility, 100);
+        }
     }, 3000);
     // if (typeof showWelcomeScreen === 'function') {
     //     showWelcomeScreen();

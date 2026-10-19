@@ -2809,7 +2809,7 @@ html.android-app #trainingTooltip .training-tooltip-progress { display: block !i
     /* Подсказки для режима обучения вверху экрана */
     #trainingTooltip {
         position: fixed !important;
-        top: 160px !important;
+        top: 100px !important;
         left: 10px !important;
         right: 10px !important;
         bottom: auto !important;
@@ -2835,5 +2835,67 @@ html.android-app #trainingTooltip .training-tooltip-progress { display: block !i
     #trainingTooltip .training-tooltip-step {
         font-size: 12px !important;
         margin-bottom: 4px !important;
+    }
+}
+
+/* Кнопки диагностики 4-5-6 */
+.diagnostic-buttons {
+    position: fixed;
+    bottom: 80px;
+    right: 10px;
+    display: none;                     /* скрыто по умолчанию */
+    flex-direction: row;
+    gap: 8px;
+    z-index: 999998;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.diagnostic-buttons button {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    font-weight: bold;
+    background: #1976D2;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.diagnostic-buttons button:active {
+    background: #1565C0;
+    transform: scale(0.95);
+}
+
+/* Показываем ТОЛЬКО в портрете на мобильном */
+@media screen and (orientation: portrait) and (max-width: 1024px) {
+    /* body.diagnostic-available .diagnostic-buttons {
+        display: flex !important;
+    } */
+
+    /* Компактнее — 35px как у виртуальной клавиатуры */
+    .diagnostic-buttons {
+        padding: 6px !important;
+        gap: 6px !important;
+        border-radius: 10px !important;
+        bottom: 78px !important;      /* над кнопкой "Главное меню" */
+        right: 50% !important;
+        transform: translateX(50%) !important;
+    }
+
+    .diagnostic-buttons button {
+        width: 50px !important;
+        height: 35px !important;
+        font-size: 22px !important;
+        border-radius: 6px !important;
     }
 }
