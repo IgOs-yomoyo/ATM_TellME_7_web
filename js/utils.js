@@ -579,17 +579,60 @@ function triggerDiagnosticSequence(digit) {
 
 
 // ===== ОТСЛЕЖИВАНИЕ КЛАВИАТУРЫ ЧЕРЕЗ visualViewport =====
-if (window.visualViewport) {
-    console.log('visualViewport resize:', window.visualViewport.height);
-    let lastVVHeight = window.visualViewport.height;
+// if (window.visualViewport) {
+//     console.log('visualViewport resize:', window.visualViewport.height);
+//     let lastVVHeight = window.visualViewport.height;
 
+//     window.visualViewport.addEventListener('resize', () => {
+//         console.log('visualViewport resize! height:', window.visualViewport.height);
+//         const currentHeight = window.visualViewport.height;
+//         const heightDiff = lastVVHeight - currentHeight;
+//         lastVVHeight = currentHeight;
+
+//         if (typeof isTrainingMode === 'undefined' || !isTrainingMode) return;
+//         const isPortrait = window.innerHeight > window.innerWidth;
+//         const isMobile = window.innerWidth <= 1024;
+//         if (!isMobile || !isPortrait) return;
+
+//         const tooltip = document.getElementById('trainingTooltip');
+//         const container = document.querySelector('.atm-container');
+//         if (!tooltip || !container) return;
+
+//         //Клавиатура открылась - высота уменьшилась
+//         if (heightDiff > 50) {
+//             //Сдвигаем контейнер вверх на половину высоты клавиатуры
+//             // container.style.transform = 'translate(-50%, -50%) translateY(-${heightDiff / 2}px) scale (var(--scale, 0.3225))';
+//             container.style.transform = `translate(-50%, -50%) translateY(-${heightDiff / 2}px) scale(${currentScale})`;
+//             console.log('Клавиатура открыта: контейнер сдвинут вверх');
+//         }
+
+//         // Клавиатура закрылась — высота увеличилась, возвращаем подсказку
+//         if (heightDiff < -50) {
+//             //возвращаем контейнер на место
+//             // container.style.transform = 'transate(-50%, -50%) scale(var(--scale, 0.3225))';
+//             container.style.transform = `translate(-50%, -50%) scale(${currentScale})`;
+//             console.log('Клавиатура закрыта: контейнер возвращён на место');
+            
+//             //Возвращаем подсказку
+//             tooltip.style.setProperty('display', 'block', 'important');
+//             console.log('Подсказка возвращена: клавиатура закрылась');
+
+//             // const isPortrait = window.innerHeight > window.innerWidth;
+//             // const isMobile = window.innerWidth <= 1024;
+//             // if (isMobile && isPortrait) {
+//             //     tooltip.style.setProperty('display', 'block', 'important');
+//             //     console.log('Подсказка возвращена: клавиатура закрылась');
+//             // }
+//         }
+//     });
+// }
+
+if (window.visualViewport) {
     window.visualViewport.addEventListener('resize', () => {
         console.log('visualViewport resize! height:', window.visualViewport.height);
-        const currentHeight = window.visualViewport.height;
-        const heightDiff = lastVVHeight - currentHeight;
-        lastVVHeight = currentHeight;
-
+        
         if (typeof isTrainingMode === 'undefined' || !isTrainingMode) return;
+        
         const isPortrait = window.innerHeight > window.innerWidth;
         const isMobile = window.innerWidth <= 1024;
         if (!isMobile || !isPortrait) return;
@@ -598,31 +641,22 @@ if (window.visualViewport) {
         const container = document.querySelector('.atm-container');
         if (!tooltip || !container) return;
 
-        //Клавиатура открылась - высота уменьшилась
-        if (heightDiff > 50) {
-            //Сдвигаем контейнер вверх на половину высоты клавиатуры
-            // container.style.transform = 'translate(-50%, -50%) translateY(-${heightDiff / 2}px) scale (var(--scale, 0.3225))';
-            container.style.transform = `translate(-50%, -50%) translateY(-${heightDiff / 2}px) scale(${currentScale})`;
-            console.log('Клавиатура открыта: контейнер сдвинут вверх');
-        }
+        // Вычисляем высоту клавиатуры: разница между полной высотой окна и видимой
+        const keyboardHeight = window.innerHeight - window.visualViewport.height;
 
-        // Клавиатура закрылась — высота увеличилась, возвращаем подсказку
-        if (heightDiff < -50) {
-            //возвращаем контейнер на место
-            // container.style.transform = 'transate(-50%, -50%) scale(var(--scale, 0.3225))';
+        // Если клавиатура открыта (высота > 100px)
+        if (keyboardHeight > 100) {
+            // Сдвигаем контейнер вверх на половину высоты клавиатуры
+            const offsetY = keyboardHeight / 2;
+            container.style.transform = `translate(-50%, -50%) translateY(-${offsetY}px) scale(${currentScale})`;
+            console.log(`Клавиатура открыта (${keyboardHeight}px): контейнер сдвинут на -${offsetY}px`);
+        } else {
+            // Клавиатура закрыта — возвращаем на место
             container.style.transform = `translate(-50%, -50%) scale(${currentScale})`;
             console.log('Клавиатура закрыта: контейнер возвращён на место');
             
-            //Возвращаем подсказку
+            // Возвращаем подсказку
             tooltip.style.setProperty('display', 'block', 'important');
-            console.log('Подсказка возвращена: клавиатура закрылась');
-
-            // const isPortrait = window.innerHeight > window.innerWidth;
-            // const isMobile = window.innerWidth <= 1024;
-            // if (isMobile && isPortrait) {
-            //     tooltip.style.setProperty('display', 'block', 'important');
-            //     console.log('Подсказка возвращена: клавиатура закрылась');
-            // }
         }
     });
 }

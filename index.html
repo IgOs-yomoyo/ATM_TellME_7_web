@@ -652,7 +652,18 @@
         container.style.transform = `translate(-50%, -50%) scale(${scale})`;
     }
     window.addEventListener('load', scaleContainer);
-    window.addEventListener('resize', scaleContainer);
+    // window.addEventListener('resize', scaleContainer);
+    window.addEventListener('resize', () => {
+        const isPortait = window.innerHeight > window.innerWidth;
+        const isMobile = window.innerWidth <= 1024;
+        const keyboardOpen = window.visualViewport && (window.innerHeight - window.visualViewport.height > 100);
+
+        //Если клавиатура открыта в портрете на мобильном - не трогаем transform (там работает сдвиг из utils.js)
+        if (isMobile && isPortait && keyboardOpen) {
+            return;
+        }
+        scaleContainer();
+    });
     // if (window.visualViewport) window.visualViewport.addEventListener('resize', scaleContainer);
     if (screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => {});
     </script>

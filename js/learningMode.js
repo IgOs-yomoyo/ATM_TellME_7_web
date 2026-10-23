@@ -603,6 +603,7 @@ function showTrainingStep(index) {
                     const oldLabel = target.querySelector('.step-number');
                     if (oldLabel) oldLabel.remove();
 
+
                     //Создаём номер
                     const label = document.createElement('span');
                     label.className = 'step-number';
@@ -1001,5 +1002,5 @@ document.addEventListener('focusin', (e) => {
             }
         }
         window.tooltipHideTimer = null;
-    }, 4000);
+    }, 1000);
 });

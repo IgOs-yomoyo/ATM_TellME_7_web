@@ -258,9 +258,11 @@ input:checked + .slider-vertical {
 
 /* ========== КНОПКА ПЕРЕХОДА В ГЛАВНОЕ МЕНЮ ТРЕНАЖЁРА ========== */
 .training-main-menu-btn {
-    position: fixed;
+    position: relative; /* Было fixed */
     top: 0;
     left: 0;
+    /* left: 10px; */
+    /* margin-left: 10px; */
     padding: 35px 70px;
     font-size: 18px;
     font-weight: bold;
@@ -292,6 +294,14 @@ input:checked + .slider-vertical {
     /* transform: none !important;
     background-color: #1976D2; */
 }
+
+/* Сдвигаем номер шага для кнопки "Главное меню" вправо, чтобы он не уезжал за край */
+.training-main-menu-btn .step-number {
+    left: 8px !important;      /* Сдвигаем внутрь кнопки */
+    top: -8px !important;     /* Чуть поднимаем, чтобы было ровно на углу */
+    /* right: -50px; */
+}
+
 
 /* ===== ПАНЕЛЬ ИНСТРУКЦИЙ ДЛЯ ОБУЧЕНИЯ ===== */
 .training-panel {
@@ -2899,3 +2909,4 @@ html.android-app #trainingTooltip .training-tooltip-progress { display: block !i
         border-radius: 6px !important;
     }
 }
+
