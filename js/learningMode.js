@@ -494,13 +494,30 @@ function showTrainingStep(index) {
         const isMobile = window.innerWidth <= 1024;
         const hideForPortrait = isMobile && isPortrait;
 
-        if (needsKeypad && !hideForPortrait) {
+        //Добавляем проверку на десктоп
+        const isDasktop = !isMobile;
+
+        if (isDasktop) {
+            //Скрываем виртуальную клавиатуру
+            keypad.style.setProperty('display', 'none', 'important');
+            console.log('Десктоп: виртуальная клавиатура скрыта');
+        } else if (needsKeypad && !hideForPortrait) {
+            //На мобильном в ландшафте
             keypad.style.setProperty('display', 'grid', 'important');
             console.log('Клавиатура показана');
         } else {
+            //На мобильном в портрете
             keypad.style.setProperty('display', 'none', 'important');
             console.log(hideForPortrait ? 'На этом шаге клавиатура скрыта, используем системную.' : 'Клавиатура скрыта.');
         }
+
+        // if (needsKeypad && !hideForPortrait) {
+        //     keypad.style.setProperty('display', 'grid', 'important');
+        //     console.log('Клавиатура показана');
+        // } else {
+        //     keypad.style.setProperty('display', 'none', 'important');
+        //     console.log(hideForPortrait ? 'На этом шаге клавиатура скрыта, используем системную.' : 'Клавиатура скрыта.');
+        // }
 
         if (typeof updateDiagnosticButtonsVisibility === 'function') {
         setTimeout(updateDiagnosticButtonsVisibility, 50);
