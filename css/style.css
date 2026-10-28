@@ -2910,3 +2910,32 @@ html.android-app #trainingTooltip .training-tooltip-progress { display: block !i
     }
 }
 
+/* Настройка номеров шагов в контейнере и вне контейнера */
+/* Уменьшаем номера шагов внутри банкомата на десктопе (из-за scale контейнера) */
+@media screen and (min-width: 1025px) {
+    .atm-container .step-number {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 21px !important;
+        top: -20px !important;
+        left: -20px !important;
+    }
+}
+
+/* Делаем номера шагов вне контейнера (в футере) чуть крупнее */
+@media screen and (min-width: 1025px) {
+    /* Для кнопки "Главное меню" и переключателя */
+    .training-main-menu-btn .step-number,
+    .mode-toggle-container .step-number {
+        width: 34px !important;
+        height: 34px !important;
+        font-size: 21px !important;
+        top: -12px !important;
+        left: -12px !important;
+    }
+    
+    /* Если нужно приподнять номер для кнопки главного меню */
+    .training-main-menu-btn .step-number {
+        left: 8px !important;
+    }
+}
