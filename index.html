@@ -620,7 +620,9 @@
         appNoticeTimer = setTimeout(dismissAppNotice, 5000);
     };
     document.addEventListener('DOMContentLoaded', () => {
-        if (isAndroidApp) document.getElementById('globalKeypad')?.remove();
+        if (isAndroidApp) {
+            console.log('Android app: клавиатура оставлена в DOM');
+        }                                                          //document.getElementById('globalKeypad')?.remove();
     });
     </script>
     <script src="js/utils.js"></script>

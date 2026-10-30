@@ -2375,12 +2375,12 @@ input:checked + .slider-vertical {
 
     /* Скрываем длинную инструкцию */
     #trainingTooltip .training-tooltip-text {
-        display: none !important;
+        display: none;  /* Здесь убрал !important */
     }
     
     /* Показываем короткую */
     #trainingTooltip .training-tooltip-short {
-        display: block !important;
+        display: block; /* Здесь тоже убрал !important */ 
         font-size: 16px !important;
         font-weight: bold !important;
     }
@@ -2835,11 +2835,11 @@ html.android-app #trainingTooltip .training-tooltip-progress { display: block !i
     #trainingTooltip .training-tooltip-short {
         font-size: 18px !important;
         font-weight: bold !important;
-        display: block !important;
+        display: block;  /* Убрал здесь пока !important */
     }
 
     #trainingTooltip .training-tooltip-text {
-        display: none !important;
+        display: none; /* И здесь пока убрал !important*/
     }
 
     #trainingTooltip .training-tooltip-step {

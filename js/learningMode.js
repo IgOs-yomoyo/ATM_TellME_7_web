@@ -447,20 +447,28 @@ function startTraining(mode = 'learning') {
 }
 
 function updateTooltipInstruction(step) {
+    console.log('updateTooltipInstruction вызвана, шаг:', step ? step.id : 'null');
     if (!step) return;
+
+    
     const switchWidth = document.querySelector('.mode-toggle-container')?.offsetWidth || 0;
-    const viewportWidth = window.visualViewport?.width || window.innerWidth;
-    const viewportHeight = window.visualViewport?.height || window.innerHeight;
+    // const viewportWidth = window.visualViewport?.width || window.innerWidth;
+    // const viewportHeight = window.visualViewport?.height || window.innerHeight;
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
     const isCompact = viewportWidth < 1200 + switchWidth + 56 || viewportHeight < 840;
+
     const tooltipInstruction = document.getElementById('tooltipText');
     const tooltipShort = document.getElementById('tooltipShort');
 
     if (tooltipInstruction) {
-        tooltipInstruction.style.display = isCompact ? 'none' : 'block';
+        // tooltipInstruction.style.display = isCompact ? 'none' : 'block';
+        tooltipInstruction.style.setProperty('display', isCompact ? 'none' : 'block', 'important')
         tooltipInstruction.textContent = step.instruction;
     }
     if (tooltipShort) {
-        tooltipShort.style.display = isCompact ? 'block' : 'none';
+        // tooltipShort.style.display = isCompact ? 'block' : 'none';
+        tooltipShort.style.setProperty('display', isCompact ? 'block' : 'none', 'important');
         tooltipShort.textContent = step.shortInstruction || step.instruction;
     }
 }
@@ -830,7 +838,16 @@ function initTooltipDrag() {
         if (isTrainingMode && !isTestingMode) updateTooltipInstruction(trainingSteps[currentStepIndex]);
         requestAnimationFrame(keepTooltipInViewport);
     });
-    window.visualViewport?.addEventListener('resize', keepTooltipInViewport);
+    // window.visualViewport?.addEventListener('resize', keepTooltipInViewport); // Заменил на код ниже. 
+    window.visualViewport?.addEventListener('resize', () => {
+    keepTooltipInViewport();
+    if (isTrainingMode && !isTestingMode && trainingSteps[currentStepIndex]) {
+        clearTimeout(window._tooltipRecalcTimer);
+        window._tooltipRecalcTimer = setTimeout(() => {
+            updateTooltipInstruction(trainingSteps[currentStepIndex]);
+        }, 150);
+    }
+});
 
     //=== Привязвываем курсор к окну ===
     tooltipElement.style.position = 'fixed';
