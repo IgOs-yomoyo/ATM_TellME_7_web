@@ -282,16 +282,18 @@ function requestSupervisorMode() {
                 passwordInput.setAttribute('inputmode', 'numeric');
             }
         } else {
-            // Если ландшафт - виртуальная клавиатура
+            // Если ландшафт - виртуальная клавиатура, отключаем системную
             if (loginInput) {
                 // loginInput.removeAttribute('readonly');
                 loginInput.readOnly = true;
                 loginInput.setAttribute('inputmode', 'none');
+                loginInput.setAttribute('readonly', 'readonly');
             }
             if (passwordInput) {
                 // passwordInput.removeAttribute('readonly');
                 passwordInput.readOnly = true;
                 passwordInput.setAttribute('inputmode', 'none');
+                passwordInput.setAttribute('readonly', 'readonly');
             }
         }
         
@@ -310,11 +312,21 @@ function requestSupervisorMode() {
         console.log('Десктоп: физическая клавиатура');
     }
 
-    // Ставим фокус на поле "Код пользователя"
-    setTimeout(() => {
-        const loginInput = document.getElementById('loginInput');
-        if (loginInput) loginInput.focus();
-    }, 100);
+    // Ставим фокус на поле "Код пользователя" только в портрете или на десктопе
+    if (isPortrait || !isMobile) {
+        setTimeout(() => {
+            const loginInput = document.getElementById('loginInput');
+            if (loginInput) loginInput.focus();
+        }, 100);
+    } else {
+        //В ландшафте принудительно убираем фокус, если он был.
+        setTimeout(() => {
+            if (loginInput && document.activeElement === loginInput) {
+                loginInput.blur();
+            }
+        }, 100);
+    }
+    
     window.pendingModeSwitch = 'supervisor';
     resetAuth();
 }

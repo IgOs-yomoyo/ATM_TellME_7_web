@@ -442,23 +442,33 @@ function startTraining(mode = 'learning') {
     if (typeof updateDiagnosticButtonsVisibility === 'function') {
         setTimeout(updateDiagnosticButtonsVisibility, 300);
     }
+
+    saveTrainingState(); 
 }
 
 function updateTooltipInstruction(step) {
+    console.log('updateTooltipInstruction вызвана, шаг:', step ? step.id : 'null');
     if (!step) return;
+
+    
     const switchWidth = document.querySelector('.mode-toggle-container')?.offsetWidth || 0;
-    const viewportWidth = window.visualViewport?.width || window.innerWidth;
-    const viewportHeight = window.visualViewport?.height || window.innerHeight;
+    // const viewportWidth = window.visualViewport?.width || window.innerWidth;
+    // const viewportHeight = window.visualViewport?.height || window.innerHeight;
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
     const isCompact = viewportWidth < 1200 + switchWidth + 56 || viewportHeight < 840;
+
     const tooltipInstruction = document.getElementById('tooltipText');
     const tooltipShort = document.getElementById('tooltipShort');
 
     if (tooltipInstruction) {
-        tooltipInstruction.style.display = isCompact ? 'none' : 'block';
+        // tooltipInstruction.style.display = isCompact ? 'none' : 'block';
+        tooltipInstruction.style.setProperty('display', isCompact ? 'none' : 'block', 'important')
         tooltipInstruction.textContent = step.instruction;
     }
     if (tooltipShort) {
-        tooltipShort.style.display = isCompact ? 'block' : 'none';
+        // tooltipShort.style.display = isCompact ? 'block' : 'none';
+        tooltipShort.style.setProperty('display', isCompact ? 'block' : 'none', 'important');
         tooltipShort.textContent = step.shortInstruction || step.instruction;
     }
 }
@@ -466,6 +476,8 @@ function updateTooltipInstruction(step) {
 function showTrainingStep(index) {
     console.log('showTrainingStep вызван, индекс:', index);
     console.log('Всего шагов в массиве:', trainingSteps.length);
+
+    saveTrainingState();
 
     if (index >= trainingSteps.length) {
         console.log('Индекс ('+ index +') >= длины массива ('+ trainingSteps.length +')');
@@ -494,13 +506,30 @@ function showTrainingStep(index) {
         const isMobile = window.innerWidth <= 1024;
         const hideForPortrait = isMobile && isPortrait;
 
-        if (needsKeypad && !hideForPortrait) {
+        //Добавляем проверку на десктоп
+        const isDasktop = !isMobile;
+
+        if (isDasktop) {
+            //Скрываем виртуальную клавиатуру
+            keypad.style.setProperty('display', 'none', 'important');
+            console.log('Десктоп: виртуальная клавиатура скрыта');
+        } else if (needsKeypad && !hideForPortrait) {
+            //На мобильном в ландшафте
             keypad.style.setProperty('display', 'grid', 'important');
             console.log('Клавиатура показана');
         } else {
+            //На мобильном в портрете
             keypad.style.setProperty('display', 'none', 'important');
             console.log(hideForPortrait ? 'На этом шаге клавиатура скрыта, используем системную.' : 'Клавиатура скрыта.');
         }
+
+        // if (needsKeypad && !hideForPortrait) {
+        //     keypad.style.setProperty('display', 'grid', 'important');
+        //     console.log('Клавиатура показана');
+        // } else {
+        //     keypad.style.setProperty('display', 'none', 'important');
+        //     console.log(hideForPortrait ? 'На этом шаге клавиатура скрыта, используем системную.' : 'Клавиатура скрыта.');
+        // }
 
         if (typeof updateDiagnosticButtonsVisibility === 'function') {
         setTimeout(updateDiagnosticButtonsVisibility, 50);
@@ -740,6 +769,8 @@ function finishTraining() {
     if (typeof updateDiagnosticButtonsVisibility === 'function') {
         setTimeout(updateDiagnosticButtonsVisibility, 200);
     }
+
+    sessionStorage.removeItem('tellme7_training_state');
 }
     // document.querySelectorAll('.atm-screen').forEach(screen => {
     //     screen.style.display = 'none';
@@ -803,11 +834,20 @@ function initTooltipDrag() {
 
     // syncTooltipParent();
     window.addEventListener('resize', () => {
-        syncTooltipParent();
+        // syncTooltipParent();
         if (isTrainingMode && !isTestingMode) updateTooltipInstruction(trainingSteps[currentStepIndex]);
         requestAnimationFrame(keepTooltipInViewport);
     });
-    window.visualViewport?.addEventListener('resize', keepTooltipInViewport);
+    // window.visualViewport?.addEventListener('resize', keepTooltipInViewport); // Заменил на код ниже. 
+    window.visualViewport?.addEventListener('resize', () => {
+    keepTooltipInViewport();
+    if (isTrainingMode && !isTestingMode && trainingSteps[currentStepIndex]) {
+        clearTimeout(window._tooltipRecalcTimer);
+        window._tooltipRecalcTimer = setTimeout(() => {
+            updateTooltipInstruction(trainingSteps[currentStepIndex]);
+        }, 150);
+    }
+});
 
     //=== Привязвываем курсор к окну ===
     tooltipElement.style.position = 'fixed';
@@ -1003,4 +1043,65 @@ document.addEventListener('focusin', (e) => {
         }
         window.tooltipHideTimer = null;
     }, 1000);
+});
+
+// ===== СОХРАНЕНИЕ СОСТОЯНИЯ В sessionStorage =====
+function saveTrainingState() {
+    if (typeof isTrainingMode === 'undefined') return;
+    
+    const state = {
+        isTrainingMode: isTrainingMode,
+        isTestingMode: isTestingMode,
+        currentStepIndex: currentStepIndex
+    };
+    sessionStorage.setItem('tellme7_training_state', JSON.stringify(state));
+    console.log('Состояние сохранено:', state);
+}
+
+function restoreTrainingState() {
+    const saved = sessionStorage.getItem('tellme7_training_state');
+    if (!saved) return false;
+    
+    try {
+        const state = JSON.parse(saved);
+        if (!state.isTrainingMode && !state.isTestingMode) return false;
+        
+        isTrainingMode = state.isTrainingMode;
+        isTestingMode = state.isTestingMode;
+        currentStepIndex = state.currentStepIndex;
+        
+        console.log('Состояние восстановлено:', state);
+        
+        // Перезапускаем обучение с сохранённого шага
+        if (typeof initTrainingSteps === 'function') {
+            initTrainingSteps();
+        }
+        if (typeof showTrainingStep === 'function') {
+            // Скрываем все экраны, кроме нужного
+            // document.querySelectorAll('.atm-screen').forEach(s => s.style.display = 'none');
+            // Показываем меню тренажёра? Нет, сразу шаг
+            showTrainingStep(currentStepIndex);
+        }
+        return true;
+    } catch (e) {
+        console.error('Ошибка восстановления состояния:', e);
+        return false;
+    }
+}
+
+// Вызываем сохранение при каждом изменении шага
+// В completeTrainingStep() в конце добавьте: saveTrainingState();
+// В startTraining() в конце добавьте: saveTrainingState();
+
+// === НОВАЯ ФУНКЦИЯ (добавляем в конец файла) ===
+document.addEventListener('DOMContentLoaded', () => {
+    // Даём всем скриптам загрузиться
+    setTimeout(() => {
+        if (typeof restoreTrainingState === 'function') {
+            const restored = restoreTrainingState();
+            if (restored) {
+                console.log('Обучение восстановлено после поворота');
+            }
+        }
+    }, 500);
 });

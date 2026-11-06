@@ -1,0 +1,6 @@
+node_modules/ 
+package-lock.json 
+www/ 
+android/.idea/ 
+android/app/src/main/assets/ 
+android/capacitor-cordova-android-plugins/ 

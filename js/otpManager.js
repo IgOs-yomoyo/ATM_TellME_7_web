@@ -111,10 +111,17 @@ function updateOTPInputMode() {
         input.focus();
     } else if (isMobile) {
         //Ландшафт - виртуальная
+        // input.readOnly = true;
+        // input.setAttribute('inputmode', 'none');
         input.readOnly = true;
         input.setAttribute('inputmode', 'none');
+        input.setAttribute('readonly', 'readonly');
+        if (document.activeElement === input) {
+            input.blur();
+        }
     } else {
         //Декстоп - физическая
+        input.removeAttribute('readonly');
         input.readOnly = false;
         input.setAttribute('inputmode', 'numeric');
         input.focus();
@@ -142,7 +149,7 @@ function showOTPScreen() {
 
     //Проверяем welcomeScreen
     const welcomeScreen = document.getElementById('welcomeScreen');
-    console.log('welcomeScreen display:', welcomeScreen?.style.display);
+    console.log('welcomeScreen display:', welcomeScreen ? welcomeScreen.style.display : 'null');
     
     // Показываем экран OTP
     const otpScreen = document.getElementById('inputOTPCodeScreen');
@@ -165,13 +172,23 @@ function showOTPScreen() {
 
         updateOTPInputMode();
 
-        setTimeout(() => {
-            if (input && getComputedStyle(otpScreen).display !== 'none') {
-                input.focus();
-                console.log('OTP: фокус установлен на поле ввода');
+        const isPortrait = window.innerHeight > window.innerWidth;
+
+        if (isPortrait || window.innerWidth > 1024) {
+            // Фокус только в портрете или на десктопе
+            setTimeout(() => {
+                if (input && getComputedStyle(otpScreen).display !== 'none') {
+                    input.focus();
+                    console.log('OTP: фокус установлен на поле ввода');
+                }
+            }, 100);
+        } else {
+            //Ландшафт на мобильном - принудительно снимаем фокус
+            if (document.activeElement === input) {
+                input.blur();
+                console.log ('OTP: фокус снят, потому что ландшафт');
             }
-        }, 100);
-        // input.focus();
+     }
     }
     // Запускаем таймер
     startOTPTimer();
@@ -306,3 +323,32 @@ function vkbSubmit() {
     console.log('Подтверждение ввода OTP');
     submitOTP();
 }
+
+// Принудительное обновление режима ввода OTP при повороте экрана
+window.addEventListener('orientationchange', () => {
+    setTimeout(() => {
+        // 👇 Проверяем размеры ЗДЕСЬ, а не в момент события
+        const isPortrait = window.innerHeight > window.innerWidth;
+        const isMobile = window.innerWidth <= 1024;
+        
+        console.log('ПОВОРОТ (через 300мс): isMobile:', isMobile, 'isPortrait:', isPortrait);
+        
+        const otpScreen = document.getElementById('inputOTPCodeScreen');
+        if (otpScreen && getComputedStyle(otpScreen).display !== 'none') {
+            if (isMobile && !isPortrait) {
+                // Ландшафт — принудительно выключаем системную
+                const input = document.getElementById('otpInput');
+                if (input) {
+                    input.readOnly = true;
+                    input.setAttribute('inputmode', 'none');
+                    input.setAttribute('readonly', 'readonly');
+                    input.blur();
+                    console.log('OTP: принудительный blur для ландшафта');
+                }
+            } else {
+                // Портрет — обновляем через функцию
+                updateOTPInputMode();
+            }
+        }
+    }, 300);
+});

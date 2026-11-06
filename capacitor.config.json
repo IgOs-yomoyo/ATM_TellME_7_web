@@ -1,0 +1,17 @@
+{
+  "appId": "com.igas.tellme7",
+  "appName": "TellME7 Trainer",
+  "webDir": "www"
+}
+
+{
+  "appId": "com.igas.tellme7",
+  "appName": "TellME7 Trainer",
+  "webDir": "www",
+  "plugins": {
+    "Keyboard": {
+      "resize": "body",
+      "resizeOnFullScreen": true
+    }
+  }
+}
