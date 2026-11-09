@@ -229,6 +229,13 @@ function showBalanceReceipt() {
 
 // ===== Функция кнопки "МЕНЮ ИНКАССАЦИИ". Работает только с чеком "БАЛАНС"
 function closeBalanceReceipt() {
+    //Проверка для режима тестирования
+    if (typeof checkTestAction === 'function') {
+        if (!checkTestAction('closeBalanceReceipt')) {
+            return; //Если действие неверное - прерываем функцию
+        }
+    }
+
     //====== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ======
     if (isTrainingMode) {
         completeTrainingStep('closeBalanceReceipt');
@@ -286,6 +293,10 @@ function closeCollectionReceipt() {
  
 //Эта функция для кнопки "Продолжить" - переходим с экрана collectionCompleteScreen на экран outOfService. 
 function continueCollection() {
+    // 👇 ПРОВЕРКА ДЛЯ ТЕСТА. Добавлено 09.11
+    if (typeof checkTestAction === 'function') {
+        if (!checkTestAction('continueCollection')) return;
+    }
     console.log('continueCollection вызвана');
 
     //Скрываем экран collectionCompleteScreen
@@ -320,6 +331,11 @@ function continueCollection() {
 
     
 function exitCollectionScreen(){
+    // Проверка для теста
+    if (typeof checkTestAction === 'function') {
+        if (!checkTestAction('exitCollectionScreen')) return;
+    }
+
     //====== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ======
     //Проверка для режима обучения
     if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
@@ -369,6 +385,11 @@ function exitCollectionScreen(){
 
 // Кнопка "Получить баланс"
 function getBalance() {
+    // Проверяем действие в тесте
+    if (typeof checkTestAction === 'function') {
+        if (!checkTestAction('getBalance')) return;
+    }
+
     isCollectionMode = false; //Чек Баланс, поэтому false
     isBalanceButtonUsed = true; //Кнопка нажата
 
@@ -389,6 +410,10 @@ function getBalance() {
 
 //Функция "Провести инкассацию"
 function performCollection() {
+    // Проверка для теста. Добавлено 09.11
+    if (typeof checkTestAction === 'function') {
+        if (!checkTestAction('performCollection')) return;
+        }
     console.log('Функция performCollection вызвана');
 
     isCollectionMode = true; //Чек Инкассация, поэтому true

@@ -218,6 +218,16 @@ function submitAuth() {
     console.log('isTrainingMode:', isTrainingMode);
 
     if (login === '100' && password === '111111') {
+        // 👇 ПРОВЕРКА ДЛЯ ТЕСТА (логин) 09.11
+        if (typeof checkTestAction === 'function') {
+            if (!checkTestAction('loginInput')) return;
+        }
+
+        // ... и сразу за ним проверка для пароля ...
+        if (typeof checkTestAction === 'function') {
+            if (!checkTestAction('passwordInput')) return;
+        }
+
         //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
         if (isTrainingMode) {
             completeTrainingStep('loginInput');
@@ -362,6 +372,13 @@ function initModeSwitch() {
     checkbox.checked = false;
     checkbox.addEventListener('change', function(e) {
         if (this.checked) {
+            // 👇 ПРОВЕРКА ДЛЯ ТЕСТА (только когда переключаем в SUPERVISOR)
+            if (typeof checkTestAction === 'function') {
+                if (!checkTestAction('switchToSupervisor')) {
+                    this.checked = false; // Возвращаем тумблер обратно
+                    return;
+                }
+            }
             requestSupervisorMode();
         } else {
             switchToNormalMode();

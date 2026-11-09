@@ -70,6 +70,13 @@ function handleLogoClick() {
     }, 3000);
     
     if (logoClickCount >= 5) {
+        // Проверяем действие. Добавлено 09.11
+        if (typeof checkTestAction === 'function') {
+            if (!checkTestAction('logoClick')) {
+                logoClickCount = 0; // Сбрасываем счётчик, если действие неверное
+                return;
+            }
+        }
         logoClickCount = 0;
         clearTimeout(logoClickTimer);
         logoClickTimer = null;
@@ -213,6 +220,10 @@ function submitOTP() {
     }
     
     if (enteredCode === otpCode) {
+        // Проверяем действие. Добавлено 09.11
+        if (typeof checkTestAction === 'function') {
+            if (!checkTestAction ('enterOTP')) return;
+        }
         console.log('✅ OTP код верный!');
         // Останавливаем таймер
         if (otpTimer) {
