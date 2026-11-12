@@ -35,6 +35,9 @@ function deviceStatus() {
 
 function openCloseDay() {
     // alert("Открытие/закрытие операционного дня");
+    if (typeof checkTestAction === 'function') {
+        if (!checkTestAction('openCloseDay')) return;
+    }
     // === ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ === 
     if (isTrainingMode) {
         completeTrainingStep('openCloseDay');

@@ -100,6 +100,9 @@
 
     // Функция "Ввод" - переход к следующему экрану
     function Enter(cassetteNumber) {
+        if (typeof checkTestAction === 'function') {
+        if (!checkTestAction('enterNoOfNotes_' + cassetteNumber)) return;
+    }
         const input = document.getElementById(`LoadInput_${cassetteNumber}`);
         let value = input ? input.value : '';
         

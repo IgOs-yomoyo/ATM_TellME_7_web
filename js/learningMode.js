@@ -4,6 +4,10 @@
 
 // ========== ОТКРЫТЬ МЕНЮ ТРЕНАЖЁРА
 function openTrainingMenu() {
+    // Проверка для режима тестирования
+    if (typeof checkTestAction === 'function') {
+        if (!checkTestAction('toAppMainMenu')) return;
+    }
 
     //Проверка для режима обучения
     if (isTrainingMode) {

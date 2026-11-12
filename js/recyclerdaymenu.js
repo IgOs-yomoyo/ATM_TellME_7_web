@@ -1,6 +1,12 @@
 
 function backtoOpenCloseDay() {
     console.log('функция backtoOpenCloseDay вызвана');
+
+    // Проверка для режима тестирования
+    if (typeof checkTestAction === 'function') {
+        if (!checkTestAction('backToOpenCloseDayMenu')) return;
+    }
+
     const recyclerday = document.getElementById('recyclerday');
     const opencloseday = document.getElementById('opencloseday');
     // showopenclosedaymenu();
@@ -13,6 +19,11 @@ function closerecyclerday() {
     console.log('closerecyclerday вызвана');
     console.log('isDayOpened():', typeof isDayOpened === 'function' ? isDayOpened() : 'функция не найдена');
     // console.log('openingDayData:', openingDayData);
+
+    // Провекра для режима тестирования
+    if (typeof checkTestAction === 'function') {
+        if (!checkTestAction('closeRecyclerDay')) return;
+    }
 
     if (typeof isDayOpened === 'function' && !isDayOpened()) {
         
@@ -74,6 +85,11 @@ function confirmCloseDayAgain() {
 //Функция Отмены повторного закрытия опердня
 function cancelCloseRecyclerDayAgain() {
     console.log('Отмена повторного закрытия опер дня');
+
+    // Проверка для режима тестирования
+    if (typeof checkTestAction === 'function') {
+        if (!checkTestAction('confirmCloseDay')) return;
+    }
     
     const closeRecyclerDayAgain = document.getElementById('closeRecyclerDayAgain');
     const recyclerday = document.getElementById('recyclerday');
@@ -96,6 +112,11 @@ function closeDayConfirmScreen() {
 //Функция подтверждения закрытия опер дня
 function confirmCloseDay() {
     console.log('Подтверждение закрытия опер дня');
+
+    // Проверка для режима тестирования
+    if (typeof checkTestAction === 'function') {
+        if (!checkTestAction('confirmCloseDay')) return;
+    }
     
     const closeDayConfirmScreen = document.getElementById('closeDayConfirmScreen');
     // const closeReceiptScreen = document.getElementById('closeReceiptScreen');
@@ -171,6 +192,11 @@ function cancelCloseDay() {
 
 
 function openrecyclerday() {
+    // Проверка для режима тестирования
+    if (typeof checkTestAction === 'function') {
+        if (!checkTestAction('openDay')) return;
+    }
+
     if (isTrainingMode) {
         completeTrainingStep('openDay');
     }

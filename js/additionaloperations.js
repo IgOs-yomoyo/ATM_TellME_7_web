@@ -9,6 +9,10 @@ let isCounterReset = false; //Флаг, был ли уже сброс в тек�
 
 function additionalOperations() {
     console.log('additionalOperations вызвана');
+    // Проверка для режима тестирования
+    if (typeof checkTestAction === 'function') {
+        if (!checkTestAction('additionalOperations')) return;
+    }
 
     //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
     if (isTrainingMode) {
@@ -151,6 +155,10 @@ function takeHeldCardReceipt() {
 
 
 function backToOpenCloseDay() {
+    // Проверка для теста
+    if (typeof checkTestAction === 'function') {
+        if (!checkTestAction('backToOpenCloseDayMenu')) return;
+    }
 
     //=== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ===
     if (isTrainingMode) {
@@ -168,6 +176,11 @@ let selectedResetOption = 'issued';
 
 //Функция выбора по клику
 function selectResetOption(option) {
+    // Проверка для режима тестирования
+    if (typeof checkTestAction === 'function' && option === 'held') {
+        if (!checkTestAction('resetHeldOption')) return;
+    }
+
     const heldOption = document.getElementById('resetHeldOption');
     const issuedOption = document.getElementById('resetIssuedOption');
 
@@ -195,6 +208,11 @@ function selectResetOption(option) {
 //Функция подтверждения выбора
 function selectBtn() {
     console.log('selectBtn вызвана');
+
+    // Проверка для режима тестирования
+    if (typeof checkTestAction === 'function') {
+        if (!checkTestAction('resetHeldCardCounter')) return;
+    }
 
     //Показываем сообщение на 3 секунды
      const message = document.createElement('div');

@@ -59,6 +59,11 @@ function resetSafeButtons() {
 function openSafeDoor() {
     console.log('openSafeDoor вызвана');
 
+    // Проверка для режима тестирования
+    if (typeof checkTestAction === 'function') {
+        if (!checkTestAction('openSafeDoor')) return;
+    }
+
     const openBtn = document.querySelector('.openSafeDoor');
     const replaceBtn = document.querySelector('.replaceCassettes');
 
@@ -98,6 +103,10 @@ function openSafeDoor() {
 function replaceCassettes() {
     console.log('replaceCassettes вызвана');
 
+    if (typeof checkTestAction === 'function') {
+        if (!checkTestAction('replaceCassettes')) return;
+    }
+
     //Активируем следующую кнопку
     // activateNextButton('replace');
 
@@ -132,6 +141,10 @@ function replaceCassettes() {
 //Функция закрытия сейфа
 function closeSafeDoor() {
     console.log('closeSafeDoor вызвана');
+
+    if (typeof checkTestAction === 'function') {
+        if (!checkTestAction('closeSafeDoor')) return;
+    }
 
     const closeBtn = document.querySelector('.closeSafeDoor');
     if (closeBtn) {

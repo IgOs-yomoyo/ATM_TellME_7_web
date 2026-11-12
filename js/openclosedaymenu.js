@@ -22,6 +22,10 @@ function backtosupervisorScreen() {
 
 function backtonormal() {
     console.log('backtonormal вызвана');
+
+    if (typeof checkTestAction === 'function') {
+        if (!checkTestAction('backToNormalMode')) return;
+    }
     
     // //Завершаем шаг в обучении
     // if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
@@ -32,6 +36,10 @@ function backtonormal() {
 }
 
 function recyclerday() {
+    // Проверка для режима тестирования
+    if (typeof checkTestAction === 'function') {
+        if (!checkTestAction('recycler')) return;
+    }
 
      //====== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ======
     if (isTrainingMode) {

@@ -266,6 +266,20 @@ function requestSupervisorMode() {
         completeTrainingStep('switchToSupervisor');
     }
 
+    if (typeof checkTestAction === 'function' && isTestingModeActive) {
+        const currentStep = currentTestScenario.steps[currentTestStepIndex];
+
+        // Проверяем только если тест действительно ждёт переключения тумблера
+        if (currentStep && currentStep.action === 'switchToSupervisor') {
+            if (!checkTestAction('switchToSupervisor')) {
+                // Если действие неверное - возвращаем тумблер обратно
+                const checkbox = document.getElementById('modeCheckbox');
+                if (checkbox) checkbox.checked = false;
+                return;
+            }
+        }
+    }
+
     const authScreen = document.getElementById('authScreen');
     document.querySelectorAll('.atm-container .atm-screen').forEach(screen => {
         screen.style.display = 'none';
@@ -372,13 +386,6 @@ function initModeSwitch() {
     checkbox.checked = false;
     checkbox.addEventListener('change', function(e) {
         if (this.checked) {
-            // 👇 ПРОВЕРКА ДЛЯ ТЕСТА (только когда переключаем в SUPERVISOR)
-            if (typeof checkTestAction === 'function') {
-                if (!checkTestAction('switchToSupervisor')) {
-                    this.checked = false; // Возвращаем тумблер обратно
-                    return;
-                }
-            }
             requestSupervisorMode();
         } else {
             switchToNormalMode();
@@ -416,6 +423,12 @@ function checkDiagnosticSequence(key) {
 }
 
 function openDiagnostics() {
+
+    // Проверка для режима тестирования
+    if (typeof checkTestAction === 'function') {
+    if (!checkTestAction('diagnosticComplete')) return;
+    }
+
     // Проверяем переключатель
     if (getCurrentMode() === 'supervisor') {
         console.log('Режим диагностики доступен в режиме "Normal"');

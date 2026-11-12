@@ -84,3 +84,113 @@ function checkTestAction(actionName) {
         return false; // Действие ЗАПРЕЩЕНО (функция не выполнится)
     }
 }
+
+// Перехват клика по кнопке "Главное меню" в режиме теста
+document.addEventListener('click', (e) => {
+    // Проверяем, что кликнули именно по кнопке "Главное меню"
+    const menuBtn = e.target.closest('.training-main-menu-btn');
+    
+    // Если это не она — ничего не делаем
+    if (!menuBtn) return;
+    
+    // Если тест не активен — даём кнопке сработать как обычно
+    if (typeof isTestingModeActive === 'undefined' || !isTestingModeActive) return;
+
+    // 👇 ЕСЛИ ТЕСТ АКТИВЕН:
+    e.preventDefault(); // Отменяем стандартное поведение
+    e.stopPropagation(); // Останавливаем всплытие
+
+    console.log('Тест прерван пользователем через кнопку "Главное меню"');
+    
+    // Завершаем тест
+    isTestingModeActive = false;
+    currentTestScenario = null;
+    currentTestStepIndex = 0;
+    
+    // Возвращаемся в меню тренажёра (вызываем функцию, которая уже есть в learningMode.js)
+    if (typeof openTrainingMenu === 'function') {
+        openTrainingMenu();
+    } else {
+        // Если функции нет — просто показываем меню вручную
+        document.querySelectorAll('.atm-screen').forEach(s => s.style.display = 'none');
+        const trainerMenu = document.getElementById('trainerMenuScreen');
+        if (trainerMenu) trainerMenu.style.display = 'block';
+        menuBtn.style.display = 'none';
+    }
+}, true); // true = capture, чтобы сработало ДО обычного onclick
+
+// ГЛОБАЛЬНЫЙ ПЕРЕХВАТЧИК КЛИКОВ ДЛЯ ТЕСТОВОГО РЕЖИМА
+document.addEventListener('click', (e) => {
+    // Если тест не идёт — не вмешиваемся
+    if (typeof isTestingModeActive === 'undefined' || !isTestingModeActive) return;
+
+    const step = currentTestScenario.steps[currentTestStepIndex];
+    if (!step) return; // Если шагов больше нет
+
+    // 1. Исключение: кнопка "Главное меню" всегда работает
+    const menuBtn = e.target.closest('.training-main-menu-btn');
+    if (menuBtn) {
+        // ... (код аварийного выхода, который мы написали ранее) ...
+        return; // Не блокируем
+    }
+
+    // 2. Ищем кнопку, по которой кликнули
+    const button = e.target.closest('button, .atm-button, [onclick], .otp-logo-wrapper, .switch-vertical');
+    
+    // Если кликнули мимо кнопок (например, по фону) — блокируем на всякий случай
+    if (!button) {
+        // Можно разрешить клики по пустому месту, но лучше заблокировать, чтобы не сбить фокус
+        // return; 
+    }
+
+    // 3. Получаем текст кнопки или её onclick для сравнения
+    let buttonText = '';
+    let onclickAttr = '';
+
+    if (button) {
+        buttonText = (button.textContent || '').trim().toUpperCase();
+        onclickAttr = (button.getAttribute('onclick') || '').toLowerCase();
+    }
+
+    // 4. Проверяем, совпадает ли действие
+    let isCorrectAction = false;
+
+    // 4.1. Если в шаге указан текст — проверяем его
+    if (step.expectedText) {
+        const expected = step.expectedText.toUpperCase();
+        // Проверяем, есть ли ожидаемый текст в тексте кнопки или в её onclick
+        if (buttonText.includes(expected) || onclickAttr.includes(step.action.toLowerCase())) {
+            isCorrectAction = true;
+        }
+    } 
+    // 4.2. Если текста нет — проверяем только по action (onclick)
+    else if (onclickAttr.includes(step.action.toLowerCase())) {
+        isCorrectAction = true;
+    }
+    
+    // 4.3. Специфичное исключение для логотипа OZON
+    if (step.action === 'logoClick' && e.target.closest('.otp-logo-wrapper')) {
+        isCorrectAction = true;
+    }
+
+    // 4.4. Специфичное исключение для тумблера (шаг 7)
+    if (step.action === 'switchToSupervisor' && e.target.closest('.switch-vertical')) {
+        isCorrectAction = true;
+    }
+
+    // 5. Если действие НЕВЕРНОЕ — блокируем
+    if (!isCorrectAction) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation(); // Важно! Останавливает другие обработчики
+
+        console.log('❌ Тест: заблокирован клик по:', buttonText || 'неизвестно', 'Ожидалось:', step.expectedText || step.action);
+        
+        // Показываем сообщение (используем вашу функцию alert или модалку)
+        alert('Неверное действие! ' + step.message);
+        return;
+    }
+
+    // 6. Если действие верное — пропускаем клик дальше
+    console.log('✅ Тест: правильный клик по:', buttonText || step.action);
+}, true); // capture = true — перехватываем ДО того, как сработают onclick
