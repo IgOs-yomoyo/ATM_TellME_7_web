@@ -190,38 +190,63 @@ function cancelCloseDay() {
     if (recyclerday) recyclerday.style.display = 'block';
 }
 
-
 function openrecyclerday() {
-    // Проверка для режима тестирования
-    if (typeof checkTestAction === 'function') {
-        if (!checkTestAction('openDay')) return;
-    }
-
     if (isTrainingMode) {
         completeTrainingStep('openDay');
     }
     console.log('openrecyclerday вызвана');
-    console.log('isDayOpened():', typeof isDayOpened === 'function' ? isDayOpened() : 'функция не найдена');
-    // console.log('openingDayData:', openingDayData);
 
     if (typeof isDayOpened === 'function' && isDayOpened()) {
-        alert('Операционный день открыт. Сначала закройте операционный день. Вызвано из recyclerdaymenu.js');
+        alert('Операционный день открыт...');
         return;
     }
 
-    // Сначала запускаем тестирование модуля рециркуляции
+    // Сначала запускаем тестирование модуля
     showTestingScreen(8000, function() {
+        console.log('После шестерёнок. isTestingModeActive =', isTestingModeActive);
+        console.log('typeof showCassetteOrderScreen =', typeof showCassetteOrderScreen);
+        // 👇 ПОСЛЕ ШЕСТЕРЕНОК: Если тест активен — показываем заявку
+        if (typeof isTestingModeActive !== 'undefined' && isTestingModeActive) {
+            if (typeof showCassetteOrderScreen === 'function') {
+                showCassetteOrderScreen();
+                return; // Ждём, когда пользователь закроет экран заявки
+            }
+        }
+        // Если тест не активен — сразу показываем кассету 1
         replenishfirstcassette();
-    })
-//    replenishfirstcassette(); 
-
-   //Обновляем подсветку после показа экрана
-   if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
-    setTimeout(() => {
-        showTrainingStep(currentStepIndex);
-    }, 8000); //Здесь изменил длительность демонстрации. Было 100. 
-   }
+    });
 }
+// function openrecyclerday() {  // Пока заменил на то, что сверху.
+//     // Проверка для режима тестирования
+//     if (typeof checkTestAction === 'function') {
+//         if (!checkTestAction('openDay')) return;
+//     }
+
+//     if (isTrainingMode) {
+//         completeTrainingStep('openDay');
+//     }
+//     console.log('openrecyclerday вызвана');
+//     console.log('isDayOpened():', typeof isDayOpened === 'function' ? isDayOpened() : 'функция не найдена');
+//     // console.log('openingDayData:', openingDayData);
+
+//     if (typeof isDayOpened === 'function' && isDayOpened()) {
+//         alert('Операционный день открыт. Сначала закройте операционный день. Вызвано из recyclerdaymenu.js');
+//         return;
+//     }
+
+//     // Сначала запускаем тестирование модуля рециркуляции
+//     showTestingScreen(8000, function() {
+//         replenishfirstcassette();
+//     })
+// //    replenishfirstcassette(); 
+
+//    //Обновляем подсветку после показа экрана
+//    if (typeof isTrainingMode !== 'undefined' && isTrainingMode) {
+//     setTimeout(() => {
+//         showTrainingStep(currentStepIndex);
+//     }, 8000); //Здесь изменил длительность демонстрации. Было 100. 
+//    }
+// }
 
 // Функция - печать баланса
 function printbalance() {

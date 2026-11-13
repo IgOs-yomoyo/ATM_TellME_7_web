@@ -100,9 +100,17 @@
 
     // Функция "Ввод" - переход к следующему экрану
     function Enter(cassetteNumber) {
-        if (typeof checkTestAction === 'function') {
-        if (!checkTestAction('enterNoOfNotes_' + cassetteNumber)) return;
-    }
+        // Проверка для теста
+        if (typeof checkTestAction === 'function' && isTestingModeActive) {
+                const expectedAction = 'enterNoOfNotes_' + cassetteNumber;
+                if (!checkTestAction(expectedAction)) {
+                    return; // Если неверный шаг - прерыаем
+                }
+        }
+
+        // if (typeof checkTestAction === 'function') {
+        // if (!checkTestAction('enterNoOfNotes_' + cassetteNumber)) return;
+    // }
         const input = document.getElementById(`LoadInput_${cassetteNumber}`);
         let value = input ? input.value : '';
         

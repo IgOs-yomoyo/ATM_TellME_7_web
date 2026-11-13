@@ -10,7 +10,14 @@ const testingScenarios = [
         initialState: {
             isOperationalDayOpen: true,
             screen: 'welcomeScreen',
-            ndcStatus: 'ok'
+            ndcStatus: 'ok',
+             // 👇 Эталонные значения для заявки
+            cassetteLoads: {
+            1: 1000, // кассета 1 (100 руб) - 1000 шт
+            2: 1200, // кассета 2 (500 руб) - 1200 шт
+            3: 700,  // кассета 3 (1000 руб) - 700 шт
+            4: 800   // кассета 4 (5000 руб) - 800 шт
+            }
         },
 
         // Шаги (пока просто для примера, потом свяжем с действиями)
@@ -31,15 +38,15 @@ const testingScenarios = [
             { id: 14, action: 'backToOpenCloseDayMenu', message: 'Нажмите "ВОЗВРАТ"', expectedText: 'ВОЗВРАТ'},
             { id: 15, action: 'recycler', message: 'Нажмите "Ресайклер"', expectedText: 'РЕСАЙКЛЕР'},
             { id: 16, action: 'closeRecyclerDay', message: 'Нажмите "Закрытие операционного дня"', expectedText: 'ЗАКРЫТИЕ ОПЕРАЦИОННОГО ДНЯ'},
-            { id: 17, action: 'confirmCloseDay', message: 'Нажмите "ПОДТВЕРДИТЬ" (или "Закрыть день повторно")' },
+            { id: 17, action: 'confirmCloseDay', message: 'Нажмите "ПОДТВЕРДИТЬ" (или "Закрыть день повторно")', expectedText: 'ПОДТВЕРДИТЬ'}, //Здесь нужно добавить "Закрыть день повторно"
             { id: 18, action: 'openSafeDoor', message: 'Откройте дверь сейфа' },
             { id: 19, action: 'replaceCassettes', message: 'Замените кассеты' },
             { id: 20, action: 'closeSafeDoor', message: 'Закройте дверь сейфа' },
-            { id: 21, action: 'openDay', message: 'Откройте операционный день' },
-            { id: 22, action: 'enterNoOfNotes_1', message: 'Введите количество банкнот в кассету 1' },
-            { id: 23, action: 'enterNoOfNotes_2', message: 'Введите количество банкнот в кассету 2' },
-            { id: 24, action: 'enterNoOfNotes_3', message: 'Введите количество банкнот в кассету 3' },
-            { id: 25, action: 'enterNoOfNotes_4', message: 'Введите количество банкнот в кассету 4' },
+            { id: 21, action: 'openDay', message: 'Открытие операционного дня', expectedText: 'ОТКРЫТИЕ ОПЕРАЦИОННОГО'},
+            { id: 22, action: 'enterNoOfNotes_1', message: 'Введите количество банкнот в кассету 1', expectedText: 'ВВОД'},
+            { id: 23, action: 'enterNoOfNotes_2', message: 'Введите количество банкнот в кассету 2', expectedText: 'ВВОД' },
+            { id: 24, action: 'enterNoOfNotes_3', message: 'Введите количество банкнот в кассету 3', expectedText: 'ВВОД' },
+            { id: 25, action: 'enterNoOfNotes_4', message: 'Введите количество банкнот в кассету 4', expectedText: 'ВВОД' },
             { id: 26, action: 'backToNormalMode', message: 'Переключите тумблер в NORMAL и нажмите "В режим обслуживания клиентов"' },
             { id: 27, action: 'logoClick', message: 'Снова нажмите 5 раз на логотип OZON' },
             { id: 28, action: 'enterOTP', message: 'Введите OTP-код' },

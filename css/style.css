@@ -2946,3 +2946,98 @@ html.android-app #trainingTooltip .training-tooltip-progress { display: block !i
         caret-color: transparent !important;
     }
 }
+
+
+/* Экран заявки на инкассацию */
+#cassetteOrderScreen {
+    background: #f0f4f8;
+}
+
+.order-content {
+    position: absolute;
+    top: 180px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 800px;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.order-header {
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #333;
+}
+
+.order-header p {
+    margin: 5px 0;
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.order-table th, .order-table td {
+    border: 1px solid #1976D2;
+    padding: 12px;
+    text-align: center;
+}
+
+.order-table th {
+    background: #1976D2;
+    color: white;
+    font-weight: bold;
+}
+
+.order-table tfoot td {
+    background: #e3f2fd;
+    font-weight: bold;
+}
+
+.order-note {
+    font-size: 16px;
+    color: #666;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.order-continue-btn {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 80px;
+    font-size: 24px;
+    background-color: #1976D2;
+}
+
+/* Адаптация для мобильных */
+@media screen and (max-width: 1024px) {
+    .order-content {
+        width: 95%;
+        top: 160px;
+        padding: 15px;
+    }
+    
+    .order-table {
+        font-size: 14px;
+    }
+    
+    .order-table th, .order-table td {
+        padding: 8px;
+    }
+    
+    .order-continue-btn {
+        width: 90%;
+        height: 60px;
+        font-size: 18px;
+        bottom: 20px;
+    }
+}

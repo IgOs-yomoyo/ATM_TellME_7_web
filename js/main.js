@@ -390,6 +390,31 @@ function getBalance() {
         if (!checkTestAction('getBalance')) return;
     }
 
+    // 👇 Проверка данных загрузки в тестовом режиме
+    if (typeof isTestingModeActive !== 'undefined' && isTestingModeActive && window.testCassetteLoads) {
+        let errors = [];
+        for (let i = 1; i <= 4; i++) {
+            const expected = window.testCassetteLoads[i];
+            const actual = cassetteLoads[i] || 0;
+            if (expected !== actual) {
+                errors.push(`Кассета ${i}: ожидалось ${expected}, введено ${actual}`);
+            }
+        }
+        
+        if (errors.length > 0) {
+            // Показываем ошибку (можно через showTestError или модальное окно)
+            if (typeof showTestError === 'function') {
+                showTestError('Ошибка при вводе данных о загрузке!\n' + errors.join('\n'));
+            } else {
+                alert('Ошибка при вводе данных о загрузке!\n' + errors.join('\n'));
+            }
+            // Не показываем чек, пока не исправят
+            return;
+        } else {
+            console.log('✅ Данные загрузки совпадают с заявкой');
+        }
+    }
+
     isCollectionMode = false; //Чек Баланс, поэтому false
     isBalanceButtonUsed = true; //Кнопка нажата
 

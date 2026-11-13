@@ -3,6 +3,7 @@
 let currentTestScenario = null;
 let currentTestStepIndex = 0;
 let isTestingModeActive = false;
+let testErrors = [];
 
 // Запуск случайного теста (вызывается из кнопки)
 function startRandomTest() {
@@ -119,6 +120,45 @@ document.addEventListener('click', (e) => {
     }
 }, true); // true = capture, чтобы сработало ДО обычного onclick
 
+
+function showTestError(message) {
+    // Создаём/показываем уведомление
+    let notice = document.getElementById('testErrorNotice');
+    if (!notice) {
+        notice = document.createElement('div');
+        notice.id = 'testErrorNotice';
+        notice.style.cssText = `
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffebee;
+            color: #b71c1c;
+            padding: 15px 30px;
+            border-radius: 10px;
+            border: 1px solid #ef9a9a;
+            font-size: 16px;
+            z-index: 1000000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transition: opacity 0.3s;
+        `;
+        document.body.appendChild(notice);
+    }
+    notice.textContent = message;
+    notice.style.opacity = '1';
+
+    // Скрываем через 3 секунды
+    clearTimeout(window.testErrorTimer);
+    window.testErrorTimer = setTimeout(() => {
+        notice.style.opacity = '0';
+        setTimeout(() => { notice.style.display = 'none'; }, 300);
+    }, 3000);
+    
+    // Сразу показываем (если было скрыто)
+    notice.style.display = 'block';
+}
+
+
 // ГЛОБАЛЬНЫЙ ПЕРЕХВАТЧИК КЛИКОВ ДЛЯ ТЕСТОВОГО РЕЖИМА
 document.addEventListener('click', (e) => {
     // Если тест не идёт — не вмешиваемся
@@ -137,46 +177,50 @@ document.addEventListener('click', (e) => {
     // 2. Ищем кнопку, по которой кликнули
     const button = e.target.closest('button, .atm-button, [onclick], .otp-logo-wrapper, .switch-vertical');
     
-    // Если кликнули мимо кнопок (например, по фону) — блокируем на всякий случай
+    // Если кликнули мимо кнопок (например, по фону) — не вмешиваемся
     if (!button) {
-        // Можно разрешить клики по пустому месту, но лучше заблокировать, чтобы не сбить фокус
-        // return; 
+        return; 
     }
+
+    // Очищаем текст от лишних пробелов
+    const cleanText = (str) => (str || '').replace(/\s+/g, ' ').trim().toUpperCase();
 
     // 3. Получаем текст кнопки или её onclick для сравнения
-    let buttonText = '';
-    let onclickAttr = '';
+    // let buttonText = '';
+    const buttonText = cleanText(button.textContent);
+    const onclickAttr = (button.getAttribute('onclick') || '').toLowerCase();
+    const expectedText = cleanText(step.expectedText);
+    const expectedAction = (step.action || '').toLowerCase();
+    // let onclickAttr = '';
 
-    if (button) {
-        buttonText = (button.textContent || '').trim().toUpperCase();
-        onclickAttr = (button.getAttribute('onclick') || '').toLowerCase();
+    // Исключение для кнопки ОБНУЛИТЬ на экране ввода количества банкнот
+    if (buttonText.includes('ОБНУЛИТЬ') || onclickAttr.includes('reset')) {
+        return; // Пропускаем без блокировки
     }
+
 
     // 4. Проверяем, совпадает ли действие
     let isCorrectAction = false;
 
-    // 4.1. Если в шаге указан текст — проверяем его
-    if (step.expectedText) {
-        const expected = step.expectedText.toUpperCase();
-        // Проверяем, есть ли ожидаемый текст в тексте кнопки или в её onclick
-        if (buttonText.includes(expected) || onclickAttr.includes(step.action.toLowerCase())) {
-            isCorrectAction = true;
-        }
-    } 
-    // 4.2. Если текста нет — проверяем только по action (onclick)
-    else if (onclickAttr.includes(step.action.toLowerCase())) {
+    // 4.1 Если в кнопке указан текст - проверяем его наличие в кнопке или onclick
+    if (expectedText && buttonText.includes(expectedText)) {
         isCorrectAction = true;
     }
-    
-    // 4.3. Специфичное исключение для логотипа OZON
+    // 4.2 Если текста нет или он не совпадает - проверяем по action (onclick)
+    else if (onclickAttr.includes(expectedAction)) {
+        isCorrectAction = true;
+    }
+
+    // 4.3 Специфическое исключение для логотипа OZON
     if (step.action === 'logoClick' && e.target.closest('.otp-logo-wrapper')) {
         isCorrectAction = true;
     }
 
-    // 4.4. Специфичное исключение для тумблера (шаг 7)
+     // 4.4. Специфичное исключение для тумблера (шаг 7)
     if (step.action === 'switchToSupervisor' && e.target.closest('.switch-vertical')) {
         isCorrectAction = true;
     }
+
 
     // 5. Если действие НЕВЕРНОЕ — блокируем
     if (!isCorrectAction) {
@@ -184,13 +228,86 @@ document.addEventListener('click', (e) => {
         e.stopPropagation();
         e.stopImmediatePropagation(); // Важно! Останавливает другие обработчики
 
+        // Записываем ошибку - неправильный клик пользователя
+        testErrors.push({
+            step: step.id,
+            expected: step.expectedText || step.action,
+            got: buttonText || 'Клик мимо кнопки'
+        });
+
         console.log('❌ Тест: заблокирован клик по:', buttonText || 'неизвестно', 'Ожидалось:', step.expectedText || step.action);
         
-        // Показываем сообщение (используем вашу функцию alert или модалку)
-        alert('Неверное действие! ' + step.message);
+        // Показываем сообщение
+        showTestError('Неверное действие! Ожидалось: ' + step.message);
         return;
     }
 
     // 6. Если действие верное — пропускаем клик дальше
     console.log('✅ Тест: правильный клик по:', buttonText || step.action);
 }, true); // capture = true — перехватываем ДО того, как сработают onclick
+
+function finishTest() {
+    isTestingModeActive = false;
+    const errorCount = testErrors.length;
+    console.log('Тест завершён. Ошибок:', errorCount);
+    
+    if (typeof showAppNotice === 'function') {
+        showAppNotice(`Тест завершён! Ошибок: ${errorCount}`, 5000);
+    } else {
+        alert(`Тест завершён! Ошибок: ${errorCount}`);
+    }
+}
+
+// Логика работы экрана демонстрации заявки
+function showCassetteOrderScreen() {
+    console.log('showCassetteOrderScreen вызвана');
+    console.log('window.testCassetteLoads =', window.testCassetteLoads);
+    // Заполняем дату
+    const dateEl = document.getElementById('orderDate');
+    if (dateEl) dateEl.textContent = new Date().toLocaleDateString('ru-RU');
+
+    // Заполняем таблицу
+    const tbody = document.getElementById('orderTableBody');
+    const totalEl = document.getElementById('orderTotalSum');
+    if (!tbody || !window.testCassetteLoads) return;
+
+    tbody.innerHTML = '';
+    let total = 0;
+    const nominals = { 1: 100, 2: 500, 3: 1000, 4: 5000 };
+
+    for (let i = 1; i <= 4; i++) {
+        const count = window.testCassetteLoads[i] || 0;
+        const nominal = nominals[i];
+        const sum = count * nominal;
+        total += sum;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${i}</td>
+            <td>${nominal}</td>
+            <td>${count}</td>
+            <td>${sum.toLocaleString()}</td>
+        `;
+        tbody.appendChild(tr);
+    }
+
+    if (totalEl) totalEl.textContent = total.toLocaleString();
+
+    // Показываем экран
+    document.querySelectorAll('.atm-screen').forEach(s => s.style.display = 'none');
+    const screen = document.getElementById('cassetteOrderScreen');
+    if (screen) screen.style.display = 'block';
+}
+
+function closeCassetteOrderScreen() {
+    const screen = document.getElementById('cassetteOrderScreen');
+    if (screen) screen.style.display = 'none';
+
+    // Переходим к первому экрану кассеты
+    const cassetteScreen = document.getElementById('replenishcassette_1');
+    if (cassetteScreen) {
+        cassetteScreen.style.display = 'block';
+        // Инициализируем поле (если нужно)
+        if (typeof initInputField === 'function') initInputField(1);
+    }
+}
