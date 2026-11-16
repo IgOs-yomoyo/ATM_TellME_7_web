@@ -17,32 +17,39 @@ function startRandomTest() {
     startTest(scenario);
 }
 
-// Запуск конкретного теста
-function startTest(scenario) {
-    currentTestScenario = scenario;
-    currentTestStepIndex = 0;
-    isTestingModeActive = true;
+    // Запуск конкретного теста
+    function startTest(scenario) {
+        currentTestScenario = scenario;
+        currentTestStepIndex = 0;
+        isTestingModeActive = true;
 
-    console.log('Запуск теста:', scenario.title);
+        console.log('Запуск теста:', scenario.title);
+        console.log('initialState:', scenario.initialState);
 
-    // 1. Скрываем все экраны (и главный экран тренажёра тоже)
-    document.querySelectorAll('.atm-screen').forEach(s => s.style.display = 'none');
-    
-    // 2. Показываем нужный экран из начального состояния
-    const targetScreen = document.getElementById(scenario.initialState.screen);
-    if (targetScreen) {
-        targetScreen.style.display = 'block';
+        // Сохраняем данные заявки
+        if (scenario.initialState.cassetteLoads) {
+            window.testCassetteLoads = scenario.initialState.cassetteLoads;
+            console.log('Данные заявки сохранены:', window.testCassetteLoads);
+        }
+
+        // 1. Скрываем все экраны (и главный экран тренажёра тоже)
+        document.querySelectorAll('.atm-screen').forEach(s => s.style.display = 'none');
+        
+        // 2. Показываем нужный экран из начального состояния
+        const targetScreen = document.getElementById(scenario.initialState.screen);
+        if (targetScreen) {
+            targetScreen.style.display = 'block';
+        }
+
+        // 3. Убеждаемся, что кнопка "Главное меню" видна (на всякий случай)
+        const mainMenuBtn = document.querySelector('.training-main-menu-btn');
+        if (mainMenuBtn) {
+            mainMenuBtn.style.display = 'block';
+        }
+
+        // 4. Показываем первый шаг (просто выводим в консоль для проверки)
+        showTestStep();
     }
-
-    // 3. Убеждаемся, что кнопка "Главное меню" видна (на всякий случай)
-    const mainMenuBtn = document.querySelector('.training-main-menu-btn');
-    if (mainMenuBtn) {
-        mainMenuBtn.style.display = 'block';
-    }
-
-    // 4. Показываем первый шаг (просто выводим в консоль для проверки)
-    showTestStep();
-}
 
 // Показ текущего шага
 function showTestStep() {
@@ -174,6 +181,12 @@ document.addEventListener('click', (e) => {
         return; // Не блокируем
     }
 
+    // 1.1 Исключение: кнопка Приступить к загрузке на экране с заявкой
+    const orderBtn = e.target.closest('.order-continue-btn');
+    if (orderBtn) {
+        return; // Не блокируем
+    }
+
     // 2. Ищем кнопку, по которой кликнули
     const button = e.target.closest('button, .atm-button, [onclick], .otp-logo-wrapper, .switch-vertical');
     
@@ -216,9 +229,14 @@ document.addEventListener('click', (e) => {
         isCorrectAction = true;
     }
 
-     // 4.4. Специфичное исключение для тумблера (шаг 7)
-    if (step.action === 'switchToSupervisor' && e.target.closest('.switch-vertical')) {
-        isCorrectAction = true;
+     // 4.4. Специфичное исключение для тумблера (для всех шагов)
+    if (e.target.closest('.switch-vertical') || e.target.closest('.mode-toggle-container')) {
+        // Если тест ждёт переключения тумблера - засчитываем
+        if (step.action === 'switchToSupervisor' || step.action === 'switchToNormal') {
+            isCorrectAction = true;
+        } else {
+            isCorrectAction = false;
+        }
     }
 
 
@@ -303,11 +321,15 @@ function closeCassetteOrderScreen() {
     const screen = document.getElementById('cassetteOrderScreen');
     if (screen) screen.style.display = 'none';
 
-    // Переходим к первому экрану кассеты
+     // Увеличиваем шаг (завершаем шаг openDay)
+    if (typeof isTestingModeActive !== 'undefined' && isTestingModeActive) {
+        currentTestStepIndex++;
+        console.log('Тест: заявка закрыта, переходим к шагу', currentTestStepIndex);
+    }
+    // Переходим к первому экрану
     const cassetteScreen = document.getElementById('replenishcassette_1');
     if (cassetteScreen) {
         cassetteScreen.style.display = 'block';
-        // Инициализируем поле (если нужно)
         if (typeof initInputField === 'function') initInputField(1);
     }
 }

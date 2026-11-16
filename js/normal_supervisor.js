@@ -358,6 +358,12 @@ function requestSupervisorMode() {
 // Переключение в Normal (слайдер вниз)
 // Просто переключаем клавишу (переключаем режим), но без переключения экранов. 
 function switchToNormalMode() {
+    // Проверка для теста
+    if (typeof checkTestAction === 'function' && isTestingModeActive) {
+        if (!checkTestAction('switchToNormal')) {
+            return;
+        }
+    }
         // currentMode = 'normal';
         window.pendingModeSwitch = null;
         console.log('currentMode установлен в Normal, экран не изменён');

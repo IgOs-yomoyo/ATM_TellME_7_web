@@ -13,10 +13,10 @@ const testingScenarios = [
             ndcStatus: 'ok',
              // 👇 Эталонные значения для заявки
             cassetteLoads: {
-            1: 1000, // кассета 1 (100 руб) - 1000 шт
+            1: 1200, // кассета 1 (100 руб) - 1000 шт
             2: 1200, // кассета 2 (500 руб) - 1200 шт
-            3: 700,  // кассета 3 (1000 руб) - 700 шт
-            4: 800   // кассета 4 (5000 руб) - 800 шт
+            3: 1200,  // кассета 3 (1000 руб) - 700 шт
+            4: 1200   // кассета 4 (5000 руб) - 800 шт
             }
         },
 
@@ -47,13 +47,14 @@ const testingScenarios = [
             { id: 23, action: 'enterNoOfNotes_2', message: 'Введите количество банкнот в кассету 2', expectedText: 'ВВОД' },
             { id: 24, action: 'enterNoOfNotes_3', message: 'Введите количество банкнот в кассету 3', expectedText: 'ВВОД' },
             { id: 25, action: 'enterNoOfNotes_4', message: 'Введите количество банкнот в кассету 4', expectedText: 'ВВОД' },
-            { id: 26, action: 'backToNormalMode', message: 'Переключите тумблер в NORMAL и нажмите "В режим обслуживания клиентов"' },
-            { id: 27, action: 'logoClick', message: 'Снова нажмите 5 раз на логотип OZON' },
-            { id: 28, action: 'enterOTP', message: 'Введите OTP-код' },
-            { id: 29, action: 'getBalance', message: 'Нажмите "Получить баланс"' },
-            { id: 30, action: 'exitButton', message: 'Нажмите "Выход" на чеке' },
-            { id: 31, action: 'diagnosticComplete', message: 'Нажмите 4-5-6 для диагностики' },
-            { id: 32, action: 'toAppMainMenu', message: 'Нажмите "В ГЛАВНОЕ МЕНЮ"' }
+            { id: 26, action: 'switchToNormal', message: 'Переключите тумблер в NORMAL' },
+            { id: 27, action: 'backToNormalMode', message: 'Нажмите "В режим обслуживания клиентов"', expectedText: 'В РЕЖИМ ОБСЛУЖИВАНИЯ КЛИЕНТОВ' },
+            { id: 28, action: 'logoClick', message: 'Снова нажмите 5 раз на логотип OZON' },
+            { id: 29, action: 'enterOTP', message: 'Введите OTP-код' },
+            // { id: 29, action: 'getBalance', message: 'Нажмите "Получить баланс"' },
+            // { id: 30, action: 'exitButton', message: 'Нажмите "Выход" на чеке' },
+            // { id: 31, action: 'diagnosticComplete', message: 'Нажмите 4-5-6 для диагностики' },
+            // { id: 32, action: 'toAppMainMenu', message: 'Нажмите "В ГЛАВНОЕ МЕНЮ"' }
         ]
     }
 ];
