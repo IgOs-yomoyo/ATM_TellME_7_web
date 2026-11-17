@@ -388,9 +388,12 @@ function exitSupervisorMode() {
 function initModeSwitch() {
     const checkbox = document.getElementById('modeCheckbox');
     if (!checkbox) return;
+
+    console.log('initModeSwitch вызвана. Чекбокс:', checkbox);
     // checkbox.checked = (currentMode === 'supervisor');
     checkbox.checked = false;
     checkbox.addEventListener('change', function(e) {
+        console.log('СОБЫТИЕ CHANGE: checked =', this.checked);
         if (this.checked) {
             requestSupervisorMode();
         } else {
