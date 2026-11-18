@@ -332,8 +332,16 @@ function continueCollection() {
     
 function exitCollectionScreen(){
     // Проверка для теста
+    // if (typeof checkTestAction === 'function') {
+    //     if (!checkTestAction('exitCollectionScreen')) return;
+    // }
     if (typeof checkTestAction === 'function') {
-        if (!checkTestAction('exitCollectionScreen')) return;
+        const step = currentTestScenario.steps[currentTestStepIndex];
+        if (step && step.action === 'exitButton') {
+            if (!checkTestAction('exitButton')) return;
+        } else {
+            if (!checkTestAction('exitCollectionScreen')) return;
+        }
     }
 
     //====== ПРОВЕРКА ДЛЯ РЕЖИМА ОБУЧЕНИЯ ======

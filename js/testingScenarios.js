@@ -51,10 +51,10 @@ const testingScenarios = [
             { id: 27, action: 'backToNormalMode', message: 'Нажмите "В режим обслуживания клиентов"', expectedText: 'В РЕЖИМ ОБСЛУЖИВАНИЯ КЛИЕНТОВ' },
             { id: 28, action: 'logoClick', message: 'Снова нажмите 5 раз на логотип OZON' },
             { id: 29, action: 'enterOTP', message: 'Введите OTP-код' },
-            { id: 30, action: 'getBalance', message: 'Нажмите "Получить баланс"' },
-            { id: 31, action: 'exitButton', message: 'Нажмите "Выход" на чеке' },
+            { id: 30, action: 'getBalance', message: 'Нажмите "Получить баланс"', expectedText: 'ПОЛУЧИТЬ БАЛАНС'},
+            { id: 31, action: 'exitButton', message: 'Нажмите кнопку "Выход"', expectedText: 'ВЫХОД'},
             { id: 32, action: 'diagnosticComplete', message: 'Нажмите 4-5-6 для диагностики' },
-            { id: 33, action: 'toAppMainMenu', message: 'Нажмите "В ГЛАВНОЕ МЕНЮ"' }
+            { id: 33, action: 'toAppMainMenu', message: 'Нажмите "В ГЛАВНОЕ МЕНЮ"', expectedText: 'В ГЛАВНОЕ МЕНЮ'}
         ]
     }
 ];

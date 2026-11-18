@@ -94,38 +94,38 @@ function checkTestAction(actionName) {
 }
 
 // Перехват клика по кнопке "Главное меню" в режиме теста
-document.addEventListener('click', (e) => {
-    // Проверяем, что кликнули именно по кнопке "Главное меню"
-    const menuBtn = e.target.closest('.training-main-menu-btn');
+// document.addEventListener('click', (e) => {
+//     // Проверяем, что кликнули именно по кнопке "Главное меню"
+//     const menuBtn = e.target.closest('.training-main-menu-btn');
     
-    // Если это не она — ничего не делаем
-    if (!menuBtn) return;
+//     // Если это не она — ничего не делаем
+//     if (!menuBtn) return;
     
-    // Если тест не активен — даём кнопке сработать как обычно
-    if (typeof isTestingModeActive === 'undefined' || !isTestingModeActive) return;
+//     // Если тест не активен — даём кнопке сработать как обычно
+//     if (typeof isTestingModeActive === 'undefined' || !isTestingModeActive) return;
 
-    // 👇 ЕСЛИ ТЕСТ АКТИВЕН:
-    e.preventDefault(); // Отменяем стандартное поведение
-    e.stopPropagation(); // Останавливаем всплытие
+//     // 👇 ЕСЛИ ТЕСТ АКТИВЕН:
+//     e.preventDefault(); // Отменяем стандартное поведение
+//     e.stopPropagation(); // Останавливаем всплытие
 
-    console.log('Тест прерван пользователем через кнопку "Главное меню"');
+//     console.log('Тест прерван пользователем через кнопку "Главное меню"');
     
-    // Завершаем тест
-    isTestingModeActive = false;
-    currentTestScenario = null;
-    currentTestStepIndex = 0;
+//     // Завершаем тест
+//     isTestingModeActive = false;
+//     currentTestScenario = null;
+//     currentTestStepIndex = 0;
     
-    // Возвращаемся в меню тренажёра (вызываем функцию, которая уже есть в learningMode.js)
-    if (typeof openTrainingMenu === 'function') {
-        openTrainingMenu();
-    } else {
-        // Если функции нет — просто показываем меню вручную
-        document.querySelectorAll('.atm-screen').forEach(s => s.style.display = 'none');
-        const trainerMenu = document.getElementById('trainerMenuScreen');
-        if (trainerMenu) trainerMenu.style.display = 'block';
-        menuBtn.style.display = 'none';
-    }
-}, true); // true = capture, чтобы сработало ДО обычного onclick
+//     // Возвращаемся в меню тренажёра (вызываем функцию, которая уже есть в learningMode.js)
+//     if (typeof openTrainingMenu === 'function') {
+//         openTrainingMenu();
+//     } else {
+//         // Если функции нет — просто показываем меню вручную
+//         document.querySelectorAll('.atm-screen').forEach(s => s.style.display = 'none');
+//         const trainerMenu = document.getElementById('trainerMenuScreen');
+//         if (trainerMenu) trainerMenu.style.display = 'block';
+//         menuBtn.style.display = 'none';
+//     }
+// }, true); // true = capture, чтобы сработало ДО обычного onclick
 
 
 function showTestError(message) {
@@ -177,6 +177,16 @@ document.addEventListener('click', (e) => {
     // 1. Исключение: кнопка "Главное меню" всегда работает
     const menuBtn = e.target.closest('.training-main-menu-btn');
     if (menuBtn) {
+        if (step && step.id !== 33) {// 33 - последний шаг
+            testErrors.push({
+                step: step.id,
+                expected: step.expectedText || step.action,
+                got: 'Выход в главное меню (тест прерван)'
+            });
+            console.log('Тест прерван через кнопку "Главное меню". Ошибка:', testErrors.length);
+            // Показываем сообщение, но не блокируем
+            showTestError('Тест прерван. Действие не выполнено.');
+        }
         // ... (код аварийного выхода, который мы написали ранее) ...
         return; // Не блокируем
     }
