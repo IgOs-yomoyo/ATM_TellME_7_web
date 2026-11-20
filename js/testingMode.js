@@ -300,12 +300,20 @@ function finishTest() {
     isTestingModeActive = false;
     const errorCount = testErrors.length;
     console.log('Тест завершён. Ошибок:', errorCount);
-    
-    if (typeof showAppNotice === 'function') {
-        showAppNotice(`Тест завершён! Ошибок: ${errorCount}`, 5000);
+
+    // Формируем сообщение
+    let message = `Тест завершён!\n\nОшибок: ${errorCount}`;
+    if (errorCount === 0) {
+        message += '\n\nОтлично! Ошибок нет!';
     } else {
-        alert(`Тест завершён! Ошибок: ${errorCount}`);
+        message += '\n\nРекомендуем повторить обучение.';
     }
+
+    alert(message);
+    // Возвращаемся в меню
+    document.querySelectorAll('.atm-screen').forEach(s => s.style.display = 'none');
+    const trainerMenu = document.getElementById('trainerMenuScreen');
+    if (trainerMenu) trainerMenu.style.display = 'block';
 }
 
 // Логика работы экрана демонстрации заявки

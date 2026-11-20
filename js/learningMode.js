@@ -8,19 +8,43 @@ function openTrainingMenu() {
     // if (typeof checkTestAction === 'function') {
     //     if (!checkTestAction('toAppMainMenu')) return;
     // }
+    // if (typeof isTestingMode !== 'undefined' && isTestingModeActive) {
+    //     console.log('openTrainingMenu: тест активен. Шаг:', currentTestStepIndex, 'из', currentTestScenario?.steps?.length);
+    //     // Если это последний шаг - показываем результаты
+    //     if (currentTestScenario && currentTestStepIndex >= currentTestScenario.steps.length) {
+    //         finishTest();
+    //     } else {
+    //         console.log('openTrainingMenu: тест активен, прерываем');
+    //         isTestingModeActive = false;
+    //         currentTestScenario = null;
+    //         currentTestStepIndex = 0;
+    //     }
+
+    //     //Скрываем все экраны
+    //     document.querySelectorAll('.atm-screen').forEach(s => s.style.display = 'none');
+
+    //     //Показываем главное меню
+    //     const trainerMenu = document.getElementById('trainerMenuScreen');
+    //     if (trainerMenu) trainerMenu.style.display = 'block';
+
+    //     return;
+    // }
     if (typeof isTestingMode !== 'undefined' && isTestingModeActive) {
         console.log('openTrainingMenu: тест активен, прерываем');
-        isTestingModeActive = false;
-        currentTestScenario = null;
-        currentTestStepIndex = 0;
 
-        //Скрываем все экраны
+        // 👇 Всегда показываем результаты (если тест был активен)
+        if (typeof finishTest === 'function') {
+            finishTest();
+        } else {
+            isTestingModeActive = false;
+            currentTestScenario = null;
+            currentTestStepIndex = 0;
+        }
+
+        // Скрываем экраны и показываем меню
         document.querySelectorAll('.atm-screen').forEach(s => s.style.display = 'none');
-
-        //Показываем главное меню
         const trainerMenu = document.getElementById('trainerMenuScreen');
         if (trainerMenu) trainerMenu.style.display = 'block';
-
         return;
     }
 
@@ -46,7 +70,7 @@ function openTrainingMenu() {
     document.querySelectorAll('.training-highlight').forEach(el => {
         el.classList.remove('training-highlight');
     });
-    
+
     //Скрываем все экраны
     document.querySelectorAll('.atm-screen').forEach(screen => {
         screen.style.display = 'none';
@@ -104,13 +128,13 @@ function initTrainingSteps() {
         ? 'Далее необходимо подтвердить закрытие операционного дня'
         : 'Если операционный день банкомата был закрыт ранее, то программа переведёт вас на экран повторного закрытия операционного дня. Нажмите кнопку "Закрыть день повторно"'
 
-        const shortInstructionText = isDayOpened()
-            ? 'ПОДТВЕРДИТЬ'
-            : 'ЗАКРЫТЬ ДЕНЬ ПОВТОРНО';
+    const shortInstructionText = isDayOpened()
+        ? 'ПОДТВЕРДИТЬ'
+        : 'ЗАКРЫТЬ ДЕНЬ ПОВТОРНО';
 
-        trainingSteps = [
+    trainingSteps = [
         {
-            id: 1, 
+            id: 1,
             instruction: 'Нажмите пять раз на логотип OZON',
             shortInstruction: 'Нажмите пять раз на логотип OZON',
             targetSelector: '.otp-logo-wrapper',
@@ -118,14 +142,14 @@ function initTrainingSteps() {
             targetScreen: 'welcomeScreen'
         },
         {
-            id: 2, 
+            id: 2,
             instruction: 'Введите шестизначный код инкассатора',
             shortInstruction: 'Введите код инкассатора',
             targetSelector: '.otp-input, .otp-submit-btn', //[onclick="submitOTP()]
             action: 'enterOTP',
             targetScreen: 'inputOTPCodeScreen',
             needsKeyboard: true
-        }, 
+        },
         {
             id: 3,
             instruction: `На экране "Меню инкассации" нажмите кнопку "Получить баланс". После этого, на экране, вы должны увидеть чек "Баланс банкомата", 
@@ -140,17 +164,17 @@ function initTrainingSteps() {
             instruction: 'Кнопка "Меню инкассации" вернёт вас в предыдущее меню',
             shortInstruction: 'МЕНЮ ИНКАССАЦИИ',
             targetSelector: '[onclick="closeBalanceReceipt()"]',
-            action: 'closeBalanceReceipt', 
+            action: 'closeBalanceReceipt',
             targetScreen: 'balanceReceiptScreen'
         },
         {
             id: 5,
             instruction: `На экране "Меню инкассации" нажмите кнопку "Провести инкассацию". После этого на экране должна появиться кнопка ПРОДОЛЖИТЬ`,
             shortInstruction: 'ПРОВЕСТИ ИНКАССАЦИЮ',
-            targetSelector: '[onclick="performCollection()"]', 
+            targetSelector: '[onclick="performCollection()"]',
             action: 'performCollection',
             targetScreen: 'mainScreen'
-        }, 
+        },
         {
             id: 6,
             instruction: `Если вы видите экран "Можно проводить инкассацию", это означает, что операция "Провести инкассацию" выполнена успешно.
@@ -158,15 +182,15 @@ function initTrainingSteps() {
             shortInstruction: 'ПРОДОЛЖИТЬ',
             targetSelector: '.collection-continue-btn',
             action: 'continueCollection',
-            targetScreen:'collectionCompleteScreen'
+            targetScreen: 'collectionCompleteScreen'
         },
         {
-            id: 7, 
+            id: 7,
             instruction: `Далее нужно открыть верхний кабинет банкомата, проверить наличие задержанных карт клиентов, 
              перевести переключатель режимов работы банкомата normal/supervisor в положение supervisor, то есть, в режим оператора.`,
             shortInstruction: 'Переключатель в положение SUPERVISOR',
-            targetSelector: '.mode-toggle-container', 
-            action: 'switchToSupervisor', 
+            targetSelector: '.mode-toggle-container',
+            action: 'switchToSupervisor',
             targetScreen: 'outOfServiceScreen'
         },
         {
@@ -174,8 +198,8 @@ function initTrainingSteps() {
             instruction: 'Введите код пользователя 100 и нажмите кнопку "Ввод"',
             shortInstruction: 'Код пользователя 100 + ВВОД',
             targetSelector: '#loginInput, .enter-btn', //#authScreen .info-input
-            action: 'loginInput', 
-            targetScreen: 'authScreen', 
+            action: 'loginInput',
+            targetScreen: 'authScreen',
             needsKeyboard: true
         },
         {
@@ -207,7 +231,7 @@ function initTrainingSteps() {
             id: 12,
             instruction: `В меню "Дополнительные операции" нужно выбрать опцию "Сброс счётчика задержанных карт".`,
             shortInstruction: 'СБРОС СЧЁТЧИКА ЗАДЕРЖАННЫХ КАРТ',
-            targetSelector: '#resetHeldOption', 
+            targetSelector: '#resetHeldOption',
             action: 'resetHeldOption',
             targetScreen: 'additionalOperations'
         },
@@ -219,7 +243,7 @@ function initTrainingSteps() {
             action: 'resetHeldCardCounter', //backToOpenCloseDayMenu
             targetScreen: 'additionalOperations'
         },
-        { 
+        {
             id: 14,
             instruction: `Нажмите кнопку "ВОЗВРАТ" для возврата в предыдущее меню`,
             shortInstruction: 'ВОЗВРАТ',
@@ -229,20 +253,20 @@ function initTrainingSteps() {
 
         },
         {
-            id: 15, 
+            id: 15,
             instruction: 'В меню "Открытие/закрытие операционного дня" нажмите кнопку "Ресайклер"',
             shortInstruction: 'РЕСАЙКЛЕР',
             targetSelector: '.opencloseday-recycler', //[onclick="backToOpenCloseDay()"]
             action: 'recycler',
             targetScreen: 'opencloseday'
-        }, 
+        },
         {
-           id: 16, 
-           instruction: 'В следующем меню, "Операционный день ресайклера", нажимаем кнопку "Закрытие операционного дня"',
-           shortInstruction: 'ЗАКРЫТИЕ ОПЕРАЦИОННОГО ДНЯ',
-           targetSelector: '.recyclerday-closeday',
-           action: 'closeRecyclerDay', //closeRecyclerDay  showCloseDayScreen
-           targetScreen: 'recyclerday'
+            id: 16,
+            instruction: 'В следующем меню, "Операционный день ресайклера", нажимаем кнопку "Закрытие операционного дня"',
+            shortInstruction: 'ЗАКРЫТИЕ ОПЕРАЦИОННОГО ДНЯ',
+            targetSelector: '.recyclerday-closeday',
+            action: 'closeRecyclerDay', //closeRecyclerDay  showCloseDayScreen
+            targetScreen: 'recyclerday'
         },
         {
             id: 17,
@@ -292,14 +316,14 @@ function initTrainingSteps() {
             action: null,
             targetScreen: 'testingScreen',
             autoAdvance: true
-        },  
+        },
         {
             id: 23,
             instruction: 'Введите количество банкнот, загруженных в кассету №1 (номинал 100 рублей) и нажмите кнопку ВВОД',
             shortInstruction: 'Введите количество банкнот в кассете 1',
-            targetSelector: '#LoadInput_1, .enter-btn', 
+            targetSelector: '#LoadInput_1, .enter-btn',
             action: 'enterNoOfNotes_1',
-            targetScreen:'replenishcassette_1',
+            targetScreen: 'replenishcassette_1',
             needsKeyboard: true
         },
         {
@@ -328,9 +352,9 @@ function initTrainingSteps() {
             action: 'enterNoOfNotes_4',
             targetScreen: 'replenishcassette_4',
             needsKeyboard: true
-        }, 
+        },
         {
-            
+
             id: 27,
             instruction: 'После ввода количества банкнот в кассетах снова запустится тест модуля рециркуляции',
             shortInstruction: 'Модуль тестируется',
@@ -349,7 +373,7 @@ function initTrainingSteps() {
             autoAdvance: true
         },
         {
-            id: 29, 
+            id: 29,
             instruction: `Теперь нужно перевести банкомат в режим обслуживания клиентов. 
             Для этого откройте верхний кабинет банкомата и переведите переключатель режимов в положение normal.
             Затем, на экране, нажмите кнопку "В режим обслуживания клиентов".`,
@@ -368,7 +392,7 @@ function initTrainingSteps() {
             autoAdvance: true
         },
         {
-            id: 31, 
+            id: 31,
             instruction: `После того, как банкомат вышел в режим обслуживания клиентов, нам ещё раз нужно авторизоваться на процессинге. Для этого 5 раз нажмите на 
             логотип OZON в левом верхнем углу.`,
             shortInstruction: '5 раз на логотип OZON',
@@ -387,7 +411,7 @@ function initTrainingSteps() {
         },
         {
             id: 33,
-            instruction: `На экране "МЕНЮ ИНКАССАЦИИ" нажмите кнопку "ПОЛУЧИТЬ БАЛАНС"`, 
+            instruction: `На экране "МЕНЮ ИНКАССАЦИИ" нажмите кнопку "ПОЛУЧИТЬ БАЛАНС"`,
             shortInstruction: 'ПОЛУЧИТЬ БАЛАНС',
             targetSelector: '[onclick="getBalance()"]',
             action: 'showBalanceReceipt',
@@ -462,14 +486,14 @@ function startTraining(mode = 'learning') {
         setTimeout(updateDiagnosticButtonsVisibility, 300);
     }
 
-    saveTrainingState(); 
+    saveTrainingState();
 }
 
 function updateTooltipInstruction(step) {
     console.log('updateTooltipInstruction вызвана, шаг:', step ? step.id : 'null');
     if (!step) return;
 
-    
+
     const switchWidth = document.querySelector('.mode-toggle-container')?.offsetWidth || 0;
     // const viewportWidth = window.visualViewport?.width || window.innerWidth;
     // const viewportHeight = window.visualViewport?.height || window.innerHeight;
@@ -499,7 +523,7 @@ function showTrainingStep(index) {
     saveTrainingState();
 
     if (index >= trainingSteps.length) {
-        console.log('Индекс ('+ index +') >= длины массива ('+ trainingSteps.length +')');
+        console.log('Индекс (' + index + ') >= длины массива (' + trainingSteps.length + ')');
         console.log('Все шаги выполнены! Обучение завершено!');
         finishTraining();
         return;
@@ -551,8 +575,8 @@ function showTrainingStep(index) {
         // }
 
         if (typeof updateDiagnosticButtonsVisibility === 'function') {
-        setTimeout(updateDiagnosticButtonsVisibility, 50);
-    }
+            setTimeout(updateDiagnosticButtonsVisibility, 50);
+        }
     }
 
     // Обновляем счётчик шагов
@@ -580,7 +604,7 @@ function showTrainingStep(index) {
             });
             targetScreen.style.display = 'block';
             console.log('Показан экран:', targetScreen.style.display);
-        } else if(targetScreen) {
+        } else if (targetScreen) {
             console.log('Экран уже показан, пропускаем переключение:', step.targetScreen);
         } else {
             console.warn('Нет targetScreen в шаге!');
@@ -623,7 +647,7 @@ function showTrainingStep(index) {
     document.querySelectorAll('.training-highlight').forEach(el => {
         el.classList.remove('training-highlight');
     });
-      
+
 
     //Подсвечиваем целевые элементы (поддержка нескольких селекторов)
     if (step.targetSelector) {
@@ -728,7 +752,7 @@ function completeTrainingStep(action) {
         }
         currentStepIndex++;
         console.log('Новый currentStepIndex:', currentStepIndex);
-        
+
         if (currentStepIndex >= trainingSteps.length) {
             console.log('Шаги закончились, завершаем обучение');
             finishTraining();
@@ -777,10 +801,10 @@ function finishTraining() {
     document.querySelectorAll('.training-highlight').forEach(el => {
         el.classList.remove('training-highlight');
     });
-    
+
     const tooltip = document.getElementById('trainingTooltip');
     if (tooltip) tooltip.style.display = 'none';
-    
+
     // openTrainingMenu();
     //backToWelcomeScreen();
     showClientScreen();
@@ -791,14 +815,14 @@ function finishTraining() {
 
     sessionStorage.removeItem('tellme7_training_state');
 }
-    // document.querySelectorAll('.atm-screen').forEach(screen => {
-    //     screen.style.display = 'none';
-    // });
-    // const welcomeScreen = document.getElementById('welcomeScreen');
-    // if (welcomeScreen) {
-    //     welcomeScreen.style.display = 'block';
-    //     console.log ('Показан экран welcomeScreen');
-    // } 
+// document.querySelectorAll('.atm-screen').forEach(screen => {
+//     screen.style.display = 'none';
+// });
+// const welcomeScreen = document.getElementById('welcomeScreen');
+// if (welcomeScreen) {
+//     welcomeScreen.style.display = 'block';
+//     console.log ('Показан экран welcomeScreen');
+// } 
 // }
 
 function startDragTouch() {
@@ -823,12 +847,12 @@ function initTooltipDrag() {
         console.log('initTooltipDrag: tooltip перемещён в body');
     }
 
-    const isPortrait = window.innerHeight >window.innerWidth;
+    const isPortrait = window.innerHeight > window.innerWidth;
     const isMobile = window.innerWidth <= 1024;
 
     if (isMobile && isPortrait) {
         console.log('Портрет: drag отключён, tooltip в body');
-        
+
         tooltipElement.removeAttribute('style');
         tooltipElement.style.display = 'none';
         tooltipDragInitialized = false;
@@ -859,14 +883,14 @@ function initTooltipDrag() {
     });
     // window.visualViewport?.addEventListener('resize', keepTooltipInViewport); // Заменил на код ниже. 
     window.visualViewport?.addEventListener('resize', () => {
-    keepTooltipInViewport();
-    if (isTrainingMode && !isTestingMode && trainingSteps[currentStepIndex]) {
-        clearTimeout(window._tooltipRecalcTimer);
-        window._tooltipRecalcTimer = setTimeout(() => {
-            updateTooltipInstruction(trainingSteps[currentStepIndex]);
-        }, 150);
-    }
-});
+        keepTooltipInViewport();
+        if (isTrainingMode && !isTestingMode && trainingSteps[currentStepIndex]) {
+            clearTimeout(window._tooltipRecalcTimer);
+            window._tooltipRecalcTimer = setTimeout(() => {
+                updateTooltipInstruction(trainingSteps[currentStepIndex]);
+            }, 150);
+        }
+    });
 
     //=== Привязвываем курсор к окну ===
     tooltipElement.style.position = 'fixed';
@@ -882,9 +906,9 @@ function initTooltipDrag() {
     document.addEventListener('mouseup', stopDrag);
 
     // События для touch-устройств
-    tooltipElement.addEventListener('touchstart', startDragTouch, {passive: false});
-    document.addEventListener('touchmove', onDragTouch, {passive: false});
-    document.addEventListener('touchend', stopDragTouch, {passive: false});
+    tooltipElement.addEventListener('touchstart', startDragTouch, { passive: false });
+    document.addEventListener('touchmove', onDragTouch, { passive: false });
+    document.addEventListener('touchend', stopDragTouch, { passive: false });
 }
 
 function startDrag(e) {
@@ -895,12 +919,12 @@ function startDrag(e) {
     dragOffsetY = e.clientY - rect.top;
 
     console.log('startDrag:', {
-        clientX: e.clientX, 
-        clientY: e.clientY, 
-        rectLeft: rect.left, 
+        clientX: e.clientX,
+        clientY: e.clientY,
+        rectLeft: rect.left,
         rectTop: rect.top,
-        offsetX: dragOffsetX, 
-        offsetY: dragOffsetY 
+        offsetX: dragOffsetX,
+        offsetY: dragOffsetY
     });
 
 
@@ -916,10 +940,10 @@ function onDrag(e) {
     let y = e.clientY - dragOffsetY;
 
     console.log('onDrag:', {
-        clientX: e.clientX, 
-        clientY: e.clientY, 
-        x: x, 
-        y: y 
+        clientX: e.clientX,
+        clientY: e.clientY,
+        x: x,
+        y: y
     });
 
     const rect = tooltipElement.getBoundingClientRect();
@@ -987,7 +1011,7 @@ function stopDrag() {
 }
 
 //Инициализация при загрузке
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     //Инициализация только если панель существует
     if (document.getElementById('trainingTooltip')) {
         initTooltipDrag();
@@ -1067,7 +1091,7 @@ document.addEventListener('focusin', (e) => {
 // ===== СОХРАНЕНИЕ СОСТОЯНИЯ В sessionStorage =====
 function saveTrainingState() {
     if (typeof isTrainingMode === 'undefined') return;
-    
+
     const state = {
         isTrainingMode: isTrainingMode,
         isTestingMode: isTestingMode,
@@ -1080,17 +1104,17 @@ function saveTrainingState() {
 function restoreTrainingState() {
     const saved = sessionStorage.getItem('tellme7_training_state');
     if (!saved) return false;
-    
+
     try {
         const state = JSON.parse(saved);
         if (!state.isTrainingMode && !state.isTestingMode) return false;
-        
+
         isTrainingMode = state.isTrainingMode;
         isTestingMode = state.isTestingMode;
         currentStepIndex = state.currentStepIndex;
-        
+
         console.log('Состояние восстановлено:', state);
-        
+
         // Перезапускаем обучение с сохранённого шага
         if (typeof initTrainingSteps === 'function') {
             initTrainingSteps();
