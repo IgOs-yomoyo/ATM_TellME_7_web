@@ -5,8 +5,23 @@
 // ========== ОТКРЫТЬ МЕНЮ ТРЕНАЖЁРА
 function openTrainingMenu() {
     // Проверка для режима тестирования
-    if (typeof checkTestAction === 'function') {
-        if (!checkTestAction('toAppMainMenu')) return;
+    // if (typeof checkTestAction === 'function') {
+    //     if (!checkTestAction('toAppMainMenu')) return;
+    // }
+    if (typeof isTestingMode !== 'undefined' && isTestingModeActive) {
+        console.log('openTrainingMenu: тест активен, прерываем');
+        isTestingModeActive = false;
+        currentTestScenario = null;
+        currentTestStepIndex = 0;
+
+        //Скрываем все экраны
+        document.querySelectorAll('.atm-screen').forEach(s => s.style.display = 'none');
+
+        //Показываем главное меню
+        const trainerMenu = document.getElementById('trainerMenuScreen');
+        if (trainerMenu) trainerMenu.style.display = 'block';
+
+        return;
     }
 
     //Проверка для режима обучения

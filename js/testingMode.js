@@ -177,18 +177,40 @@ document.addEventListener('click', (e) => {
     // 1. Исключение: кнопка "Главное меню" всегда работает
     const menuBtn = e.target.closest('.training-main-menu-btn');
     if (menuBtn) {
-        if (step && step.id !== 33) {// 33 - последний шаг
+        // 1. Если это последний шаг - разрешаем выход без ошибки
+        if (step && step.id === 33) {// 33 - последний шаг
+           return;
+        }
+
+         // 2. Шаги с 27 по 32 - блокируем выход
+        if (step && step.id >= 28 && step.id <= 32) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+
+            testErrors.push({
+                step: step.id,
+                expected: step.expectedText || step.action,
+                got: 'Попытка выхода в главное меню (заблокировано)'
+            });
+            console.log('Тест: выход заблокирован (шаги 28 - 32). Ошибкок:', testErrors.length);
+            // console.log('Тест прерван через кнопку "Главное меню". Ошибка:', testErrors.length);
+            // Показываем сообщение, но не блокируем
+            showTestError('Нельзя прервать тест! Действие не выполнено.');
+            return;
+        }
+        
+        // 3. Во всех остальных случаях прерываем тест (кнопка работает), показываем ошибку и количество ошибок пользователя
+        if (step) {
             testErrors.push({
                 step: step.id,
                 expected: step.expectedText || step.action,
                 got: 'Выход в главное меню (тест прерван)'
             });
             console.log('Тест прерван через кнопку "Главное меню". Ошибка:', testErrors.length);
-            // Показываем сообщение, но не блокируем
             showTestError('Тест прерван. Действие не выполнено.');
         }
-        // ... (код аварийного выхода, который мы написали ранее) ...
-        return; // Не блокируем
+        return;
     }
 
     // 1.1 Исключение: кнопка Приступить к загрузке на экране с заявкой
